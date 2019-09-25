@@ -18,10 +18,15 @@
     <link rel="dns-prefetch" href="http://yoursite.com">
     <!--SEO-->
 
-    <meta name="keywords" content>
+    <meta name="keywords" content="RocketMQ">
 
 
-    <meta name="description" content>
+    <meta name="description" content="RocketMQ插件部署
+
+下载
+
+地址：https://github.com/apache/rocketmq-externals
+下载完成之后，进入‘rocketmq-externals\rocketmq-console\src\main\resources’文件夹，打开‘applicati...">
 
 
 
@@ -32,7 +37,7 @@
     <!--Title-->
 
 
-<title>分类: 工具 | 赵可进的博客</title>
+<title>RocketMQ插件部署console控制台 | 赵可进的博客</title>
 
 
     <link rel="alternate" href="/atom.xml" title="赵可进的博客" type="application/atom+xml">
@@ -203,84 +208,120 @@
     <section class="content-wrap">
         <div class="container">
             <div class="row">
-                <main class="col-md-8 main-content ">
-                    <ol class="breadcrumb">
+                <main class="col-md-8 main-content m-post">
+                    
+
+<p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="RocketMQ插件部署console控制台">
+            
+                RocketMQ插件部署console控制台
+            
+        </h1>
+        <div class="post-meta">
     
-    
-        <li>
-            <a href="/categories" target="_blank">分类</a> /
-            <a href="/categories/工具" target="_blank">
-                工具
-            </a>
-        </li>
+        <span class="categories-meta fa-wrap">
+            <i class="fa fa-folder-open-o"></i>
+            <a class="category-link" href="/categories/安装教程/">安装教程</a>
+        </span>
     
 
+    
+        <span class="fa-wrap">
+            <i class="fa fa-tags"></i>
+            <span class="tags-meta">
+                
+                    <a class="tag-link" href="/tags/RocketMQ/">RocketMQ</a>
+                
+            </span>
+        </span>
+    
+
+    
+        
+        <span class="fa-wrap">
+            <i class="fa fa-clock-o"></i>
+            <span class="date-meta">2019/09/25</span>
+        </span>
+        
+            <span class="fa-wrap">
+                <i class="fa fa-eye"></i>
+                <span id="busuanzi_value_page_pv"></span>
+            </span>
+        
+    
+</div>
+        
+        
+    </div>
+    
+    <div class="post-body post-content">
+        
+
+        <p><strong>RocketMQ插件部署</strong></p>
+<ol>
+<li><strong>下载</strong></li>
 </ol>
+<p>地址：<a href="https://github.com/apache/rocketmq-externals" target="_blank" rel="noopener">https://github.com/apache/rocketmq-externals</a></p>
+<p><strong>下载完成之后，进入‘rocketmq-externals\rocketmq-console\src\main\resources’文件夹，打开‘application.properties’进行配置</strong></p>
+<p><img src="/images/rocketmq/rocketmq20190925135502.png" alt="1"></p>
+<ol start="2">
+<li><strong>编译启动</strong></li>
+</ol>
+<p>​        <strong>进入‘\rocketmq-externals\rocketmq-console’文件夹，执行‘mvn clean package -Dmaven.test.skip=true’，编译生成。</strong></p>
+<p>​        <strong>编译成功之后，Cmd进入‘target’文件夹，执行‘java -jar rocketmq-console-ng-1.0.0.jar’，启动‘rocketmq-console-ng-1.0.0.jar’。</strong></p>
+<ol start="3">
+<li><p><strong>测试</strong></p>
+<p>浏览器中输入‘127.0.0.1：配置端口’，成功后即可查看。</p>
+</li>
+</ol>
+<p><img src="/images/rocketmq/rocketmq20190925135856.png" alt="2"></p>
+
+        <h2>相关文章</h2><ul><li><a href="/install/install-windows-rocketmq/">windows下安装部署RocketMQ</a></li></ul>
+    </div>
+    
 
 
-    <article class="post">
+    
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+    
+        <a target="_blank" href="/install/install-windows-rocketmq/" class="next-post btn btn-default"
+           title='windows下安装部署RocketMQ'>
+            <span class="hidden-lg">下一篇</span>
+            <span class="hidden-xs">windows下安装部署RocketMQ</span><i class="fa fa-angle-right fa-fw"></i>
+        </a>
+    
+</div>
+
+
+    <div id="comments">
         
-            <div class="post-media">
-                <a href="/tools/IntelliJ-IDEA-Plugins/">
-                    <img class="img-ajax" src="/img/loading.gif"  data-src="/images/1569305057620.png"  alt="IntelliJ IDEA 快速高效 Plugins">
-                </a>
-            </div>
-        
-        <div class="post-content">
-            <div class="post-head home-post-head">
-                <h1 class="post-title">
-                    <a href="/tools/IntelliJ-IDEA-Plugins/">IntelliJ IDEA 快速高效 Plugins</a>
-                </h1>
-                <div class="post-meta">  &bull;
-                    <time class="post-date" datetime="" title="">
-                        2019年09月24日
-                    </time>
-                </div>
-            </div>
-            <p class="brief">
-                
-                    GsonFormat插件作用：将JSON文本转换成Java类，并且支持Lombok
-下载数：651K
-插件主页：https://plugins.jetbrains.com/plugin/7654-gsonformat
-GitHub：https://github.com/zzz40500/GsonFormat
+	<link rel="stylesheet" href="https://cdn.bootcss.com/gitalk/1.4.1/gitalk.min.css">
+<script src="//cdn.bootcss.com/gitalk/1.4.1/gitalk.min.js"></script>
+<script src="//cdn.bootcss.com/blueimp-md5/2.9.0/js/md5.min.js"></script>
+
+<div id="gitalk-container"></div>
+<script type="text/javascript">
+    var gitalk = new Gitalk({
+        // Gitalk配置
+        language: "zh-CN",
+        clientID: "934e6c8b8e5d8796b4c3",
+        clientSecret: "c6b01f8df89c3a426a0eb019ebe5f71620814aee",
+        repo: "zhaokejin.github.io",
+        owner: "zhaokejin",
+        admin: ["zhaokejin"],
+        id: md5(location.pathname),
+        distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+</script>
 
 
-主要用于使用Gson库将JSONObject格式的String 解析成实体，该插...
-                
-            </p>
-        </div>
-    </article>
- 
-    <article class="post">
-        
-            <div class="post-media">
-                <a href="/other/theme使用/">
-                    <img class="img-ajax" src="/img/loading.gif"  data-src="https://faithlove.github.io/pic/2018/RMTP_1/topPicPre.png"  alt="theme使用">
-                </a>
-            </div>
-        
-        <div class="post-content">
-            <div class="post-head home-post-head">
-                <h1 class="post-title">
-                    <a href="/other/theme使用/">theme使用</a>
-                </h1>
-                <div class="post-meta">  &bull;
-                    <time class="post-date" datetime="" title="">
-                        2018年12月18日
-                    </time>
-                </div>
-            </div>
-            <p class="brief">
-                
-                    1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859D:\hexo&amp;gt;hexo new page categoriesINFO  =========================================INFO  ...
-                
-            </p>
-        </div>
-    </article>
- 
-
-
-
+    </div>
 
 
 
@@ -346,7 +387,7 @@ GitHub：https://github.com/zzz40500/GsonFormat
         
     <div class="widget">
         <h3 class="title">分类</h3>
-        <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/"><i class="fa" aria-hidden="true">Docker</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/"><i class="fa" aria-hidden="true">Hexo</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/主键/"><i class="fa" aria-hidden="true">主键</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/其他/"><i class="fa" aria-hidden="true">其他</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/安装教程/"><i class="fa" aria-hidden="true">安装教程</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link current" href="/categories/工具/"><i class="fa" aria-hidden="true">工具</i></a><span class="category-list-count">2</span></li></ul>
+        <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/"><i class="fa" aria-hidden="true">Docker</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/"><i class="fa" aria-hidden="true">Hexo</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/主键/"><i class="fa" aria-hidden="true">主键</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/其他/"><i class="fa" aria-hidden="true">其他</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link current" href="/categories/安装教程/"><i class="fa" aria-hidden="true">安装教程</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/工具/"><i class="fa" aria-hidden="true">工具</i></a><span class="category-list-count">2</span></li></ul>
     </div>
 
 
