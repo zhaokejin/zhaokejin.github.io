@@ -1,0 +1,587 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="赵可进的博客">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.2.3">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="https://www.cicoding.com">
+    <!--SEO-->
+
+    <meta name="keywords" content="图片水印">
+
+
+    <meta name="description" content="因为项目中考虑到添加图片版权的保护，特意看了下水印的处理…以下有两种方式: 
+第一种是添加文字水印：
+import java.awt.*;
+import java.awt.image.*;
+import java.io.*;
+import javax.swing.*;
+import com.s...">
+
+
+
+<meta name="robots" content="all">
+<meta name="google" content="all">
+<meta name="googlebot" content="all">
+<meta name="verify" content="all">
+    <!--Title-->
+
+
+<title>Java添加水印（图片水印，文字水印） | 赵可进的博客</title>
+
+
+    <link rel="alternate" href="/atom.xml" title="赵可进的博客" type="application/atom+xml">
+
+
+    <link rel="icon" href="/favicon.jpg">
+
+    
+
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.5.0">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash">
+
+
+
+
+    
+
+
+
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?7ca0cd1757657048afeb05087511c0e4";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+
+
+    
+
+</head>
+
+</html>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+
+<body>
+    
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row clearfix">
+            <div class="col-md-12 column">
+                <nav class="navbar navbar-default" style="background-color:#fff;border:0;margin-bottom:0"
+                     role="navigation">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse"
+                                data-target="#navbar-collapse-1">
+                            <span class="sr-only">切</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="logo" href="/">
+                            <img src="/favicon.jpg"/>赵可进的博客
+                        </a>
+                    </div>
+
+                    <div class="collapse navbar-collapse" style="border:0;" id="navbar-collapse-1">
+                        <ul class="nav navbar-nav">
+                            
+                                
+                                    <li>
+                                        <a href="/" target="_blank">
+                                            <i class="fa fa-home"></i>
+                                            首页
+                                        </a>
+                                    </li>
+                                
+                            
+                                
+                                    <li>
+                                        <a href="/categories" target="_blank">
+                                            <i class="fa fa-sort"></i>
+                                            分类
+                                        </a>
+                                    </li>
+                                
+                            
+                                
+                                    <li>
+                                        <a href="/archives" target="_blank">
+                                            <i class="fa fa-sort"></i>
+                                            归档
+                                        </a>
+                                    </li>
+                                
+                            
+                                
+                                    <li>
+                                        <a href="/micro-service/microservice/" target="_blank">
+                                            <i class="fa fa-server"></i>
+                                            微服务
+                                        </a>
+                                    </li>
+                                
+                            
+                                
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                                           data-hover="dropdown">
+                                            <i class="fa fa-fire"></i>
+                                            系列教程
+                                            <strong class="caret"></strong>
+                                        </a>
+                                        <ul class="dropdown-menu">
+                                            
+                                                <li>
+                                                    <a href="/docker/00-docker-lession-index" target="_blank">
+                                                        <i class="fa "></i>
+                                                        Docker系列教程
+                                                    </a>
+                                                </li>
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+                                
+                                    <li>
+                                        <a href="/about" target="_blank">
+                                            <i class="fa fa-user"></i>
+                                            关于我
+                                        </a>
+                                    </li>
+                                
+                            
+                        </ul>
+                        
+                            <form id="search-form" class="navbar-form navbar-right">
+                                <div class="form-group input-group">
+                                    <input type="text" id="local-search-input" class="form-control"
+                                           placeholder="搜我..."/>
+                                    <span class="input-group-btn">
+                                        <a class="btn btn-default">
+                                            <i class="fa fa-search"></i>
+                                        </a>
+                                    </span>
+                                </div>
+                                <div id="local-search-result" class="local-search-result-cls"></div>
+                            </form>
+                        
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </div>
+</nav>
+
+    <a href="http://github.com/zhaokejin" target="_blank">
+        <img style="position: absolute; width:100px; top: 0; left: 0; border: 0;"
+             src="/img/fork-me.png"
+             alt="Fork me on GitHub">
+    </a>
+
+
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    
+
+<p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="Java添加水印（图片水印，文字水印）">
+            
+                Java添加水印（图片水印，文字水印）
+            
+        </h1>
+        <div class="post-meta">
+    
+        <span class="categories-meta fa-wrap">
+            <i class="fa fa-folder-open-o"></i>
+            <a class="category-link" href="/categories/工具/">工具</a>
+        </span>
+    
+
+    
+        <span class="fa-wrap">
+            <i class="fa fa-tags"></i>
+            <span class="tags-meta">
+                
+                    <a class="tag-link" href="/tags/图片水印/">图片水印</a>
+                
+            </span>
+        </span>
+    
+
+    
+        
+        <span class="fa-wrap">
+            <i class="fa fa-clock-o"></i>
+            <span class="date-meta">2018/08/18</span>
+        </span>
+        
+            <span class="fa-wrap">
+                <i class="fa fa-eye"></i>
+                <span id="busuanzi_value_page_pv"></span>
+            </span>
+        
+    
+</div>
+        
+        
+    </div>
+    
+    <div class="post-body post-content">
+        
+
+        <p>因为项目中考虑到添加图片版权的保护，特意看了下水印的处理…以下有两种方式: </p>
+<p>第一种是添加文字水印：</p>
+<pre><code>import java.awt.*;
+import java.awt.image.*;
+import java.io.*;
+import javax.swing.*;
+import com.sun.image.codec.jpeg.*;
+
+public class WaterSet {
+    /**
+     * 给图片添加水印
+     * 
+     * @param filePath
+     *            需要添加水印的图片的路径
+     * @param markContent
+     *            水印的文字
+     * @param markContentColor
+     *            水印文字的颜色
+     * @param qualNum
+     *            图片质量
+     * @return
+     */
+    public boolean createMark(String filePath, String markContent,
+            Color markContentColor, float qualNum) {
+        ImageIcon imgIcon = new ImageIcon(filePath);
+        Image theImg = imgIcon.getImage();
+        int width = theImg.getWidth(null);
+        int height = theImg.getHeight(null);
+        BufferedImage bimage = new BufferedImage(width, height,
+                BufferedImage.TYPE_INT_RGB);
+        Graphics2D g = bimage.createGraphics();
+        g.setColor(markContentColor);
+        g.setBackground(Color.white);
+        g.drawImage(theImg, 0, 0, null);
+        g.drawString(markContent, width / 5, height / 5); // 添加水印的文字和设置水印文字出现的内容
+        g.dispose();
+        try {
+            FileOutputStream out = new FileOutputStream(filePath);
+            JPEGImageEncoder encoder = JPEGCodec.createJPEGEncoder(out);
+            JPEGEncodeParam param = encoder.getDefaultJPEGEncodeParam(bimage);
+            param.setQuality(qualNum, true);
+            encoder.encode(bimage, param);
+            out.close();
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
+    }
+}</code></pre><p>第二种是添加图片水印和文字水印两种方法，水印图片可以是GIF,PNG透明的文件，我一般采用的是PNG的，因为它的质量和GIF相比要高一些：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.awt.Color;</span><br><span class="line"><span class="keyword">import</span> java.awt.Font;</span><br><span class="line"><span class="keyword">import</span> java.awt.Graphics;</span><br><span class="line"><span class="keyword">import</span> java.awt.Image;</span><br><span class="line"><span class="keyword">import</span> java.awt.image.BufferedImage;</span><br><span class="line"><span class="keyword">import</span> java.io.File;</span><br><span class="line"><span class="keyword">import</span> java.io.FileOutputStream;</span><br><span class="line"><span class="keyword">import</span> javax.imageio.ImageIO;</span><br><span class="line"><span class="keyword">import</span> com.sun.image.codec.jpeg.JPEGCodec;</span><br><span class="line"><span class="keyword">import</span> com.sun.image.codec.jpeg.JPEGImageEncoder;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">ImageUtils</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ImageUtils</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">     * public final static String getPressImgPath() &#123; return ApplicationContext</span></span><br><span class="line"><span class="comment">     * .getRealPath("/template/data/util/shuiyin.gif"); &#125;</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 把图片印刷到图片上</span></span><br><span class="line"><span class="comment">     * </span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> pressImg --</span></span><br><span class="line"><span class="comment">     *            水印文件</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> targetImg --</span></span><br><span class="line"><span class="comment">     *            目标文件</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> x</span></span><br><span class="line"><span class="comment">     *            --x坐标</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> y</span></span><br><span class="line"><span class="comment">     *            --y坐标</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">pressImage</span><span class="params">(String pressImg, String targetImg,</span></span></span><br><span class="line"><span class="function"><span class="params">            <span class="keyword">int</span> x, <span class="keyword">int</span> y)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">//目标文件</span></span><br><span class="line">            File _file = <span class="keyword">new</span> File(targetImg);</span><br><span class="line">            Image src = ImageIO.read(_file);</span><br><span class="line">            <span class="keyword">int</span> wideth = src.getWidth(<span class="keyword">null</span>);</span><br><span class="line">            <span class="keyword">int</span> height = src.getHeight(<span class="keyword">null</span>);</span><br><span class="line">            BufferedImage image = <span class="keyword">new</span> BufferedImage(wideth, height,</span><br><span class="line">                    BufferedImage.TYPE_INT_RGB);</span><br><span class="line">            Graphics g = image.createGraphics();</span><br><span class="line">            g.drawImage(src, <span class="number">0</span>, <span class="number">0</span>, wideth, height, <span class="keyword">null</span>);</span><br><span class="line"></span><br><span class="line">            <span class="comment">//水印文件</span></span><br><span class="line">            File _filebiao = <span class="keyword">new</span> File(pressImg);</span><br><span class="line">            Image src_biao = ImageIO.read(_filebiao);</span><br><span class="line">            <span class="keyword">int</span> wideth_biao = src_biao.getWidth(<span class="keyword">null</span>);</span><br><span class="line">            <span class="keyword">int</span> height_biao = src_biao.getHeight(<span class="keyword">null</span>);</span><br><span class="line">            g.drawImage(src_biao, (wideth - wideth_biao) / <span class="number">2</span>,</span><br><span class="line">                    (height - height_biao) / <span class="number">2</span>, wideth_biao, height_biao, <span class="keyword">null</span>);</span><br><span class="line">            <span class="comment">//水印文件结束</span></span><br><span class="line">            g.dispose();</span><br><span class="line">            FileOutputStream out = <span class="keyword">new</span> FileOutputStream(targetImg);</span><br><span class="line">            JPEGImageEncoder encoder = JPEGCodec.createJPEGEncoder(out);</span><br><span class="line">            encoder.encode(image);</span><br><span class="line">            out.close();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 打印文字水印图片</span></span><br><span class="line"><span class="comment">     * </span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> pressText</span></span><br><span class="line"><span class="comment">     *            --文字</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> targetImg --</span></span><br><span class="line"><span class="comment">     *            目标图片</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> fontName --</span></span><br><span class="line"><span class="comment">     *            字体名</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> fontStyle --</span></span><br><span class="line"><span class="comment">     *            字体样式</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> color --</span></span><br><span class="line"><span class="comment">     *            字体颜色</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> fontSize --</span></span><br><span class="line"><span class="comment">     *            字体大小</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> x --</span></span><br><span class="line"><span class="comment">     *            偏移量</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> y</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">pressText</span><span class="params">(String pressText, String targetImg,</span></span></span><br><span class="line"><span class="function"><span class="params">            String fontName, <span class="keyword">int</span> fontStyle, <span class="keyword">int</span> color, <span class="keyword">int</span> fontSize, <span class="keyword">int</span> x,</span></span></span><br><span class="line"><span class="function"><span class="params">            <span class="keyword">int</span> y)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            File _file = <span class="keyword">new</span> File(targetImg);</span><br><span class="line">            Image src = ImageIO.read(_file);</span><br><span class="line">            <span class="keyword">int</span> wideth = src.getWidth(<span class="keyword">null</span>);</span><br><span class="line">            <span class="keyword">int</span> height = src.getHeight(<span class="keyword">null</span>);</span><br><span class="line">            BufferedImage image = <span class="keyword">new</span> BufferedImage(wideth, height,</span><br><span class="line">                    BufferedImage.TYPE_INT_RGB);</span><br><span class="line">            Graphics g = image.createGraphics();</span><br><span class="line">            g.drawImage(src, <span class="number">0</span>, <span class="number">0</span>, wideth, height, <span class="keyword">null</span>);</span><br><span class="line">            <span class="comment">// String s="www.qhd.com.cn";</span></span><br><span class="line">            g.setColor(Color.RED);</span><br><span class="line">            g.setFont(<span class="keyword">new</span> Font(fontName, fontStyle, fontSize));</span><br><span class="line"></span><br><span class="line">            g.drawString(pressText, wideth - fontSize - x, height - fontSize</span><br><span class="line">                    / <span class="number">2</span> - y);</span><br><span class="line">            g.dispose();</span><br><span class="line">            FileOutputStream out = <span class="keyword">new</span> FileOutputStream(targetImg);</span><br><span class="line">            JPEGImageEncoder encoder = JPEGCodec.createJPEGEncoder(out);</span><br><span class="line">            encoder.encode(image);</span><br><span class="line">            out.close();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            System.out.println(e);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        pressImage(<span class="string">"F:/logo.png"</span>,          <span class="string">"F:/123.jpg"</span>, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        
+    </div>
+    
+
+
+    
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+        <a target="_blank" href="/maven/maven-pom/" class="pre-post btn btn-default"
+           title='史上最全的maven pom.xml文件教程详解'>
+            <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+            <span class="hidden-xs">史上最全的maven pom.xml文件教程详解</span>
+        </a>
+    
+    
+        <a target="_blank" href="/other/theme-config/" class="next-post btn btn-default"
+           title='主题配置'>
+            <span class="hidden-lg">下一篇</span>
+            <span class="hidden-xs">主题配置</span><i class="fa fa-angle-right fa-fw"></i>
+        </a>
+    
+</div>
+
+
+    <div id="comments">
+        
+	<link rel="stylesheet" href="https://cdn.bootcss.com/gitalk/1.4.1/gitalk.min.css">
+<script src="//cdn.bootcss.com/gitalk/1.4.1/gitalk.min.js"></script>
+<script src="//cdn.bootcss.com/blueimp-md5/2.9.0/js/md5.min.js"></script>
+
+<div id="gitalk-container"></div>
+<script type="text/javascript">
+    var gitalk = new Gitalk({
+        // Gitalk配置
+        language: "zh-CN",
+        clientID: "934e6c8b8e5d8796b4c3",
+        clientSecret: "c6b01f8df89c3a426a0eb019ebe5f71620814aee",
+        repo: "zhaokejin.github.io",
+        owner: "zhaokejin",
+        admin: ["zhaokejin"],
+        id: md5(location.pathname),
+        distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+</script>
+
+
+    </div>
+
+
+
+
+
+
+                </main>
+                
+    <aside class="col-md-4 sidebar">
+        
+        <div class="widget about-me">
+    <div class="row">
+        <div class="col-md-5">
+            <img src="/icons/wx.jpg" alt="公众号" class="img-responsive center-block">
+        </div>
+        <div class="col-md-7">
+            <a class="series-a" href="javascript:void(0)">公众号</a>
+            <ul>
+                <li>• 技术干货推送</li>
+                <li>• 免费资料领取</li>
+                <li><b>• 扫码领取更多惊喜</b></li>
+            </ul>
+        </div>
+    </div>
+    
+        <div class="row">
+            <div class="col-md-5">
+                <img src="/icons/xcx.jpg" alt="小程序" class="img-responsive">
+            </div>
+            <div class="col-md-7">
+                <a class="series-a" href="javascript:void(0)">小程序</a>
+                <ul>
+                    <li>• 原创笔记</li>
+                    <li>• 独家心法</li>
+                    <li><b>• 扫码领取</b></li>
+                </ul>
+            </div>
+        </div>
+    
+</div>
+
+
+
+
+        
+        
+    <div class="widget">
+        <h3 class="title">网站公告</h3>
+        <div class="notification">
+            <p>
+  <b>笔者微信</b>：210006540，欢迎加我<br/>
+  <b>公众号</b>：请扫描我的头像<br/>
+</p>
+        </div>
+    </div>
+
+        
+        
+
+
+
+        
+        
+    <div class="widget">
+        <h3 class="title">分类</h3>
+        <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/"><i class="fa" aria-hidden="true">Docker</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/"><i class="fa" aria-hidden="true">Redis</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/"><i class="fa" aria-hidden="true">Spring</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/maven/"><i class="fa" aria-hidden="true">maven</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/主键/"><i class="fa" aria-hidden="true">主键</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/其他/"><i class="fa" aria-hidden="true">其他</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/安装教程/"><i class="fa" aria-hidden="true">安装教程</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link current" href="/categories/工具/"><i class="fa" aria-hidden="true">工具</i></a><span class="category-list-count">3</span></li></ul>
+    </div>
+
+
+        
+        
+  <div class="widget">
+    <h3 class="title">标签云</h3>
+    <div class="content tag-cloud">
+        
+            <canvas width="300" height="300" id="tag-cloud-3d">
+                <a href="/tags/Docker/" style="font-size: 10px;">Docker</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/IDEA/" style="font-size: 10px;">IDEA</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/RocketMQ/" style="font-size: 20px;">RocketMQ</a> <a href="/tags/SonarQube/" style="font-size: 10px;">SonarQube</a> <a href="/tags/Spring/" style="font-size: 20px;">Spring</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/maven/" style="font-size: 10px;">maven</a> <a href="/tags/microservice/" style="font-size: 10px;">microservice</a> <a href="/tags/theme/" style="font-size: 10px;">theme</a> <a href="/tags/其他/" style="font-size: 10px;">其他</a> <a href="/tags/分布式/" style="font-size: 20px;">分布式</a> <a href="/tags/图片水印/" style="font-size: 10px;">图片水印</a> <a href="/tags/注解/" style="font-size: 10px;">注解</a>
+            </canvas>
+        
+    </div>
+  </div>
+
+
+        
+        
+    <div class="widget">
+        <h3 class="title">归档</h3>
+        <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/"><i class="fa" aria-hidden="true">2019年09月</i></a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/"><i class="fa" aria-hidden="true">2019年01月</i></a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/"><i class="fa" aria-hidden="true">2018年12月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/"><i class="fa" aria-hidden="true">2018年10月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/"><i class="fa" aria-hidden="true">2018年09月</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/"><i class="fa" aria-hidden="true">2018年08月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/"><i class="fa" aria-hidden="true">2018年06月</i></a><span class="archive-list-count">1</span></li></ul>
+    </div>
+
+
+        
+        
+    <div class="widget">
+      <h3 class="title">社交</h3> 
+        <div class="content social">
+            
+	            <a href="//github.com/zhaokejin" rel="external nofollow" title="GitHub" target="_blank">
+			    	<i class="github fa fa-github"></i>
+			    </a>
+            
+	            <a href="//gitee.com/zhaokejin" rel="external nofollow" title="Gitee" target="_blank">
+			    	<i class="git fa fa-git"></i>
+			    </a>
+            
+	            <a href="mailto:210006540qq.com" rel="external nofollow" title="邮箱" target="_blank">
+			    	<i class="envelope-o fa fa-envelope-o"></i>
+			    </a>
+            
+	            <a href="//www.baidu.com" rel="external nofollow" title="QQ" target="_blank">
+			    	<i class="qq fa fa-qq"></i>
+			    </a>
+            
+	            <a href="//www.baidu.com" rel="external nofollow" title="QQ群" target="_blank">
+			    	<i class="group fa fa-group"></i>
+			    </a>
+            
+	            <a href="/atom.xml" rel="external nofollow" title="RSS" target="_blank">
+			    	<i class="feed fa fa-feed"></i>
+			    </a>
+            
+        </div>
+    </div>
+
+
+        
+        
+
+        
+    </aside>
+
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+
+<a id="back-to-top" class="icon-btn hide">
+	<i class="fa fa-chevron-up"></i>
+</a>
+
+
+
+
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+        访问量:
+        <strong id="busuanzi_value_site_pv">
+            <i class="fa fa-spinner fa-spin"></i>
+        </strong>
+
+        访客数:
+        &nbsp; | &nbsp;
+        <strong id="busuanzi_value_site_uv">
+            <i class="fa fa-spinner fa-spin"></i>
+        </strong>
+        &nbsp; <strong>Since 2018-12-26</strong>
+    
+</div>
+
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy; 2018
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    鲁ICP备18033870号
+<!--                    Theme by <a href="//github.com/zhaokejin" class="copyright-links" target="_blank" rel="nofollow">ITMuch</a>-->
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/js/jquery.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/bootstrap-hover-dropdown.min.js"></script>
+
+	<script src="/js/search.js?rev=@@hash"></script>
+
+
+
+    <script src="/assets/tagcanvas.min.js?rev=2.9"></script>
+    <script>
+        var tagOption = {
+            textColour: '#444', // 字体颜色
+            outlineMethod: 'block', // 选中模式
+            outlineColour: '#FFDAB9', // 选中模式的颜色
+            interval: 30 || 30, // 动画帧之间的时间间隔，值越大，转动幅度越大
+            textHeight: 13,
+            outlineRadius: 3,
+            freezeActive: true || '', // 选中的标签是否继续滚动
+            frontSelect: true || '', // 不选标签云后部的标签
+            initial: [0.1, -0.1],
+            depth: 0.5,
+            decel: 0.95,
+            maxSpeed: 0.03,
+            reverse: true || '', // 是否反向触发
+            fadeIn: 500, // 进入动画时间
+            wheelZoom: false || '' // 是否启用鼠标滚轮
+        }
+        TagCanvas.Start('tag-cloud-3d','',tagOption);
+    </script>
+
+
+
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<script src="/js/app.js?rev=@@hash"></script>
+
+
+
+</body>
+</html>
