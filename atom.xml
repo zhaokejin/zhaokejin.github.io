@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title>赵可进的博客</title>
+  <title>Cicoding博客</title>
   
   
   <link href="/atom.xml" rel="self"/>
   
-  <link href="https://www.cicoding.com/"/>
+  <link href="https://www.cicoding.cn/"/>
   <updated>2019-09-25T06:00:59.524Z</updated>
-  <id>https://www.cicoding.com/</id>
+  <id>https://www.cicoding.cn/</id>
   
   <author>
     <name>zhaokejin</name>
@@ -18,8 +18,8 @@
   
   <entry>
     <title>RocketMQ插件部署console控制台</title>
-    <link href="https://www.cicoding.com/install/install-rocketmq-console/"/>
-    <id>https://www.cicoding.com/install/install-rocketmq-console/</id>
+    <link href="https://www.cicoding.cn/install/install-rocketmq-console/"/>
+    <id>https://www.cicoding.cn/install/install-rocketmq-console/</id>
     <published>2019-09-25T05:50:43.000Z</published>
     <updated>2019-09-25T06:00:59.524Z</updated>
     
@@ -39,17 +39,17 @@
     </summary>
     
     
-      <category term="安装教程" scheme="https://www.cicoding.com/categories/%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/"/>
+      <category term="安装教程" scheme="https://www.cicoding.cn/categories/%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/"/>
     
     
-      <category term="RocketMQ" scheme="https://www.cicoding.com/tags/RocketMQ/"/>
+      <category term="RocketMQ" scheme="https://www.cicoding.cn/tags/RocketMQ/"/>
     
   </entry>
   
   <entry>
     <title>windows下安装部署RocketMQ</title>
-    <link href="https://www.cicoding.com/install/install-windows-rocketmq/"/>
-    <id>https://www.cicoding.com/install/install-windows-rocketmq/</id>
+    <link href="https://www.cicoding.cn/install/install-windows-rocketmq/"/>
+    <id>https://www.cicoding.cn/install/install-windows-rocketmq/</id>
     <published>2019-09-25T05:24:17.000Z</published>
     <updated>2019-09-25T05:49:42.575Z</updated>
     
@@ -69,17 +69,17 @@
     </summary>
     
     
-      <category term="安装教程" scheme="https://www.cicoding.com/categories/%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/"/>
+      <category term="安装教程" scheme="https://www.cicoding.cn/categories/%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/"/>
     
     
-      <category term="RocketMQ" scheme="https://www.cicoding.com/tags/RocketMQ/"/>
+      <category term="RocketMQ" scheme="https://www.cicoding.cn/tags/RocketMQ/"/>
     
   </entry>
   
   <entry>
     <title>microservice</title>
-    <link href="https://www.cicoding.com/micro-service/microservice/"/>
-    <id>https://www.cicoding.com/micro-service/microservice/</id>
+    <link href="https://www.cicoding.cn/micro-service/microservice/"/>
+    <id>https://www.cicoding.cn/micro-service/microservice/</id>
     <published>2019-09-24T08:17:35.000Z</published>
     <updated>2019-09-25T01:03:22.353Z</updated>
     
@@ -97,14 +97,14 @@
     
     
     
-      <category term="microservice" scheme="https://www.cicoding.com/tags/microservice/"/>
+      <category term="microservice" scheme="https://www.cicoding.cn/tags/microservice/"/>
     
   </entry>
   
   <entry>
     <title>IntelliJ IDEA 快速高效 Plugins</title>
-    <link href="https://www.cicoding.com/tools/IntelliJ-IDEA-Plugins/"/>
-    <id>https://www.cicoding.com/tools/IntelliJ-IDEA-Plugins/</id>
+    <link href="https://www.cicoding.cn/tools/IntelliJ-IDEA-Plugins/"/>
+    <id>https://www.cicoding.cn/tools/IntelliJ-IDEA-Plugins/</id>
     <published>2019-09-24T03:07:39.000Z</published>
     <updated>2019-09-25T05:25:01.485Z</updated>
     
@@ -120,17 +120,17 @@
     </summary>
     
     
-      <category term="工具" scheme="https://www.cicoding.com/categories/%E5%B7%A5%E5%85%B7/"/>
+      <category term="工具" scheme="https://www.cicoding.cn/categories/%E5%B7%A5%E5%85%B7/"/>
     
     
-      <category term="IDEA" scheme="https://www.cicoding.com/tags/IDEA/"/>
+      <category term="IDEA" scheme="https://www.cicoding.cn/tags/IDEA/"/>
     
   </entry>
   
   <entry>
     <title>传统项目开发部署的流程是怎样的？</title>
-    <link href="https://www.cicoding.com/docker/00-docker-lession-index/"/>
-    <id>https://www.cicoding.com/docker/00-docker-lession-index/</id>
+    <link href="https://www.cicoding.cn/docker/00-docker-lession-index/"/>
+    <id>https://www.cicoding.cn/docker/00-docker-lession-index/</id>
     <published>2019-09-24T02:22:55.000Z</published>
     <updated>2019-09-25T01:03:22.350Z</updated>
     
@@ -148,17 +148,17 @@
     </summary>
     
     
-      <category term="Docker" scheme="https://www.cicoding.com/categories/Docker/"/>
+      <category term="Docker" scheme="https://www.cicoding.cn/categories/Docker/"/>
     
     
-      <category term="Docker" scheme="https://www.cicoding.com/tags/Docker/"/>
+      <category term="Docker" scheme="https://www.cicoding.cn/tags/Docker/"/>
     
   </entry>
   
   <entry>
     <title>Docker部署springboot项目</title>
-    <link href="https://www.cicoding.com/docker/01-docker-lession-index/"/>
-    <id>https://www.cicoding.com/docker/01-docker-lession-index/</id>
+    <link href="https://www.cicoding.cn/docker/01-docker-lession-index/"/>
+    <id>https://www.cicoding.cn/docker/01-docker-lession-index/</id>
     <published>2019-09-24T02:20:27.000Z</published>
     <updated>2019-09-25T01:03:22.350Z</updated>
     
@@ -174,17 +174,17 @@
     </summary>
     
     
-      <category term="Docker" scheme="https://www.cicoding.com/categories/Docker/"/>
+      <category term="Docker" scheme="https://www.cicoding.cn/categories/Docker/"/>
     
     
-      <category term="docker" scheme="https://www.cicoding.com/tags/docker/"/>
+      <category term="docker" scheme="https://www.cicoding.cn/tags/docker/"/>
     
   </entry>
   
   <entry>
     <title>为什么我们做分布式使用 Redis ?</title>
-    <link href="https://www.cicoding.com/other/Why-do-we-do-distributed-use-Redis/"/>
-    <id>https://www.cicoding.com/other/Why-do-we-do-distributed-use-Redis/</id>
+    <link href="https://www.cicoding.cn/other/Why-do-we-do-distributed-use-Redis/"/>
+    <id>https://www.cicoding.cn/other/Why-do-we-do-distributed-use-Redis/</id>
     <published>2019-01-20T12:41:13.000Z</published>
     <updated>2019-09-26T00:34:42.707Z</updated>
     
@@ -200,19 +200,19 @@
     </summary>
     
     
-      <category term="Redis" scheme="https://www.cicoding.com/categories/Redis/"/>
+      <category term="Redis" scheme="https://www.cicoding.cn/categories/Redis/"/>
     
     
-      <category term="分布式" scheme="https://www.cicoding.com/tags/%E5%88%86%E5%B8%83%E5%BC%8F/"/>
+      <category term="分布式" scheme="https://www.cicoding.cn/tags/%E5%88%86%E5%B8%83%E5%BC%8F/"/>
     
-      <category term="Redis" scheme="https://www.cicoding.com/tags/Redis/"/>
+      <category term="Redis" scheme="https://www.cicoding.cn/tags/Redis/"/>
     
   </entry>
   
   <entry>
     <title>手把手使用SonarQube分析、改善项目代码质量</title>
-    <link href="https://www.cicoding.com/other/SonarQube/"/>
-    <id>https://www.cicoding.com/other/SonarQube/</id>
+    <link href="https://www.cicoding.cn/other/SonarQube/"/>
+    <id>https://www.cicoding.cn/other/SonarQube/</id>
     <published>2019-01-18T09:43:44.000Z</published>
     <updated>2019-09-26T00:34:42.706Z</updated>
     
@@ -232,17 +232,17 @@
     </summary>
     
     
-      <category term="其他" scheme="https://www.cicoding.com/categories/%E5%85%B6%E4%BB%96/"/>
+      <category term="其他" scheme="https://www.cicoding.cn/categories/%E5%85%B6%E4%BB%96/"/>
     
     
-      <category term="SonarQube" scheme="https://www.cicoding.com/tags/SonarQube/"/>
+      <category term="SonarQube" scheme="https://www.cicoding.cn/tags/SonarQube/"/>
     
   </entry>
   
   <entry>
     <title>聊聊Spring家族中的那几百个注解</title>
-    <link href="https://www.cicoding.com/spring/spring-annotation-hundred/"/>
-    <id>https://www.cicoding.com/spring/spring-annotation-hundred/</id>
+    <link href="https://www.cicoding.cn/spring/spring-annotation-hundred/"/>
+    <id>https://www.cicoding.cn/spring/spring-annotation-hundred/</id>
     <published>2019-01-07T13:50:43.000Z</published>
     <updated>2019-09-26T00:34:42.710Z</updated>
     
@@ -260,19 +260,19 @@
     </summary>
     
     
-      <category term="Spring" scheme="https://www.cicoding.com/categories/Spring/"/>
+      <category term="Spring" scheme="https://www.cicoding.cn/categories/Spring/"/>
     
     
-      <category term="Spring" scheme="https://www.cicoding.com/tags/Spring/"/>
+      <category term="Spring" scheme="https://www.cicoding.cn/tags/Spring/"/>
     
-      <category term="注解" scheme="https://www.cicoding.com/tags/%E6%B3%A8%E8%A7%A3/"/>
+      <category term="注解" scheme="https://www.cicoding.cn/tags/%E6%B3%A8%E8%A7%A3/"/>
     
   </entry>
   
   <entry>
     <title>分库分表之后，id 主键如何处理？</title>
-    <link href="https://www.cicoding.com/database/Sub-library-table/"/>
-    <id>https://www.cicoding.com/database/Sub-library-table/</id>
+    <link href="https://www.cicoding.cn/database/Sub-library-table/"/>
+    <id>https://www.cicoding.cn/database/Sub-library-table/</id>
     <published>2018-12-26T06:48:17.000Z</published>
     <updated>2019-09-25T01:03:22.349Z</updated>
     
@@ -289,17 +289,17 @@
     </summary>
     
     
-      <category term="主键" scheme="https://www.cicoding.com/categories/%E4%B8%BB%E9%94%AE/"/>
+      <category term="主键" scheme="https://www.cicoding.cn/categories/%E4%B8%BB%E9%94%AE/"/>
     
     
-      <category term="分布式" scheme="https://www.cicoding.com/tags/%E5%88%86%E5%B8%83%E5%BC%8F/"/>
+      <category term="分布式" scheme="https://www.cicoding.cn/tags/%E5%88%86%E5%B8%83%E5%BC%8F/"/>
     
   </entry>
   
   <entry>
     <title>theme使用</title>
-    <link href="https://www.cicoding.com/other/theme-Use/"/>
-    <id>https://www.cicoding.com/other/theme-Use/</id>
+    <link href="https://www.cicoding.cn/other/theme-Use/"/>
+    <id>https://www.cicoding.cn/other/theme-Use/</id>
     <published>2018-10-18T09:43:44.000Z</published>
     <updated>2019-09-26T00:34:42.708Z</updated>
     
@@ -315,17 +315,17 @@
     </summary>
     
     
-      <category term="工具" scheme="https://www.cicoding.com/categories/%E5%B7%A5%E5%85%B7/"/>
+      <category term="工具" scheme="https://www.cicoding.cn/categories/%E5%B7%A5%E5%85%B7/"/>
     
     
-      <category term="Hexo" scheme="https://www.cicoding.com/tags/Hexo/"/>
+      <category term="Hexo" scheme="https://www.cicoding.cn/tags/Hexo/"/>
     
   </entry>
   
   <entry>
     <title>spring注解大全解析</title>
-    <link href="https://www.cicoding.com/spring/spring-annotation/"/>
-    <id>https://www.cicoding.com/spring/spring-annotation/</id>
+    <link href="https://www.cicoding.cn/spring/spring-annotation/"/>
+    <id>https://www.cicoding.cn/spring/spring-annotation/</id>
     <published>2018-09-30T12:28:40.000Z</published>
     <updated>2019-09-26T02:06:19.471Z</updated>
     
@@ -343,17 +343,17 @@
     </summary>
     
     
-      <category term="Spring" scheme="https://www.cicoding.com/categories/Spring/"/>
+      <category term="Spring" scheme="https://www.cicoding.cn/categories/Spring/"/>
     
     
-      <category term="Spring" scheme="https://www.cicoding.com/tags/Spring/"/>
+      <category term="Spring" scheme="https://www.cicoding.cn/tags/Spring/"/>
     
   </entry>
   
   <entry>
     <title>史上最全的maven pom.xml文件教程详解</title>
-    <link href="https://www.cicoding.com/maven/maven-pom/"/>
-    <id>https://www.cicoding.com/maven/maven-pom/</id>
+    <link href="https://www.cicoding.cn/maven/maven-pom/"/>
+    <id>https://www.cicoding.cn/maven/maven-pom/</id>
     <published>2018-09-27T09:10:22.000Z</published>
     <updated>2019-09-26T02:12:39.344Z</updated>
     
@@ -369,17 +369,17 @@
     </summary>
     
     
-      <category term="maven" scheme="https://www.cicoding.com/categories/maven/"/>
+      <category term="maven" scheme="https://www.cicoding.cn/categories/maven/"/>
     
     
-      <category term="maven" scheme="https://www.cicoding.com/tags/maven/"/>
+      <category term="maven" scheme="https://www.cicoding.cn/tags/maven/"/>
     
   </entry>
   
   <entry>
     <title>Java添加水印（图片水印，文字水印）</title>
-    <link href="https://www.cicoding.com/other/java-images-watermark/"/>
-    <id>https://www.cicoding.com/other/java-images-watermark/</id>
+    <link href="https://www.cicoding.cn/other/java-images-watermark/"/>
+    <id>https://www.cicoding.cn/other/java-images-watermark/</id>
     <published>2018-08-18T11:55:45.000Z</published>
     <updated>2019-09-26T00:34:42.707Z</updated>
     
@@ -400,17 +400,17 @@ im
     </summary>
     
     
-      <category term="工具" scheme="https://www.cicoding.com/categories/%E5%B7%A5%E5%85%B7/"/>
+      <category term="工具" scheme="https://www.cicoding.cn/categories/%E5%B7%A5%E5%85%B7/"/>
     
     
-      <category term="图片水印" scheme="https://www.cicoding.com/tags/%E5%9B%BE%E7%89%87%E6%B0%B4%E5%8D%B0/"/>
+      <category term="图片水印" scheme="https://www.cicoding.cn/tags/%E5%9B%BE%E7%89%87%E6%B0%B4%E5%8D%B0/"/>
     
   </entry>
   
   <entry>
     <title>主题配置</title>
-    <link href="https://www.cicoding.com/other/theme-config/"/>
-    <id>https://www.cicoding.com/other/theme-config/</id>
+    <link href="https://www.cicoding.cn/other/theme-config/"/>
+    <id>https://www.cicoding.cn/other/theme-config/</id>
     <published>2018-06-19T09:43:44.000Z</published>
     <updated>2019-09-26T00:34:42.709Z</updated>
     
@@ -427,12 +427,12 @@ im
     </summary>
     
     
-      <category term="其他" scheme="https://www.cicoding.com/categories/%E5%85%B6%E4%BB%96/"/>
+      <category term="其他" scheme="https://www.cicoding.cn/categories/%E5%85%B6%E4%BB%96/"/>
     
     
-      <category term="theme" scheme="https://www.cicoding.com/tags/theme/"/>
+      <category term="theme" scheme="https://www.cicoding.cn/tags/theme/"/>
     
-      <category term="其他" scheme="https://www.cicoding.com/tags/%E5%85%B6%E4%BB%96/"/>
+      <category term="其他" scheme="https://www.cicoding.cn/tags/%E5%85%B6%E4%BB%96/"/>
     
   </entry>
   
