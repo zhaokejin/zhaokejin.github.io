@@ -18,10 +18,13 @@
     <link rel="dns-prefetch" href="https://www.cicoding.cn">
     <!--SEO-->
 
-    <meta name="keywords" content="docker">
+    <meta name="keywords" content="Docker">
 
 
-    <meta name="description" content="一、构建一个简单的Spring Boot项目1. 启动类12345678910111213141516@SpringBootApplicationpublic class MicroservicesDockerApplication &#123;    public static void m...">
+    <meta name="description" content="
+题外话
+我个人的文档风格，不会一上来就讲什么专业名词、贴原理图、贴架构图、贴代码啥的。。。感觉这样会给人一种很大的入门门槛，会让很多人一开始就失去了学习的兴趣和信心（我不喜欢那样的“装逼”风格，虽然看似很牛B的样子，其实对于新手入门的朋友而言，是没有任何参考价值的）。
+考虑到一些对于某一技术...">
 
 
 
@@ -32,7 +35,7 @@
     <!--Title-->
 
 
-<title>Docker部署springboot项目 | 筱进GG的博客</title>
+<title>传统项目开发部署的流程是怎样的？ | 筱进GG的博客</title>
 
 
     <link rel="alternate" href="/atom.xml" title="筱进GG的博客" type="application/atom+xml">
@@ -223,9 +226,9 @@
 <p id="process"></p>
 <article class="post">
     <div class="post-head">
-        <h1 id="Docker部署springboot项目">
+        <h1 id="传统项目开发部署的流程是怎样的？">
             
-                Docker部署springboot项目
+                传统项目开发部署的流程是怎样的？
             
         </h1>
         <div class="post-meta">
@@ -241,7 +244,7 @@
             <i class="fa fa-tags"></i>
             <span class="tags-meta">
                 
-                    <a class="tag-link" href="/tags/docker/">docker</a>
+                    <a class="tag-link" href="/tags/Docker/">Docker</a>
                 
             </span>
         </span>
@@ -251,7 +254,7 @@
         
         <span class="fa-wrap">
             <i class="fa fa-clock-o"></i>
-            <span class="date-meta">2019/09/24</span>
+            <span class="date-meta">2019/09/07</span>
         </span>
         
             <span class="fa-wrap">
@@ -272,53 +275,65 @@
             目录
         </strong>
         <div class="toc-content">
-            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#一、构建一个简单的Spring-Boot项目"><span class="toc-text">一、构建一个简单的Spring Boot项目</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-启动类"><span class="toc-text">1. 启动类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-pom依赖"><span class="toc-text">2. pom依赖</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#二、添加Docker支持"><span class="toc-text">二、添加Docker支持</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#三、打包部署项目"><span class="toc-text">三、打包部署项目</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#构建镜像"><span class="toc-text">构建镜像</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#查看是否构建成功"><span class="toc-text">查看是否构建成功</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#运行镜像"><span class="toc-text">运行镜像</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#查看正在运行的镜像"><span class="toc-text">查看正在运行的镜像</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#访问项目"><span class="toc-text">访问项目</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#停止实例"><span class="toc-text">停止实例</span></a></li></ol></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#前言"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#传统项目开发部署的基本流程"><span class="toc-text">传统项目开发部署的基本流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#存在什么问题？"><span class="toc-text">存在什么问题？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#比较好的做法是什么样的？"><span class="toc-text">比较好的做法是什么样的？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#技术方案"><span class="toc-text">技术方案</span></a></li></ol>
         </div>
     </div>
 
 
-        <h1 id="一、构建一个简单的Spring-Boot项目"><a href="#一、构建一个简单的Spring-Boot项目" class="headerlink" title="一、构建一个简单的Spring Boot项目"></a>一、构建一个简单的Spring Boot项目</h1><h2 id="1-启动类"><a href="#1-启动类" class="headerlink" title="1. 启动类"></a>1. 启动类</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">@SpringBootApplication</span><br><span class="line">public class MicroservicesDockerApplication &#123;</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        SpringApplication.run(MicroservicesDockerApplication.class, args);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @RestController</span><br><span class="line">    public class HelloSimonController&#123;</span><br><span class="line">        @RequestMapping(&quot;/hello&quot;)</span><br><span class="line">        public String hello()&#123;</span><br><span class="line">            return &quot;hello world!&quot;;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        <blockquote>
+<p><strong>题外话</strong></p>
+<p>我个人的文档风格，不会一上来就讲什么专业名词、贴原理图、贴架构图、贴代码啥的。。。感觉这样会给人一种很大的入门门槛，会让很多人一开始就失去了学习的兴趣和信心（我不喜欢那样的“装逼”风格，虽然看似很牛B的样子，其实对于新手入门的朋友而言，是没有任何参考价值的）。</p>
+<p>考虑到一些对于某一技术不太懂、或者刚刚接触的朋友，所以尽量会写的通俗易懂。</p>
+</blockquote>
+<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><blockquote>
+<p>学习docker技术之前呢，我们通过引入一个大家都经历过的开发场景，由此作为切入点，学习起来思路会很清晰明白。</p>
+</blockquote>
+<h3 id="传统项目开发部署的基本流程"><a href="#传统项目开发部署的基本流程" class="headerlink" title="传统项目开发部署的基本流程"></a>传统项目开发部署的基本流程</h3><blockquote>
+<p>这里只简单描述一下，项目发布的基本流程</p>
+</blockquote>
+<ul>
+<li><p>本地开发+测试，没有问题的话，编译打包发布到测试环境</p>
+</li>
+<li><p>在测试环境中进行测试，测试完成后，发布到生产环境</p>
+</li>
+<li><p>在生产环境中进行最后的测试，如果没有问题，那么一切就OK了</p>
+</li>
+</ul>
+<h3 id="存在什么问题？"><a href="#存在什么问题？" class="headerlink" title="存在什么问题？"></a>存在什么问题？</h3><p>我想100%的人都亲身经历过这样的事情 —— 在自己本地测试都没有问题，发布到测试环境、生产环境后，就出现问题了！搞得自己非常苦恼！非常纠结！到底是哪里出了问题呢？明明代码什么的都一样啊~</p>
+<blockquote>
+<p>好吧，这里我就不仔细分析具体的原因是什么了，因为可能会有N种原因。</p>
+</blockquote>
+<blockquote>
+<p><strong>这里就列举一个比较常见的原因，就是：</strong></p>
+</blockquote>
+<ul>
+<li>本地开发环境与测试环境、生产环境上的软件环境配置，可能出现不一致的情况，导致有些时候相同的代码在不同的环境下运行会出现问题。</li>
+</ul>
+<p><strong>存在问题：不同机器上的软件环境不一致。（比较核心的问题）</strong></p>
+<blockquote>
+<p><strong>再列举几个实际开发中遇到的情况：</strong></p>
+</blockquote>
+<ul>
+<li>公司在阿里云买了一台新服务器，要想能正常发布项目等，前提是需要在服务器上重新安装一些软件环境（比如jdk、tomcat等），在安装软件环境的过程中，很大几率会出现配置错误的情况；一些比较复杂的环境配置步骤会很多，很多人都记不清具体的步骤和命令，还得上网搜索……</li>
+</ul>
+<p><strong>存在问题：软件环境的配置繁多、命令记不清楚。</strong></p>
+<ul>
+<li>像jdk、tomcat等基础的环境搭建，都已经很熟练了，每次有新机器的时候，都要重新搭建，这样就造成了重复性工作、效率低下、配置繁琐麻烦、易出错等情况。</li>
+</ul>
+<p><strong>存在问题：重复性搭建软件环境、效率低下。</strong></p>
+<blockquote>
+<p>当然也会有其他的问题，这里就不多做说明了。</p>
+</blockquote>
+<h3 id="比较好的做法是什么样的？"><a href="#比较好的做法是什么样的？" class="headerlink" title="比较好的做法是什么样的？"></a>比较好的做法是什么样的？</h3><blockquote>
+<p>举个例子：</p>
+<p>比如你到了一家新公司工作，一般都会让你在电脑上安装开发环境（比如JDK等），这时候一个技术人员递给了你一个U盘，里面有很多安装文件以及资源，你直接插在自己电脑上，copy需要的软件安装就行了，无需重新下载软件。</p>
+</blockquote>
+<p>上面的场景，比较好的一点是：不用在网上重新下载对应的软件，直接使用U盘里面已经有的软件进行安装就行了。而且，U盘中的软件可以进行版本更新以及提供给他人直接使用。多么方便。</p>
+<p>所以，针对上面提到的开发过程中遇到的开发环境等问题，如果能做到只搭建一次环境，多次复用的话，就nice了！就不会出现环境不一致的问题，也不用重复搭建软件环境了。</p>
+<p>有什么技术方案能解决这样的痛点吗？</p>
+<h3 id="技术方案"><a href="#技术方案" class="headerlink" title="技术方案"></a>技术方案</h3><p>因此，Docker出现了！</p>
 
-<h2 id="2-pom依赖"><a href="#2-pom依赖" class="headerlink" title="2. pom依赖"></a>2. pom依赖</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><br><span class="line">         xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;</span><br><span class="line">    &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;</span><br><span class="line">    &lt;parent&gt;</span><br><span class="line">        &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;spring-boot-starter-parent&lt;/artifactId&gt;</span><br><span class="line">        &lt;version&gt;2.1.5.RELEASE&lt;/version&gt;</span><br><span class="line">        &lt;relativePath/&gt; &lt;!-- lookup parent from repository --&gt;</span><br><span class="line">    &lt;/parent&gt;</span><br><span class="line">    &lt;groupId&gt;com.example&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;microservices-docker&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;0.0.1-SNAPSHOT&lt;/version&gt;</span><br><span class="line">    &lt;name&gt;microservices-docker&lt;/name&gt;</span><br><span class="line">    &lt;description&gt;Demo project for Spring Boot&lt;/description&gt;</span><br><span class="line"></span><br><span class="line">    &lt;properties&gt;</span><br><span class="line">        &lt;java.version&gt;1.8&lt;/java.version&gt;</span><br><span class="line">    &lt;/properties&gt;</span><br><span class="line"></span><br><span class="line">    &lt;dependencies&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line"></span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;spring-boot-starter-test&lt;/artifactId&gt;</span><br><span class="line">            &lt;scope&gt;test&lt;/scope&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line">    &lt;/dependencies&gt;</span><br><span class="line"></span><br><span class="line">    &lt;build&gt;</span><br><span class="line">        &lt;plugins&gt;</span><br><span class="line">            &lt;plugin&gt;</span><br><span class="line">                &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">                &lt;artifactId&gt;spring-boot-maven-plugin&lt;/artifactId&gt;</span><br><span class="line">            &lt;/plugin&gt;</span><br><span class="line">            </span><br><span class="line">        &lt;/plugins&gt;</span><br><span class="line">    &lt;/build&gt;</span><br><span class="line"></span><br><span class="line">&lt;/project&gt;</span><br></pre></td></tr></table></figure>
-
-<p>启动这个demo，浏览器访问<a href="http://localhost:8080/hello,返回" target="_blank" rel="noopener">http://localhost:8080/hello,返回</a> “hello world!”，接口正常。</p>
-<h1 id="二、添加Docker支持"><a href="#二、添加Docker支持" class="headerlink" title="二、添加Docker支持"></a>二、添加Docker支持</h1><p>添加Docker构建插件</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- Docker maven plugin --&gt;</span><br><span class="line">&lt;plugin&gt;</span><br><span class="line">    &lt;groupId&gt;com.spotify&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;docker-maven-plugin&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;1.0.0&lt;/version&gt;</span><br><span class="line">    &lt;configuration&gt;</span><br><span class="line">        &lt;imageName&gt;simon/$&#123;project.artifactId&#125;:$&#123;project.version&#125;&lt;/imageName&gt;</span><br><span class="line">        &lt;dockerDirectory&gt;src/main/docker&lt;/dockerDirectory&gt;</span><br><span class="line">        &lt;resources&gt;</span><br><span class="line">            &lt;resource&gt;</span><br><span class="line">                &lt;targetPath&gt;/&lt;/targetPath&gt;</span><br><span class="line">                &lt;directory&gt;$&#123;project.build.directory&#125;&lt;/directory&gt;</span><br><span class="line">                &lt;include&gt;$&#123;project.build.finalName&#125;.jar&lt;/include&gt;</span><br><span class="line">            &lt;/resource&gt;</span><br><span class="line">        &lt;/resources&gt;</span><br><span class="line">    &lt;/configuration&gt;</span><br><span class="line">&lt;/plugin&gt;</span><br></pre></td></tr></table></figure>
-
-<p>简要说明插件配置：</p>
-<p><strong>imageName</strong>:用于指定镜像名称，其中simon是仓库名称，${project.artifactId}是镜像名称，${project.version}是标签名称；</p>
-<p><strong>resources.resource.directory</strong>:用于指定需要复制的文件，${project.build.directory}表示target目录；</p>
-<p><strong>resources.resource.include</strong>:用于指定需要复制的文件。${project.build.finalName}.jar指的是打包后的jar</p>
-<p>在目录src/main/docker下创建 Dockerfile 文件，Dockerfile 文件用来说明如何来构建镜像</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">FROM openjdk:8-jdk-alpine</span><br><span class="line">VOLUME /tmp(可忽略)</span><br><span class="line">ADD demo-0.0.1-SNAPSHOT.jar app.jar</span><br><span class="line">ENTRYPOINT [&quot;java&quot;,&quot;-Djava.security.egd=file:/dev/./urandom&quot;,&quot;-jar&quot;,&quot;/app.jar&quot;]</span><br></pre></td></tr></table></figure>
-
-<p><strong>FROM</strong>：表示使用 Jdk8 环境 为基础镜像，如果镜像不是本地的会从 DockerHub 进行下载</p>
-<p><strong>VOLUME：</strong>VOLUME 指向了一个/tmp的目录，由于 Spring Boot 使用内置的Tomcat容器，Tomcat 默认使用/tmp作为工作目录。这个命令的效果是：在宿主机的/var/lib/docker目录下创建一个临时文件并把它链接到容器中的/tmp目录</p>
-<p><strong>ADD：</strong>拷贝文件并且重命名</p>
-<p><strong>ENTRYPOINT：</strong>为了缩短 Tomcat 的启动时间，添加java.security.egd的系统属性指向/dev/urandom作为 ENTRYPOINT</p>
-<h1 id="三、打包部署项目"><a href="#三、打包部署项目" class="headerlink" title="三、打包部署项目"></a>三、打包部署项目</h1><p>我们需要把demo这个项目上传到linux上进行打包部署。linux上需要安装jdk和maven（不讲述安装过程），还需要安装Docker环境，可以参考之前的文章Centos7 安装Docker。</p>
-<h2 id="构建镜像"><a href="#构建镜像" class="headerlink" title="构建镜像"></a>构建镜像</h2><p>进入demo项目的根目录，执行下面的命令</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mvn package docker:build</span><br></pre></td></tr></table></figure>
-
-<h2 id="查看是否构建成功"><a href="#查看是否构建成功" class="headerlink" title="查看是否构建成功"></a>查看是否构建成功</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker images</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# docker images</span><br><span class="line">REPOSITORY                   TAG                 IMAGE ID            CREATED             SIZE</span><br><span class="line">simon/microservices-docker   0.0.1-SNAPSHOT      a8aa192bf68c        12 hours ago        660MB</span><br><span class="line">java                         latest              d23bdf5b1b1b        2 years ago         643MB</span><br></pre></td></tr></table></figure>
-
-<p>simon/microservices-docker就是构建的镜像</p>
-<h2 id="运行镜像"><a href="#运行镜像" class="headerlink" title="运行镜像"></a>运行镜像</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -p 8080:8080 -t simon/microservices-docker:0.0.1-SNAPSHOT</span><br></pre></td></tr></table></figure>
-
-<h2 id="查看正在运行的镜像"><a href="#查看正在运行的镜像" class="headerlink" title="查看正在运行的镜像"></a>查看正在运行的镜像</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker ps</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">CONTAINER ID        IMAGE                                       COMMAND                  CREATED             STATUS              PORTS                    NAMES</span><br><span class="line">f216e60cb5ec        simon/microservices-docker:0.0.1-SNAPSHOT   &quot;java -Djava.securit…&quot;   7 minutes ago       Up 7 minutes        0.0.0.0:8080-&gt;8080/tcp   zen_leakey</span><br></pre></td></tr></table></figure>
-
-<h2 id="访问项目"><a href="#访问项目" class="headerlink" title="访问项目"></a>访问项目</h2><p>浏览器访问<a href="http://IP地址:8080/hello,返回hello" target="_blank" rel="noopener">http://IP地址:8080/hello,返回hello</a> world！，部署成功。</p>
-<h2 id="停止实例"><a href="#停止实例" class="headerlink" title="停止实例"></a>停止实例</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker stop zen_leakey</span><br></pre></td></tr></table></figure>
-
-
-
-<p>哦了！</p>
-
-        
+        <h2>相关文章</h2><ul><li><a href="/docker/00-docker-lession-index/">Docker系列教程</a></li><li><a href="/docker/02-docker-lession-index/">Docker是干什么用的？</a></li><li><a href="/docker/04-docker-lession-index/">Docker部署springboot项目</a></li><li><a href="/docker/03-docker-lession-index/">Docker镜像、容器、仓库的介绍</a></li></ul>
     </div>
     
 
@@ -328,10 +343,10 @@
 
 <div class="article-nav prev-next-wrap clearfix">
     
-        <a target="_blank" href="/docker/00-docker-lession-index/" class="pre-post btn btn-default"
-           title='传统项目开发部署的流程是怎样的？'>
+        <a target="_blank" href="/docker/02-docker-lession-index/" class="pre-post btn btn-default"
+           title='Docker是干什么用的？'>
             <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
-            <span class="hidden-xs">传统项目开发部署的流程是怎样的？</span>
+            <span class="hidden-xs">Docker是干什么用的？</span>
         </a>
     
     
@@ -433,7 +448,7 @@
         
     <div class="widget">
         <h3 class="title">分类</h3>
-        <ul class="category-list"><li class="category-list-item"><a class="category-list-link current" href="/categories/Docker/"><i class="fa" aria-hidden="true">Docker</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/"><i class="fa" aria-hidden="true">Redis</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/"><i class="fa" aria-hidden="true">Spring</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/maven/"><i class="fa" aria-hidden="true">maven</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/主键/"><i class="fa" aria-hidden="true">主键</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/其他/"><i class="fa" aria-hidden="true">其他</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/安装教程/"><i class="fa" aria-hidden="true">安装教程</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/工具/"><i class="fa" aria-hidden="true">工具</i></a><span class="category-list-count">3</span></li></ul>
+        <ul class="category-list"><li class="category-list-item"><a class="category-list-link current" href="/categories/Docker/"><i class="fa" aria-hidden="true">Docker</i></a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/"><i class="fa" aria-hidden="true">Redis</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/"><i class="fa" aria-hidden="true">Spring</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/maven/"><i class="fa" aria-hidden="true">maven</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/主键/"><i class="fa" aria-hidden="true">主键</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/其他/"><i class="fa" aria-hidden="true">其他</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/安装教程/"><i class="fa" aria-hidden="true">安装教程</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/工具/"><i class="fa" aria-hidden="true">工具</i></a><span class="category-list-count">3</span></li></ul>
     </div>
 
 
@@ -444,7 +459,7 @@
     <div class="content tag-cloud">
         
             <canvas width="300" height="300" id="tag-cloud-3d">
-                <a href="/tags/Docker/" style="font-size: 10px;">Docker</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/IDEA/" style="font-size: 10px;">IDEA</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/RocketMQ/" style="font-size: 20px;">RocketMQ</a> <a href="/tags/SonarQube/" style="font-size: 10px;">SonarQube</a> <a href="/tags/Spring/" style="font-size: 20px;">Spring</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/maven/" style="font-size: 10px;">maven</a> <a href="/tags/microservice/" style="font-size: 10px;">microservice</a> <a href="/tags/theme/" style="font-size: 10px;">theme</a> <a href="/tags/其他/" style="font-size: 10px;">其他</a> <a href="/tags/分布式/" style="font-size: 20px;">分布式</a> <a href="/tags/图片水印/" style="font-size: 10px;">图片水印</a> <a href="/tags/注解/" style="font-size: 10px;">注解</a>
+                <a href="/tags/Docker/" style="font-size: 20px;">Docker</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/IDEA/" style="font-size: 10px;">IDEA</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/RocketMQ/" style="font-size: 15px;">RocketMQ</a> <a href="/tags/SonarQube/" style="font-size: 10px;">SonarQube</a> <a href="/tags/Spring/" style="font-size: 15px;">Spring</a> <a href="/tags/maven/" style="font-size: 10px;">maven</a> <a href="/tags/microservice/" style="font-size: 10px;">microservice</a> <a href="/tags/theme/" style="font-size: 10px;">theme</a> <a href="/tags/其他/" style="font-size: 10px;">其他</a> <a href="/tags/分布式/" style="font-size: 15px;">分布式</a> <a href="/tags/图片水印/" style="font-size: 10px;">图片水印</a> <a href="/tags/注解/" style="font-size: 10px;">注解</a>
             </canvas>
         
     </div>
@@ -455,7 +470,7 @@
         
     <div class="widget">
         <h3 class="title">归档</h3>
-        <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/"><i class="fa" aria-hidden="true">2019年09月</i></a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/"><i class="fa" aria-hidden="true">2019年01月</i></a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/"><i class="fa" aria-hidden="true">2018年12月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/"><i class="fa" aria-hidden="true">2018年10月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/"><i class="fa" aria-hidden="true">2018年09月</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/"><i class="fa" aria-hidden="true">2018年08月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/"><i class="fa" aria-hidden="true">2018年06月</i></a><span class="archive-list-count">1</span></li></ul>
+        <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/"><i class="fa" aria-hidden="true">2019年09月</i></a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/"><i class="fa" aria-hidden="true">2019年01月</i></a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/"><i class="fa" aria-hidden="true">2018年12月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/"><i class="fa" aria-hidden="true">2018年10月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/"><i class="fa" aria-hidden="true">2018年09月</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/"><i class="fa" aria-hidden="true">2018年08月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/"><i class="fa" aria-hidden="true">2018年06月</i></a><span class="archive-list-count">1</span></li></ul>
     </div>
 
 

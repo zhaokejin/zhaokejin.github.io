@@ -18,10 +18,16 @@
     <link rel="dns-prefetch" href="https://www.cicoding.cn">
     <!--SEO-->
 
-    <meta name="keywords" content="筱进GG的博客,Spring Cloud,Docker,微服务架构,Spring Boot">
+    <meta name="keywords" content="Docker">
 
 
-    <meta name="description" content="筱进GG的博客,Spring Cloud、Docker、微服务架构、Cloud Native相关知识分享。">
+    <meta name="description" content="Docker镜像
+
+因为Docker本身包含的知识点很多，网上太多的介绍文档了，这里我就简单概述一下。
+
+通俗的理解镜像
+Docker的镜像是一个只读的模板，一个独立的文件系统，包括运行容器所需的数据，可以用来创建新的容器。
+Docker的镜像相当于ISO操作系统的安装包，ISO镜像的内容是固...">
 
 
 
@@ -32,7 +38,7 @@
     <!--Title-->
 
 
-<title>标签: 图片水印 | 筱进GG的博客</title>
+<title>Docker镜像、容器、仓库的介绍 | 筱进GG的博客</title>
 
 
     <link rel="alternate" href="/atom.xml" title="筱进GG的博客" type="application/atom+xml">
@@ -217,59 +223,128 @@
     <section class="content-wrap">
         <div class="container">
             <div class="row">
-                <main class="col-md-8 main-content ">
-                    <ol class="breadcrumb">
+                <main class="col-md-8 main-content m-post">
+                    
+
+<p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="Docker镜像、容器、仓库的介绍">
+            
+                Docker镜像、容器、仓库的介绍
+            
+        </h1>
+        <div class="post-meta">
     
-    
-        <li>
-            <a href="/tags" target="_blank">标签</a> /
-            <a href="/tags/图片水印" target="_blank">
-                图片水印
-            </a>
-        </li>
-    
+        <span class="categories-meta fa-wrap">
+            <i class="fa fa-folder-open-o"></i>
+            <a class="category-link" href="/categories/Docker/">Docker</a>
+        </span>
     
 
-</ol>
-
-
-    <article class="post">
-        
-            <div class="post-media">
-                <a href="/other/java-images-watermark/">
-                    <img class="img-ajax" src="/img/loading.gif"  data-src="https://faithlove.github.io/pic/2018/RMTP_1/topPicPre.png"  alt="Java添加水印（图片水印，文字水印）">
-                </a>
-            </div>
-        
-        <div class="post-content">
-            <div class="post-head home-post-head">
-                <h1 class="post-title">
-                    <a href="/other/java-images-watermark/">Java添加水印（图片水印，文字水印）</a>
-                </h1>
-                <div class="post-meta">  &bull;
-                    <time class="post-date" datetime="" title="">
-                        2018年08月18日
-                    </time>
-                </div>
-            </div>
-            <p class="brief">
+    
+        <span class="fa-wrap">
+            <i class="fa fa-tags"></i>
+            <span class="tags-meta">
                 
-                    因为项目中考虑到添加图片版权的保护，特意看了下水印的处理…以下有两种方式: 
-第一种是添加文字水印：
-import java.awt.*;
-import java.awt.image.*;
-import java.io.*;
-import javax.swing.*;
-import com.sun.image.codec.jpeg.*;
-
-public class WaterSet {
-  ...
+                    <a class="tag-link" href="/tags/Docker/">Docker</a>
                 
-            </p>
-        </div>
-    </article>
- 
+            </span>
+        </span>
+    
 
+    
+        
+        <span class="fa-wrap">
+            <i class="fa fa-clock-o"></i>
+            <span class="date-meta">2019/09/16</span>
+        </span>
+        
+            <span class="fa-wrap">
+                <i class="fa fa-eye"></i>
+                <span id="busuanzi_value_page_pv"></span>
+            </span>
+        
+    
+</div>
+        
+        
+    </div>
+    
+    <div class="post-body post-content">
+        
+
+        <p><strong>Docker镜像</strong></p>
+<blockquote>
+<p>因为Docker本身包含的知识点很多，网上太多的介绍文档了，这里我就简单概述一下。</p>
+</blockquote>
+<p>通俗的理解镜像</p>
+<p>Docker的镜像是一个只读的模板，一个独立的文件系统，包括运行容器所需的数据，可以用来创建新的容器。</p>
+<p>Docker的镜像相当于ISO操作系统的安装包，ISO镜像的内容是固定的，不会发生改变，可以重复使用。</p>
+<p>如果上面的形容还无法让你理解Docker镜像，那我再举一个例子：</p>
+<p>从事Java开发的人都知道类和实例的关系。直观的感觉，类就像是一个模板，根据这个类模板，可以生成很多个具体的对象实例。</p>
+<p>则，<strong>Docker镜像就相当于Java的类，而通过Docker镜像生成出来的东西，我们就叫他它“容器”</strong>。</p>
+<p>通过上面的形容，应该可以感觉的到镜像和容器之间的关系了吧。</p>
+<p><strong>Docker容器</strong></p>
+<p>通俗的理解容器</p>
+<p>在上一节已经介绍了镜像与容器的关系。</p>
+<p>这里就直接copy文档中的一句话，来简单形容一下容器：</p>
+<p><strong>Docker镜像就相当于Java的类，而通过Docker镜像生成出来的东西，我们就叫他它“容器”</strong>。</p>
+<p><strong>Docker仓库</strong></p>
+<p>通俗的理解Docker仓库</p>
+<p>仓库支持的操作类似git，当用户创建了自己的镜像之后就可以使用 push 命令将它上传到公有或者私有仓库，这样下次在另外一台机器上使用这个镜像时候，只需要从仓库上 pull 下来就可以了。</p>
+<p>类似于，将某项目模块打成jar包，然后上传到私有或者公有的maven仓库，然后在其他的所有支持maven环境的机器上，都可以拉取这个jar进行使用。</p>
+
+        <h2>相关文章</h2><ul><li><a href="/docker/00-docker-lession-index/">Docker系列教程</a></li><li><a href="/docker/02-docker-lession-index/">Docker是干什么用的？</a></li><li><a href="/docker/01-docker-lession-index/">传统项目开发部署的流程是怎样的？</a></li><li><a href="/docker/04-docker-lession-index/">Docker部署springboot项目</a></li></ul>
+    </div>
+    
+
+
+    
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+        <a target="_blank" href="/docker/04-docker-lession-index/" class="pre-post btn btn-default"
+           title='Docker部署springboot项目'>
+            <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+            <span class="hidden-xs">Docker部署springboot项目</span>
+        </a>
+    
+    
+        <a target="_blank" href="/docker/02-docker-lession-index/" class="next-post btn btn-default"
+           title='Docker是干什么用的？'>
+            <span class="hidden-lg">下一篇</span>
+            <span class="hidden-xs">Docker是干什么用的？</span><i class="fa fa-angle-right fa-fw"></i>
+        </a>
+    
+</div>
+
+
+    <div id="comments">
+        
+	<link rel="stylesheet" href="https://cdn.bootcss.com/gitalk/1.4.1/gitalk.min.css">
+<script src="//cdn.bootcss.com/gitalk/1.4.1/gitalk.min.js"></script>
+<script src="//cdn.bootcss.com/blueimp-md5/2.9.0/js/md5.min.js"></script>
+
+<div id="gitalk-container"></div>
+<script type="text/javascript">
+    var gitalk = new Gitalk({
+        // Gitalk配置
+        language: "zh-CN",
+        clientID: "934e6c8b8e5d8796b4c3",
+        clientSecret: "c6b01f8df89c3a426a0eb019ebe5f71620814aee",
+        repo: "zhaokejin.github.io",
+        owner: "zhaokejin",
+        admin: ["zhaokejin"],
+        id: md5(location.pathname),
+        distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+</script>
+
+
+    </div>
 
 
 
@@ -335,7 +410,7 @@ public class WaterSet {
         
     <div class="widget">
         <h3 class="title">分类</h3>
-        <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/"><i class="fa" aria-hidden="true">Docker</i></a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/"><i class="fa" aria-hidden="true">Redis</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/"><i class="fa" aria-hidden="true">Spring</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/maven/"><i class="fa" aria-hidden="true">maven</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/主键/"><i class="fa" aria-hidden="true">主键</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/其他/"><i class="fa" aria-hidden="true">其他</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/安装教程/"><i class="fa" aria-hidden="true">安装教程</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/工具/"><i class="fa" aria-hidden="true">工具</i></a><span class="category-list-count">3</span></li></ul>
+        <ul class="category-list"><li class="category-list-item"><a class="category-list-link current" href="/categories/Docker/"><i class="fa" aria-hidden="true">Docker</i></a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/"><i class="fa" aria-hidden="true">Redis</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/"><i class="fa" aria-hidden="true">Spring</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/maven/"><i class="fa" aria-hidden="true">maven</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/主键/"><i class="fa" aria-hidden="true">主键</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/其他/"><i class="fa" aria-hidden="true">其他</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/安装教程/"><i class="fa" aria-hidden="true">安装教程</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/工具/"><i class="fa" aria-hidden="true">工具</i></a><span class="category-list-count">3</span></li></ul>
     </div>
 
 
