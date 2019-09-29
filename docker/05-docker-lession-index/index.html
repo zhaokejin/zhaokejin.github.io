@@ -18,16 +18,10 @@
     <link rel="dns-prefetch" href="https://www.cicoding.cn">
     <!--SEO-->
 
-    <meta name="keywords" content="Docker">
+    <meta name="keywords" content="Docker,Spring Boot">
 
 
-    <meta name="description" content="Docker镜像
-
-因为Docker本身包含的知识点很多，网上太多的介绍文档了，这里我就简单概述一下。
-
-通俗的理解镜像
-Docker的镜像是一个只读的模板，一个独立的文件系统，包括运行容器所需的数据，可以用来创建新的容器。
-Docker的镜像相当于ISO操作系统的安装包，ISO镜像的内容是固...">
+    <meta name="description" content="一、构建一个简单的Spring Boot项目1. 启动类12345678910111213141516@SpringBootApplicationpublic class MicroservicesDockerApplication &#123;    public static void m...">
 
 
 
@@ -38,7 +32,7 @@ Docker的镜像相当于ISO操作系统的安装包，ISO镜像的内容是固..
     <!--Title-->
 
 
-<title>Docker镜像、容器、仓库的介绍 | 筱进GG的博客</title>
+<title>Docker部署springboot项目 | 筱进GG的博客</title>
 
 
     <link rel="alternate" href="/atom.xml" title="筱进GG的博客" type="application/atom+xml">
@@ -215,9 +209,9 @@ Docker的镜像相当于ISO操作系统的安装包，ISO镜像的内容是固..
 <p id="process"></p>
 <article class="post">
     <div class="post-head">
-        <h1 id="Docker镜像、容器、仓库的介绍">
+        <h1 id="Docker部署springboot项目">
             
-                Docker镜像、容器、仓库的介绍
+                Docker部署springboot项目
             
         </h1>
         <div class="post-meta">
@@ -233,7 +227,7 @@ Docker的镜像相当于ISO操作系统的安装包，ISO镜像的内容是固..
             <i class="fa fa-tags"></i>
             <span class="tags-meta">
                 
-                    <a class="tag-link" href="/tags/Docker/">Docker</a>
+                    <a class="tag-link" href="/tags/Docker/">Docker</a> <a class="tag-link" href="/tags/Spring-Boot/">Spring Boot</a>
                 
             </span>
         </span>
@@ -243,7 +237,7 @@ Docker的镜像相当于ISO操作系统的安装包，ISO镜像的内容是固..
         
         <span class="fa-wrap">
             <i class="fa fa-clock-o"></i>
-            <span class="date-meta">2019/09/16</span>
+            <span class="date-meta">2019/09/30</span>
         </span>
         
             <span class="fa-wrap">
@@ -259,29 +253,58 @@ Docker的镜像相当于ISO操作系统的安装包，ISO镜像的内容是固..
     
     <div class="post-body post-content">
         
+    <div class="toc-article">
+        <strong>
+            目录
+        </strong>
+        <div class="toc-content">
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#一、构建一个简单的Spring-Boot项目"><span class="toc-text">一、构建一个简单的Spring Boot项目</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-启动类"><span class="toc-text">1. 启动类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-pom依赖"><span class="toc-text">2. pom依赖</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#二、添加Docker支持"><span class="toc-text">二、添加Docker支持</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#三、打包部署项目"><span class="toc-text">三、打包部署项目</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#构建镜像"><span class="toc-text">构建镜像</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#查看是否构建成功"><span class="toc-text">查看是否构建成功</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#运行镜像"><span class="toc-text">运行镜像</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#查看正在运行的镜像"><span class="toc-text">查看正在运行的镜像</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#访问项目"><span class="toc-text">访问项目</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#停止实例"><span class="toc-text">停止实例</span></a></li></ol></li></ol>
+        </div>
+    </div>
 
-        <p><strong>Docker镜像</strong></p>
-<blockquote>
-<p>因为Docker本身包含的知识点很多，网上太多的介绍文档了，这里我就简单概述一下。</p>
-</blockquote>
-<p>通俗的理解镜像</p>
-<p>Docker的镜像是一个只读的模板，一个独立的文件系统，包括运行容器所需的数据，可以用来创建新的容器。</p>
-<p>Docker的镜像相当于ISO操作系统的安装包，ISO镜像的内容是固定的，不会发生改变，可以重复使用。</p>
-<p>如果上面的形容还无法让你理解Docker镜像，那我再举一个例子：</p>
-<p>从事Java开发的人都知道类和实例的关系。直观的感觉，类就像是一个模板，根据这个类模板，可以生成很多个具体的对象实例。</p>
-<p>则，<strong>Docker镜像就相当于Java的类，而通过Docker镜像生成出来的东西，我们就叫他它“容器”</strong>。</p>
-<p>通过上面的形容，应该可以感觉的到镜像和容器之间的关系了吧。</p>
-<p><strong>Docker容器</strong></p>
-<p>通俗的理解容器</p>
-<p>在上一节已经介绍了镜像与容器的关系。</p>
-<p>这里就直接copy文档中的一句话，来简单形容一下容器：</p>
-<p><strong>Docker镜像就相当于Java的类，而通过Docker镜像生成出来的东西，我们就叫他它“容器”</strong>。</p>
-<p><strong>Docker仓库</strong></p>
-<p>通俗的理解Docker仓库</p>
-<p>仓库支持的操作类似git，当用户创建了自己的镜像之后就可以使用 push 命令将它上传到公有或者私有仓库，这样下次在另外一台机器上使用这个镜像时候，只需要从仓库上 pull 下来就可以了。</p>
-<p>类似于，将某项目模块打成jar包，然后上传到私有或者公有的maven仓库，然后在其他的所有支持maven环境的机器上，都可以拉取这个jar进行使用。</p>
 
-        <h2>相关文章</h2><ul><li><a href="/docker/01-docker-lession-index/">传统项目开发部署的流程是怎样的？</a></li><li><a href="/docker/00-docker-lession-index/">Docker系列教程</a></li><li><a href="/docker/02-docker-lession-index/">Docker是干什么用的？</a></li><li><a href="/docker/05-docker-lession-index/">Docker部署springboot项目</a></li><li><a href="/docker/04-docker-lession-index/">在Centos系统中安装Docker</a></li></ul>
+        <h1 id="一、构建一个简单的Spring-Boot项目"><a href="#一、构建一个简单的Spring-Boot项目" class="headerlink" title="一、构建一个简单的Spring Boot项目"></a>一、构建一个简单的Spring Boot项目</h1><h2 id="1-启动类"><a href="#1-启动类" class="headerlink" title="1. 启动类"></a>1. 启动类</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">@SpringBootApplication</span><br><span class="line">public class MicroservicesDockerApplication &#123;</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        SpringApplication.run(MicroservicesDockerApplication.class, args);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @RestController</span><br><span class="line">    public class HelloSimonController&#123;</span><br><span class="line">        @RequestMapping(&quot;/hello&quot;)</span><br><span class="line">        public String hello()&#123;</span><br><span class="line">            return &quot;hello world!&quot;;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-pom依赖"><a href="#2-pom依赖" class="headerlink" title="2. pom依赖"></a>2. pom依赖</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><br><span class="line">         xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;</span><br><span class="line">    &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;</span><br><span class="line">    &lt;parent&gt;</span><br><span class="line">        &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;spring-boot-starter-parent&lt;/artifactId&gt;</span><br><span class="line">        &lt;version&gt;2.1.5.RELEASE&lt;/version&gt;</span><br><span class="line">        &lt;relativePath/&gt; &lt;!-- lookup parent from repository --&gt;</span><br><span class="line">    &lt;/parent&gt;</span><br><span class="line">    &lt;groupId&gt;com.example&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;microservices-docker&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;0.0.1-SNAPSHOT&lt;/version&gt;</span><br><span class="line">    &lt;name&gt;microservices-docker&lt;/name&gt;</span><br><span class="line">    &lt;description&gt;Demo project for Spring Boot&lt;/description&gt;</span><br><span class="line"></span><br><span class="line">    &lt;properties&gt;</span><br><span class="line">        &lt;java.version&gt;1.8&lt;/java.version&gt;</span><br><span class="line">    &lt;/properties&gt;</span><br><span class="line"></span><br><span class="line">    &lt;dependencies&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line"></span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;spring-boot-starter-test&lt;/artifactId&gt;</span><br><span class="line">            &lt;scope&gt;test&lt;/scope&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line">    &lt;/dependencies&gt;</span><br><span class="line"></span><br><span class="line">    &lt;build&gt;</span><br><span class="line">        &lt;plugins&gt;</span><br><span class="line">            &lt;plugin&gt;</span><br><span class="line">                &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">                &lt;artifactId&gt;spring-boot-maven-plugin&lt;/artifactId&gt;</span><br><span class="line">            &lt;/plugin&gt;</span><br><span class="line">            </span><br><span class="line">        &lt;/plugins&gt;</span><br><span class="line">    &lt;/build&gt;</span><br><span class="line"></span><br><span class="line">&lt;/project&gt;</span><br></pre></td></tr></table></figure>
+
+<p>启动这个demo，浏览器访问<a href="http://localhost:8080/hello,返回" target="_blank" rel="noopener">http://localhost:8080/hello,返回</a> “hello world!”，接口正常。</p>
+<h1 id="二、添加Docker支持"><a href="#二、添加Docker支持" class="headerlink" title="二、添加Docker支持"></a>二、添加Docker支持</h1><p>添加Docker构建插件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- Docker maven plugin --&gt;</span><br><span class="line">&lt;plugin&gt;</span><br><span class="line">    &lt;groupId&gt;com.spotify&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;docker-maven-plugin&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;1.0.0&lt;/version&gt;</span><br><span class="line">    &lt;configuration&gt;</span><br><span class="line">        &lt;imageName&gt;simon/$&#123;project.artifactId&#125;:$&#123;project.version&#125;&lt;/imageName&gt;</span><br><span class="line">        &lt;dockerDirectory&gt;src/main/docker&lt;/dockerDirectory&gt;</span><br><span class="line">        &lt;resources&gt;</span><br><span class="line">            &lt;resource&gt;</span><br><span class="line">                &lt;targetPath&gt;/&lt;/targetPath&gt;</span><br><span class="line">                &lt;directory&gt;$&#123;project.build.directory&#125;&lt;/directory&gt;</span><br><span class="line">                &lt;include&gt;$&#123;project.build.finalName&#125;.jar&lt;/include&gt;</span><br><span class="line">            &lt;/resource&gt;</span><br><span class="line">        &lt;/resources&gt;</span><br><span class="line">    &lt;/configuration&gt;</span><br><span class="line">&lt;/plugin&gt;</span><br></pre></td></tr></table></figure>
+
+<p>简要说明插件配置：</p>
+<p><strong>imageName</strong>:用于指定镜像名称，其中simon是仓库名称，${project.artifactId}是镜像名称，${project.version}是标签名称；</p>
+<p><strong>resources.resource.directory</strong>:用于指定需要复制的文件，${project.build.directory}表示target目录；</p>
+<p><strong>resources.resource.include</strong>:用于指定需要复制的文件。${project.build.finalName}.jar指的是打包后的jar</p>
+<p>在目录src/main/docker下创建 Dockerfile 文件，Dockerfile 文件用来说明如何来构建镜像</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">FROM openjdk:8-jdk-alpine</span><br><span class="line">VOLUME /tmp(可忽略)</span><br><span class="line">ADD demo-0.0.1-SNAPSHOT.jar app.jar</span><br><span class="line">ENTRYPOINT [&quot;java&quot;,&quot;-Djava.security.egd=file:/dev/./urandom&quot;,&quot;-jar&quot;,&quot;/app.jar&quot;]</span><br></pre></td></tr></table></figure>
+
+<p><strong>FROM</strong>：表示使用 Jdk8 环境 为基础镜像，如果镜像不是本地的会从 DockerHub 进行下载</p>
+<p><strong>VOLUME：</strong>VOLUME 指向了一个/tmp的目录，由于 Spring Boot 使用内置的Tomcat容器，Tomcat 默认使用/tmp作为工作目录。这个命令的效果是：在宿主机的/var/lib/docker目录下创建一个临时文件并把它链接到容器中的/tmp目录</p>
+<p><strong>ADD：</strong>拷贝文件并且重命名</p>
+<p><strong>ENTRYPOINT：</strong>为了缩短 Tomcat 的启动时间，添加java.security.egd的系统属性指向/dev/urandom作为 ENTRYPOINT</p>
+<h1 id="三、打包部署项目"><a href="#三、打包部署项目" class="headerlink" title="三、打包部署项目"></a>三、打包部署项目</h1><p>我们需要把demo这个项目上传到linux上进行打包部署。linux上需要安装jdk和maven（不讲述安装过程），还需要安装Docker环境，可以参考之前的文章Centos7 安装Docker。</p>
+<h2 id="构建镜像"><a href="#构建镜像" class="headerlink" title="构建镜像"></a>构建镜像</h2><p>进入demo项目的根目录，执行下面的命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mvn package docker:build</span><br></pre></td></tr></table></figure>
+
+<h2 id="查看是否构建成功"><a href="#查看是否构建成功" class="headerlink" title="查看是否构建成功"></a>查看是否构建成功</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker images</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# docker images</span><br><span class="line">REPOSITORY                   TAG                 IMAGE ID            CREATED             SIZE</span><br><span class="line">simon/microservices-docker   0.0.1-SNAPSHOT      a8aa192bf68c        12 hours ago        660MB</span><br><span class="line">java                         latest              d23bdf5b1b1b        2 years ago         643MB</span><br></pre></td></tr></table></figure>
+
+<p>simon/microservices-docker就是构建的镜像</p>
+<h2 id="运行镜像"><a href="#运行镜像" class="headerlink" title="运行镜像"></a>运行镜像</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -p 8080:8080 -t simon/microservices-docker:0.0.1-SNAPSHOT</span><br></pre></td></tr></table></figure>
+
+<h2 id="查看正在运行的镜像"><a href="#查看正在运行的镜像" class="headerlink" title="查看正在运行的镜像"></a>查看正在运行的镜像</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker ps</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">CONTAINER ID        IMAGE                                       COMMAND                  CREATED             STATUS              PORTS                    NAMES</span><br><span class="line">f216e60cb5ec        simon/microservices-docker:0.0.1-SNAPSHOT   &quot;java -Djava.securit…&quot;   7 minutes ago       Up 7 minutes        0.0.0.0:8080-&gt;8080/tcp   zen_leakey</span><br></pre></td></tr></table></figure>
+
+<h2 id="访问项目"><a href="#访问项目" class="headerlink" title="访问项目"></a>访问项目</h2><p>浏览器访问<a href="http://IP地址:8080/hello,返回hello" target="_blank" rel="noopener">http://IP地址:8080/hello,返回hello</a> world！，部署成功。</p>
+<h2 id="停止实例"><a href="#停止实例" class="headerlink" title="停止实例"></a>停止实例</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker stop zen_leakey</span><br></pre></td></tr></table></figure>
+
+
+
+<p>哦了！</p>
+
+        <h2>相关文章</h2><ul><li><a href="/docker/01-docker-lession-index/">传统项目开发部署的流程是怎样的？</a></li><li><a href="/docker/00-docker-lession-index/">Docker系列教程</a></li><li><a href="/docker/02-docker-lession-index/">Docker是干什么用的？</a></li><li><a href="/docker/03-docker-lession-index/">Docker镜像、容器、仓库的介绍</a></li><li><a href="/docker/04-docker-lession-index/">在Centos系统中安装Docker</a></li></ul>
     </div>
     
 
@@ -290,7 +313,7 @@ Docker的镜像相当于ISO操作系统的安装包，ISO镜像的内容是固..
         <div class="post-footer">
             <div class="col-sm-10">
                 <div>
-                    <b>本文链接</b>：<a href="/docker/03-docker-lession-index/" target="_blank">Docker镜像、容器、仓库的介绍</a>
+                    <b>本文链接</b>：<a href="/docker/05-docker-lession-index/" target="_blank">Docker部署springboot项目</a>
                 </div>
                 <div>
                     
@@ -310,17 +333,11 @@ Docker的镜像相当于ISO操作系统的安装包，ISO镜像的内容是固..
 
 <div class="article-nav prev-next-wrap clearfix">
     
-        <a target="_blank" href="/docker/00-docker-lession-index/" class="pre-post btn btn-default"
-           title='Docker系列教程'>
-            <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
-            <span class="hidden-xs">Docker系列教程</span>
-        </a>
     
-    
-        <a target="_blank" href="/docker/02-docker-lession-index/" class="next-post btn btn-default"
-           title='Docker是干什么用的？'>
+        <a target="_blank" href="/docker/04-docker-lession-index/" class="next-post btn btn-default"
+           title='在Centos系统中安装Docker'>
             <span class="hidden-lg">下一篇</span>
-            <span class="hidden-xs">Docker是干什么用的？</span><i class="fa fa-angle-right fa-fw"></i>
+            <span class="hidden-xs">在Centos系统中安装Docker</span><i class="fa fa-angle-right fa-fw"></i>
         </a>
     
 </div>
