@@ -49,12 +49,13 @@
   <entry>
     <title><![CDATA[microservice]]></title>
     <url>%2Fmicro-service%2Fmicroservice%2F</url>
-    <content type="text"><![CDATA[正在努力更新中]]></content>
+    <content type="text"><![CDATA[微服务微服务简介 问题汇总SpringCloud—–Ribbon异常java.net.UnknownHostException]]></content>
       <categories>
         <category>微服务</category>
       </categories>
       <tags>
-        <tag>microservice</tag>
+        <tag>微服务</tag>
+        <tag>Spring Cloud</tag>
       </tags>
   </entry>
   <entry>
@@ -110,6 +111,41 @@
       </categories>
       <tags>
         <tag>Docker</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[升级MySQL8问题总结]]></title>
+    <url>%2Fdatabase%2Fmysql-8-problems%2F</url>
+    <content type="text"><![CDATA[mysql 8驱动变更Loading class com.mysql.jdbc.Driver&#39;. This is deprecated. The new driver class iscom.mysql.cj.jdbc.Driver’. The driver is automatically registered via the SPI and manual loading of the driver class is generally unnecessary. 解决办法： com.mysql.jdbc.Driver 修改为 com.mysql.cj.jdbc.Driver MySQL 8.0 Public Key Retrieval is not allowed 错误的解决方法在使用 MySQL 8.0 时重启应用后提示 com.mysql.jdbc.exceptions.jdbc4.MySQLNonTransientConnectionException: Public Key Retrieval is not allowed 最简单的解决方法是在连接后面添加 allowPublicKeyRetrieval=true 文档中(https://mysql-net.github.io/MySqlConnector/connection-options/)给出的解释是： 如果用户使用了 sha256_password 认证，密码在传输过程中必须使用 TLS 协议保护，但是如果 RSA 公钥不可用，可以使用服务器提供的公钥；可以在连接中通过 ServerRSAPublicKeyFile 指定服务器的 RSA 公钥，或者AllowPublicKeyRetrieval=True参数以允许客户端从服务器获取公钥；但是需要注意的是 AllowPublicKeyRetrieval=True可能会导致恶意的代理通过中间人攻击(MITM)获取到明文密码，所以默认是关闭的，必须显式开启]]></content>
+      <categories>
+        <category>数据库</category>
+      </categories>
+      <tags>
+        <tag>MySQL8</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[SpringCloud-----Ribbon异常java.net.UnknownHostException]]></title>
+    <url>%2Fmicro-service%2FSpringCloud01%2F</url>
+    <content type="text"><![CDATA[如何解决Feign/Ribbon第一次请求失败的问题？** Spring Cloud中，Feign和Ribbon在整合了Hystrix后，可能会出现首次调用失败的问题，要如何解决该问题呢？ 造成该问题的原因 Hystrix默认的超时时间是1秒，如果超过这个时间尚未响应，将会进入fallback代码。而首次请求往往会比较慢（由于Ribbon是懒加载的，在首次请求时，才会开始初始化相关类），这个响应时间可能就大于1秒了。知道原因后，我们来总结一下解决方案。以feign为例，解决方案有如下四种。 方法一、将Hystrix超时设长 1hystrix.command.default.execution.isolation.thread.timeoutInMilliseconds: 5000 该配置是让Hystrix的超时时间改为5秒，这是最容易想到的办法，不过有点治标不治本。 方法二、禁用Hystrix超时 1hystrix.command.default.execution.timeout.enabled: false 该配置，用于禁用Hystrix的超时时间，一般不建议使用。 方法三、为Feign禁用Hystrix 全局禁用 1feign.hystrix.enabled: false 索性禁用feign的hystrix，该做法比较极端，除非一些特殊场景，不推荐使用。 局部禁用 为名为microservice-provider-user 的Feign Client禁用Hystrix 123456789101112@FeignClient(name = &quot;microservice-provider-user&quot;)public interface UserFeignClient &#123; @GetMapping(&quot;/users/&#123;id&#125;&quot;) User findById(@PathVariable(&quot;id&quot;) Long id);&#125;class FooConfiguration &#123; @Bean @Scope(&quot;prototype&quot;) public Feign.Builder feignBuilder()&#123; return Feign.builder(); &#125;&#125; 方法四、Ribbon配置饥饿加载（最佳） 从Dalston开始，Ribbon支持配置eager load实现在启动时就初始化Ribbon相关类。 1234ribbon: eager-load: enabled: true clients: client1, client2, client3 Dalson之前版本可以通过一些Hack的机制实现eager load，不过成本略高，不建议]]></content>
+      <categories>
+        <category>微服务</category>
+      </categories>
+      <tags>
+        <tag>微服务</tag>
+        <tag>Spring Cloud</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[微服务简介]]></title>
+    <url>%2Fmicro-service%2Fmicroservice01%2F</url>
+    <content type="text"><![CDATA[什么是微服务架构近年来，在软件开发领域关于微服务的讨论呈现出火爆的局面，有人倾向于在系统设计与开发中采用微服务方式实现软件系统的松耦合、跨部门开发，被认为是IT软件架构的未来方向，Martin Fowler也给微服务架构极高的评价；同时，反对之声也很强烈，持反对观点的人表示微服务增加了系统维护、部署的难度，导致一些功能模块或代码无法复用，同时微服务允许使用不同的语言和框架来开发各个系统模块，这又会增加系统集成与测试的难度，而且随着系统规模的日渐增长，微服务在一定程度上也会导致系统变得越来越复杂。尽管一些公司已经在生产系统中采用了微服务架构，并且取得了良好的效果；但更多公司还是处在观望的态度。 什么是微服务架构呢？简单说就是将一个完整的应用（单体应用）按照一定的拆分规则（后文讲述）拆分成多个不同的服务，每个服务都能独立地进行开发、部署、扩展。服务于服务之间通过注入RESTful api或其他方式调用。大家可以搜索到很多相关介绍和文章。本文暂不细表。在此推荐两个比较好的博客： http://microservices.io/ http://martinfowler.com/articles/microservices.html Spring Cloud是一个综合项目，它包含很多的子项目。由于子项目也维护着自己的版本号，Spring Cloud采用了这种版本命名方式，从而避免与子项目的版本混淆。其中，英文单词叫做“release train”，Angel、Brixton、Camden等都是伦敦地铁站的名称，它们按照字母顺序发行，我们可将其理解为主版本的演进。SR表示“Service Release”，一般表示Bug修复；在SR版本发布之前，会先发布一个Release版本，例如Camden RELEASE。 经过以上讲解，相信大家就能很好地理解Spring Cloud的版本了。例如，Camden SR3表示Camden版本的第3次Bug修复版本。 PS: Spring Cloud版本发布记录可详见：https://github.com/spring-cloud/spring-cloud-release/releases ，从中我们可清晰看到Spring Cloud版本发布的时间及先后顺序。 Spring Cloud版本演进计划：https://github.com/spring-cloud/spring-cloud-release/milestones，从中我们可了解Spring Cloud的版本演进计划，例如计划什么时间点发布什么版本等。 事实上，Spring有不少项目使用类似的命名方式。例如Spring Data、Spring Cloud Stream等。 子项目一览理解Spring Cloud的版本后，我们来看一下各版本Spring Cloud包含的子项目及版本。不同的Spring Cloud版本有不同的子项目： Component Edgware.SR5 Finchley.SR2 Finchley.BUILD-SNAPSHOT spring-cloud-aws 1.2.3.RELEASE 2.0.1.RELEASE 2.0.1.BUILD-SNAPSHOT spring-cloud-bus 1.3.3.RELEASE 2.0.0.RELEASE 2.0.1.BUILD-SNAPSHOT spring-cloud-cli 1.4.1.RELEASE 2.0.0.RELEASE 2.0.1.BUILD-SNAPSHOT spring-cloud-commons 1.3.5.RELEASE 2.0.2.RELEASE 2.0.2.BUILD-SNAPSHOT spring-cloud-contract 1.2.6.RELEASE 2.0.2.RELEASE 2.0.2.BUILD-SNAPSHOT spring-cloud-config 1.4.5.RELEASE 2.0.2.RELEASE 2.0.2.BUILD-SNAPSHOT spring-cloud-netflix 1.4.6.RELEASE 2.0.2.RELEASE 2.0.2.BUILD-SNAPSHOT spring-cloud-security 1.2.3.RELEASE 2.0.1.RELEASE 2.0.1.BUILD-SNAPSHOT spring-cloud-cloudfoundry 1.1.2.RELEASE 2.0.1.RELEASE 2.0.1.BUILD-SNAPSHOT spring-cloud-consul 1.3.5.RELEASE 2.0.1.RELEASE 2.0.2.BUILD-SNAPSHOT spring-cloud-sleuth 1.3.5.RELEASE 2.0.2.RELEASE 2.0.2.BUILD-SNAPSHOT spring-cloud-stream Ditmars.SR4 Elmhurst.SR1 Elmhurst.BUILD-SNAPSHOT spring-cloud-zookeeper 1.2.2.RELEASE 2.0.0.RELEASE 2.0.1.BUILD-SNAPSHOT spring-boot 1.5.16.RELEASE 2.0.6.RELEASE 2.0.7.BUILD-SNAPSHOT spring-cloud-task 1.2.3.RELEASE 2.0.0.RELEASE 2.0.1.BUILD-SNAPSHOT spring-cloud-vault 1.1.2.RELEASE 2.0.2.RELEASE 2.0.2.BUILD-SNAPSHOT spring-cloud-gateway 1.0.2.RELEASE 2.0.2.RELEASE 2.0.2.BUILD-SNAPSHOT spring-cloud-openfeign 2.0.2.RELEASE 2.0.2.BUILD-SNAPSHOT spring-cloud-function 1.0.1.RELEASE 1.0.0.RELEASE 1.0.1.BUILD-SNAPSHOT spring cloud子项目包括： Spring Cloud Config：配置管理开发工具包，可以让你把配置放到远程服务器，目前支持本地存储、Git以及Subversion。 Spring Cloud Bus：事件、消息总线，用于在集群（例如，配置变化事件）中传播状态变化，可与Spring Cloud Config联合实现热部署。 Spring Cloud Netflix：针对多种Netflix组件提供的开发工具包，其中包括Eureka、Hystrix、Zuul、Archaius等。 Netflix Eureka：云端负载均衡，一个基于 REST 的服务，用于定位服务，以实现云端的负载均衡和中间层服务器的故障转移。 Netflix Hystrix：容错管理工具，旨在通过控制服务和第三方库的节点,从而对延迟和故障提供更强大的容错能力。 Netflix Zuul：边缘服务工具，是提供动态路由，监控，弹性，安全等的边缘服务。 Netflix Archaius：配置管理API，包含一系列配置管理API，提供动态类型化属性、线程安全配置操作、轮询框架、回调机制等功能。 Spring Cloud for Cloud Foundry：通过Oauth2协议绑定服务到CloudFoundry，CloudFoundry是VMware推出的开源PaaS云平台。 Spring Cloud Sleuth：日志收集工具包，封装了Dapper,Zipkin和HTrace操作。 Spring Cloud Data Flow：大数据操作工具，通过命令行方式操作数据流。 Spring Cloud Security：安全工具包，为你的应用程序添加安全控制，主要是指OAuth2。 Spring Cloud Consul：封装了Consul操作，consul是一个服务发现与配置工具，与Docker容器可以无缝集成。 Spring Cloud Zookeeper：操作Zookeeper的工具包，用于使用zookeeper方式的服务注册和发现。 Spring Cloud Stream：数据流操作开发包，封装了与Redis,Rabbit、Kafka等发送接收消息。 Spring Cloud CLI：基于 Spring Boot CLI，可以让你以命令行方式快速建立云组件 Spring-Cloud-task: 任务处理框架 更多：https://spring.io/projects/spring-cloud Spring Cloud/Spring Boot兼容性【重要】 Spring Cloud版本 Spring Boot版本 Spring Cloud Alibaba Greenwich 2.1.x 0.9.x Finchley 2.0.x 0.2.x Edgware 1.5.x 0.1.x Dalston 1.5.x 0.1.x 可前往https://spring.io/projects/spring-cloud#overview查看版本兼容性。 https://github.com/alibaba/spring-cloud-alibaba/wiki/%E7%89%88%E6%9C%AC%E8%AF%B4%E6%98%8E SpringCloud入门概述 Spring的三大模块：SpringBoot（构建），Spring Cloud（协调），Spring Cloud Data Flow（连接） SpringCloud是什么 分布式系统的简化版（官方介绍） SpringCloud基于SpringBoot提供了一整套微服务的解决方案，包括服务注册与发现，配置中心，全链路监控，服务网关，负载均衡，熔断器等组件，除了基于Netflix的开源组件做高度抽象封装之外，还有一些选型中立的开源组件 SpringCloud利用SpringBoot的开发便利性巧妙地简化了分布式系统的基础设施开发，SpringCloud为开发人员提供了快速构建分布式系统的一些工具，包括配置管理、服务发现、断路器、路由、微代理、事件总线，全局所、决策精选、分布式会话等等，他们都可以用SpringBoot的开发风格做到一键启动和部署。 一句话概括：SpringCloud是分布式微服务架构下的一站式解决方案，是各个微服务架构落地技术的几何体，俗称微服务全家桶 SpringCloud和SpringBoot的关系SpringBoot：专注于快速方便的开发单个个体微服务（关注微观） SpringCloud：关注全局的微服务协调治理框架，将SpringBoot开发的一个个单体微服务组合并管理起来（关注宏观） SpringBoot可以离开SpringCloud独立使用，但是SpringCloud不可以离开SpringBoot，属于依赖关系 SpringBoot专注于快速、方便的开发单个微服务个体，SpringCloud关注全局的服务治理框架。 解决的问题域不一样：Dubbo的定位是一款RPC框架，Spring Cloud的目标是微服务架构下的一站式解决方案 微服务的优缺点优点 每个服务足够内聚，足够小，比较容易聚焦一个指定的业务需求或者业务功能 开发简单且效率高，一个服务只做一件事情 开发团队小，一般2-5人足以（当然按实际为准） 微服务是松耦合的，无论开发还是部署都可以独立完成 微服务能用不同的语言开发 易于和第三方集成，微服务允许容易且灵活的自动集成部署（持续集成工具有Jenkins,Hudson,bamboo等） 微服务易于被开发人员理解，修改和维护，这样可以使小团队更加关注自己的工作成果，而无需一定要通过合作才能体现价值 微服务允许你融合最新的技术 微服务只是业务逻辑的代码，不会和HTML,CSS或其他界面组件融合。 每个微服务都可以有自己的存储能力，数据库可自有也可以统一，十分灵活。 缺点 开发人员要处理分布式系统的复杂性 多服务运维难度，随着服务的增加，运维的压力也会增大 依赖系统部署 服务间通讯的成本 数据的一致性 系统集成测试 性能监控的难度]]></content>
+      <categories>
+        <category>微服务</category>
+      </categories>
+      <tags>
+        <tag>微服务</tag>
+        <tag>Spring Cloud</tag>
       </tags>
   </entry>
   <entry>

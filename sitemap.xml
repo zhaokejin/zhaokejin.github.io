@@ -2,6 +2,34 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://www.cicoding.cn/micro-service/microservice/</loc>
+    
+    <lastmod>2019-10-08T02:18:10.614Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.cicoding.cn/micro-service/SpringCloud01/</loc>
+    
+    <lastmod>2019-10-08T02:07:35.721Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.cicoding.cn/database/mysql-8-problems/</loc>
+    
+    <lastmod>2019-10-08T01:08:30.546Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.cicoding.cn/micro-service/microservice01/</loc>
+    
+    <lastmod>2019-10-08T00:44:12.590Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://www.cicoding.cn/about/index.html</loc>
     
     <lastmod>2019-10-06T14:26:54.853Z</lastmod>
@@ -26,13 +54,6 @@
     <loc>https://www.cicoding.cn/docker/04-docker-lession-index/</loc>
     
     <lastmod>2019-09-28T11:56:20.296Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://www.cicoding.cn/micro-service/microservice/</loc>
-    
-    <lastmod>2019-09-28T10:51:54.893Z</lastmod>
     
   </url>
   
