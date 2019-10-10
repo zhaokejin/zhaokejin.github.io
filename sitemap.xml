@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://www.cicoding.cn/other/simplicity-is-paramount/</loc>
+    
+    <lastmod>2019-10-10T03:36:04.284Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.cicoding.cn/tools/IntelliJ-IDEA-Plugins/</loc>
+    
+    <lastmod>2019-10-10T03:26:32.002Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://www.cicoding.cn/micro-service/microservice/</loc>
     
     <lastmod>2019-10-08T02:18:10.614Z</lastmod>
@@ -58,16 +72,9 @@
   </url>
   
   <url>
-    <loc>https://www.cicoding.cn/other/Why-do-we-do-distributed-use-Redis/</loc>
+    <loc>https://www.cicoding.cn/other/Why-do-we-do-distributed-use-Redis%20-%20%E5%89%AF%E6%9C%AC/</loc>
     
     <lastmod>2019-09-28T04:56:25.161Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://www.cicoding.cn/tools/IntelliJ-IDEA-Plugins/</loc>
-    
-    <lastmod>2019-09-28T04:55:38.255Z</lastmod>
     
   </url>
   

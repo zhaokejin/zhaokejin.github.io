@@ -1,0 +1,739 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="筱进GG的博客">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.2.3">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="https://www.cicoding.cn">
+    <!--SEO-->
+
+    <meta name="keywords" content="Web应用,互联网产品">
+
+
+    <meta name="description" content="
+主要适合Web应用、互联网产品、移动应用产品经理及交互式设计人员阅读，也许远远不止适合这些同学
+
+
+简单
+
+
+简单的产品能在专业领域内聚焦非核心玩家的核心功能，产出惊人的效果
+转移复杂的简单不是简单。复杂自己，简单别人@Google
+简单的目的是提高用户体验。设计产品应该从用户而非产品本身角...">
+
+
+
+<meta name="robots" content="all">
+<meta name="google" content="all">
+<meta name="googlebot" content="all">
+<meta name="verify" content="all">
+    <!--Title-->
+
+
+<title>简约至上 | 筱进GG的博客</title>
+
+
+    <link rel="alternate" href="/atom.xml" title="筱进GG的博客" type="application/atom+xml">
+
+
+    <link rel="icon" href="/favicon.png">
+
+    
+
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7">
+<link rel="stylesheet" href="/jquery.fancybox.css?v=2.1.5">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.5.0">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash">
+
+
+
+
+    
+
+
+
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?04983d21727b02deb6771184cf02f865";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+
+
+    
+
+</head>
+
+</html>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+
+<body>
+    
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row clearfix">
+            <div class="col-md-12 column">
+                <nav class="navbar navbar-default" style="background-color:#fff;border:0;margin-bottom:0"
+                     role="navigation">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse"
+                                data-target="#navbar-collapse-1">
+                            <span class="sr-only">切</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="logo" href="/">
+                            <img src="/favicon.png"/>筱进GG的博客
+                        </a>
+                    </div>
+
+                    <div class="collapse navbar-collapse" style="border:0;" id="navbar-collapse-1">
+                        <ul class="nav navbar-nav">
+                            
+                                
+                                    <li>
+                                        <a href="/" target="_blank">
+                                            <i class="fa fa-home"></i>
+                                            首页
+                                        </a>
+                                    </li>
+                                
+                            
+                                
+                                    <li>
+                                        <a href="/categories" target="_blank">
+                                            <i class="fa fa-sort"></i>
+                                            分类
+                                        </a>
+                                    </li>
+                                
+                            
+                                
+                                    <li>
+                                        <a href="/archives" target="_blank">
+                                            <i class="fa fa-sort"></i>
+                                            归档
+                                        </a>
+                                    </li>
+                                
+                            
+                                
+                                    <li>
+                                        <a href="/micro-service/microservice/" target="_blank">
+                                            <i class="fa fa-server"></i>
+                                            微服务
+                                        </a>
+                                    </li>
+                                
+                            
+                                
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                                           data-hover="dropdown">
+                                            <i class="fa fa-fire"></i>
+                                            系列教程
+                                            <strong class="caret"></strong>
+                                        </a>
+                                        <ul class="dropdown-menu">
+                                            
+                                                <li>
+                                                    <a href="/docker/00-docker-lession-index" target="_blank">
+                                                        <i class="fa "></i>
+                                                        Docker系列教程
+                                                    </a>
+                                                </li>
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+                                
+                                    <li>
+                                        <a href="/about" target="_blank">
+                                            <i class="fa fa-user"></i>
+                                            关于我
+                                        </a>
+                                    </li>
+                                
+                            
+                        </ul>
+                        
+                            <form id="search-form" class="navbar-form navbar-right">
+                                <div class="form-group input-group">
+                                    <input type="text" id="local-search-input" class="form-control"
+                                           placeholder="搜我..."/>
+                                    <span class="input-group-btn">
+                                        <a class="btn btn-default">
+                                            <i class="fa fa-search"></i>
+                                        </a>
+                                    </span>
+                                </div>
+                                <div id="local-search-result" class="local-search-result-cls"></div>
+                            </form>
+                        
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </div>
+</nav>
+
+    <a href="http://github.com/zhaokejin" target="_blank">
+        <img style="position: absolute; width:100px; top: 0; left: 0; border: 0;"
+             src="/img/fork-me.png"
+             alt="Fork me on GitHub">
+    </a>
+
+
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    
+
+<p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="简约至上">
+            
+                简约至上
+            
+        </h1>
+        <div class="post-meta">
+    
+        <span class="categories-meta fa-wrap">
+            <i class="fa fa-folder-open-o"></i>
+            <a class="category-link" href="/categories/其他/">其他</a>
+        </span>
+    
+
+    
+        <span class="fa-wrap">
+            <i class="fa fa-tags"></i>
+            <span class="tags-meta">
+                
+                    <a class="tag-link" href="/tags/Web应用/">Web应用</a> <a class="tag-link" href="/tags/互联网产品/">互联网产品</a>
+                
+            </span>
+        </span>
+    
+
+    
+        
+        <span class="fa-wrap">
+            <i class="fa fa-clock-o"></i>
+            <span class="date-meta">2018/06/20</span>
+        </span>
+        
+            <span class="fa-wrap">
+                <i class="fa fa-eye"></i>
+                <span id="busuanzi_value_page_pv"></span>
+            </span>
+        
+    
+</div>
+        
+        
+    </div>
+    
+    <div class="post-body post-content">
+        
+
+        <blockquote>
+<p>主要适合Web应用、互联网产品、移动应用产品经理及交互式设计人员阅读，也许远远不止适合这些同学</p>
+</blockquote>
+<ul>
+<li><p>简单</p>
+</li>
+<li><ul>
+<li>简单的产品能在专业领域内聚焦非核心玩家的核心功能，产出惊人的效果</li>
+<li>转移复杂的简单不是简单。复杂自己，简单别人@<code>Google</code></li>
+<li>简单的目的是提高用户体验。设计产品应该从用户而非产品本身角度来考虑</li>
+<li>简单并不需要极简主义，并不意味着最少化。简单并不意味着欠缺和低劣，也不意味着不注重装饰或完全赤裸裸。而是说装饰应该紧密贴近设计本身，任何无关的要素都应该予以剔除</li>
+<li>貌似简单不是真的简单。证明简洁的东西能在哪些方面带来好处，这样才能说服别人接受简洁。对简洁的事项进行排序，更优方式是对排序进行分组，高 <code>ROI</code> 的马上做，中 <code>ROI</code> 的暂缓缓，低 <code>ROI</code> 的先抛弃</li>
+</ul>
+</li>
+<li><p>明确认识</p>
+</li>
+<li><ul>
+<li>如何建立判定简单的标准：</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>方法一：建立一个需要遵循的简单规则列表，当犹豫的时候，和规则列表进行比对（反向）</li>
+<li>方法二：理解用户的体验和使用场景，尽量考虑到所有细节（正向）</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li>了解用户使用产品的环境，特别是要知道他们在使用你的软件的时候经常会发生什么事情，发掘可能忽略的需求</li>
+<li>不同的环境，玩家可能受到完全不一样的干扰</li>
+<li>主流用户想要什么？</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>感兴趣的是立即把工作做完 vs 喜欢设定自己的偏好</li>
+<li>认为容易操作是最有价值的事 vs 在乎操作是否精准</li>
+<li>得到靠谱的结果 vs 得到完美的结果</li>
+<li>害怕弄坏什么 vs 刨根问到底</li>
+<li>适合即可 vs 精确匹配</li>
+<li>想要事例和故事 vs 想要原理</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li>感情需求：找到用户感情上不愿意处理但又无法避免的需求，这些会成为用户的精神负担，从而放弃使用软件</li>
+<li>简单就是感觉在掌控一切，设计不能和这种感觉抵触，而是要放大这种感觉。要让用户感觉到自己在掌控技术，掌控生活。对主流用户来说，掌控的含义就是掌控结果</li>
+<li>如何正确地选择做“什么”？有了用户需求后，从用户的角度，用户的语言来描述这个需求，不要遗漏每个细节</li>
+<li>当需要描述需求或者把问题转化成一种认知时，特别是在想要说服别人时，故事是一种很好的形式。故事可以让读者更容易明白什么重要和为什么重要</li>
+<li>讲故事的方法。不要长篇大论。好故事应该简明、具体、可信，并且拥有相关细节</li>
+<li>要满足简单的体验需要功能要满足极端的条件，诸如任何人都要能用，相应速度瞬间完成等。设定不可能达成的目标可以让事情保持在正确的放向上运行。妥协的目标必让产品变得越来越糟糕</li>
+<li>尝试用简洁、清晰、完整的语言向事先不给任何提示的人描述想法</li>
+<li>要有优秀的洞察力去观察什么因素对客户的行为影响最大</li>
+<li>设计者可能希望马上开始设计，但要克制自己，太早设计意味着会遗漏重要的见解。任何项目的前三个方案大约都是对真正重要问题的描述，这段时间非常让人头疼，复杂性与日俱增，脑子也没有什么想法，但坚持不懈寻找问题的关键和深层次原因，是最后能拿出一个优雅和堪称完美有效方案的关键</li>
+<li>与别人分享你的知识，即使你不在场也能保证做出正确的决定。跟参与项目的每一个人复述你的故事，不停的讲，直到自己都厌恶为止</li>
+</ul>
+</li>
+<li><p>简约四策略 以简化遥控器为例：</p>
+</li>
+<li><ul>
+<li><strong>删除</strong>：去掉不必要的功能，直到不能再减为止</li>
+<li><strong>组织</strong>：按照有意义的标准将按钮划分成组</li>
+<li><strong>隐藏</strong>：把不重要的按钮安排在活动舱盖下，分散用户注意力</li>
+<li><strong>转移</strong>：只在遥控器上保留最基本的功能，将其他控制转移到屏幕的菜单里，从而将复杂性从遥控器转移到了电视</li>
+</ul>
+</li>
+<li><p>删除</p>
+</li>
+<li><ul>
+<li>Standish Group 2002的报告：<strong>64%</strong> 的软件功能“从未使用或极少使用”</li>
+<li>要通过删除来简化设计，请准备好一张白纸，问自己：“最重要的问题是什么？”然后，逐渐添加最重要的功能和内容—— MVP（Minimum Viable Product）</li>
+<li>简化设计最明显的方式是删除不必要的功能</li>
+<li>增加价值始于改进核心体验。按照优先级对功能排序时，要时刻记住用户认为哪些关系到他们日常使用体验的功能最有价值</li>
+<li>以“去掉他们是一种浪费”作为理由而抓住残缺的功能不放，可能会妨碍你成功</li>
+<li>不要猜测用户可能会或者可能不会怎么样</li>
+<li>如果一个改动让流程变得更复杂就应该退一步去寻找更好的解决方案</li>
+<li>用户在意的是你的功能是否能解决他们的问题</li>
+<li>确定删除和保留功能时候的原则：</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>对用户想要达到的目的排序</li>
+<li>优先满足最高优先级用户的需求，然后再考虑其他用户</li>
+<li>确定用户使用产品过程中的感染源并排序并找到解决方案</li>
+<li>要能明白满足主流用户和专家级用户的方案之间的差别</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li>提供有限选择，用户反而会更喜欢</li>
+<li>想要设计简单的用户体验，就该牢记删除那些干扰因素，让用户注意力保持集中——如文章中的超链接(-_-)</li>
+<li>默认值是节省用户时间和精力的有效方式，也是清除设计蓝图中“减速带”的首选方式</li>
+<li>主流用户希望“够好就行了，快点”，专家用户则希望“尽可能地完美，等多长时间都愿意”。如果你想要设计受主流用户喜爱的简单体验，就应该放弃因为最求完美而牺牲速度和简单的方案。</li>
+<li>简化体验的一个重要思路是看用户会犯什么错误，这些发生错误的地方既有可能是一个简化点—</li>
+<li>减少视觉混乱</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>1）使用空白和轻微的背景色来划分页面，不是用线条</li>
+<li>2）尽量少使用强调</li>
+<li>3）不使用黑粗线</li>
+<li>4）控制信息层次</li>
+<li>5）减少元素大小和形状变化</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li>删除不必要的说明文字——标题下边的“单击这里”超链接可以直接做在标题上</li>
+<li>“删除”的核心策略是干掉哪些焚烧用户注意力的因素，聚焦于项目。聚焦于给用户提供价值的功能、聚焦于达成用户目标，删除干扰用户的、增加用户负担的“减速带”、聚焦于可以利用的资源为用户创造价值</li>
+<li>不可避免的法律文书不能够去掉</li>
+</ul>
+</li>
+<li><p>组织</p>
+</li>
+<li><ul>
+<li>不是任何时候都需要分块，如果按照索引顺序检索则没必要分块，如字母表。</li>
+<li>简单的组织模式具有清晰的界限，即是非分明。这样用户才能明确知道到哪里去找自己想要的东西</li>
+<li>按资源格式分类，看起来简单但不讨好</li>
+<li>在没有提供有效导航的情况下，用户会使用搜索。在需要从大量类似项中挑选一个已知项（比如 iTunes 找歌），用户也会倾向使用搜索。</li>
+<li>利用不可见的网格来对其节目元素是一种吸引用户注意力的有效方式。用户虽然看不见网格，但视觉上的想象会告诉他们“接着看这里”。网格越简单，效果越明显</li>
+<li>网格布局会让人感觉局促和受压制，可以通过设计不对称的布局来解决。如包含奇数列或者让少量元素跨在两列和三列上。</li>
+<li>如果一个元素的重要性为 <code>1/2</code>，那就把它的大小做成 <code>1/4</code></li>
+<li>感知分层技术：人们在无意的状态下，只会感知到自己关心的东西，而忽略其他东西。</li>
+<li>在确保人们会花很长时间学习，而且他们会重复使用你的设计时，色标系统非常合适</li>
+</ul>
+</li>
+<li><p>隐藏</p>
+</li>
+<li><ul>
+<li>隐藏部分功能是一种低成本的方案，但不要尝试先隐藏再删除，欲删从速</li>
+<li>不常用但不能少的功能很适合隐藏</li>
+<li>自动定制不会让界面变得简单</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>1）很难保证默认菜单的准确性</li>
+<li>2）用户需要把每个功能看两遍才能确定</li>
+<li>3）用户不知道去哪里找自己想要的命令，因为位置会变</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li>“核心功能加扩展功能”的渐进展示模式不仅能够简化设计，更是一种强大的交互手段</li>
+<li>阶段展示，比如向导，在符合用户心理预期的情况下，阶段展示的效果最好。</li>
+<li>把标签放在那里比把标签做多大更重要，必须要标签放在用户关注点之内</li>
+<li>保证用户在前进的过程中能够遇到提示，但不要挡住他们的去路</li>
+<li>隐藏策略需要做到：</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>1）隐藏一次性设计和选项</li>
+<li>2）隐藏精确控制选项，但专家用户能够让用户这些选项保持可见</li>
+<li>3）不要强迫或寄希望与主流用户使用自定义功能，但专家用户可以有</li>
+<li>4）巧妙因此，首先要彻底影藏，其次是适时出现</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>转移</p>
+</li>
+<li><ul>
+<li>人和电脑分别擅长不同的东西，电脑擅长计算，人喜欢控制结果。可以把一些规则很复杂的工作（如制定目标和组织游记）留给用户，人处理有些信息更方便</li>
+<li>让某个功能具有多功能也是一种简化方式——汽车后挡风玻璃的加热丝也是收音机天线</li>
+<li>简单界面的最高境界是专家和主流用户都觉得他非常好用</li>
+<li>输入结构化数据（填表）非常让人讨厌，解决办法是让用户按照自己想要的格式输入，结构化的过程由计算机完成</li>
+<li>转移之后，需要在用户面前建立设备和应用间能正常工作的信任，唯一方式是让用户参与测试原型和实物模型</li>
+</ul>
+</li>
+<li><p>小结</p>
+</li>
+<li><ul>
+<li>简化就像打地鼠，一个地方下去了，另一个地方又冒出来了</li>
+<li>简单的秘诀就是把复杂性转移到正确的地方</li>
+<li>简单不能忽视细节，只说坐1号线，但是没说方向，一样导致困惑</li>
+<li>简单的体验应该为用户留出足够的空间，让他们能够想象到当前正在做的事情同样也是自己生活的一部分</li>
+</ul>
+</li>
+</ul>
+
+        
+    </div>
+    
+
+
+    
+        <div class="post-footer">
+            <div class="col-sm-10">
+                <div>
+                    <b>本文链接</b>：<a href="/other/simplicity-is-paramount/" target="_blank">简约至上</a>
+                </div>
+                <div>
+                    
+                        转载声明：本博客由筱进GG创作，采用 <a href="https://creativecommons.org/licenses/by-nc-nd/3.0/" target="_blank"> CC BY 3.0 CN </a> 许可协议。可自由转载、引用，但需署名作者且注明文章出处。如转载至微信公众号，请在文末添加作者公众号二维码。
+                    
+                </div>
+                <div>
+                    
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <img src="/icons/wx.jpg" width=100%/>
+            </div>
+        </div>
+    
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+        <a target="_blank" href="/other/java-images-watermark/" class="pre-post btn btn-default"
+           title='Java添加水印（图片水印，文字水印）'>
+            <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+            <span class="hidden-xs">Java添加水印（图片水印，文字水印）</span>
+        </a>
+    
+    
+        <a target="_blank" href="/other/theme-config/" class="next-post btn btn-default"
+           title='主题配置'>
+            <span class="hidden-lg">下一篇</span>
+            <span class="hidden-xs">主题配置</span><i class="fa fa-angle-right fa-fw"></i>
+        </a>
+    
+</div>
+
+
+
+
+
+
+
+                </main>
+                
+    <aside class="col-md-4 sidebar">
+        
+        <div class="widget about-me">
+    <div class="row">
+        <div class="col-md-5">
+            <img src="/icons/wx.jpg" alt="公众号" class="img-responsive center-block">
+        </div>
+        <div class="col-md-7">
+            <a class="series-a" href="javascript:void(0)">公众号</a>
+            <ul>
+                <li>• 技术干货推送</li>
+                <li>• 免费资料领取</li>
+                <li><b>• 扫码领取更多惊喜</b></li>
+            </ul>
+        </div>
+    </div>
+    
+<!--        <div class="row">-->
+<!--            <div class="col-md-5">-->
+<!--                <img src="/icons/xcx.jpg" alt="小程序" class="img-responsive">-->
+<!--            </div>-->
+<!--            <div class="col-md-7">-->
+<!--                <a class="series-a" href="javascript:void(0)">小程序</a>-->
+<!--                <ul>-->
+<!--                    <li>• 原创笔记</li>-->
+<!--                    <li>• 独家心法</li>-->
+<!--                    <li><b>• 扫码领取</b></li>-->
+<!--                </ul>-->
+<!--            </div>-->
+<!--        </div>-->
+    
+</div>
+
+
+
+
+        
+        
+    <div class="widget">
+        <h3 class="title">网站公告</h3>
+        <div class="notification">
+            <p>
+  <b>笔者微信</b>：210006540，欢迎加我<br/>
+  <b>公众号</b>：请扫描我的头像<br/>
+</p>
+        </div>
+    </div>
+
+        
+        
+
+
+
+        
+        
+    <div class="widget">
+        <h3 class="title">分类</h3>
+        <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/"><i class="fa" aria-hidden="true">Docker</i></a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/"><i class="fa" aria-hidden="true">Redis</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/"><i class="fa" aria-hidden="true">Spring</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/maven/"><i class="fa" aria-hidden="true">maven</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/主键/"><i class="fa" aria-hidden="true">主键</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link current" href="/categories/其他/"><i class="fa" aria-hidden="true">其他</i></a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/安装教程/"><i class="fa" aria-hidden="true">安装教程</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/工具/"><i class="fa" aria-hidden="true">工具</i></a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/微服务/"><i class="fa" aria-hidden="true">微服务</i></a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据库/"><i class="fa" aria-hidden="true">数据库</i></a><span class="category-list-count">1</span></li></ul>
+    </div>
+
+
+        
+        
+  <div class="widget">
+    <h3 class="title">标签云</h3>
+    <div class="content tag-cloud">
+        
+            <canvas width="300" height="300" id="tag-cloud-3d">
+                <a href="/tags/Centos/" style="font-size: 10px;">Centos</a> <a href="/tags/Docker/" style="font-size: 20px;">Docker</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/IDEA/" style="font-size: 10px;">IDEA</a> <a href="/tags/MySQL8/" style="font-size: 10px;">MySQL8</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/RocketMQ/" style="font-size: 13.33px;">RocketMQ</a> <a href="/tags/SonarQube/" style="font-size: 10px;">SonarQube</a> <a href="/tags/Spring/" style="font-size: 13.33px;">Spring</a> <a href="/tags/Spring-Boot/" style="font-size: 10px;">Spring Boot</a> <a href="/tags/Spring-Cloud/" style="font-size: 16.67px;">Spring Cloud</a> <a href="/tags/Web应用/" style="font-size: 10px;">Web应用</a> <a href="/tags/maven/" style="font-size: 10px;">maven</a> <a href="/tags/theme/" style="font-size: 10px;">theme</a> <a href="/tags/互联网产品/" style="font-size: 10px;">互联网产品</a> <a href="/tags/其他/" style="font-size: 10px;">其他</a> <a href="/tags/分布式/" style="font-size: 13.33px;">分布式</a> <a href="/tags/图片水印/" style="font-size: 10px;">图片水印</a> <a href="/tags/微服务/" style="font-size: 16.67px;">微服务</a> <a href="/tags/注解/" style="font-size: 10px;">注解</a>
+            </canvas>
+        
+    </div>
+  </div>
+
+
+        
+        
+    <div class="widget">
+        <h3 class="title">归档</h3>
+        <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/"><i class="fa" aria-hidden="true">2019年09月</i></a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/"><i class="fa" aria-hidden="true">2019年05月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/"><i class="fa" aria-hidden="true">2019年04月</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/"><i class="fa" aria-hidden="true">2019年01月</i></a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/"><i class="fa" aria-hidden="true">2018年12月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/"><i class="fa" aria-hidden="true">2018年10月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/"><i class="fa" aria-hidden="true">2018年09月</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/"><i class="fa" aria-hidden="true">2018年08月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/"><i class="fa" aria-hidden="true">2018年06月</i></a><span class="archive-list-count">2</span></li></ul>
+    </div>
+
+
+        
+        
+    <div class="widget">
+      <h3 class="title">社交</h3> 
+        <div class="content social">
+            
+	            <a href="//github.com/zhaokejin" rel="external nofollow" title="GitHub" target="_blank">
+			    	<i class="github fa fa-github"></i>
+			    </a>
+            
+	            <a href="//gitee.com/zhaokejin" rel="external nofollow" title="Gitee" target="_blank">
+			    	<i class="git fa fa-git"></i>
+			    </a>
+            
+	            <a href="mailto:210006540qq.com" rel="external nofollow" title="邮箱" target="_blank">
+			    	<i class="envelope-o fa fa-envelope-o"></i>
+			    </a>
+            
+	            <a href="//wpa.qq.com/msgrd?v=3&uin=210006540&site=qq&menu=yes" rel="external nofollow" title="QQ" target="_blank">
+			    	<i class="qq fa fa-qq"></i>
+			    </a>
+            
+	            <a href="//www.baidu.com" rel="external nofollow" title="QQ群" target="_blank">
+			    	<i class="group fa fa-group"></i>
+			    </a>
+            
+	            <a href="/atom.xml" rel="external nofollow" title="RSS" target="_blank">
+			    	<i class="feed fa fa-feed"></i>
+			    </a>
+            
+        </div>
+    </div>
+
+
+        
+        
+
+        
+    </aside>
+
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+
+<a id="back-to-top" class="icon-btn hide">
+	<i class="fa fa-chevron-up"></i>
+</a>
+
+
+
+
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+        访问量:
+        <strong id="busuanzi_value_site_pv">
+            <i class="fa fa-spinner fa-spin"></i>
+        </strong>
+        &nbsp; | &nbsp;
+        访客数:
+        <strong id="busuanzi_value_site_uv">
+            <i class="fa fa-spinner fa-spin"></i>
+        </strong>
+<!--        &nbsp; <strong>Since 2018-12-26</strong>-->
+    
+</div>
+
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy; 2018 - 2019
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    鲁ICP备18033870号
+<!--                    Theme by <a href="//github.com/zhaokejin" class="copyright-links" target="_blank" rel="nofollow">ITMuch</a>-->
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/js/jquery.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/bootstrap-hover-dropdown.min.js"></script>
+
+
+	<script src="/js/search.js?rev=@@hash"></script>
+
+
+
+    <script src="/assets/tagcanvas.min.js?rev=2.9"></script>
+    <script>
+        var tagOption = {
+            textColour: '#444', // 字体颜色
+            outlineMethod: 'block', // 选中模式
+            outlineColour: '#FFDAB9', // 选中模式的颜色
+            interval: 30 || 30, // 动画帧之间的时间间隔，值越大，转动幅度越大
+            textHeight: 13,
+            outlineRadius: 3,
+            freezeActive: true || '', // 选中的标签是否继续滚动
+            frontSelect: true || '', // 不选标签云后部的标签
+            initial: [0.1, -0.1],
+            depth: 0.5,
+            decel: 0.95,
+            maxSpeed: 0.03,
+            reverse: true || '', // 是否反向触发
+            fadeIn: 500, // 进入动画时间
+            wheelZoom: false || '' // 是否启用鼠标滚轮
+        }
+        TagCanvas.Start('tag-cloud-3d','',tagOption);
+    </script>
+
+
+
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<script src="/js/app.js?rev=@@hash"></script>
+<script src="/jquery.fancybox.js?v=2.1.5"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('.fancybox').fancybox();
+    });
+    // 给图片添加链接
+    $(document).ready(function() {
+        $("p img").each(function() {
+            var strA = "<a id='yourid' class='fancybox' data-fancybox-group='gallery'  href='" + this.src + "'></a>";
+            $(this).wrapAll(strA);
+        });
+    });
+    // fancybox
+    $("#yourid").fancybox({
+        openEffect    : 'elastic',
+        closeEffect   : 'elastic',
+    });
+</script>
+
+</body>
+</html>
