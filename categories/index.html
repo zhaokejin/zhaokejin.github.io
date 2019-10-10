@@ -45,6 +45,7 @@
 
 
 <link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7">
+<link rel="stylesheet" href="/jquery.fancybox.css?v=2.1.5">
 <link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.5.0">
 <link rel="stylesheet" href="/css/style.css?rev=@@hash">
 
@@ -217,26 +218,20 @@
 	            </li>
 	        
 	            <li class="post-items" >
-	                    <a href="/categories/安装教程/" title="安装教程" target="_blank">
-	                        安装教程
-	                    </a>
-	            </li>
-	        
-	            <li class="post-items" >
 	                    <a href="/categories/数据库/" title="数据库" target="_blank">
 	                        数据库
 	                    </a>
 	            </li>
 	        
 	            <li class="post-items" >
-	                    <a href="/categories/微服务/" title="微服务" target="_blank">
-	                        微服务
+	                    <a href="/categories/安装教程/" title="安装教程" target="_blank">
+	                        安装教程
 	                    </a>
 	            </li>
 	        
 	            <li class="post-items" >
-	                    <a href="/categories/其他/" title="其他" target="_blank">
-	                        其他
+	                    <a href="/categories/微服务/" title="微服务" target="_blank">
+	                        微服务
 	                    </a>
 	            </li>
 	        
@@ -249,6 +244,12 @@
 	            <li class="post-items" >
 	                    <a href="/categories/工具/" title="工具" target="_blank">
 	                        工具
+	                    </a>
+	            </li>
+	        
+	            <li class="post-items" >
+	                    <a href="/categories/其他/" title="其他" target="_blank">
+	                        其他
 	                    </a>
 	            </li>
 	        
@@ -456,6 +457,7 @@
 <script src="/js/bootstrap.min.js"></script>
 <script src="/js/bootstrap-hover-dropdown.min.js"></script>
 
+
 	<script src="/js/search.js?rev=@@hash"></script>
 
 
@@ -488,8 +490,24 @@
 
 
 <script src="/js/app.js?rev=@@hash"></script>
-
-
+<script src="/jquery.fancybox.js?v=2.1.5"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('.fancybox').fancybox();
+    });
+    // 给图片添加链接
+    $(document).ready(function() {
+        $("p img").each(function() {
+            var strA = "<a id='yourid' class='fancybox' data-fancybox-group='gallery'  href='" + this.src + "'></a>";
+            $(this).wrapAll(strA);
+        });
+    });
+    // fancybox
+    $("#yourid").fancybox({
+        openEffect    : 'elastic',
+        closeEffect   : 'elastic',
+    });
+</script>
 
 </body>
 </html>

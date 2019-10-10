@@ -45,6 +45,7 @@
 
 
 <link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7">
+<link rel="stylesheet" href="/jquery.fancybox.css?v=2.1.5">
 <link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.5.0">
 <link rel="stylesheet" href="/css/style.css?rev=@@hash">
 
@@ -304,7 +305,7 @@
 
 <p>哦了！</p>
 
-        <h2>相关文章</h2><ul><li><a href="/docker/01-docker-lession-index/">传统项目开发部署的流程是怎样的？</a></li><li><a href="/docker/00-docker-lession-index/">Docker系列教程</a></li><li><a href="/docker/02-docker-lession-index/">Docker是干什么用的？</a></li><li><a href="/docker/03-docker-lession-index/">Docker镜像、容器、仓库的介绍</a></li><li><a href="/docker/04-docker-lession-index/">在Centos系统中安装Docker</a></li></ul>
+        <h2>相关文章</h2><ul><li><a href="/docker/00-docker-lession-index/">Docker系列教程</a></li><li><a href="/docker/01-docker-lession-index/">传统项目开发部署的流程是怎样的？</a></li><li><a href="/docker/03-docker-lession-index/">Docker镜像、容器、仓库的介绍</a></li><li><a href="/docker/02-docker-lession-index/">Docker是干什么用的？</a></li><li><a href="/docker/04-docker-lession-index/">在Centos系统中安装Docker</a></li></ul>
     </div>
     
 
@@ -554,6 +555,7 @@
 <script src="/js/bootstrap.min.js"></script>
 <script src="/js/bootstrap-hover-dropdown.min.js"></script>
 
+
 	<script src="/js/search.js?rev=@@hash"></script>
 
 
@@ -586,8 +588,24 @@
 
 
 <script src="/js/app.js?rev=@@hash"></script>
-
-
+<script src="/jquery.fancybox.js?v=2.1.5"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('.fancybox').fancybox();
+    });
+    // 给图片添加链接
+    $(document).ready(function() {
+        $("p img").each(function() {
+            var strA = "<a id='yourid' class='fancybox' data-fancybox-group='gallery'  href='" + this.src + "'></a>";
+            $(this).wrapAll(strA);
+        });
+    });
+    // fancybox
+    $("#yourid").fancybox({
+        openEffect    : 'elastic',
+        closeEffect   : 'elastic',
+    });
+</script>
 
 </body>
 </html>
