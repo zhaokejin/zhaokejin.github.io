@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://www.cicoding.cn/springboot/springboot-redis-springsession/</loc>
+    
+    <lastmod>2019-10-11T06:59:20.602Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://www.cicoding.cn/other/simplicity-is-paramount/</loc>
     
     <lastmod>2019-10-10T03:36:04.284Z</lastmod>
