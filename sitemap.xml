@@ -2,6 +2,27 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://www.cicoding.cn/about/index.html</loc>
+    
+    <lastmod>2019-10-12T06:52:23.855Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.cicoding.cn/docker/05-docker-lession-index/</loc>
+    
+    <lastmod>2019-10-12T06:48:28.711Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.cicoding.cn/http/httpclient-utils/</loc>
+    
+    <lastmod>2019-10-12T06:47:31.482Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://www.cicoding.cn/springboot/springboot-redis-springsession/</loc>
     
     <lastmod>2019-10-11T06:59:20.602Z</lastmod>
@@ -47,20 +68,6 @@
     <loc>https://www.cicoding.cn/micro-service/microservice01/</loc>
     
     <lastmod>2019-10-08T00:44:12.590Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://www.cicoding.cn/about/index.html</loc>
-    
-    <lastmod>2019-10-06T14:26:54.853Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://www.cicoding.cn/docker/05-docker-lession-index/</loc>
-    
-    <lastmod>2019-09-28T12:07:12.889Z</lastmod>
     
   </url>
   
