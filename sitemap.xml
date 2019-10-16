@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://www.cicoding.cn/micro-service/microservice/</loc>
+    
+    <lastmod>2019-10-16T08:37:44.517Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.cicoding.cn/micro-service/microservice02/</loc>
+    
+    <lastmod>2019-10-16T08:36:51.387Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://www.cicoding.cn/about/index.html</loc>
     
     <lastmod>2019-10-12T06:52:23.855Z</lastmod>
@@ -40,13 +54,6 @@
     <loc>https://www.cicoding.cn/tools/IntelliJ-IDEA-Plugins/</loc>
     
     <lastmod>2019-10-10T03:26:32.002Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://www.cicoding.cn/micro-service/microservice/</loc>
-    
-    <lastmod>2019-10-08T02:18:10.614Z</lastmod>
     
   </url>
   

@@ -18,10 +18,10 @@
     <link rel="dns-prefetch" href="https://www.cicoding.cn">
     <!--SEO-->
 
-    <meta name="keywords" content="session共享,SpringBoot,SpringSession">
+    <meta name="keywords" content="筱进GG,Spring Cloud,Docker,微服务架构,Spring Boot,经验分享,软件代做,毕业设计,博客建站">
 
 
-    <meta name="description" content="使用 Redis 实现 Session 共享1 什么是 Session由于 HTTP 协议是无状态的协议，因而服务端需要记录用户的状态时，就需要用某种机制来识具体的用户。Session 是另一种记录客户状态的机制，不同的是 Cookie 保存在客户端浏览器中，而 Session 保存在服务器上...">
+    <meta name="description" content="Spring Cloud、Docker、微服务架构、Cloud Native相关知识分享、筱进GG的博客,毕业设计代做">
 
 
 
@@ -32,7 +32,7 @@
     <!--Title-->
 
 
-<title>SpringBoot2.1.6集成spring session redis实现session共享 | 筱进GG的博客</title>
+<title>标签: Eureka | 筱进GG的博客</title>
 
 
     <link rel="alternate" href="/atom.xml" title="筱进GG的博客" type="application/atom+xml">
@@ -256,147 +256,44 @@
     <section class="content-wrap">
         <div class="container">
             <div class="row">
-                <main class="col-md-8 main-content m-post">
-                    
-
-<p id="process"></p>
-<article class="post">
-    <div class="post-head">
-        <h1 id="SpringBoot2.1.6集成spring session redis实现session共享">
-            
-                SpringBoot2.1.6集成spring session redis实现session共享
-            
-        </h1>
-        <div class="post-meta">
+                <main class="col-md-8 main-content ">
+                    <ol class="breadcrumb">
     
-        <span class="categories-meta fa-wrap">
-            <i class="fa fa-folder-open-o"></i>
-            <a class="category-link" href="/categories/SpringSession/">SpringSession</a>
-        </span>
+    
+        <li>
+            <a href="/tags" target="_blank">标签</a> /
+            <a href="/tags/Eureka" target="_blank">
+                Eureka
+            </a>
+        </li>
+    
     
 
-    
-        <span class="fa-wrap">
-            <i class="fa fa-tags"></i>
-            <span class="tags-meta">
-                
-                    <a class="tag-link" href="/tags/SpringBoot/">SpringBoot</a> <a class="tag-link" href="/tags/SpringSession/">SpringSession</a> <a class="tag-link" href="/tags/session共享/">session共享</a>
-                
-            </span>
-        </span>
-    
+</ol>
 
-    
+
+    <article class="post">
         
-        <span class="fa-wrap">
-            <i class="fa fa-clock-o"></i>
-            <span class="date-meta">2019/10/11</span>
-        </span>
-        
-            <span class="fa-wrap">
-                <i class="fa fa-eye"></i>
-                <span id="busuanzi_value_page_pv"></span>
-            </span>
-        
-    
-</div>
-        
-        
-    </div>
-    
-    <div class="post-body post-content" id="container">
-        
-    <div class="toc-article">
-        <strong>
-            目录
-        </strong>
-        <div class="toc-content">
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#使用-Redis-实现-Session-共享"><span class="toc-text">使用 Redis 实现 Session 共享</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-什么是-Session"><span class="toc-text">1 什么是 Session</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-为什么需要同步session-？"><span class="toc-text">2 为什么需要同步session ？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-Session-复制"><span class="toc-text">1 Session 复制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-Session-集中存储"><span class="toc-text">2 Session 集中存储</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-项目准备"><span class="toc-text">3 项目准备</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-pom文件添加依赖"><span class="toc-text">3.1 pom文件添加依赖</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-配置文件添加redis-链接"><span class="toc-text">3.2 配置文件添加redis 链接</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3添加redis-session配置"><span class="toc-text">3.3添加redis session配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-获取sessionid-Controller"><span class="toc-text">3.4 获取sessionid Controller</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-5-测试"><span class="toc-text">3.5 测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#参考文献："><span class="toc-text">参考文献：</span></a></li></ol></li></ol>
-        </div>
-    </div>
-
-
-        <h2 id="使用-Redis-实现-Session-共享"><a href="#使用-Redis-实现-Session-共享" class="headerlink" title="使用 Redis 实现 Session 共享"></a>使用 Redis 实现 Session 共享</h2><h2 id="1-什么是-Session"><a href="#1-什么是-Session" class="headerlink" title="1 什么是 Session"></a>1 什么是 Session</h2><p>由于 HTTP 协议是无状态的协议，因而服务端需要记录用户的状态时，就需要用某种机制来识具体的用户。Session 是另一种记录客户状态的机制，不同的是 Cookie 保存在客户端浏览器中，而 Session 保存在服务器上。客户端浏览器访问服务器的时候，服务器把客户端信息以某种形式记录在服务器上，这就是 Session。客户端浏览器再次访问时只需要从该 Session 中查找该客户的状态就可以了。</p>
-<h2 id="2-为什么需要同步session-？"><a href="#2-为什么需要同步session-？" class="headerlink" title="2 为什么需要同步session ？"></a>2 为什么需要同步session ？</h2><blockquote>
-<p>当用户量比较大时候一个tomcat可能无法处理更多的请求，超过单个tomcat的承受能力，可能会出现用户等待，严重的导致tomcat宕机。</p>
-</blockquote>
-<p><img src="/images/springboot/892644927-5d1c4942a2cb6_articlex.png" alt="说明"></p>
-<blockquote>
-<p>这时候我们后端可能会采用多个tomcat去处理请求，分派请求，不同请求让多个tomcat分担处理。</p>
-<p>登录的时候可能采用的是tomca1，下单的时候可能采用的是tomcat2 等等等。</p>
-</blockquote>
-<p>若没有session共享同步，可能在tomcat1登录了，下一次请求被分派到tomcat2上，这时候用户就需要重新登录。</p>
-<blockquote>
-<p>在实际工作中我们建议使用外部的缓存设备来共享 Session，避免单个节点挂掉而影响服务，使用外部缓存 Session 后，我们的<br>共享数据都会放到外部缓存容器中，服务本身就会变成无状态的服务，可以随意的根据流量的大小增加或者减少负载的设备。</p>
-</blockquote>
-<p>目前主流的分布式 Session 管理有两种方案。</p>
-<h3 id="1-Session-复制"><a href="#1-Session-复制" class="headerlink" title="1 Session 复制"></a>1 Session 复制</h3><p>部分 Web 服务器能够支持 Session 复制功能，如 Tomcat。用户可以通过修改 Web 服务器的配置文件，让 Web 服务器进行 Session 复制，保持每一个服务器节点的 Session 数据都能达到一致。</p>
-<p>这种方案的实现依赖于 Web 服务器，需要 Web 服务器有 Session 复制功能。当 Web 应用中 Session 数量较多的时候，每个服务器节点都需要有一部分内存用来存放 Session，将会占用大量内存资源。同时大量的 Session 对象通过网络传输进行复制，不但占用了网络资源，还会因为复制同步出现延迟，导致程序运行错误。</p>
-<p>在微服务架构中，往往需要 N 个服务端来共同支持服务，不建议采用这种方案。</p>
-<p>这种session 管理方式，可以参考此篇文章：<a href="https://blog.csdn.net/weixin_38361347/article/details/82629025" target="_blank" rel="noopener">传送门</a></p>
-<h3 id="2-Session-集中存储"><a href="#2-Session-集中存储" class="headerlink" title="2 Session 集中存储"></a>2 Session 集中存储</h3><p>在单独的服务器或服务器集群上使用缓存技术，如 Redis 存储 Session 数据，集中管理所有的 Session，所有的 Web 服务器都从这个存储介质中存取对应的 Session，实现 Session 共享。将 Session 信息从应用中剥离出来后，其实就达到了服务的无状态化，这样就方便在业务极速发展时水平扩充。</p>
-<p><strong>Spring Session</strong><br>Spring Session 提供了一套创建和管理 Servlet HttpSession 的方案。Spring Session 提供了集群 Session（Clustered Sessions）功能，默认采用外置的 Redis 来存储 Session 数据，以此来解决 Session 共享的问题。</p>
-<p>Spring Session 为企业级 Java 应用的 Session 管理带来了革新，使得以下的功能更加容易实现：</p>
-<blockquote>
-<p>API 和用于管理用户会话的实现； HttpSession，允许以应用程序容器（即 Tomcat）中性的方式替换 HttpSession；<br>将 Session 所保存的状态卸载到特定的外部 Session 存储中，如 Redis 或 Apache Geode<br>中，它们能够以独立于应用服务器的方式提供高质量的集群； 支持每个浏览器上使用多个<br>Session，从而能够很容易地构建更加丰富的终端用户体验； 控制 Session ID<br>如何在客户端和服务器之间进行交换，这样的话就能很容易地编写 Restful API，因为它可以从 HTTP 头信息中获取 Session<br>ID，而不必再依赖于 cookie； 当用户使用 WebSocket 发送请求的时候，能够保持 HttpSession 处于活跃状态。<br>需要说明的很重要的一点就是，Spring Session 的核心项目并不依赖于 Spring 框架，因此，我们甚至能够将其应用于不使用<br>Spring 框架的项目中。</p>
-</blockquote>
-<h2 id="3-项目准备"><a href="#3-项目准备" class="headerlink" title="3 项目准备"></a>3 项目准备</h2><h3 id="3-1-pom文件添加依赖"><a href="#3-1-pom文件添加依赖" class="headerlink" title="3.1 pom文件添加依赖"></a>3.1 pom文件添加依赖</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-boot-starter-data-redis-reactive&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.springframework.session&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-session-data-redis&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
-
-<h3 id="3-2-配置文件添加redis-链接"><a href="#3-2-配置文件添加redis-链接" class="headerlink" title="3.2 配置文件添加redis 链接"></a>3.2 配置文件添加redis 链接</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">spring.redis.database=0</span><br><span class="line">spring.redis.host=127.0.0.1</span><br><span class="line">spring.redis.port=6379</span><br><span class="line">spring.redis.password=</span><br><span class="line">spring.redis.jedis.pool.max-idle=8</span><br><span class="line">spring.redis.jedis.pool.max-wait=-1</span><br><span class="line">spring.redis.jedis.pool.min-idle=0</span><br><span class="line">spring.redis.timeout=5000</span><br><span class="line"></span><br><span class="line">server.port=8081</span><br></pre></td></tr></table></figure>
-
-<h3 id="3-3添加redis-session配置"><a href="#3-3添加redis-session配置" class="headerlink" title="3.3添加redis session配置"></a>3.3添加redis session配置</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">package com.crecgec.cas.frontend.config;</span><br><span class="line"></span><br><span class="line">import org.springframework.context.annotation.Configuration;</span><br><span class="line">import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;</span><br><span class="line"></span><br><span class="line">@Configuration  </span><br><span class="line">@EnableRedisHttpSession</span><br><span class="line">public class RedisSessionConfig &#123;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="3-4-获取sessionid-Controller"><a href="#3-4-获取sessionid-Controller" class="headerlink" title="3.4 获取sessionid Controller"></a>3.4 获取sessionid Controller</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">package com.crecgec.cas.frontend.controller;</span><br><span class="line"> </span><br><span class="line">import java.util.HashMap;</span><br><span class="line">import java.util.Map;</span><br><span class="line"> </span><br><span class="line">import javax.servlet.http.HttpSession;</span><br><span class="line"> </span><br><span class="line">import org.springframework.web.bind.annotation.RequestMapping;</span><br><span class="line">import org.springframework.web.bind.annotation.RequestParam;</span><br><span class="line">import org.springframework.web.bind.annotation.RestController;</span><br><span class="line"> </span><br><span class="line">@RestController</span><br><span class="line">public class SessionController &#123;</span><br><span class="line"> </span><br><span class="line">    @RequestMapping(value = &quot;/setsession&quot;)</span><br><span class="line">    public Object setSession(@RequestParam(required=false) String value, HttpSession session) &#123;</span><br><span class="line">        session.setAttribute(&quot;value&quot;, value);</span><br><span class="line">        return session.getId();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    @RequestMapping(value = &quot;/getsession&quot;)</span><br><span class="line">    public Object getSession(HttpSession session) &#123;</span><br><span class="line">        Object value = session.getAttribute(&quot;value&quot;);</span><br><span class="line">        Map&lt;String, Object&gt; map = new HashMap&lt;&gt;();</span><br><span class="line">        map.put(&quot;sessionId&quot;, session.getId());</span><br><span class="line">        map.put(&quot;value&quot;, value);</span><br><span class="line">        return map;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="3-5-测试"><a href="#3-5-测试" class="headerlink" title="3.5 测试"></a>3.5 测试</h3><p>访问<a href="http://localhost:8080/setsession" target="_blank" rel="noopener">http://localhost:8080/setsession</a></p>
-<p><img src="/images/springboot/1570759299435-8b02890d-aac8-4e4a-ad9f-f5d80b877285.png" alt="image.png"></p>
-<p>启动8081 <a href="http://localhost:8081/getsession" target="_blank" rel="noopener">http://localhost:8081/getsession</a></p>
-<p><img src="/images/springboot/1570759346002-4f80663c-e337-4d19-b8a3-1a6ec17171db.png" alt="image.png"></p>
-<h3 id="参考文献："><a href="#参考文献：" class="headerlink" title="参考文献："></a>参考文献：</h3><p><a href="https://blog.csdn.net/bowei026/article/details/86531614" target="_blank" rel="noopener">springboot2.1入门系列四 Spring Session实现session共享</a><br><a href="https://blog.csdn.net/moxiaomomo/article/details/82749865" target="_blank" rel="noopener">Redis共享Session原理及示例</a><br><a href="https://segmentfault.com/a/1190000019625173" target="_blank" rel="noopener">SpringBoot 使用 Redis 实现 Session 共享</a></p>
-
-        
-    </div>
-    
-
-
-    
-        <div class="post-footer">
-            <div class="col-sm-10">
-                <div>
-                    <b>本文链接</b>：<a href="/springboot/springboot-redis-springsession/" target="_blank">SpringBoot2.1.6集成spring session redis实现session共享</a>
-                </div>
-                <div>
-                    
-                        转载声明：本博客由筱进GG创作，采用 <a href="https://creativecommons.org/licenses/by-nc-nd/3.0/" target="_blank"> CC BY 3.0 CN </a> 许可协议。可自由转载、引用，但需署名作者且注明文章出处。如转载至微信公众号，请在文末添加作者公众号二维码。
-                    
-                </div>
-                <div>
-                    
+        <div class="post-content">
+            <div class="post-head home-post-head">
+                <h1 class="post-title">
+                    <a href="/micro-service/microservice02/">服务发现 - Eureka</a>
+                </h1>
+                <div class="post-meta">  &bull;
+                    <time class="post-date" datetime="" title="">
+                        2019年10月16日
+                    </time>
                 </div>
             </div>
-            <div class="col-sm-2">
-                <img src="/icons/wx.jpg" width=100%/>
-            </div>
+            <p class="brief">
+                
+                    Eureka简介Eureka是Netflix开源的服务发现组件，本身是一个基于REST的服务，包含Server和Client两部分，Spring Cloud将它集成在子项目Spring Cloud Netflix中。
+关于服务发现在微服务架构中，服务发现（Service Discovery）是关键原则之一。手动配置每个客户端或某种形式的约定是很难做的，并且很脆弱。Spring Cloud提供...
+                
+            </p>
         </div>
-    
-</article>
-
-<div class="article-nav prev-next-wrap clearfix">
-    
-        <a target="_blank" href="/http/httpclient-utils/" class="pre-post btn btn-default"
-           title='HttpClient工具类'>
-            <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
-            <span class="hidden-xs">HttpClient工具类</span>
-        </a>
-    
-    
-        <a target="_blank" href="/docker/05-docker-lession-index/" class="next-post btn btn-default"
-           title='Docker部署springboot项目'>
-            <span class="hidden-lg">下一篇</span>
-            <span class="hidden-xs">Docker部署springboot项目</span><i class="fa fa-angle-right fa-fw"></i>
-        </a>
-    
-</div>
+    </article>
+ 
 
 
 
@@ -464,7 +361,7 @@
         
     <div class="widget">
         <h3 class="title">分类</h3>
-        <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/"><i class="fa" aria-hidden="true">Docker</i></a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/HTTP/"><i class="fa" aria-hidden="true">HTTP</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/"><i class="fa" aria-hidden="true">Redis</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/"><i class="fa" aria-hidden="true">Spring</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link current" href="/categories/SpringSession/"><i class="fa" aria-hidden="true">SpringSession</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/maven/"><i class="fa" aria-hidden="true">maven</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/主键/"><i class="fa" aria-hidden="true">主键</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/其他/"><i class="fa" aria-hidden="true">其他</i></a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/安装教程/"><i class="fa" aria-hidden="true">安装教程</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/工具/"><i class="fa" aria-hidden="true">工具</i></a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/微服务/"><i class="fa" aria-hidden="true">微服务</i></a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据库/"><i class="fa" aria-hidden="true">数据库</i></a><span class="category-list-count">1</span></li></ul>
+        <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/"><i class="fa" aria-hidden="true">Docker</i></a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/HTTP/"><i class="fa" aria-hidden="true">HTTP</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/"><i class="fa" aria-hidden="true">Redis</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/"><i class="fa" aria-hidden="true">Spring</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringSession/"><i class="fa" aria-hidden="true">SpringSession</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/maven/"><i class="fa" aria-hidden="true">maven</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/主键/"><i class="fa" aria-hidden="true">主键</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/其他/"><i class="fa" aria-hidden="true">其他</i></a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/安装教程/"><i class="fa" aria-hidden="true">安装教程</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/工具/"><i class="fa" aria-hidden="true">工具</i></a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/微服务/"><i class="fa" aria-hidden="true">微服务</i></a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据库/"><i class="fa" aria-hidden="true">数据库</i></a><span class="category-list-count">1</span></li></ul>
     </div>
 
 
