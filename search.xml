@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[SpringBoot那些好用的连接池HikariCP]]></title>
+    <url>%2Fspringboot%2Fspringboot-HikariCP%2F</url>
+    <content type="text"><![CDATA[HikariCP来自于日语，翻译过来是光的意思，由此可见，连接池非常的快。 HikariCP是什么HikariCP是数据库连接池,而且是号称史上最快的,而且目前来看确实是这样的,SpringBoot2.0也已经采用HikariCP作为默认连接池配置. HikariCP GitHub网址 HikariCP为什么这么快 字节码级别优化(很多方法通过JavaAssist生成) 代码量非常小，很多方法都没有写，是通过JavaAssist编译的时候是动态生成的。 大量小改进 用FastStatementList代替ArrayList 无锁集合ConcurrentBag（借鉴了.NET中的ConcurrentBag，在java中实现了自己的ConcurrentBag，对于高并发方面有些优化） 代理类的优化 (比如，用invokestatic代替了invokevirtual) [invokestatic通过调用getProxyPreparedStatement静态方法生成了18个操作 invokevirtual通过ProxyFactory.getProxyPreparedStatement生成15个操作，由此可见。 在Spring Boot中的配置Spring Boot 2.x 默认使用HikariCP 配置spring.datasource.hikari.* 配置 Spring Boot 1.x 默认使用Tomcat连接池，需要移除tomcat-jdbc依赖 spring.datasource.type=com.zaxxer.hikari.HikariDataSource HikariCP数据源配置源码： 1234567891011121314151617181920212223/** * Hikari DataSource configuration. */@Configuration@ConditionalOnClass(HikariDataSource.class)@ConditionalOnMissingBean(DataSource.class)@ConditionalOnProperty(name = "spring.datasource.type", havingValue = "com.zaxxer.hikari.HikariDataSource", matchIfMissing = true)static class Hikari &#123; @Bean @ConfigurationProperties(prefix = "spring.datasource.hikari") public HikariDataSource dataSource(DataSourceProperties properties) &#123; HikariDataSource dataSource = createDataSource(properties, HikariDataSource.class); if (StringUtils.hasText(properties.getName())) &#123; dataSource.setPoolName(properties.getName()); &#125; return dataSource; &#125;&#125;]]></content>
+      <categories>
+        <category>SpringBoot</category>
+      </categories>
+      <tags>
+        <tag>SpringBoot</tag>
+        <tag>HikariCP</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[服务发现 - Eureka]]></title>
     <url>%2Fmicro-service%2Fmicroservice02%2F</url>
     <content type="text"><![CDATA[Eureka简介Eureka是Netflix开源的服务发现组件，本身是一个基于REST的服务，包含Server和Client两部分，Spring Cloud将它集成在子项目Spring Cloud Netflix中。 关于服务发现在微服务架构中，服务发现（Service Discovery）是关键原则之一。手动配置每个客户端或某种形式的约定是很难做的，并且很脆弱。Spring Cloud提供了多种服务发现的实现方式，例如：Eureka、Consul、Zookeeper。 Spring Cloud支持得最好的是Eureka，其次是Consul，最次是Zookeeper。 代码示例 创建一个Maven工程（microservice-discovery-eureka），并在pom.xml中加入如下内容： 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"&gt; &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt; &lt;groupId&gt;cn.cicoding&lt;/groupId&gt; &lt;artifactId&gt;microservice-discovery-eureka&lt;/artifactId&gt; &lt;version&gt;0.0.1-SNAPSHOT&lt;/version&gt; &lt;packaging&gt;jar&lt;/packaging&gt; &lt;!-- 引入spring boot的依赖 --&gt; &lt;parent&gt; &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt; &lt;artifactId&gt;spring-boot-starter-parent&lt;/artifactId&gt; &lt;version&gt;2.1.4.RELEASE&lt;/version&gt; &lt;/parent&gt; &lt;properties&gt; &lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt; &lt;java.version&gt;1.8&lt;/java.version&gt; &lt;/properties&gt; &lt;dependencies&gt; &lt;dependency&gt; &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt; &lt;artifactId&gt;spring-cloud-starter-netflix-eureka-server&lt;/artifactId&gt; &lt;/dependency&gt; &lt;/dependencies&gt; &lt;!-- 引入spring cloud的依赖 --&gt; &lt;dependencyManagement&gt; &lt;dependencies&gt; &lt;dependency&gt; &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt; &lt;artifactId&gt;spring-cloud-dependencies&lt;/artifactId&gt; &lt;version&gt;Greenwich.SR1&lt;/version&gt; &lt;type&gt;pom&lt;/type&gt; &lt;scope&gt;import&lt;/scope&gt; &lt;/dependency&gt; &lt;/dependencies&gt; &lt;/dependencyManagement&gt; &lt;!-- 添加spring-boot的maven插件 --&gt; &lt;build&gt; &lt;plugins&gt; &lt;plugin&gt; &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt; &lt;artifactId&gt;spring-boot-maven-plugin&lt;/artifactId&gt; &lt;/plugin&gt; &lt;/plugins&gt; &lt;/build&gt;&lt;/project&gt; 编写Spring Boot启动程序：通过@EnableEurekaServer申明一个注册中心： 12345678910111213package cn.cicoding;import org.springframework.boot.SpringApplication;import org.springframework.boot.autoconfigure.SpringBootApplication;import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;@SpringBootApplication@EnableEurekaServerpublic class EurekaApplication &#123; public static void main(String[] args) &#123; SpringApplication.run(EurekaApplication.class, args); &#125;&#125; 在默认情况下，Eureka会将自己也作为客户端尝试注册，所以在单机模式下，我们需要禁止该行为，只需要在application.yml中如下配置： 12345678910server: port: 8761eureka: client: # 是否要注册到其他Eureka Server实例 register-with-eureka: false # 是否要从其他Eureka Server实例获取数据 fetch-registry: false service-url: defaultZone: http://localhost:8761/eureka/ 启动工程后，访问：http://discovery:8761/ ，如下图。我们会发现此时还没有服务注册到Eureka上面。]]></content>
@@ -33,8 +45,8 @@
         <category>SpringSession</category>
       </categories>
       <tags>
-        <tag>session共享</tag>
         <tag>SpringBoot</tag>
+        <tag>session共享</tag>
         <tag>SpringSession</tag>
       </tags>
   </entry>

@@ -18,10 +18,14 @@
     <link rel="dns-prefetch" href="https://www.cicoding.cn">
     <!--SEO-->
 
-    <meta name="keywords" content="筱进GG,Spring Cloud,Docker,微服务架构,Spring Boot,经验分享,软件代做,毕业设计,博客建站">
+    <meta name="keywords" content="SpringBoot,HikariCP">
 
 
-    <meta name="description" content="Spring Cloud、Docker、微服务架构、Cloud Native相关知识分享、筱进GG的博客,毕业设计代做">
+    <meta name="description" content="HikariCP来自于日语，翻译过来是光的意思，由此可见，连接池非常的快。
+HikariCP是什么HikariCP是数据库连接池,而且是号称史上最快的,而且目前来看确实是这样的,SpringBoot2.0也已经采用HikariCP作为默认连接池配置.
+
+ HikariCP GitHub网址 
+...">
 
 
 
@@ -32,7 +36,7 @@
     <!--Title-->
 
 
-<title>标签: HTTP | 筱进GG的博客</title>
+<title>SpringBoot那些好用的连接池HikariCP | 筱进GG的博客</title>
 
 
     <link rel="alternate" href="/atom.xml" title="筱进GG的博客" type="application/atom+xml">
@@ -256,49 +260,138 @@
     <section class="content-wrap">
         <div class="container">
             <div class="row">
-                <main class="col-md-8 main-content ">
-                    <ol class="breadcrumb">
+                <main class="col-md-8 main-content m-post">
+                    
+
+<p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="SpringBoot那些好用的连接池HikariCP">
+            
+                SpringBoot那些好用的连接池HikariCP
+            
+        </h1>
+        <div class="post-meta">
     
-    
-        <li>
-            <a href="/tags" target="_blank">标签</a> /
-            <a href="/tags/HTTP" target="_blank">
-                HTTP
-            </a>
-        </li>
-    
+        <span class="categories-meta fa-wrap">
+            <i class="fa fa-folder-open-o"></i>
+            <a class="category-link" href="/categories/SpringBoot/">SpringBoot</a>
+        </span>
     
 
-</ol>
+    
+        <span class="fa-wrap">
+            <i class="fa fa-tags"></i>
+            <span class="tags-meta">
+                
+                    <a class="tag-link" href="/tags/HikariCP/">HikariCP</a> <a class="tag-link" href="/tags/SpringBoot/">SpringBoot</a>
+                
+            </span>
+        </span>
+    
 
-
-    <article class="post">
+    
         
-            <div class="post-media">
-                <a href="/http/httpclient-utils/">
-                    <img class="img-ajax" src="/img/loading.gif"  data-src="/images/http/http20191012144553.jpg"  alt="HttpClient工具类">
-                </a>
-            </div>
+        <span class="fa-wrap">
+            <i class="fa fa-clock-o"></i>
+            <span class="date-meta">2019/10/16</span>
+        </span>
         
-        <div class="post-content">
-            <div class="post-head home-post-head">
-                <h1 class="post-title">
-                    <a href="/http/httpclient-utils/">HttpClient工具类</a>
-                </h1>
-                <div class="post-meta">  &bull;
-                    <time class="post-date" datetime="" title="">
-                        2019年10月11日
-                    </time>
+            <span class="fa-wrap">
+                <i class="fa fa-eye"></i>
+                <span id="busuanzi_value_page_pv"></span>
+            </span>
+        
+    
+</div>
+        
+        
+    </div>
+    
+    <div class="post-body post-content" id="container">
+        
+    <div class="toc-article">
+        <strong>
+            目录
+        </strong>
+        <div class="toc-content">
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#HikariCP是什么"><span class="toc-text">HikariCP是什么</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HikariCP为什么这么快"><span class="toc-text">HikariCP为什么这么快</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#在Spring-Boot中的配置"><span class="toc-text">在Spring Boot中的配置</span></a></li></ol>
+        </div>
+    </div>
+
+
+        <p>HikariCP来自于日语，翻译过来是光的意思，由此可见，连接池非常的快。</p>
+<h3 id="HikariCP是什么"><a href="#HikariCP是什么" class="headerlink" title="HikariCP是什么"></a>HikariCP是什么</h3><p>HikariCP是数据库连接池,而且是号称史上最快的,而且目前来看确实是这样的,SpringBoot2.0也已经采用HikariCP作为默认连接池配置.</p>
+<p><img src="/images/springboot/1571219068394.png" alt="1571219068394"></p>
+<p> <a href="https://github.com/brettwooldridge/HikariCP" target="_blank" rel="noopener">HikariCP GitHub网址</a> </p>
+<h3 id="HikariCP为什么这么快"><a href="#HikariCP为什么这么快" class="headerlink" title="HikariCP为什么这么快"></a>HikariCP为什么这么快</h3><ul>
+<li><p>字节码级别优化(很多方法通过JavaAssist生成)  </p>
+<p> 代码量非常小，很多方法都没有写，是通过JavaAssist编译的时候是动态生成的。</p>
+</li>
+<li><p>大量小改进</p>
+<ul>
+<li><p>用FastStatementList代替ArrayList</p>
+</li>
+<li><p>无锁集合ConcurrentBag（借鉴了.NET中的ConcurrentBag，在java中实现了自己的ConcurrentBag，对于高并发方面有些优化）</p>
+</li>
+<li><p>代理类的优化 (比如，用<a href="https://github.com/brettwooldridge/HikariCP/wiki/Down-the-Rabbit-Hole#invocation-invokevirtual-vs-invokestatic" target="_blank" rel="noopener">invokestatic代替了invokevirtual</a>)</p>
+<p>[invokestatic通过调用getProxyPreparedStatement静态方法生成了18个操作</p>
+<p>invokevirtual通过ProxyFactory.getProxyPreparedStatement生成15个操作，由此可见。</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="在Spring-Boot中的配置"><a href="#在Spring-Boot中的配置" class="headerlink" title="在Spring Boot中的配置"></a>在Spring Boot中的配置</h3><p>Spring Boot 2.x</p>
+<ul>
+<li>默认使用HikariCP</li>
+<li>配置spring.datasource.hikari.* 配置</li>
+</ul>
+<p>Spring Boot 1.x</p>
+<ul>
+<li>默认使用Tomcat连接池，需要移除tomcat-jdbc依赖</li>
+<li>spring.datasource.type=com.zaxxer.hikari.HikariDataSource</li>
+</ul>
+<p>HikariCP数据源配置源码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Hikari DataSource configuration.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@ConditionalOnClass</span>(HikariDataSource.class)</span><br><span class="line"><span class="meta">@ConditionalOnMissingBean</span>(DataSource.class)</span><br><span class="line"><span class="meta">@ConditionalOnProperty</span>(name = <span class="string">"spring.datasource.type"</span>,</span><br><span class="line">		havingValue = <span class="string">"com.zaxxer.hikari.HikariDataSource"</span>, matchIfMissing = <span class="keyword">true</span>)</span><br><span class="line"><span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Hikari</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Bean</span></span><br><span class="line">	<span class="meta">@ConfigurationProperties</span>(prefix = <span class="string">"spring.datasource.hikari"</span>)</span><br><span class="line">	<span class="function"><span class="keyword">public</span> HikariDataSource <span class="title">dataSource</span><span class="params">(DataSourceProperties properties)</span> </span>&#123;</span><br><span class="line">		HikariDataSource dataSource = createDataSource(properties,</span><br><span class="line">				HikariDataSource.class);</span><br><span class="line">		<span class="keyword">if</span> (StringUtils.hasText(properties.getName())) &#123;</span><br><span class="line">			dataSource.setPoolName(properties.getName());</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> dataSource;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+        <h2>相关文章</h2><ul><li><a href="/springboot/springboot-redis-springsession/">SpringBoot2.1.6集成spring session redis实现session共享</a></li></ul>
+    </div>
+    
+
+
+    
+        <div class="post-footer">
+            <div class="col-sm-10">
+                <div>
+                    <b>本文链接</b>：<a href="/springboot/springboot-HikariCP/" target="_blank">SpringBoot那些好用的连接池HikariCP</a>
+                </div>
+                <div>
+                    
+                        转载声明：本博客由筱进GG创作，采用 <a href="https://creativecommons.org/licenses/by-nc-nd/3.0/" target="_blank"> CC BY 3.0 CN </a> 许可协议。可自由转载、引用，但需署名作者且注明文章出处。如转载至微信公众号，请在文末添加作者公众号二维码。
+                    
+                </div>
+                <div>
+                    
                 </div>
             </div>
-            <p class="brief">
-                
-                    HttpClientUtils12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879808182838485868788899091929394959...
-                
-            </p>
+            <div class="col-sm-2">
+                <img src="/icons/wx.jpg" width=100%/>
+            </div>
         </div>
-    </article>
- 
+    
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+    
+        <a target="_blank" href="/micro-service/microservice02/" class="next-post btn btn-default"
+           title='服务发现 - Eureka'>
+            <span class="hidden-lg">下一篇</span>
+            <span class="hidden-xs">服务发现 - Eureka</span><i class="fa fa-angle-right fa-fw"></i>
+        </a>
+    
+</div>
 
 
 
@@ -366,7 +459,7 @@
         
     <div class="widget">
         <h3 class="title">分类</h3>
-        <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/"><i class="fa" aria-hidden="true">Docker</i></a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/HTTP/"><i class="fa" aria-hidden="true">HTTP</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/"><i class="fa" aria-hidden="true">Redis</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/"><i class="fa" aria-hidden="true">Spring</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringBoot/"><i class="fa" aria-hidden="true">SpringBoot</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringSession/"><i class="fa" aria-hidden="true">SpringSession</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/maven/"><i class="fa" aria-hidden="true">maven</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/主键/"><i class="fa" aria-hidden="true">主键</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/其他/"><i class="fa" aria-hidden="true">其他</i></a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/安装教程/"><i class="fa" aria-hidden="true">安装教程</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/工具/"><i class="fa" aria-hidden="true">工具</i></a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/微服务/"><i class="fa" aria-hidden="true">微服务</i></a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据库/"><i class="fa" aria-hidden="true">数据库</i></a><span class="category-list-count">1</span></li></ul>
+        <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/"><i class="fa" aria-hidden="true">Docker</i></a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/HTTP/"><i class="fa" aria-hidden="true">HTTP</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/"><i class="fa" aria-hidden="true">Redis</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/"><i class="fa" aria-hidden="true">Spring</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link current" href="/categories/SpringBoot/"><i class="fa" aria-hidden="true">SpringBoot</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringSession/"><i class="fa" aria-hidden="true">SpringSession</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/maven/"><i class="fa" aria-hidden="true">maven</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/主键/"><i class="fa" aria-hidden="true">主键</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/其他/"><i class="fa" aria-hidden="true">其他</i></a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/安装教程/"><i class="fa" aria-hidden="true">安装教程</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/工具/"><i class="fa" aria-hidden="true">工具</i></a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/微服务/"><i class="fa" aria-hidden="true">微服务</i></a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据库/"><i class="fa" aria-hidden="true">数据库</i></a><span class="category-list-count">1</span></li></ul>
     </div>
 
 
