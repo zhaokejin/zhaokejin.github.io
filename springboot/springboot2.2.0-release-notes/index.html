@@ -18,10 +18,17 @@
     <link rel="dns-prefetch" href="https://www.cicoding.cn">
     <!--SEO-->
 
-    <meta name="keywords" content="筱进GG,Spring Cloud,Docker,微服务架构,Spring Boot,经验分享,软件代做,毕业设计,博客建站">
+    <meta name="keywords" content="SpringBoot">
 
 
-    <meta name="description" content="Spring Cloud、Docker、微服务架构、Cloud Native相关知识分享、筱进GG的博客,毕业设计代做">
+    <meta name="description" content="Spring Boot 2.2 Release Notes
+ApplicationContextRunner简单的bean注册
+
+RestTemplateBuilder 要求定制
+
+从配置注释处理器中排除 groovy.lang.MetaClass 类型 
+
+响应式Elasticsearch自...">
 
 
 
@@ -32,7 +39,7 @@
     <!--Title-->
 
 
-<title>标签: Hexo | 筱进GG的博客</title>
+<title>SpringBoot2.2.0 Release版本发行特性 | 筱进GG的博客</title>
 
 
     <link rel="alternate" href="/atom.xml" title="筱进GG的博客" type="application/atom+xml">
@@ -256,49 +263,166 @@
     <section class="content-wrap">
         <div class="container">
             <div class="row">
-                <main class="col-md-8 main-content ">
-                    <ol class="breadcrumb">
+                <main class="col-md-8 main-content m-post">
+                    
+
+<p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="SpringBoot2.2.0 Release版本发行特性">
+            
+                SpringBoot2.2.0 Release版本发行特性
+            
+        </h1>
+        <div class="post-meta">
     
-    
-        <li>
-            <a href="/tags" target="_blank">标签</a> /
-            <a href="/tags/Hexo" target="_blank">
-                Hexo
-            </a>
-        </li>
-    
+        <span class="categories-meta fa-wrap">
+            <i class="fa fa-folder-open-o"></i>
+            <a class="category-link" href="/categories/SpringBoot/">SpringBoot</a>
+        </span>
     
 
-</ol>
+    
+        <span class="fa-wrap">
+            <i class="fa fa-tags"></i>
+            <span class="tags-meta">
+                
+                    <a class="tag-link" href="/tags/SpringBoot/">SpringBoot</a>
+                
+            </span>
+        </span>
+    
 
-
-    <article class="post">
+    
         
-            <div class="post-media">
-                <a href="/other/theme-Use/">
-                    <img class="img-ajax" src="/img/loading.gif"  data-src="https://faithlove.github.io/pic/2018/RMTP_1/topPicPre.png"  alt="theme使用">
-                </a>
-            </div>
+        <span class="fa-wrap">
+            <i class="fa fa-clock-o"></i>
+            <span class="date-meta">2019/10/21</span>
+        </span>
         
-        <div class="post-content">
-            <div class="post-head home-post-head">
-                <h1 class="post-title">
-                    <a href="/other/theme-Use/">theme使用</a>
-                </h1>
-                <div class="post-meta">  &bull;
-                    <time class="post-date" datetime="" title="">
-                        2018年10月18日
-                    </time>
+            <span class="fa-wrap">
+                <i class="fa fa-eye"></i>
+                <span id="busuanzi_value_page_pv"></span>
+            </span>
+        
+    
+</div>
+        
+        
+    </div>
+    
+    <div class="post-body post-content" id="container">
+        
+    <div class="toc-article">
+        <strong>
+            目录
+        </strong>
+        <div class="toc-content">
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Spring-Boot-2-2-Release-Notes"><span class="toc-text">Spring Boot 2.2 Release Notes</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#依赖升级"><span class="toc-text">依赖升级</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Spring-Boot-2-2中的弃用"><span class="toc-text">Spring Boot 2.2中的弃用</span></a>
+        </div>
+    </div>
+
+
+        <h3 id="Spring-Boot-2-2-Release-Notes"><a href="#Spring-Boot-2-2-Release-Notes" class="headerlink" title="Spring Boot 2.2 Release Notes"></a>Spring Boot 2.2 Release Notes</h3><ul>
+<li><p>ApplicationContextRunner简单的bean注册</p>
+</li>
+<li><p>RestTemplateBuilder 要求定制</p>
+</li>
+<li><p>从配置注释处理器中排除 groovy.lang.MetaClass 类型 </p>
+</li>
+<li><p>响应式Elasticsearch自动配置</p>
+</li>
+<li><p>Banners  ASCII标语文件现在可以使用来使用ANSI 256颜色转义码 </p>
+</li>
+<li><p>空闲JDBC连接指标</p>
+</li>
+<li><p>Kubernetes检测 ConditionalOnCloudPlatform 现在可以检测应用程序是否在Kubernetes上运行</p>
+</li>
+<li><p>RSocket支持</p>
+</li>
+<li><p>Java 13支持 Spring Boot 2.2增加了对Java 13的支持。还支持Java 8和11</p>
+</li>
+<li><p>······</p>
+<p><a href="https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-2.2-Release-Notes" target="_blank" rel="noopener">更多特性</a> </p>
+</li>
+</ul>
+<h3 id="依赖升级"><a href="#依赖升级" class="headerlink" title="依赖升级"></a>依赖升级</h3><p>Spring Boot 2.2移至几个Spring项目的新版本：</p>
+<ul>
+<li>Reactor Dysprosium</li>
+<li>Spring AMQP 2.2</li>
+<li>Spring Batch 4.2</li>
+<li>Spring Data Moore</li>
+<li>Spring Framework 5.2</li>
+<li>Spring HATEOAS 1.0</li>
+<li>Spring Integration 5.2</li>
+<li>Spring Kafka 2.3</li>
+<li>Spring Security 5.2</li>
+<li>Spring Session Corn</li>
+</ul>
+<p>第三方版本的更新：</p>
+<ul>
+<li>Artemis 2.9</li>
+<li>Elasticsearch 6.7</li>
+<li>Flyway 6.0</li>
+<li>Git Commit ID Plugin 3.0</li>
+<li>Hazelcast 3.12</li>
+<li>HSQLDB 2.5</li>
+<li>Jackson 2.10</li>
+<li>Jedis 3.1</li>
+<li>Jersey 2.29</li>
+<li>Kafka 2.3</li>
+<li>Lettuce 5.2</li>
+<li>Micrometer 1.3</li>
+<li>Mockito 3.1</li>
+<li>Solr 8.0</li>
+</ul>
+<h2 id="Spring-Boot-2-2中的弃用"><a href="#Spring-Boot-2-2中的弃用" class="headerlink" title="Spring Boot 2.2中的弃用"></a>Spring Boot 2.2中的弃用</h2><ul>
+<li>该<code>logging.name</code>属性已重命名为<code>logging.file.name</code>。 </li>
+<li>该<code>logging.path</code>属性已重命名为<code>logging.file.path</code>。 </li>
+<li><code>server.connection-timeout</code>不建议使用该属性，而应使用服务器特定的属性，因为它们的行为并不完全相同。 </li>
+<li><code>agent</code>Maven插件的属性已重命名为<code>agents</code>。 </li>
+<li><code>WebTestClientBuilderCustomizer</code>已移至<code>org.springframework.boot.test.web.reactive.server</code>。 </li>
+<li>······</li>
+</ul>
+<p>参考文档： <a href="https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-2.2-Release-Notes" target="_blank" rel="noopener">Spring Boot 2.2 Release Notes</a></p>
+
+        <h2>相关文章</h2><ul><li><a href="/springboot/springboot-HikariCP/">SpringBoot那些好用的连接池HikariCP</a></li><li><a href="/springboot/springboot-redis-springsession/">SpringBoot2.1.6集成spring session redis实现session共享</a></li></ul>
+    </div>
+    
+
+
+    
+        <div class="post-footer">
+            <div class="col-sm-10">
+                <div>
+                    <b>本文链接</b>：<a href="/springboot/springboot2.2.0-release-notes/" target="_blank">SpringBoot2.2.0 Release版本发行特性</a>
+                </div>
+                <div>
+                    
+                        转载声明：本博客由筱进GG创作，采用 <a href="https://creativecommons.org/licenses/by-nc-nd/3.0/" target="_blank"> CC BY 3.0 CN </a> 许可协议。可自由转载、引用，但需署名作者且注明文章出处。如转载至微信公众号，请在文末添加作者公众号二维码。
+                    
+                </div>
+                <div>
+                    
                 </div>
             </div>
-            <p class="brief">
-                
-                    1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859D:\hexo&amp;gt;hexo new page categoriesINFO  =========================================INFO  ...
-                
-            </p>
+            <div class="col-sm-2">
+                <img src="/icons/wx.jpg" width=100%/>
+            </div>
         </div>
-    </article>
- 
+    
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+    
+        <a target="_blank" href="/springboot/springboot-HikariCP/" class="next-post btn btn-default"
+           title='SpringBoot那些好用的连接池HikariCP'>
+            <span class="hidden-lg">下一篇</span>
+            <span class="hidden-xs">SpringBoot那些好用的连接池HikariCP</span><i class="fa fa-angle-right fa-fw"></i>
+        </a>
+    
+</div>
 
 
 
@@ -366,7 +490,7 @@
         
     <div class="widget">
         <h3 class="title">分类</h3>
-        <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/"><i class="fa" aria-hidden="true">Docker</i></a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/HTTP/"><i class="fa" aria-hidden="true">HTTP</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/"><i class="fa" aria-hidden="true">Redis</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/"><i class="fa" aria-hidden="true">Spring</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringBoot/"><i class="fa" aria-hidden="true">SpringBoot</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringSession/"><i class="fa" aria-hidden="true">SpringSession</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/maven/"><i class="fa" aria-hidden="true">maven</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/主键/"><i class="fa" aria-hidden="true">主键</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/其他/"><i class="fa" aria-hidden="true">其他</i></a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/安装教程/"><i class="fa" aria-hidden="true">安装教程</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/工具/"><i class="fa" aria-hidden="true">工具</i></a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/微服务/"><i class="fa" aria-hidden="true">微服务</i></a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据库/"><i class="fa" aria-hidden="true">数据库</i></a><span class="category-list-count">1</span></li></ul>
+        <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/"><i class="fa" aria-hidden="true">Docker</i></a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/HTTP/"><i class="fa" aria-hidden="true">HTTP</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/"><i class="fa" aria-hidden="true">Redis</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/"><i class="fa" aria-hidden="true">Spring</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link current" href="/categories/SpringBoot/"><i class="fa" aria-hidden="true">SpringBoot</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringSession/"><i class="fa" aria-hidden="true">SpringSession</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/maven/"><i class="fa" aria-hidden="true">maven</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/主键/"><i class="fa" aria-hidden="true">主键</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/其他/"><i class="fa" aria-hidden="true">其他</i></a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/安装教程/"><i class="fa" aria-hidden="true">安装教程</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/工具/"><i class="fa" aria-hidden="true">工具</i></a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/微服务/"><i class="fa" aria-hidden="true">微服务</i></a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据库/"><i class="fa" aria-hidden="true">数据库</i></a><span class="category-list-count">1</span></li></ul>
     </div>
 
 

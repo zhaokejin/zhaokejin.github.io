@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://www.cicoding.cn/springboot/springboot2.2.0-release-notes/</loc>
+    
+    <lastmod>2019-10-21T03:11:40.559Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://www.cicoding.cn/springboot/springboot-HikariCP/</loc>
     
     <lastmod>2019-10-16T10:09:21.638Z</lastmod>

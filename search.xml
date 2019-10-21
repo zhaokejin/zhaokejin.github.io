@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[SpringBoot2.2.0 Release版本发行特性]]></title>
+    <url>%2Fspringboot%2Fspringboot2.2.0-release-notes%2F</url>
+    <content type="text"><![CDATA[Spring Boot 2.2 Release Notes ApplicationContextRunner简单的bean注册 RestTemplateBuilder 要求定制 从配置注释处理器中排除 groovy.lang.MetaClass 类型 响应式Elasticsearch自动配置 Banners ASCII标语文件现在可以使用来使用ANSI 256颜色转义码 空闲JDBC连接指标 Kubernetes检测 ConditionalOnCloudPlatform 现在可以检测应用程序是否在Kubernetes上运行 RSocket支持 Java 13支持 Spring Boot 2.2增加了对Java 13的支持。还支持Java 8和11 ······ 更多特性 依赖升级Spring Boot 2.2移至几个Spring项目的新版本： Reactor Dysprosium Spring AMQP 2.2 Spring Batch 4.2 Spring Data Moore Spring Framework 5.2 Spring HATEOAS 1.0 Spring Integration 5.2 Spring Kafka 2.3 Spring Security 5.2 Spring Session Corn 第三方版本的更新： Artemis 2.9 Elasticsearch 6.7 Flyway 6.0 Git Commit ID Plugin 3.0 Hazelcast 3.12 HSQLDB 2.5 Jackson 2.10 Jedis 3.1 Jersey 2.29 Kafka 2.3 Lettuce 5.2 Micrometer 1.3 Mockito 3.1 Solr 8.0 Spring Boot 2.2中的弃用 该logging.name属性已重命名为logging.file.name。 该logging.path属性已重命名为logging.file.path。 server.connection-timeout不建议使用该属性，而应使用服务器特定的属性，因为它们的行为并不完全相同。 agentMaven插件的属性已重命名为agents。 WebTestClientBuilderCustomizer已移至org.springframework.boot.test.web.reactive.server。 ······ 参考文档： Spring Boot 2.2 Release Notes]]></content>
+      <categories>
+        <category>SpringBoot</category>
+      </categories>
+      <tags>
+        <tag>SpringBoot</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[SpringBoot那些好用的连接池HikariCP]]></title>
     <url>%2Fspringboot%2Fspringboot-HikariCP%2F</url>
     <content type="text"><![CDATA[HikariCP来自于日语，翻译过来是光的意思，由此可见，连接池非常的快。 HikariCP是什么HikariCP是数据库连接池,而且是号称史上最快的,而且目前来看确实是这样的,SpringBoot2.0也已经采用HikariCP作为默认连接池配置. HikariCP GitHub网址 HikariCP为什么这么快 字节码级别优化(很多方法通过JavaAssist生成) 代码量非常小，很多方法都没有写，是通过JavaAssist编译的时候是动态生成的。 大量小改进 用FastStatementList代替ArrayList 无锁集合ConcurrentBag（借鉴了.NET中的ConcurrentBag，在java中实现了自己的ConcurrentBag，对于高并发方面有些优化） 代理类的优化 (比如，用invokestatic代替了invokevirtual) [invokestatic通过调用getProxyPreparedStatement静态方法生成了18个操作 invokevirtual通过ProxyFactory.getProxyPreparedStatement生成15个操作，由此可见。 在Spring Boot中的配置Spring Boot 2.x 默认使用HikariCP 配置spring.datasource.hikari.* 配置 Spring Boot 1.x 默认使用Tomcat连接池，需要移除tomcat-jdbc依赖 spring.datasource.type=com.zaxxer.hikari.HikariDataSource HikariCP数据源配置源码： 1234567891011121314151617181920212223/** * Hikari DataSource configuration. */@Configuration@ConditionalOnClass(HikariDataSource.class)@ConditionalOnMissingBean(DataSource.class)@ConditionalOnProperty(name = "spring.datasource.type", havingValue = "com.zaxxer.hikari.HikariDataSource", matchIfMissing = true)static class Hikari &#123; @Bean @ConfigurationProperties(prefix = "spring.datasource.hikari") public HikariDataSource dataSource(DataSourceProperties properties) &#123; HikariDataSource dataSource = createDataSource(properties, HikariDataSource.class); if (StringUtils.hasText(properties.getName())) &#123; dataSource.setPoolName(properties.getName()); &#125; return dataSource; &#125;&#125;]]></content>
