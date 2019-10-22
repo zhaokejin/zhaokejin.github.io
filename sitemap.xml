@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://www.cicoding.cn/docker/00-docker-lession-index/</loc>
+    
+    <lastmod>2019-10-22T03:19:59.454Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://www.cicoding.cn/springboot/springboot2.2.0-release-notes/</loc>
     
     <lastmod>2019-10-21T03:11:40.559Z</lastmod>
@@ -93,20 +100,6 @@
   </url>
   
   <url>
-    <loc>https://www.cicoding.cn/docker/00-docker-lession-index/</loc>
-    
-    <lastmod>2019-09-28T12:04:16.145Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://www.cicoding.cn/docker/04-docker-lession-index/</loc>
-    
-    <lastmod>2019-09-28T11:56:20.296Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://www.cicoding.cn/other/Why-do-we-do-distributed-use-Redis%20-%20%E5%89%AF%E6%9C%AC/</loc>
     
     <lastmod>2019-09-28T04:56:25.161Z</lastmod>
@@ -124,27 +117,6 @@
     <loc>https://www.cicoding.cn/spring/spring-annotation/</loc>
     
     <lastmod>2019-09-28T04:51:03.555Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://www.cicoding.cn/docker/01-docker-lession-index/</loc>
-    
-    <lastmod>2019-09-28T04:45:42.618Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://www.cicoding.cn/docker/03-docker-lession-index/</loc>
-    
-    <lastmod>2019-09-28T03:55:07.719Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://www.cicoding.cn/docker/02-docker-lession-index/</loc>
-    
-    <lastmod>2019-09-28T03:55:07.718Z</lastmod>
     
   </url>
   
