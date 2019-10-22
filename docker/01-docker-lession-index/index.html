@@ -18,10 +18,13 @@
     <link rel="dns-prefetch" href="https://www.cicoding.cn">
     <!--SEO-->
 
-    <meta name="keywords" content="筱进GG,Spring Cloud,Docker,微服务架构,Spring Boot,经验分享,软件代做,毕业设计,博客建站">
+    <meta name="keywords" content="Docker">
 
 
-    <meta name="description" content="Spring Cloud、Docker、微服务架构、Cloud Native相关知识分享、筱进GG的博客,毕业设计代做">
+    <meta name="description" content="
+题外话
+我个人的文档风格，不会一上来就讲什么专业名词、贴原理图、贴架构图、贴代码啥的。。。感觉这样会给人一种很大的入门门槛，会让很多人一开始就失去了学习的兴趣和信心（我不喜欢那样的“装逼”风格，虽然看似很牛B的样子，其实对于新手入门的朋友而言，是没有任何参考价值的）。
+考虑到一些对于某一技术...">
 
 
 
@@ -32,7 +35,7 @@
     <!--Title-->
 
 
-<title>标签: Hexo | 筱进GG的博客</title>
+<title>传统项目开发部署的流程是怎样的？ | 筱进GG的博客</title>
 
 
     <link rel="alternate" href="/atom.xml" title="筱进GG的博客" type="application/atom+xml">
@@ -256,50 +259,188 @@
     <section class="content-wrap">
         <div class="container">
             <div class="row">
-                <main class="col-md-8 main-content ">
-                    <ol class="breadcrumb">
+                <main class="col-md-8 main-content m-post">
+                    
+
+<p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="传统项目开发部署的流程是怎样的？">
+            
+                传统项目开发部署的流程是怎样的？
+            
+        </h1>
+        <div class="post-meta">
     
-    
-        <li>
-            <a href="/tags" target="_blank">标签</a> /
-            <a href="/tags/Hexo" target="_blank">
-                Hexo
-            </a>
-        </li>
-    
+        <span class="categories-meta fa-wrap">
+            <i class="fa fa-folder-open-o"></i>
+            <a class="category-link" href="/categories/Docker/">Docker</a>
+        </span>
     
 
-</ol>
+    
+        <span class="fa-wrap">
+            <i class="fa fa-tags"></i>
+            <span class="tags-meta">
+                
+                    <a class="tag-link" href="/tags/Docker/">Docker</a>
+                
+            </span>
+        </span>
+    
 
-
-    <article class="post">
+    
         
-            <div class="post-media">
-                <a href="/other/theme-Use/">
-                    <img class="img-ajax" src="/img/loading.gif"  data-src="https://faithlove.github.io/pic/2018/RMTP_1/topPicPre.png"  alt="theme使用">
-                </a>
-            </div>
+        <span class="fa-wrap">
+            <i class="fa fa-clock-o"></i>
+            <span class="date-meta">2019/09/07</span>
+        </span>
         
-        <div class="post-content">
-            <div class="post-head home-post-head">
-                <h1 class="post-title">
-                    <a href="/other/theme-Use/">theme使用</a>
-                </h1>
-                <div class="post-meta">  &bull;
-                    <time class="post-date" datetime="" title="">
-                        2018年10月18日
-                    </time>
+            <span class="fa-wrap">
+                <i class="fa fa-eye"></i>
+                <span id="busuanzi_value_page_pv"></span>
+            </span>
+        
+    
+</div>
+        
+        
+    </div>
+    
+    <div class="post-body post-content" id="container">
+        
+    <div class="toc-article">
+        <strong>
+            目录
+        </strong>
+        <div class="toc-content">
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#前言"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#传统项目开发部署的基本流程"><span class="toc-text">传统项目开发部署的基本流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#存在什么问题？"><span class="toc-text">存在什么问题？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#比较好的做法是什么样的？"><span class="toc-text">比较好的做法是什么样的？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#技术方案"><span class="toc-text">技术方案</span></a></li></ol>
+        </div>
+    </div>
+
+
+        <blockquote>
+<p><strong>题外话</strong></p>
+<p>我个人的文档风格，不会一上来就讲什么专业名词、贴原理图、贴架构图、贴代码啥的。。。感觉这样会给人一种很大的入门门槛，会让很多人一开始就失去了学习的兴趣和信心（我不喜欢那样的“装逼”风格，虽然看似很牛B的样子，其实对于新手入门的朋友而言，是没有任何参考价值的）。</p>
+<p>考虑到一些对于某一技术不太懂、或者刚刚接触的朋友，所以尽量会写的通俗易懂。</p>
+</blockquote>
+<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><blockquote>
+<p>学习docker技术之前呢，我们通过引入一个大家都经历过的开发场景，由此作为切入点，学习起来思路会很清晰明白。</p>
+</blockquote>
+<h3 id="传统项目开发部署的基本流程"><a href="#传统项目开发部署的基本流程" class="headerlink" title="传统项目开发部署的基本流程"></a>传统项目开发部署的基本流程</h3><blockquote>
+<p>这里只简单描述一下，项目发布的基本流程</p>
+</blockquote>
+<ul>
+<li><p>本地开发+测试，没有问题的话，编译打包发布到测试环境</p>
+</li>
+<li><p>在测试环境中进行测试，测试完成后，发布到生产环境</p>
+</li>
+<li><p>在生产环境中进行最后的测试，如果没有问题，那么一切就OK了</p>
+</li>
+</ul>
+<h3 id="存在什么问题？"><a href="#存在什么问题？" class="headerlink" title="存在什么问题？"></a>存在什么问题？</h3><p>我想100%的人都亲身经历过这样的事情 —— 在自己本地测试都没有问题，发布到测试环境、生产环境后，就出现问题了！搞得自己非常苦恼！非常纠结！到底是哪里出了问题呢？明明代码什么的都一样啊~</p>
+<blockquote>
+<p>好吧，这里我就不仔细分析具体的原因是什么了，因为可能会有N种原因。</p>
+</blockquote>
+<blockquote>
+<p><strong>这里就列举一个比较常见的原因，就是：</strong></p>
+</blockquote>
+<ul>
+<li>本地开发环境与测试环境、生产环境上的软件环境配置，可能出现不一致的情况，导致有些时候相同的代码在不同的环境下运行会出现问题。</li>
+</ul>
+<p><strong>存在问题：不同机器上的软件环境不一致。（比较核心的问题）</strong></p>
+<blockquote>
+<p><strong>再列举几个实际开发中遇到的情况：</strong></p>
+</blockquote>
+<ul>
+<li>公司在阿里云买了一台新服务器，要想能正常发布项目等，前提是需要在服务器上重新安装一些软件环境（比如jdk、tomcat等），在安装软件环境的过程中，很大几率会出现配置错误的情况；一些比较复杂的环境配置步骤会很多，很多人都记不清具体的步骤和命令，还得上网搜索……</li>
+</ul>
+<p><strong>存在问题：软件环境的配置繁多、命令记不清楚。</strong></p>
+<ul>
+<li>像jdk、tomcat等基础的环境搭建，都已经很熟练了，每次有新机器的时候，都要重新搭建，这样就造成了重复性工作、效率低下、配置繁琐麻烦、易出错等情况。</li>
+</ul>
+<p><strong>存在问题：重复性搭建软件环境、效率低下。</strong></p>
+<blockquote>
+<p>当然也会有其他的问题，这里就不多做说明了。</p>
+</blockquote>
+<h3 id="比较好的做法是什么样的？"><a href="#比较好的做法是什么样的？" class="headerlink" title="比较好的做法是什么样的？"></a>比较好的做法是什么样的？</h3><blockquote>
+<p>举个例子：</p>
+<p>比如你到了一家新公司工作，一般都会让你在电脑上安装开发环境（比如JDK等），这时候一个技术人员递给了你一个U盘，里面有很多安装文件以及资源，你直接插在自己电脑上，copy需要的软件安装就行了，无需重新下载软件。</p>
+</blockquote>
+<p>上面的场景，比较好的一点是：不用在网上重新下载对应的软件，直接使用U盘里面已经有的软件进行安装就行了。而且，U盘中的软件可以进行版本更新以及提供给他人直接使用。多么方便。</p>
+<p>所以，针对上面提到的开发过程中遇到的开发环境等问题，如果能做到只搭建一次环境，多次复用的话，就nice了！就不会出现环境不一致的问题，也不用重复搭建软件环境了。</p>
+<p>有什么技术方案能解决这样的痛点吗？</p>
+<h3 id="技术方案"><a href="#技术方案" class="headerlink" title="技术方案"></a>技术方案</h3><p>因此，Docker出现了！</p>
+
+        <h2>相关文章</h2><ul><li><a href="/docker/00-docker-lession-index/">Docker系列教程</a></li><li><a href="/docker/03-docker-lession-index/">Docker镜像、容器、仓库的介绍</a></li><li><a href="/docker/05-docker-lession-index/">Docker部署springboot项目</a></li><li><a href="/docker/02-docker-lession-index/">Docker是干什么用的？</a></li><li><a href="/docker/04-docker-lession-index/">在Centos系统中安装Docker</a></li></ul>
+    </div>
+    
+
+
+    
+        <div class="post-footer">
+            <div class="col-sm-10">
+                <div>
+                    <b>本文链接</b>：<a href="/docker/01-docker-lession-index/" target="_blank">传统项目开发部署的流程是怎样的？</a>
+                </div>
+                <div>
+                    
+                        转载声明：本博客由筱进GG创作，采用 <a href="https://creativecommons.org/licenses/by-nc-nd/3.0/" target="_blank"> CC BY 3.0 CN </a> 许可协议。可自由转载、引用，但需署名作者且注明文章出处。如转载至微信公众号，请在文末添加作者公众号二维码。
+                    
+                </div>
+                <div>
+                    
                 </div>
             </div>
-            <p class="brief">
-                
-                    1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859D:\hexo&amp;gt;hexo new page categoriesINFO  =========================================INFO  ...
-                
-            </p>
+            <div class="col-sm-2">
+                <img src="/icons/wx.jpg" width=100%/>
+            </div>
         </div>
-    </article>
- 
+    
+</article>
 
+<div class="article-nav prev-next-wrap clearfix">
+    
+        <a target="_blank" href="/docker/02-docker-lession-index/" class="pre-post btn btn-default"
+           title='Docker是干什么用的？'>
+            <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+            <span class="hidden-xs">Docker是干什么用的？</span>
+        </a>
+    
+    
+        <a target="_blank" href="/database/mysql-8-problems/" class="next-post btn btn-default"
+           title='升级MySQL8问题总结'>
+            <span class="hidden-lg">下一篇</span>
+            <span class="hidden-xs">升级MySQL8问题总结</span><i class="fa fa-angle-right fa-fw"></i>
+        </a>
+    
+</div>
+
+
+    <div id="comments">
+        
+	<link rel="stylesheet" href="https://cdn.bootcss.com/gitalk/1.4.1/gitalk.min.css">
+<script src="//cdn.bootcss.com/gitalk/1.4.1/gitalk.min.js"></script>
+<script src="//cdn.bootcss.com/blueimp-md5/2.9.0/js/md5.min.js"></script>
+
+<div id="gitalk-container"></div>
+<script type="text/javascript">
+    var gitalk = new Gitalk({
+        // Gitalk配置
+        language: "zh-CN",
+        clientID: "934e6c8b8e5d8796b4c3",
+        clientSecret: "c6b01f8df89c3a426a0eb019ebe5f71620814aee",
+        repo: "zhaokejin.github.io",
+        owner: "zhaokejin",
+        admin: ["zhaokejin"],
+        id: md5(location.pathname),
+        distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+</script>
+
+
+    </div>
 
 
 
@@ -366,7 +507,7 @@
         
     <div class="widget">
         <h3 class="title">分类</h3>
-        <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/"><i class="fa" aria-hidden="true">Docker</i></a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/HTTP/"><i class="fa" aria-hidden="true">HTTP</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/"><i class="fa" aria-hidden="true">Redis</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/"><i class="fa" aria-hidden="true">Spring</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringBoot/"><i class="fa" aria-hidden="true">SpringBoot</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringSession/"><i class="fa" aria-hidden="true">SpringSession</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/maven/"><i class="fa" aria-hidden="true">maven</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/主键/"><i class="fa" aria-hidden="true">主键</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/其他/"><i class="fa" aria-hidden="true">其他</i></a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/安装教程/"><i class="fa" aria-hidden="true">安装教程</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/工具/"><i class="fa" aria-hidden="true">工具</i></a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/微服务/"><i class="fa" aria-hidden="true">微服务</i></a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据库/"><i class="fa" aria-hidden="true">数据库</i></a><span class="category-list-count">1</span></li></ul>
+        <ul class="category-list"><li class="category-list-item"><a class="category-list-link current" href="/categories/Docker/"><i class="fa" aria-hidden="true">Docker</i></a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/HTTP/"><i class="fa" aria-hidden="true">HTTP</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/"><i class="fa" aria-hidden="true">Redis</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/"><i class="fa" aria-hidden="true">Spring</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringBoot/"><i class="fa" aria-hidden="true">SpringBoot</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringSession/"><i class="fa" aria-hidden="true">SpringSession</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/maven/"><i class="fa" aria-hidden="true">maven</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/主键/"><i class="fa" aria-hidden="true">主键</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/其他/"><i class="fa" aria-hidden="true">其他</i></a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/安装教程/"><i class="fa" aria-hidden="true">安装教程</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/工具/"><i class="fa" aria-hidden="true">工具</i></a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/微服务/"><i class="fa" aria-hidden="true">微服务</i></a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据库/"><i class="fa" aria-hidden="true">数据库</i></a><span class="category-list-count">1</span></li></ul>
     </div>
 
 

@@ -18,13 +18,16 @@
     <link rel="dns-prefetch" href="https://www.cicoding.cn">
     <!--SEO-->
 
-    <meta name="keywords" content="微服务,Spring Cloud">
+    <meta name="keywords" content="Docker,Centos">
 
 
-    <meta name="description" content="如何解决Feign/Ribbon第一次请求失败的问题？**
-Spring Cloud中，Feign和Ribbon在整合了Hystrix后，可能会出现首次调用失败的问题，要如何解决该问题呢？
-造成该问题的原因
-Hystrix默认的超时时间是1秒，如果超过这个时间尚未响应，将会进入fallback...">
+    <meta name="description" content="前言：
+网上很多关于docker在centos系统上的安装教程，但是又各有异同，比较混乱。所以，此文章接下来的对于docker的安装，将参照官方的文档进行安装。
+
+
+官方文档地址：https://docs.docker.com/install/linux/docker-ce/centos/
+
+...">
 
 
 
@@ -35,7 +38,7 @@ Hystrix默认的超时时间是1秒，如果超过这个时间尚未响应，将
     <!--Title-->
 
 
-<title>SpringCloud-----Ribbon异常java.net.UnknownHostException | 筱进GG的博客</title>
+<title>在Centos系统中安装Docker | 筱进GG的博客</title>
 
 
     <link rel="alternate" href="/atom.xml" title="筱进GG的博客" type="application/atom+xml">
@@ -265,16 +268,16 @@ Hystrix默认的超时时间是1秒，如果超过这个时间尚未响应，将
 <p id="process"></p>
 <article class="post">
     <div class="post-head">
-        <h1 id="SpringCloud-----Ribbon异常java.net.UnknownHostException">
+        <h1 id="在Centos系统中安装Docker">
             
-                SpringCloud-----Ribbon异常java.net.UnknownHostException
+                在Centos系统中安装Docker
             
         </h1>
         <div class="post-meta">
     
         <span class="categories-meta fa-wrap">
             <i class="fa fa-folder-open-o"></i>
-            <a class="category-link" href="/categories/微服务/">微服务</a>
+            <a class="category-link" href="/categories/Docker/">Docker</a>
         </span>
     
 
@@ -283,7 +286,7 @@ Hystrix默认的超时时间是1秒，如果超过这个时间尚未响应，将
             <i class="fa fa-tags"></i>
             <span class="tags-meta">
                 
-                    <a class="tag-link" href="/tags/Spring-Cloud/">Spring Cloud</a> <a class="tag-link" href="/tags/微服务/">微服务</a>
+                    <a class="tag-link" href="/tags/Centos/">Centos</a> <a class="tag-link" href="/tags/Docker/">Docker</a>
                 
             </span>
         </span>
@@ -293,7 +296,7 @@ Hystrix默认的超时时间是1秒，如果超过这个时间尚未响应，将
         
         <span class="fa-wrap">
             <i class="fa fa-clock-o"></i>
-            <span class="date-meta">2019/04/28</span>
+            <span class="date-meta">2019/09/28</span>
         </span>
         
             <span class="fa-wrap">
@@ -309,35 +312,229 @@ Hystrix默认的超时时间是1秒，如果超过这个时间尚未响应，将
     
     <div class="post-body post-content" id="container">
         
+    <div class="toc-article">
+        <strong>
+            目录
+        </strong>
+        <div class="toc-content">
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#前言："><span class="toc-text">前言：</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Docker版本"><span class="toc-text">Docker版本</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#安装Docker-CE"><span class="toc-text">安装Docker CE</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#验证Docker是否安装成功"><span class="toc-text">验证Docker是否安装成功</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Docker默认挂载目录"><span class="toc-text">Docker默认挂载目录</span></a></li></ol>
+        </div>
+    </div>
 
-        <p>如何解决Feign/Ribbon第一次请求失败的问题？**</p>
-<p>Spring Cloud中，Feign和Ribbon在整合了Hystrix后，可能会出现首次调用失败的问题，要如何解决该问题呢？</p>
-<p><strong>造成该问题的原因</strong></p>
-<p>Hystrix默认的超时时间是1秒，如果超过这个时间尚未响应，将会进入fallback代码。而首次请求往往会比较慢（<strong>由于Ribbon是懒加载的，在首次请求时，才会开始初始化相关类</strong>），这个响应时间可能就大于1秒了。知道原因后，我们来总结一下解决方案。以feign为例，解决方案有如下四种。</p>
-<p><strong>方法一、将Hystrix超时设长</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hystrix.command.default.execution.isolation.thread.timeoutInMilliseconds: 5000</span><br></pre></td></tr></table></figure>
 
-<p>该配置是让Hystrix的超时时间改为5秒，这是最容易想到的办法，不过有点治标不治本。</p>
-<p><strong>方法二、禁用Hystrix超时</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hystrix.command.default.execution.timeout.enabled: false</span><br></pre></td></tr></table></figure>
+        <h1 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h1><blockquote>
+<p>网上很多关于docker在centos系统上的安装教程，但是又各有异同，比较混乱。所以，此文章接下来的对于docker的安装，将参照官方的文档进行安装。</p>
+</blockquote>
+<blockquote>
+<p>官方文档地址：<a href="http://www.zuidaima.com/link.htm?url=https%3A%2F%2Fdocs.docker.com%2Finstall%2Flinux%2Fdocker-ce%2Fcentos%2F" target="_blank" rel="noopener">https://docs.docker.com/install/linux/docker-ce/centos/</a></p>
+</blockquote>
+<h1 id="Docker版本"><a href="#Docker版本" class="headerlink" title="Docker版本"></a>Docker版本</h1><p>Docker如今划分成了2个版本：</p>
+<ul>
+<li><p>Docker CE（社区版）</p>
+</li>
+<li><p>Docker EE（企业版）</p>
+</li>
+</ul>
+<blockquote>
+<p>具体详情以及区别，就不多做说明了。我们一般都会选择Docker CE（社区版），因为CE版本是开源免费的。对于大多数企业公司都比较节约成本。</p>
+<p>因此，文章中所使用的Docker版本均为Docker CE版本。</p>
+</blockquote>
+<p>安装Docker CE版本的先决条件</p>
+<p>官方文档中有这样一段描述：</p>
+<blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt; OS requirements</span><br><span class="line">&gt; To install Docker CE, you need a maintained version of CentOS 7. Archived versions aren’t supported or tested.</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<p>翻译过来的中文意思就是：</p>
+<blockquote>
+<p>OS要求</p>
+<p>要安装Docker CE，您需要维护的CentOS 7版本。不支持或测试归档版本。</p>
+</blockquote>
+<p>官方推荐的系统是centos7以上，但其实centos6也是可以安装docker的，并没有强制必须是centos7。</p>
+<p>但是我的文章是基于最新的centos7系统，所以对于低版本的centos系统如何安装docker，请自行网上查找资料或者实际操作。</p>
+<p>卸载旧版本</p>
+<p>老版本的Docker被称为docker或docker-engine。如果安装了它们，请卸载它们以及相关的依赖项。</p>
+<p>在Linux命令行执行的命令如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">yum remove docker \</span><br><span class="line">                  docker-client \</span><br><span class="line">                  docker-client-latest \</span><br><span class="line">                  docker-common \</span><br><span class="line">                  docker-latest \</span><br><span class="line">                  docker-latest-logrotate \</span><br><span class="line">                  docker-logrotate \</span><br><span class="line">                  docker-selinux \</span><br><span class="line">                  docker-engine-selinux \</span><br><span class="line">                  docker-engine</span><br></pre></td></tr></table></figure>
 
-<p>该配置，用于禁用Hystrix的超时时间，一般不建议使用。</p>
-<p><strong>方法三、为Feign禁用Hystrix</strong></p>
-<p><strong>全局禁用</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">feign.hystrix.enabled: false</span><br></pre></td></tr></table></figure>
 
-<p>索性禁用feign的hystrix，该做法比较极端，除非一些特殊场景，不推荐使用。</p>
-<p><strong>局部禁用</strong></p>
-<p>为名为<code>microservice-provider-user</code> 的Feign Client禁用Hystrix</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">@FeignClient(name = &quot;microservice-provider-user&quot;)</span><br><span class="line">public interface UserFeignClient &#123;</span><br><span class="line">  @GetMapping(&quot;/users/&#123;id&#125;&quot;)</span><br><span class="line">  User findById(@PathVariable(&quot;id&quot;) Long id);</span><br><span class="line">&#125;</span><br><span class="line">class FooConfiguration &#123;</span><br><span class="line">  @Bean</span><br><span class="line">  @Scope(&quot;prototype&quot;)</span><br><span class="line">  public Feign.Builder feignBuilder()&#123;</span><br><span class="line">    return Feign.builder();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p><strong>方法四、Ribbon配置饥饿加载（最佳）</strong></p>
-<p>从Dalston开始，Ribbon支持配置eager load实现在启动时就初始化Ribbon相关类。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ribbon:</span><br><span class="line">  eager-load:</span><br><span class="line">    enabled: true</span><br><span class="line">    clients: client1, client2, client3</span><br></pre></td></tr></table></figure>
+<p>如下图所示，将上面的命令copy一下，并在Linux命令行下面直接回车运行：</p>
+<p><img src="/images/docker/docker20190928192624.png" alt="图片描述"></p>
+<p>如图中所示，最后出现 No Packages marked for removal 的提示信息，说明没有需要删除的资源包了，标明旧版本的docker资源包以及相关依赖包都已经删除掉了。</p>
+<h1 id="安装Docker-CE"><a href="#安装Docker-CE" class="headerlink" title="安装Docker CE"></a>安装Docker CE</h1><p>Docker CE安装的不同方式</p>
+<ul>
+<li><p>设置Docker的存储库并从中进行安装，以便安装和升级任务。这是推荐的方法。</p>
+</li>
+<li><p>有些用户下载RPM软件包并手动安装，并完全手动管理升级。这对于在无法访问互联网的系统上安装Docker等情况很有用。</p>
+</li>
+<li><p>在测试和开发环境中，一些用户选择使用自动便利脚本来安装Docker。</p>
+</li>
+</ul>
+<blockquote>
+<p>这里我们就选择第一种方式进行安装，这也是推荐的做法。</p>
+<p>至于其他的安装方式，可自行网上学习，这里不做过多讲解。</p>
+</blockquote>
+<p>使用存储库进行安装</p>
+<blockquote>
+<p>首次在新主机上安装Docker CE之前，需要设置Docker存储库。之后，您可以从存储库安装和更新Docker。</p>
+</blockquote>
+<p>设置存储库</p>
+<ul>
+<li>安装所需的包。 yum-utils提供yum-config-manager实用程序，devicemapper存储驱动程序需要device-mapper-persistent-data和lvm2。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">yum install -y yum-utils \</span><br><span class="line">  device-mapper-persistent-data \</span><br><span class="line">  lvm2</span><br></pre></td></tr></table></figure>
 
-<p>Dalson之前版本可以通过一些Hack的机制实现eager load，不过成本略高，不建议</p>
 
-        <h2>相关文章</h2><ul><li><a href="/micro-service/microservice/">microservice</a></li><li><a href="/micro-service/microservice02/">服务发现 - Eureka</a></li><li><a href="/micro-service/microservice01/">微服务简介</a></li></ul>
+
+<ul>
+<li>使用以下命令设置稳定的存储库。 即使您想从边缘或测试存储库安装构建，也总是需要稳定的存储库。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">yum-config-manager \</span><br><span class="line">    --add-repo \</span><br><span class="line">    https://download.docker.com/linux/centos/docker-ce.repo</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li>（可选）：启用边缘和测试存储库。 这些存储库包含在上面的docker.repo文件中，但默认情况下处于禁用状态。 您可以将它们与稳定的存储库一起启用。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yum-config-manager --enable docker-ce-edge</span><br><span class="line">yum-config-manager --enable docker-ce-test</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li>（可选）：与上一步相反的作用。通过使用–disable标志运行yum-config-manager命令，可以禁用边缘或测试存储库。 要重新启用它，请使用–enable标志。 以下命令禁用边缘存储库。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum-config-manager --disable docker-ce-edge</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>注意</strong>：从Docker 17.06开始，稳定版本也被推到<strong>边缘</strong>并<strong>测试</strong>版本库。</p>
+</blockquote>
+<blockquote>
+<p>了解稳定和边缘构建 ：<a href="http://www.zuidaima.com/link.htm?url=https%3A%2F%2Fdocs.docker.com%2Finstall%2F" target="_blank" rel="noopener">https://docs.docker.com/install/</a></p>
+</blockquote>
+<p>安装Docker CE</p>
+<ol>
+<li>安装最新版本的Docker CE：</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install docker-ce</span><br></pre></td></tr></table></figure>
+
+<p>如果命令行下面出现如下图所示的确认信息，请输入“y”继续，主要是用于处理依赖包的事情：</p>
+<p><img src="/images/docker/docker20190928193134.png" alt="图片描述"></p>
+<p>上一步输入“y”之后，后面可能会遇到下图所示的确认提示信息，同样的输入“y”即可：</p>
+<p><img src="/images/docker/docker20190928193304.png" alt="图片描述"></p>
+<p>稍作等待，当命令行最终输出“Complete！”即表示安装完成：</p>
+<p><img src="/images/docker/docker20190928193519.png" alt="图片描述"></p>
+<p>启动Docker</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl start docker</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="验证Docker是否安装成功"><a href="#验证Docker是否安装成功" class="headerlink" title="验证Docker是否安装成功"></a>验证Docker是否安装成功</h1><blockquote>
+<p>最简单的验证方式，就是使用 docker version 命令，类似于JDK的 java -version 一样的道理。</p>
+<p>Docker安装成功的话，就可以直接在命令行运行Docker的命令的。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker version</span><br></pre></td></tr></table></figure>
+
+<p>如果出现如下图所示信息，说明Docker以及安装成功了！</p>
+<p><img src="/images/docker/docker20190928193631.png" alt="图片描述"></p>
+<p>【可选】：当然，你也可以通过运行 hello-world 映像来检验Docker是否安装成功：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run hello-world</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>上面的命令含义：下载官方提供的用于测试使用的hello-world镜像并将其运行到容器中，来检验Docker服务是否正常安装并运行。</p>
+<p>执行上面的命令之后，Docker会自动下载hello-world镜像并自动运行到容器中，当命令行中出现“Hello from Docker!”的字样，说明已经成功运行了hello-world镜像，一切就OK了！</p>
+<p>这里就简单的作为Docker的入门操作，很简单的吧。让你有一个比较直观的感觉~</p>
+</blockquote>
+<p><img src="/images/docker/docker20190928194325.png" alt="图片描述"></p>
+<h1 id="Docker默认挂载目录"><a href="#Docker默认挂载目录" class="headerlink" title="Docker默认挂载目录"></a>Docker默认挂载目录</h1><p>Docker CE安装成功之后，你可以发现 /var/lib 目录下有一个 docker 目录，你可以进入Docker目录查看Docker的一些结构，如下图所示：</p>
+<p><img src="/images/docker/docker20190928194422.png" alt="图片描述"></p>
+<p>其中有一个containers 目录，这个目录就是存放Docker容器的。上面我们有提及到 hello-world 镜像，如果你运行了 hello-world 镜像，那么这个镜像所生成的容器信息，就会存储在 containers 目录中。</p>
+<blockquote>
+<p>具体 containers 目录中存放了什么内容，可自行网上查询资料学习。</p>
+</blockquote>
+<p>配置Docker在系统启动时启动</p>
+<p>未配置Docker在系统启动时启动，则系统重启之后，Docker服务是无法正常访问</p>
+<blockquote>
+<p>这里是使用我的阿里云服务器作为测试，在阿里云的后台系统中手动重启了服务器，服务器启动完成并正常运行后，在我的本地电脑使用客户端软件连接Linux服务器的时候（可以使用XShell、或者其他终端软件），通过执行 docker version 命令查看Docker服务运行状况，如下图结果：</p>
+</blockquote>
+<p><img src="/images/docker/docker20190928194618.png" alt="图片描述"></p>
+<blockquote>
+<p>从图中可以看到，Docker Server 没有正常启动，原因很简单，就是没有设置Docker在服务器重启之后，没有自动启动导致。</p>
+</blockquote>
+<blockquote>
+<p>如何解决？</p>
+</blockquote>
+<blockquote>
+<p><strong>手动启动Docker服务：</strong></p>
+</blockquote>
+<blockquote>
+<p>1、通过在命令行中执行以下命令，即可实现Docker服务的启动：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; systemctl start docker</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<p>这时候重新在命令行中执行 docker version命令，效果如下：</p>
+</blockquote>
+<p><img src="/images/docker/docker20190928194840.png" alt="图片描述"></p>
+<blockquote>
+<p>出现Server相关的信息，标明Docker服务正常启动了，就可以对Docker进行一系列操作。</p>
+</blockquote>
+<blockquote>
+<p>上面这种启动方式存在什么不足呢？</p>
+</blockquote>
+<blockquote>
+<p>当服务器重启的时候，Docker服务依然不能自动启动，还是需要手工去启动Docker服务。</p>
+</blockquote>
+<blockquote>
+<p>那能不能做到系统重启之后，Docker服务自动启动，答案肯定是有的。</p>
+</blockquote>
+<p>实现Docker服务随着系统重启后自动启动</p>
+<blockquote>
+<p>大多数当前的Linux发行版（RHEL，CentOS，Fedora，Ubuntu 16.04和更高版本）使用systemd来管理在系统启动时启动哪些服务。</p>
+</blockquote>
+<blockquote>
+<p>通过在命令行执行以下命令，用于设置Docker在系统重启时，自动启动Docker服务</p>
+</blockquote>
+<blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; systemctl enable docker</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<p>执行该命令之后，会显示如下结果：</p>
+</blockquote>
+<p><img src="/images/docker/docker20190928194944.png" alt="图片描述"></p>
+<blockquote>
+<p>主要的意思就是 设置Docker服务会随着服务器重启，会自动启动Docker服务。</p>
+<p>当然，执行该命令之后，对于当前的Docker服务状况是没有启动服务的，需要手动启动Docker服务；只有下次服务器重启，就无需手动启动Docker服务了。</p>
+<p>官方文档介绍：<a href="http://www.zuidaima.com/link.htm?url=https%3A%2F%2Fdocs.docker.com%2Finstall%2Flinux%2Flinux-postinstall%2F%23configure-docker-to-start-on-boot" target="_blank" rel="noopener">https://docs.docker.com/install/linux/linux-postinstall/#configure-docker-to-start-on-boot</a></p>
+</blockquote>
+<blockquote>
+<p>注意一点：由于Linux不同版本的系统的差异、或者低版本的系统，命令或许会出现差异。如有遇到这样的问题，请自行网上查找资料解决。</p>
+</blockquote>
+<p><strong>取消Docker服务随着系统重启后自动启动</strong></p>
+<p>如果你不想让Docker服务随着系统重启之后自动启动的话，你可以通过命令来取消这样的策略：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl disable docker</span><br></pre></td></tr></table></figure>
+
+<p>执行上面的命令，就可以了。</p>
+<blockquote>
+<p>官方文档介绍：<a href="http://www.zuidaima.com/link.htm?url=https%3A%2F%2Fdocs.docker.com%2Finstall%2Flinux%2Flinux-postinstall%2F%23configure-docker-to-start-on-boot" target="_blank" rel="noopener">https://docs.docker.com/install/linux/linux-postinstall/#configure-docker-to-start-on-boot</a></p>
+</blockquote>
+<p>卸载Docker CE</p>
+<blockquote>
+<p>如果需要卸载机器上已经安装的Docker CE，可以通过简单命令实现。</p>
+</blockquote>
+<ol>
+<li>卸载Docker包：</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum remove docker-ce</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>上面的命令，不会自动删除主机上的图像，容器，卷或自定义配置文件。要想删除所有图像，容器和卷，执行以下命令：</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rm -rf /var/lib/docker</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>注意：必须手动删除任何已编辑的配置文件</p>
+</blockquote>
+
+        <h2>相关文章</h2><ul><li><a href="/docker/00-docker-lession-index/">Docker系列教程</a></li><li><a href="/docker/01-docker-lession-index/">传统项目开发部署的流程是怎样的？</a></li><li><a href="/docker/03-docker-lession-index/">Docker镜像、容器、仓库的介绍</a></li><li><a href="/docker/05-docker-lession-index/">Docker部署springboot项目</a></li><li><a href="/docker/02-docker-lession-index/">Docker是干什么用的？</a></li></ul>
     </div>
     
 
@@ -346,7 +543,7 @@ Hystrix默认的超时时间是1秒，如果超过这个时间尚未响应，将
         <div class="post-footer">
             <div class="col-sm-10">
                 <div>
-                    <b>本文链接</b>：<a href="/micro-service/SpringCloud01/" target="_blank">SpringCloud-----Ribbon异常java.net.UnknownHostException</a>
+                    <b>本文链接</b>：<a href="/docker/04-docker-lession-index/" target="_blank">在Centos系统中安装Docker</a>
                 </div>
                 <div>
                     
@@ -366,17 +563,17 @@ Hystrix默认的超时时间是1秒，如果超过这个时间尚未响应，将
 
 <div class="article-nav prev-next-wrap clearfix">
     
-        <a target="_blank" href="/database/mysql-8-problems/" class="pre-post btn btn-default"
-           title='升级MySQL8问题总结'>
+        <a target="_blank" href="/docker/05-docker-lession-index/" class="pre-post btn btn-default"
+           title='Docker部署springboot项目'>
             <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
-            <span class="hidden-xs">升级MySQL8问题总结</span>
+            <span class="hidden-xs">Docker部署springboot项目</span>
         </a>
     
     
-        <a target="_blank" href="/micro-service/microservice01/" class="next-post btn btn-default"
-           title='微服务简介'>
+        <a target="_blank" href="/install/install-rocketmq-console/" class="next-post btn btn-default"
+           title='RocketMQ插件部署console控制台'>
             <span class="hidden-lg">下一篇</span>
-            <span class="hidden-xs">微服务简介</span><i class="fa fa-angle-right fa-fw"></i>
+            <span class="hidden-xs">RocketMQ插件部署console控制台</span><i class="fa fa-angle-right fa-fw"></i>
         </a>
     
 </div>
@@ -447,7 +644,7 @@ Hystrix默认的超时时间是1秒，如果超过这个时间尚未响应，将
         
     <div class="widget">
         <h3 class="title">分类</h3>
-        <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/"><i class="fa" aria-hidden="true">Docker</i></a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/HTTP/"><i class="fa" aria-hidden="true">HTTP</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/"><i class="fa" aria-hidden="true">Redis</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/"><i class="fa" aria-hidden="true">Spring</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringBoot/"><i class="fa" aria-hidden="true">SpringBoot</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringSession/"><i class="fa" aria-hidden="true">SpringSession</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/maven/"><i class="fa" aria-hidden="true">maven</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/主键/"><i class="fa" aria-hidden="true">主键</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/其他/"><i class="fa" aria-hidden="true">其他</i></a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/安装教程/"><i class="fa" aria-hidden="true">安装教程</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/工具/"><i class="fa" aria-hidden="true">工具</i></a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link current" href="/categories/微服务/"><i class="fa" aria-hidden="true">微服务</i></a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据库/"><i class="fa" aria-hidden="true">数据库</i></a><span class="category-list-count">1</span></li></ul>
+        <ul class="category-list"><li class="category-list-item"><a class="category-list-link current" href="/categories/Docker/"><i class="fa" aria-hidden="true">Docker</i></a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/HTTP/"><i class="fa" aria-hidden="true">HTTP</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/"><i class="fa" aria-hidden="true">Redis</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/"><i class="fa" aria-hidden="true">Spring</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringBoot/"><i class="fa" aria-hidden="true">SpringBoot</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringSession/"><i class="fa" aria-hidden="true">SpringSession</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/maven/"><i class="fa" aria-hidden="true">maven</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/主键/"><i class="fa" aria-hidden="true">主键</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/其他/"><i class="fa" aria-hidden="true">其他</i></a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/安装教程/"><i class="fa" aria-hidden="true">安装教程</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/工具/"><i class="fa" aria-hidden="true">工具</i></a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/微服务/"><i class="fa" aria-hidden="true">微服务</i></a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据库/"><i class="fa" aria-hidden="true">数据库</i></a><span class="category-list-count">1</span></li></ul>
     </div>
 
 
