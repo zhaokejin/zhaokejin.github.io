@@ -2,6 +2,55 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://www.cicoding.cn/docker/07-docker-lession-index/</loc>
+    
+    <lastmod>2019-10-27T12:53:03.746Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.cicoding.cn/docker/06-docker-lession-index/</loc>
+    
+    <lastmod>2019-10-27T12:45:24.274Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.cicoding.cn/docker/05-docker-lession-index/</loc>
+    
+    <lastmod>2019-10-27T12:34:04.387Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.cicoding.cn/docker/04-docker-lession-index/</loc>
+    
+    <lastmod>2019-10-27T12:10:24.125Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.cicoding.cn/docker/03-docker-lession-index/</loc>
+    
+    <lastmod>2019-10-27T12:10:00.737Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.cicoding.cn/docker/02-docker-lession-index/</loc>
+    
+    <lastmod>2019-10-27T12:09:42.632Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.cicoding.cn/docker/01-docker-lession-index/</loc>
+    
+    <lastmod>2019-10-27T12:09:39.418Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://www.cicoding.cn/springboot/springboot2.2.0-release-notes/</loc>
     
     <lastmod>2019-10-21T03:11:40.559Z</lastmod>
@@ -33,13 +82,6 @@
     <loc>https://www.cicoding.cn/about/index.html</loc>
     
     <lastmod>2019-10-12T06:52:23.855Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://www.cicoding.cn/docker/05-docker-lession-index/</loc>
-    
-    <lastmod>2019-10-12T06:48:28.711Z</lastmod>
     
   </url>
   
@@ -100,13 +142,6 @@
   </url>
   
   <url>
-    <loc>https://www.cicoding.cn/docker/04-docker-lession-index/</loc>
-    
-    <lastmod>2019-09-28T11:56:20.296Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://www.cicoding.cn/other/Why-do-we-do-distributed-use-Redis%20-%20%E5%89%AF%E6%9C%AC/</loc>
     
     <lastmod>2019-09-28T04:56:25.161Z</lastmod>
@@ -124,27 +159,6 @@
     <loc>https://www.cicoding.cn/spring/spring-annotation/</loc>
     
     <lastmod>2019-09-28T04:51:03.555Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://www.cicoding.cn/docker/01-docker-lession-index/</loc>
-    
-    <lastmod>2019-09-28T04:45:42.618Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://www.cicoding.cn/docker/03-docker-lession-index/</loc>
-    
-    <lastmod>2019-09-28T03:55:07.719Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://www.cicoding.cn/docker/02-docker-lession-index/</loc>
-    
-    <lastmod>2019-09-28T03:55:07.718Z</lastmod>
     
   </url>
   
