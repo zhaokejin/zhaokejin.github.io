@@ -154,7 +154,7 @@
   <entry>
     <title><![CDATA[Docker系列教程]]></title>
     <url>%2Fdocker%2F00-docker-lession-index%2F</url>
-    <content type="text"><![CDATA[Docker系列传统项目开发部署的流程是怎样的？ Docker是干什么用的？ Docker镜像、容器、仓库的介绍 在Centos系统中安装Docker]]></content>
+    <content type="text"><![CDATA[Docker系列传统项目开发部署的流程是怎样的？ Docker是干什么用的？ Docker镜像、容器、仓库的介绍 在Centos系统中安装Docker 在windows系统中安装Docker 在Docker中安装JDK 在Docker中安装Tomcat]]></content>
       <categories>
         <category>Docker</category>
       </categories>

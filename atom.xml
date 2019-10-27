@@ -394,9 +394,9 @@
     <link href="https://www.cicoding.cn/docker/00-docker-lession-index/"/>
     <id>https://www.cicoding.cn/docker/00-docker-lession-index/</id>
     <published>2019-09-24T02:22:55.000Z</published>
-    <updated>2019-09-28T12:04:16.145Z</updated>
+    <updated>2019-10-27T13:05:20.925Z</updated>
     
-    <content type="html"><![CDATA[<h1 id="Docker系列"><a href="#Docker系列" class="headerlink" title="Docker系列"></a>Docker系列</h1><p><a href="/docker/01-docker-lession-index/">传统项目开发部署的流程是怎样的？</a></p><p><a href="/docker/02-docker-lession-index/">Docker是干什么用的？</a></p><p><a href="/docker/03-docker-lession-index/">Docker镜像、容器、仓库的介绍</a></p><p><a href="/docker/04-docker-lession-index/">在Centos系统中安装Docker</a></p>]]></content>
+    <content type="html"><![CDATA[<h1 id="Docker系列"><a href="#Docker系列" class="headerlink" title="Docker系列"></a>Docker系列</h1><p><a href="/docker/01-docker-lession-index/">传统项目开发部署的流程是怎样的？</a></p><p><a href="/docker/02-docker-lession-index/">Docker是干什么用的？</a></p><p><a href="/docker/03-docker-lession-index/">Docker镜像、容器、仓库的介绍</a></p><p><a href="/docker/04-docker-lession-index/">在Centos系统中安装Docker</a></p><p><a href="/docker/05-docker-lession-index/">在windows系统中安装Docker</a></p><p><a href="/docker/06-docker-lession-index/">在Docker中安装JDK</a></p><p><a href="/docker/07-docker-lession-index/">在Docker中安装Tomcat</a></p>]]></content>
     
     <summary type="html">
     
