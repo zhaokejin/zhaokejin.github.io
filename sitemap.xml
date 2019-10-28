@@ -2,23 +2,65 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://www.cicoding.cn/docker/00-docker-lession-index/</loc>
+    <loc>https://www.cicoding.cn/docker/12-docker-lession-index/</loc>
     
-    <lastmod>2019-10-27T13:05:20.925Z</lastmod>
+    <lastmod>2019-10-28T01:24:54.489Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://www.cicoding.cn/docker/07-docker-lession-index/</loc>
+    <loc>https://www.cicoding.cn/docker/11-docker-lession-index/</loc>
     
-    <lastmod>2019-10-27T12:53:03.746Z</lastmod>
+    <lastmod>2019-10-28T01:24:41.015Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.cicoding.cn/docker/10-docker-lession-index/</loc>
+    
+    <lastmod>2019-10-28T01:24:27.991Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://www.cicoding.cn/docker/06-docker-lession-index/</loc>
     
-    <lastmod>2019-10-27T12:45:24.274Z</lastmod>
+    <lastmod>2019-10-28T01:24:16.147Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.cicoding.cn/docker/07-docker-lession-index/</loc>
+    
+    <lastmod>2019-10-28T01:24:09.386Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.cicoding.cn/docker/08-docker-lession-index/</loc>
+    
+    <lastmod>2019-10-28T01:24:00.046Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.cicoding.cn/docker/09-docker-lession-index/</loc>
+    
+    <lastmod>2019-10-28T01:23:41.065Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.cicoding.cn/http/httpclient-utils/</loc>
+    
+    <lastmod>2019-10-28T00:37:39.823Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.cicoding.cn/docker/00-docker-lession-index/</loc>
+    
+    <lastmod>2019-10-27T13:05:20.925Z</lastmod>
     
   </url>
   
@@ -89,13 +131,6 @@
     <loc>https://www.cicoding.cn/about/index.html</loc>
     
     <lastmod>2019-10-12T06:52:23.855Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://www.cicoding.cn/http/httpclient-utils/</loc>
-    
-    <lastmod>2019-10-12T06:47:31.482Z</lastmod>
     
   </url>
   
