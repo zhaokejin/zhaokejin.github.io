@@ -18,10 +18,15 @@
     <link rel="dns-prefetch" href="https://www.cicoding.cn">
     <!--SEO-->
 
-    <meta name="keywords" content="筱进GG,Spring Cloud,Docker,微服务架构,Spring Boot,经验分享,软件代做,毕业设计,博客建站">
+    <meta name="keywords" content="SpringBoot,Banner">
 
 
-    <meta name="description" content="Spring Cloud、Docker、微服务架构、Cloud Native相关知识分享、筱进GG的博客,毕业设计代做">
+    <meta name="description" content="TIPS
+
+本文基于Spring Boot 2.1.9，理论支持Spring Boot所有版本。
+
+相信玩过Spring Boot的童鞋一定在启动日志中见过类似如下的内容。本文详细探讨如何定制这部分内容，让内容更加趣味性。
+12345671.   ____          _        ...">
 
 
 
@@ -32,7 +37,7 @@
     <!--Title-->
 
 
-<title>tags | 筱进GG的博客</title>
+<title>Spring Boot自定义Banner | 筱进GG的博客</title>
 
 
     <link rel="alternate" href="/atom.xml" title="筱进GG的博客" type="application/atom+xml">
@@ -256,17 +261,230 @@
     <section class="content-wrap">
         <div class="container">
             <div class="row">
-                <main class="col-md-8 main-content ">
-                    <div class="about">
-	
-	    <article class="post">
-	        <h1 class="post-head">共计33个标签</h1>
-	        <div class="post-body">
-	            <a href="/tags/Banner/" style="font-size: 14px; color: #ccc">Banner</a> <a href="/tags/Centos/" style="font-size: 14px; color: #ccc">Centos</a> <a href="/tags/Docker/" style="font-size: 30px; color: #111">Docker</a> <a href="/tags/Eureka/" style="font-size: 14px; color: #ccc">Eureka</a> <a href="/tags/HTTP/" style="font-size: 14px; color: #ccc">HTTP</a> <a href="/tags/Hexo/" style="font-size: 14px; color: #ccc">Hexo</a> <a href="/tags/HikariCP/" style="font-size: 14px; color: #ccc">HikariCP</a> <a href="/tags/IDEA/" style="font-size: 14px; color: #ccc">IDEA</a> <a href="/tags/JDK/" style="font-size: 14px; color: #ccc">JDK</a> <a href="/tags/MySQL8/" style="font-size: 14px; color: #ccc">MySQL8</a> <a href="/tags/Mysql/" style="font-size: 14px; color: #ccc">Mysql</a> <a href="/tags/Nginx/" style="font-size: 14px; color: #ccc">Nginx</a> <a href="/tags/Redis/" style="font-size: 19.33px; color: #8e8e8e">Redis</a> <a href="/tags/RocketMQ/" style="font-size: 19.33px; color: #8e8e8e">RocketMQ</a> <a href="/tags/SonarQube/" style="font-size: 14px; color: #ccc">SonarQube</a> <a href="/tags/Spring/" style="font-size: 19.33px; color: #8e8e8e">Spring</a> <a href="/tags/Spring-Boot/" style="font-size: 14px; color: #ccc">Spring Boot</a> <a href="/tags/Spring-Cloud/" style="font-size: 24.67px; color: #4f4f4f">Spring Cloud</a> <a href="/tags/SpringBoot/" style="font-size: 24.67px; color: #4f4f4f">SpringBoot</a> <a href="/tags/SpringSession/" style="font-size: 14px; color: #ccc">SpringSession</a> <a href="/tags/Tomcat/" style="font-size: 14px; color: #ccc">Tomcat</a> <a href="/tags/Web应用/" style="font-size: 14px; color: #ccc">Web应用</a> <a href="/tags/Zookeeper/" style="font-size: 14px; color: #ccc">Zookeeper</a> <a href="/tags/httpclient/" style="font-size: 14px; color: #ccc">httpclient</a> <a href="/tags/maven/" style="font-size: 14px; color: #ccc">maven</a> <a href="/tags/session共享/" style="font-size: 14px; color: #ccc">session共享</a> <a href="/tags/theme/" style="font-size: 14px; color: #ccc">theme</a> <a href="/tags/互联网产品/" style="font-size: 14px; color: #ccc">互联网产品</a> <a href="/tags/其他/" style="font-size: 14px; color: #ccc">其他</a> <a href="/tags/分布式/" style="font-size: 19.33px; color: #8e8e8e">分布式</a> <a href="/tags/图片水印/" style="font-size: 14px; color: #ccc">图片水印</a> <a href="/tags/微服务/" style="font-size: 24.67px; color: #4f4f4f">微服务</a> <a href="/tags/注解/" style="font-size: 14px; color: #ccc">注解</a>
-	        </div>
-	    </article>
-	
+                <main class="col-md-8 main-content m-post">
+                    
+    
+        <div class="ad">
+            <div class="row">
+                
+                    <div class="col-md-12">
+                        <a href="https://www.aliyun.com/1111/2019/group-buying-share?ptCode=15DC12AF87B20ED9D921BDEAD3C98077647C88CF896EF535&amp;userCode=qhtujh03&amp;share_source=copy_link" rel="nofollow" target="_blank">
+                            <img class="img-responsive center-block"
+                                 src="/icons/BBB.png"
+                                 title="阿里云双11活动"
+                            >
+                        </a>
+                    </div>
+                
+            </div>
+        </div>
+    
+
+
+<p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="Spring Boot自定义Banner">
+            
+                Spring Boot自定义Banner
+            
+        </h1>
+        <div class="post-meta">
+    
+        <span class="categories-meta fa-wrap">
+            <i class="fa fa-folder-open-o"></i>
+            <a class="category-link" href="/categories/SpringBoot/">SpringBoot</a>
+        </span>
+    
+
+    
+        <span class="fa-wrap">
+            <i class="fa fa-tags"></i>
+            <span class="tags-meta">
+                
+                    <a class="tag-link" href="/tags/Banner/">Banner</a> <a class="tag-link" href="/tags/SpringBoot/">SpringBoot</a>
+                
+            </span>
+        </span>
+    
+
+    
+        
+        <span class="fa-wrap">
+            <i class="fa fa-clock-o"></i>
+            <span class="date-meta">2019/11/01</span>
+        </span>
+        
+            <span class="fa-wrap">
+                <i class="fa fa-eye"></i>
+                <span id="busuanzi_value_page_pv"></span>
+            </span>
+        
+    
 </div>
+        
+        
+    </div>
+    
+    <div class="post-body post-content" id="container">
+        
+    <div class="toc-article">
+        <strong>
+            目录
+        </strong>
+        <div class="toc-content">
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#如何自定义"><span class="toc-text">如何自定义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Banner生成工具"><span class="toc-text">Banner生成工具</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#占位符与描述信息"><span class="toc-text">占位符与描述信息</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#测试"><span class="toc-text">测试</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#图片支持"><span class="toc-text">图片支持</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#禁用Banner"><span class="toc-text">禁用Banner</span></a></li></ol>
+        </div>
+    </div>
+
+
+        <p><strong>TIPS</strong></p>
+<blockquote>
+<p>本文基于Spring Boot 2.1.9，理论支持Spring Boot所有版本。</p>
+</blockquote>
+<p>相信玩过Spring Boot的童鞋一定在启动日志中见过类似如下的内容。本文详细探讨如何定制这部分内容，让内容更加趣味性。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">1.   ____          _            __ _ _</span><br><span class="line">2 /\\ / ___&apos;_ __ _ _(_)_ __  __ _ \ \ \ \</span><br><span class="line">3( ( )\___ | &apos;_ | &apos;_| | &apos;_ \/ _` | \ \ \ \</span><br><span class="line">4 \\/  ___)| |_)| | | | | || (_| |  ) ) ) )</span><br><span class="line">5  &apos;  |____| .__|_| |_|_| |_\__, | / / / /</span><br><span class="line">6 =========|_|==============|___/=/_/_/_/</span><br><span class="line">7 :: Spring Boot ::        (v2.1.9.RELEASE)</span><br></pre></td></tr></table></figure>
+
+<h2 id="如何自定义"><a href="#如何自定义" class="headerlink" title="如何自定义"></a>如何自定义</h2><p>自定义Banner非常简单，只需在 <code>classpath</code> （ <code>src/main/resources</code> ）下创建创建名为 <code>banner.txt</code> 的文件即可。</p>
+<h2 id="Banner生成工具"><a href="#Banner生成工具" class="headerlink" title="Banner生成工具"></a>Banner生成工具</h2><p>自己画Banner是很麻烦的，下面提供几款工具，将图片转换成ASCII字符，快速生成Banner。</p>
+<table>
+<thead>
+<tr>
+<th>工具地址</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><a href="http://patorjk.com/software/taag" target="_blank" rel="noopener">http://patorjk.com/software/taag</a></td>
+<td>写文字，选择字体，将字转成ASCII</td>
+</tr>
+<tr>
+<td><a href="http://picascii.com/" target="_blank" rel="noopener">http://picascii.com/</a></td>
+<td>上传图片，将图片转ASCII</td>
+</tr>
+<tr>
+<td>其他</td>
+<td>使用搜索引擎，搜索”图片转ASCII”即可</td>
+</tr>
+<tr>
+<td>等等</td>
+<td><a href="http://patorjk.com/software/taaghttp://www.network-science.de/ascii/http://www.degraeve.com/img2txt.php" target="_blank" rel="noopener">http://patorjk.com/software/taaghttp://www.network-science.de/ascii/http://www.degraeve.com/img2txt.php</a></td>
+</tr>
+</tbody></table>
+<p>下面是笔者准备好的Banner：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">                     _ooOoo_</span><br><span class="line">                    o8888888o</span><br><span class="line">                   88&quot; . &quot;88</span><br><span class="line">                    (| ^_^ |)</span><br><span class="line">                    O\  =  /O</span><br><span class="line">                 ____/`---&apos;\____</span><br><span class="line">               .&apos;  \\|     |//  `.</span><br><span class="line">              /  \\|||  :  |||//  \</span><br><span class="line">             /  _||||| -:- |||||-  \</span><br><span class="line">            |   | \\\  -  /// |   |</span><br><span class="line">            | \_|  &apos;&apos;\---/&apos;&apos;  |   |</span><br><span class="line">            \  .-\__  `-`  ___/-. /</span><br><span class="line">          ___`. .&apos;  /--.--\  `. . ___</span><br><span class="line">        .&quot;&quot; &apos;&lt;  `.___\_&lt;|&gt;_/___.&apos;  &gt;&apos;&quot;&quot;.</span><br><span class="line">      | | :  `- \`.;`\ _ /`;.`/ - ` : | |</span><br><span class="line">========`-.____`-.___\_____/___.-`____.-&apos;========</span><br><span class="line">      \  \ `-.   \_ __\ /__ _/   .-` /  /</span><br><span class="line">                     `=---=&apos;</span><br><span class="line">^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</span><br><span class="line">         佛祖保佑       永不宕机       永无Bug</span><br></pre></td></tr></table></figure>
+
+<h2 id="占位符与描述信息"><a href="#占位符与描述信息" class="headerlink" title="占位符与描述信息"></a>占位符与描述信息</h2><p><code>banner.txt</code> 支持占位符，占位符可用于描述项目，同时也可定制Banner显示的具体细节。</p>
+<p>允许使用的占位符如下表所示：</p>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>${application.version}</code></td>
+<td>应用版本，从<code>MANIFEST.MF</code> 读取<code>Implementation-Version</code> 的值并显示。例如<code>Implementation-Version: 1.0</code> ，则打印 <code>1.0</code></td>
+</tr>
+<tr>
+<td><code>${application.formatted-version}</code></td>
+<td>将应用版本用括号括起来，并添加前缀v。例如：<code>Implementation-Version: 1.0</code> ，则打印 <code>(v1.0)</code></td>
+</tr>
+<tr>
+<td><code>${spring-boot.version}</code></td>
+<td>打印Spring Boot版本，例如 <code>2.1.4.RELEASE</code></td>
+</tr>
+<tr>
+<td><code>${spring-boot.formatted-version}</code></td>
+<td>将Spring Boot版本用括号括起来，并添加前缀v。例如： <code>(v2.1.4.RELEASE)</code></td>
+</tr>
+<tr>
+<td><code>${Ansi.NAME}</code> (or <code>${AnsiColor.NAME}</code>, <code>${AnsiBackground.NAME}</code>, <code>${AnsiStyle.NAME}</code>)</td>
+<td>指定ANSI转义码，详见 <code>org.springframework.boot.ansi.AnsiPropertySource</code></td>
+</tr>
+<tr>
+<td><code>${application.title}</code></td>
+<td>应用标题，从 <code>MANIFEST.MF</code> 读取 <code>Implementation-Title</code> 的值并打印。例如 <code>Implementation-Title: itmuch-app</code> ，则打印 <code>itmuch-app</code> 。</td>
+</tr>
+</tbody></table>
+<h3 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h3><p>创建 <code>banner.txt</code> ，内容如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$&#123;AnsiBackground.BRIGHT_YELLOW&#125;$&#123;AnsiColor.BLUE&#125;$&#123;AnsiStyle.BOLD&#125;</span><br><span class="line">应用版本：$&#123;application.version&#125;</span><br><span class="line">Spring Boot版本：$&#123;spring-boot.version&#125;</span><br><span class="line">应用标题：$&#123;application.title&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="图片支持"><a href="#图片支持" class="headerlink" title="图片支持"></a>图片支持</h2><p>Spring Boot同样支持使用图片作为Banner，只需将图片放到项目的<code>classpath</code> （<code>src/main/resources</code> ）目录下，命名为<code>banner</code> ，格式支持<code>png</code> 、<code>jpg</code> 、<code>gif</code> 。</p>
+<h2 id="禁用Banner"><a href="#禁用Banner" class="headerlink" title="禁用Banner"></a>禁用Banner</h2><p>添加如下配置：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">spring:</span><br><span class="line">  main:</span><br><span class="line">    banner-mode: &quot;off&quot;</span><br></pre></td></tr></table></figure>
+
+<p>或在启动类上添加类似如下代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">public static void main(String[] args) &#123;</span><br><span class="line">    SpringApplication app = new SpringApplication(MySpringConfiguration.class);</span><br><span class="line">    app.setBannerMode(Banner.Mode.OFF);</span><br><span class="line">    app.run(args);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        <h2>相关文章</h2><ul><li><a href="/springboot/springboot-HikariCP/">SpringBoot那些好用的连接池HikariCP</a></li><li><a href="/springboot/springboot2.2.0-release-notes/">SpringBoot2.2.0 Release版本发行特性</a></li><li><a href="/springboot/springboot-redis-springsession/">SpringBoot2.1.6集成spring session redis实现session共享</a></li></ul>
+    </div>
+    
+
+
+    
+        <div class="post-footer">
+            <div class="col-sm-10">
+                <div>
+                    <b>本文链接</b>：<a href="/springboot/springboot-banner/" target="_blank">Spring Boot自定义Banner</a>
+                </div>
+                <div>
+                    
+                        转载声明：本博客由筱进GG创作，采用 <a href="https://creativecommons.org/licenses/by-nc-nd/3.0/" target="_blank"> CC BY 3.0 CN </a> 许可协议。可自由转载、引用，但需署名作者且注明文章出处。如转载至微信公众号，请在文末添加作者公众号二维码。
+                    
+                </div>
+                <div>
+                    
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <img src="/icons/wx.jpg" width=100%/>
+            </div>
+        </div>
+    
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+    
+        <a target="_blank" href="/docker/12-docker-lession-index/" class="next-post btn btn-default"
+           title='Docker部署Spring Boot项目'>
+            <span class="hidden-lg">下一篇</span>
+            <span class="hidden-xs">Docker部署Spring Boot项目</span><i class="fa fa-angle-right fa-fw"></i>
+        </a>
+    
+</div>
+
+
+    <div id="comments">
+        
+	<link rel="stylesheet" href="https://cdn.bootcss.com/gitalk/1.4.1/gitalk.min.css">
+<script src="//cdn.bootcss.com/gitalk/1.4.1/gitalk.min.js"></script>
+<script src="//cdn.bootcss.com/blueimp-md5/2.9.0/js/md5.min.js"></script>
+
+<div id="gitalk-container"></div>
+<script type="text/javascript">
+    var gitalk = new Gitalk({
+        // Gitalk配置
+        language: "zh-CN",
+        clientID: "934e6c8b8e5d8796b4c3",
+        clientSecret: "c6b01f8df89c3a426a0eb019ebe5f71620814aee",
+        repo: "zhaokejin.github.io",
+        owner: "zhaokejin",
+        admin: ["zhaokejin"],
+        id: md5(location.pathname),
+        distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+</script>
+
+
+    </div>
+
+
+
+
+
 
                 </main>
                 
@@ -343,7 +561,7 @@
         
     <div class="widget">
         <h3 class="title">分类</h3>
-        <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/"><i class="fa" aria-hidden="true">Docker</i></a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/HTTP/"><i class="fa" aria-hidden="true">HTTP</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/"><i class="fa" aria-hidden="true">Redis</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/"><i class="fa" aria-hidden="true">Spring</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringBoot/"><i class="fa" aria-hidden="true">SpringBoot</i></a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringSession/"><i class="fa" aria-hidden="true">SpringSession</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/maven/"><i class="fa" aria-hidden="true">maven</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/主键/"><i class="fa" aria-hidden="true">主键</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/其他/"><i class="fa" aria-hidden="true">其他</i></a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/安装教程/"><i class="fa" aria-hidden="true">安装教程</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/工具/"><i class="fa" aria-hidden="true">工具</i></a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/微服务/"><i class="fa" aria-hidden="true">微服务</i></a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据库/"><i class="fa" aria-hidden="true">数据库</i></a><span class="category-list-count">1</span></li></ul>
+        <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/"><i class="fa" aria-hidden="true">Docker</i></a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/HTTP/"><i class="fa" aria-hidden="true">HTTP</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/"><i class="fa" aria-hidden="true">Redis</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/"><i class="fa" aria-hidden="true">Spring</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link current" href="/categories/SpringBoot/"><i class="fa" aria-hidden="true">SpringBoot</i></a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringSession/"><i class="fa" aria-hidden="true">SpringSession</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/maven/"><i class="fa" aria-hidden="true">maven</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/主键/"><i class="fa" aria-hidden="true">主键</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/其他/"><i class="fa" aria-hidden="true">其他</i></a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/安装教程/"><i class="fa" aria-hidden="true">安装教程</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/工具/"><i class="fa" aria-hidden="true">工具</i></a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/微服务/"><i class="fa" aria-hidden="true">微服务</i></a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据库/"><i class="fa" aria-hidden="true">数据库</i></a><span class="category-list-count">1</span></li></ul>
     </div>
 
 

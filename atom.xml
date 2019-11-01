@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://www.cicoding.cn/"/>
-  <updated>2019-10-28T01:24:54.489Z</updated>
+  <updated>2019-11-01T01:12:32.685Z</updated>
   <id>https://www.cicoding.cn/</id>
   
   <author>
@@ -15,6 +15,38 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Spring Boot自定义Banner</title>
+    <link href="https://www.cicoding.cn/springboot/springboot-banner/"/>
+    <id>https://www.cicoding.cn/springboot/springboot-banner/</id>
+    <published>2019-11-01T01:09:15.000Z</published>
+    <updated>2019-11-01T01:12:32.685Z</updated>
+    
+    <content type="html"><![CDATA[<p><strong>TIPS</strong></p><blockquote><p>本文基于Spring Boot 2.1.9，理论支持Spring Boot所有版本。</p></blockquote><p>相信玩过Spring Boot的童鞋一定在启动日志中见过类似如下的内容。本文详细探讨如何定制这部分内容，让内容更加趣味性。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">1.   ____          _            __ _ _</span><br><span class="line">2 /\\ / ___&apos;_ __ _ _(_)_ __  __ _ \ \ \ \</span><br><span class="line">3( ( )\___ | &apos;_ | &apos;_| | &apos;_ \/ _` | \ \ \ \</span><br><span class="line">4 \\/  ___)| |_)| | | | | || (_| |  ) ) ) )</span><br><span class="line">5  &apos;  |____| .__|_| |_|_| |_\__, | / / / /</span><br><span class="line">6 =========|_|==============|___/=/_/_/_/</span><br><span class="line">7 :: Spring Boot ::        (v2.1.9.RELEASE)</span><br></pre></td></tr></table></figure><h2 id="如何自定义"><a href="#如何自定义" class="headerlink" title="如何自定义"></a>如何自定义</h2><p>自定义Banner非常简单，只需在 <code>classpath</code> （ <code>src/main/resources</code> ）下创建创建名为 <code>banner.txt</code> 的文件即可。</p><h2 id="Banner生成工具"><a href="#Banner生成工具" class="headerlink" title="Banner生成工具"></a>Banner生成工具</h2><p>自己画Banner是很麻烦的，下面提供几款工具，将图片转换成ASCII字符，快速生成Banner。</p><table><thead><tr><th>工具地址</th><th>作用</th></tr></thead><tbody><tr><td><a href="http://patorjk.com/software/taag" target="_blank" rel="noopener">http://patorjk.com/software/taag</a></td><td>写文字，选择字体，将字转成ASCII</td></tr><tr><td><a href="http://picascii.com/" target="_blank" rel="noopener">http://picascii.com/</a></td><td>上传图片，将图片转ASCII</td></tr><tr><td>其他</td><td>使用搜索引擎，搜索”图片转ASCII”即可</td></tr><tr><td>等等</td><td><a href="http://patorjk.com/software/taaghttp://www.network-science.de/ascii/http://www.degraeve.com/img2txt.php" target="_blank" rel="noopener">http://patorjk.com/software/taaghttp://www.network-science.de/ascii/http://www.degraeve.com/img2txt.php</a></td></tr></tbody></table><p>下面是笔者准备好的Banner：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">                     _ooOoo_</span><br><span class="line">                    o8888888o</span><br><span class="line">                   88&quot; . &quot;88</span><br><span class="line">                    (| ^_^ |)</span><br><span class="line">                    O\  =  /O</span><br><span class="line">                 ____/`---&apos;\____</span><br><span class="line">               .&apos;  \\|     |//  `.</span><br><span class="line">              /  \\|||  :  |||//  \</span><br><span class="line">             /  _||||| -:- |||||-  \</span><br><span class="line">            |   | \\\  -  /// |   |</span><br><span class="line">            | \_|  &apos;&apos;\---/&apos;&apos;  |   |</span><br><span class="line">            \  .-\__  `-`  ___/-. /</span><br><span class="line">          ___`. .&apos;  /--.--\  `. . ___</span><br><span class="line">        .&quot;&quot; &apos;&lt;  `.___\_&lt;|&gt;_/___.&apos;  &gt;&apos;&quot;&quot;.</span><br><span class="line">      | | :  `- \`.;`\ _ /`;.`/ - ` : | |</span><br><span class="line">========`-.____`-.___\_____/___.-`____.-&apos;========</span><br><span class="line">      \  \ `-.   \_ __\ /__ _/   .-` /  /</span><br><span class="line">                     `=---=&apos;</span><br><span class="line">^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</span><br><span class="line">         佛祖保佑       永不宕机       永无Bug</span><br></pre></td></tr></table></figure><h2 id="占位符与描述信息"><a href="#占位符与描述信息" class="headerlink" title="占位符与描述信息"></a>占位符与描述信息</h2><p><code>banner.txt</code> 支持占位符，占位符可用于描述项目，同时也可定制Banner显示的具体细节。</p><p>允许使用的占位符如下表所示：</p><table><thead><tr><th>Variable</th><th>Description</th></tr></thead><tbody><tr><td><code>${application.version}</code></td><td>应用版本，从<code>MANIFEST.MF</code> 读取<code>Implementation-Version</code> 的值并显示。例如<code>Implementation-Version: 1.0</code> ，则打印 <code>1.0</code></td></tr><tr><td><code>${application.formatted-version}</code></td><td>将应用版本用括号括起来，并添加前缀v。例如：<code>Implementation-Version: 1.0</code> ，则打印 <code>(v1.0)</code></td></tr><tr><td><code>${spring-boot.version}</code></td><td>打印Spring Boot版本，例如 <code>2.1.4.RELEASE</code></td></tr><tr><td><code>${spring-boot.formatted-version}</code></td><td>将Spring Boot版本用括号括起来，并添加前缀v。例如： <code>(v2.1.4.RELEASE)</code></td></tr><tr><td><code>${Ansi.NAME}</code> (or <code>${AnsiColor.NAME}</code>, <code>${AnsiBackground.NAME}</code>, <code>${AnsiStyle.NAME}</code>)</td><td>指定ANSI转义码，详见 <code>org.springframework.boot.ansi.AnsiPropertySource</code></td></tr><tr><td><code>${application.title}</code></td><td>应用标题，从 <code>MANIFEST.MF</code> 读取 <code>Implementation-Title</code> 的值并打印。例如 <code>Implementation-Title: itmuch-app</code> ，则打印 <code>itmuch-app</code> 。</td></tr></tbody></table><h3 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h3><p>创建 <code>banner.txt</code> ，内容如下：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$&#123;AnsiBackground.BRIGHT_YELLOW&#125;$&#123;AnsiColor.BLUE&#125;$&#123;AnsiStyle.BOLD&#125;</span><br><span class="line">应用版本：$&#123;application.version&#125;</span><br><span class="line">Spring Boot版本：$&#123;spring-boot.version&#125;</span><br><span class="line">应用标题：$&#123;application.title&#125;</span><br></pre></td></tr></table></figure><h2 id="图片支持"><a href="#图片支持" class="headerlink" title="图片支持"></a>图片支持</h2><p>Spring Boot同样支持使用图片作为Banner，只需将图片放到项目的<code>classpath</code> （<code>src/main/resources</code> ）目录下，命名为<code>banner</code> ，格式支持<code>png</code> 、<code>jpg</code> 、<code>gif</code> 。</p><h2 id="禁用Banner"><a href="#禁用Banner" class="headerlink" title="禁用Banner"></a>禁用Banner</h2><p>添加如下配置：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">spring:</span><br><span class="line">  main:</span><br><span class="line">    banner-mode: &quot;off&quot;</span><br></pre></td></tr></table></figure><p>或在启动类上添加类似如下代码：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">public static void main(String[] args) &#123;</span><br><span class="line">    SpringApplication app = new SpringApplication(MySpringConfiguration.class);</span><br><span class="line">    app.setBannerMode(Banner.Mode.OFF);</span><br><span class="line">    app.run(args);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;&lt;strong&gt;TIPS&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;本文基于Spring Boot 2.1.9，理论支持Spring Boot所有版本。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;相信玩过Spring Boot的童鞋一定在启动日志中见过类似如
+      
+    
+    </summary>
+    
+    
+      <category term="SpringBoot" scheme="https://www.cicoding.cn/categories/SpringBoot/"/>
+    
+    
+      <category term="SpringBoot" scheme="https://www.cicoding.cn/tags/SpringBoot/"/>
+    
+      <category term="Banner" scheme="https://www.cicoding.cn/tags/Banner/"/>
+    
+  </entry>
   
   <entry>
     <title>Docker部署Spring Boot项目</title>
@@ -550,46 +582,15 @@
     <link href="https://www.cicoding.cn/docker/00-docker-lession-index/"/>
     <id>https://www.cicoding.cn/docker/00-docker-lession-index/</id>
     <published>2019-09-24T02:22:55.000Z</published>
-    <updated>2019-10-27T13:05:20.925Z</updated>
+    <updated>2019-10-28T02:08:10.713Z</updated>
     
-    <content type="html"><![CDATA[<h1 id="Docker系列"><a href="#Docker系列" class="headerlink" title="Docker系列"></a>Docker系列</h1><p><a href="/docker/01-docker-lession-index/">传统项目开发部署的流程是怎样的？</a></p><p><a href="/docker/02-docker-lession-index/">Docker是干什么用的？</a></p><p><a href="/docker/03-docker-lession-index/">Docker镜像、容器、仓库的介绍</a></p><p><a href="/docker/04-docker-lession-index/">在Centos系统中安装Docker</a></p><p><a href="/docker/05-docker-lession-index/">在windows系统中安装Docker</a></p><p><a href="/docker/06-docker-lession-index/">在Docker中安装JDK</a></p><p><a href="/docker/07-docker-lession-index/">在Docker中安装Tomcat</a></p>]]></content>
+    <content type="html"><![CDATA[<h1 id="Docker系列"><a href="#Docker系列" class="headerlink" title="Docker系列"></a>Docker系列</h1><p><a href="/docker/01-docker-lession-index/">传统项目开发部署的流程是怎样的？</a></p><p><a href="/docker/02-docker-lession-index/">Docker是干什么用的？</a></p><p><a href="/docker/03-docker-lession-index/">Docker镜像、容器、仓库的介绍</a></p><p><a href="/docker/04-docker-lession-index/">在Centos系统中安装Docker</a></p><p><a href="/docker/05-docker-lession-index/">在windows系统中安装Docker</a></p><p><a href="/docker/06-docker-lession-index/">在Docker中安装JDK</a></p><p><a href="/docker/07-docker-lession-index/">在Docker中安装Tomcat</a></p><p><a href="/docker/08-docker-lession-index/">在Docker中安装Mysql</a></p><p><a href="/docker/09-docker-lession-index/">在Docker中安装Nginx</a></p><p><a href="/docker/10-docker-lession-index/">在Docker中安装Zookeeper以及集群环境搭建</a></p><p><a href="/docker/11-docker-lession-index/">在Docker中安装Redis以及主从环境搭建</a></p><p><a href="/docker/12-docker-lession-index/">Docker部署Spring Boot项目</a></p>]]></content>
     
     <summary type="html">
     
       
       
         &lt;h1 id=&quot;Docker系列&quot;&gt;&lt;a href=&quot;#Docker系列&quot; class=&quot;headerlink&quot; title=&quot;Docker系列&quot;&gt;&lt;/a&gt;Docker系列&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;/docker/01-docker-lession-index/&quot;&gt;传统项
-      
-    
-    </summary>
-    
-    
-      <category term="Docker" scheme="https://www.cicoding.cn/categories/Docker/"/>
-    
-    
-      <category term="Docker" scheme="https://www.cicoding.cn/tags/Docker/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Docker镜像、容器、仓库的介绍</title>
-    <link href="https://www.cicoding.cn/docker/03-docker-lession-index/"/>
-    <id>https://www.cicoding.cn/docker/03-docker-lession-index/</id>
-    <published>2019-09-16T00:10:12.000Z</published>
-    <updated>2019-10-27T12:10:00.737Z</updated>
-    
-    <content type="html"><![CDATA[<p><strong>Docker镜像</strong></p><blockquote><p>因为Docker本身包含的知识点很多，网上太多的介绍文档了，这里我就简单概述一下。</p></blockquote><p>通俗的理解镜像</p><p>Docker的镜像是一个只读的模板，一个独立的文件系统，包括运行容器所需的数据，可以用来创建新的容器。</p><p>Docker的镜像相当于ISO操作系统的安装包，ISO镜像的内容是固定的，不会发生改变，可以重复使用。</p><p>如果上面的形容还无法让你理解Docker镜像，那我再举一个例子：</p><p>从事Java开发的人都知道类和实例的关系。直观的感觉，类就像是一个模板，根据这个类模板，可以生成很多个具体的对象实例。</p><p>则，<strong>Docker镜像就相当于Java的类，而通过Docker镜像生成出来的东西，我们就叫他它“容器”</strong>。</p><p>通过上面的形容，应该可以感觉的到镜像和容器之间的关系了吧。</p><p><strong>Docker容器</strong></p><p>通俗的理解容器</p><p>在上一节已经介绍了镜像与容器的关系。</p><p>这里就直接copy文档中的一句话，来简单形容一下容器：</p><p><strong>Docker镜像就相当于Java的类，而通过Docker镜像生成出来的东西，我们就叫他它“容器”</strong>。</p><p><strong>Docker仓库</strong></p><p>通俗的理解Docker仓库</p><p>仓库支持的操作类似git，当用户创建了自己的镜像之后就可以使用 push 命令将它上传到公有或者私有仓库，这样下次在另外一台机器上使用这个镜像时候，只需要从仓库上 pull 下来就可以了。</p><p>类似于，将某项目模块打成jar包，然后上传到私有或者公有的maven仓库，然后在其他的所有支持maven环境的机器上，都可以拉取这个jar进行使用。</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;&lt;strong&gt;Docker镜像&lt;/strong&gt;&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;因为Docker本身包含的知识点很多，网上太多的介绍文档了，这里我就简单概述一下。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;通俗的理解镜像&lt;/p&gt;
-&lt;p&gt;Docker的镜像是一个只
       
     
     </summary>

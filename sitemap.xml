@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://www.cicoding.cn/springboot/springboot-banner/</loc>
+    
+    <lastmod>2019-11-01T01:12:32.685Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.cicoding.cn/docker/00-docker-lession-index/</loc>
+    
+    <lastmod>2019-10-28T02:08:10.713Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://www.cicoding.cn/docker/12-docker-lession-index/</loc>
     
     <lastmod>2019-10-28T01:24:54.489Z</lastmod>
@@ -54,13 +68,6 @@
     <loc>https://www.cicoding.cn/http/httpclient-utils/</loc>
     
     <lastmod>2019-10-28T00:37:39.823Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://www.cicoding.cn/docker/00-docker-lession-index/</loc>
-    
-    <lastmod>2019-10-27T13:05:20.925Z</lastmod>
     
   </url>
   
