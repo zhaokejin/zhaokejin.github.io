@@ -18,10 +18,12 @@
     <link rel="dns-prefetch" href="https://www.cicoding.cn">
     <!--SEO-->
 
-    <meta name="keywords" content="筱进GG,Spring Cloud,Docker,微服务架构,Spring Boot,经验分享,软件代做,毕业设计,博客建站">
+    <meta name="keywords" content="Spring,注解">
 
 
-    <meta name="description" content="Spring Cloud、Docker、微服务架构、Cloud Native相关知识分享、筱进GG的博客,毕业设计代做">
+    <meta name="description" content="​        继《聊聊Spring家族中的那几百个注解》之后，我们来谈谈@Repository、@Component、@Controller、@Service有什么区别与使用：
+Spring的官方文档中的一段描述：
+​        在Spring2.0之前的版本中，@Repository...">
 
 
 
@@ -32,7 +34,7 @@
     <!--Title-->
 
 
-<title>分类: SpringSession | 筱进GG的博客</title>
+<title>聊聊@Repository、@Component、@Controller、@Service有什么区别 | 筱进GG的博客</title>
 
 
     <link rel="alternate" href="/atom.xml" title="筱进GG的博客" type="application/atom+xml">
@@ -250,45 +252,228 @@
     <section class="content-wrap">
         <div class="container">
             <div class="row">
-                <main class="col-md-8 main-content ">
-                    <ol class="breadcrumb">
+                <main class="col-md-8 main-content m-post">
+                    
     
-    
-        <li>
-            <a href="/categories" target="_blank">分类</a> /
-            <a href="/categories/SpringSession" target="_blank">
-                SpringSession
-            </a>
-        </li>
+        <div class="ad">
+            <div class="row">
+                
+                    <div class="col-md-12">
+                        <a href="https://www.aliyun.com/1111/2019/home?userCode=qhtujh03" rel="nofollow" target="_blank">
+                            <img class="img-responsive center-block"
+                                 src="/icons/750-240.jpg"
+                                 title="阿里云双11活动"
+                            >
+                        </a>
+                    </div>
+                
+            </div>
+        </div>
     
 
+
+<p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="聊聊@Repository、@Component、@Controller、@Service有什么区别">
+            
+                聊聊@Repository、@Component、@Controller、@Service有什么区别
+            
+        </h1>
+        <div class="post-meta">
+    
+        <span class="categories-meta fa-wrap">
+            <i class="fa fa-folder-open-o"></i>
+            <a class="category-link" href="/categories/Spring/">Spring</a>
+        </span>
+    
+
+    
+        <span class="fa-wrap">
+            <i class="fa fa-tags"></i>
+            <span class="tags-meta">
+                
+                    <a class="tag-link" href="/tags/Spring/">Spring</a> <a class="tag-link" href="/tags/注解/">注解</a>
+                
+            </span>
+        </span>
+    
+
+    
+        
+        <span class="fa-wrap">
+            <i class="fa fa-clock-o"></i>
+            <span class="date-meta">2019/11/12</span>
+        </span>
+        
+            <span class="fa-wrap">
+                <i class="fa fa-eye"></i>
+                <span id="busuanzi_value_page_pv"></span>
+            </span>
+        
+    
+</div>
+        
+        
+    </div>
+    
+    <div class="post-body post-content" id="container">
+        
+    <div class="toc-article">
+        <strong>
+            目录
+        </strong>
+        <div class="toc-content">
+            <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#总结"><span class="toc-text">总结</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Scope的prototype与singleton区别"><span class="toc-text">Scope的prototype与singleton区别</span></a></li></ol>
+        </div>
+    </div>
+
+
+        <p>​        继<a href="/spring/spring-annotation-hundred/">《聊聊Spring家族中的那几百个注解》</a>之后，我们来谈谈@Repository、@Component、@Controller、@Service有什么区别与使用：</p>
+<p><strong>Spring的官方文档中的一段描述：</strong></p>
+<p>​        在Spring2.0之前的版本中，<code>@Repository</code>注解可以标记在任何的类上，用来表明该类是用来执行与数据库相关的操作（即dao对象），并支持自动处理数据库操作产生的异常</p>
+<p>​        在Spring2.5版本中，引入了更多的Spring类注解：<code>@Component</code>,<code>@Service</code>,<code>@Controller</code>。<code>@Component</code>是一个通用的Spring容器管理的单例bean组件。而<code>@Repository</code>, <code>@Service</code>, <code>@Controller</code>就是针对不同的使用场景所采取的特定功能化的注解组件。</p>
+<p>​        因此，当你的一个类被<code>@Component</code>所注解，那么就意味着同样可以用<code>@Repository</code>, <code>@Service</code>, <code>@Controller</code>来替代它，同时这些注解会具备有更多的功能，而且功能各异。</p>
+<p>​        最后，如果你不知道要在项目的业务层采用<code>@Service</code>还是<code>@Component</code>注解。那么，<code>@Service</code>是一个更好的选择。</p>
+<p>​        就如上文所说的，<code>@Repository</code>早已被支持了在你的持久层作为一个标记可以去自动处理数据库操作产生的异常（译者注：因为原生的java操作数据库所产生的异常只定义了几种，但是产生数据库异常的原因却有很多种，这样对于数据库操作的报错排查造成了一定的影响；而Spring拓展了原生的持久层异常，针对不同的产生原因有了更多的异常进行描述。所以，在注解了<code>@Repository</code>的类上如果数据库操作中抛出了异常，就能对其进行处理，转而抛出的是翻译后的spring专属数据库异常，方便我们对异常进行排查处理）。</p>
+<table>
+<thead>
+<tr>
+<th>注解</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>@Component</td>
+<td>最普通的组件，可以被注入到spring容器进行管理</td>
+</tr>
+<tr>
+<td>@Repository</td>
+<td>作用于持久层</td>
+</tr>
+<tr>
+<td>@Service</td>
+<td>作用于业务逻辑层</td>
+</tr>
+<tr>
+<td>@Controller</td>
+<td>作用于表现层（spring-mvc的注解）</td>
+</tr>
+</tbody></table>
+<p>为了让 Spring 能够扫描类路径中的类并识别出 @Repository 注解，需要在 XML 配置文件中启用Bean 的自动扫描功能，这可以通过<a href="context:component-scan/" target="_blank" rel="noopener">context:component-scan/</a>实现。如下所示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">` // 首先使用 @Repository 将 DAO 类声明为 Bean  package bookstore.dao;  @Repository  public class UserDaoImpl implements UserDao&#123; …… &#125;   // 其次，在 XML 配置文件中启动 Spring 的自动扫描功能      ……   ……  `</span><br></pre></td></tr></table></figure>
+
+<p>​        这几个注解几乎可以说是一样的：因为被这些注解修饰的类就会被Spring扫描到并注入到Spring的bean容器中。</p>
+<p>这里，有两个注解是不能被其他注解所互换的：</p>
+<ul>
+<li><code>@Controller</code> 注解的bean会被spring-mvc框架所使用。</li>
+<li><code>@Repository</code> 会被作为持久层操作（数据库）的bean来使用</li>
+</ul>
+<p>如果想使用自定义的组件注解，那么只要在你定义的新注解中加上<code>@Component</code>即可：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">@Component </span><br><span class="line">@Scope(&quot;prototype&quot;)</span><br><span class="line">public @interface ScheduleJob &#123;...&#125;</span><br></pre></td></tr></table></figure>
+
+<p>​        这样，所有被<code>@ScheduleJob</code>注解的类就都可以注入到spring容器来进行管理。我们所需要做的，就是写一些新的代码来处理这个自定义注解（译者注：可以用反射的方法），进而执行我们想要执行的工作。@Scope参数了解继续往下读。</p>
+<p>如果你想提供一个自定义的作用域解析策略而不使用基于注解的方法，只需实现 ScopeMetadataResolver接口，确认包含一个默认的没有参数的构造方法。然后在配置扫描器时提供全限定类名：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;context:component-scan base-package=&quot;a.b&quot; scope-resolver=&quot;footmark.SimpleScopeResolver&quot; /&gt;</span><br></pre></td></tr></table></figure>
+
+<p><code>@Component</code>就是跟<code>&lt;bean&gt;</code>一样，可以托管到Spring容器进行管理。</p>
+<p>@Service, @Controller , @Repository = {@Component + 一些特定的功能}。这个就意味着这些注解在部分功能上是一样的。</p>
+<p>当然，下面三个注解被用于为我们的应用进行分层：</p>
+<ul>
+<li><code>@Controller</code>注解类进行前端请求的处理，转发，重定向。包括调用Service层的方法</li>
+<li><code>@Service</code>注解类处理业务逻辑</li>
+<li><code>@Repository</code>注解类作为DAO对象（数据访问对象，Data Access Objects），这些类可以直接对数据库进行操作</li>
+</ul>
+<p>有这些分层操作的话，代码之间就实现了松耦合，代码之间的调用也清晰明朗，便于项目的管理；假想一下，如果只用<code>@Controller</code>注解，那么所有的请求转发，业务处理，数据库操作代码都糅合在一个地方，那这样的代码该有多难拓展和维护。</p>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><ul>
+<li><code>@Component</code>, <code>@Service</code>, <code>@Controller</code>, <code>@Repository</code>是spring注解，注解后可以被spring框架所扫描并注入到spring容器来进行管理</li>
+<li><code>@Component</code>是通用注解，其他三个注解是这个注解的拓展，并且具有了特定的功能，他是一个泛化的概念，仅仅表示一个组件 (Bean) ，可以作用在任何层次。 </li>
+<li><code>@Repository</code>注解在持久层中，具有将数据库操作抛出的原生异常翻译转化为spring的持久层异常的功能。</li>
+<li><code>@Controller</code>层是spring-mvc的注解，具有将请求进行转发，重定向的功能。</li>
+<li><code>@Service</code>层是业务逻辑层注解，这个注解只是标注该类处于业务逻辑层。</li>
+<li>用这些注解对应用进行分层之后，就能将请求处理，义务逻辑处理，数据库操作处理分离出来，为代码解耦，也方便了以后项目的维护和开发。</li>
+</ul>
+<h4 id="Scope的prototype与singleton区别"><a href="#Scope的prototype与singleton区别" class="headerlink" title="Scope的prototype与singleton区别"></a>Scope的prototype与singleton区别</h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">"com.****.boss.domain.utils.CacheManager"</span> <span class="attr">scope</span>=<span class="string">"singleton"</span>  <span class="attr">init-method</span>=<span class="string">"init"</span> <span class="attr">destroy-method</span>=<span class="string">"destory"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"messageProcessService"</span> <span class="attr">class</span>=<span class="string">"com.****.boss.domain.common.service.MessageProcessService"</span> <span class="attr">scope</span>=<span class="string">"prototype"</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"orderHandleConfigService"</span> <span class="attr">ref</span>=<span class="string">"orderHandleConfigService"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>1、singleton作用域<br>　　当一个bean的作用域设置为singleton, 那么Spring IOC容器中只会存在一个共享的bean实例，并且所有对bean的请求，只要id与该bean定义相匹配，则只会返回bean的同一实例。换言之，当把一个bean定义设置为singleton作用域时，Spring IOC容器只会创建该bean定义的唯一实例。这个单一实例会被存储到单例缓存（singleton cache）中，并且所有针对该bean的后续请求和引用都将返回被缓存的对象实例，这里要注意的是singleton作用域和GOF设计模式中的单例是完全不同的，单例设计模式表示一个ClassLoader中只有一个class存在，而这里的singleton则表示一个容器对应一个bean，也就是说当一个bean被标识为singleton时候，spring的IOC容器中只会存在一个该bean。</p>
+<p>2、prototype<br>　　prototype作用域部署的bean，每一次请求（将其注入到另一个bean中，或者以程序的方式调用容器的getBean()方法）都会产生一个新的bean实例，相当与一个new的操作，对于prototype作用域的bean，有一点非常重要，那就是Spring不能对一个prototype bean的整个生命周期负责，容器在初始化、配置、装饰或者是装配完一个prototype实例后，将它交给客户端，随后就对该prototype实例不闻不问了。不管何种作用域，容器都会调用所有对象的初始化生命周期回调方法，而对prototype而言，任何配置好的析构生命周期回调方法都将不会被调用。清除prototype作用域的对象并释放任何prototype bean所持有的昂贵资源，都是客户端代码的职责。（让Spring容器释放被singleton作用域bean占用资源的一种可行方式是，通过使用bean的后置处理器，该处理器持有要被清除的bean的引用。） </p>
+<p>scope=”prototype”没写的问题,项目中对一个表的增删该操作是用一个action，这个 actionadd,update,delete,save这些方法， 添加和修改是共用一个页面，当页面得到id时代表进行的修改操作，反之是添加操作。因为在配置spring的bean是忘了写scope=”prototype” 所以每次添加时都显示最后一次访问过的记录,scope=”prototype” 会在该类型的对象被请求 时创建一个新的action对象。如果没有配置scope=prototype则添加的时候不会新建一个action，他任然会保留上次访问的过记录的信息 webwork的Action不是线程安全的，要求在多线程环境下必须是一个线程对应一个独立的实例，不能使用singleton。所以，我们在Spring配置Webwork Action Bean时，需要加上属性scope=prototype”或singleton=”false”。<br>　　singleton模式指的是对某个对象的完全共享，包括代码空间和数据空间，说白了，如果一个类是singleton的，假如这个类有成员变量，那么这个成员变量的值是各个线程共享的（有点类似于static的样子了），当线程A往给变量赋了一个值以后，线程B就能读出这个值。因此，对于前台Action，肯定不能使用singleton的模式，必须是一个线程请求对应一个独立的实例。推而广之，只要是带数据成员变量的类，为了防止多个线程混用数据，就不能使用singleton。对于我们用到的Service、Dao，之所以用了singleton，就是因为他们没有用到数据成员变量，如果谁的Service需要数据成员变量，请设置singleton=false。 有状态的bean都使用Prototype作用域，而对无状态的bean则应该使用singleton作用域。 </p>
+<p>简单的说：</p>
+<ul>
+<li>singleton 只有一个实例，也即是单例模式。</li>
+<li>prototype访问一次创建一个实例，相当于new。</li>
+</ul>
+<p>应用场合：</p>
+<ol>
+<li>需要回收重要资源(数据库连接等)的事宜配置为singleton，如果配置为prototype需要应用确保资源正常回收。</li>
+<li>有状态的Bean配置成singleton会引发未知问题，可以考虑配置为prototype。 </li>
 </ol>
 
+        <h2>相关文章</h2><ul><li><a href="/spring/spring-annotation-hundred/">聊聊Spring家族中的那几百个注解</a></li><li><a href="/spring/spring-annotation/">spring注解大全解析</a></li></ul>
+    </div>
+    
 
-    <article class="post">
-        
-        <div class="post-content">
-            <div class="post-head home-post-head">
-                <h1 class="post-title">
-                    <a href="/springboot/springboot-redis-springsession/">SpringBoot2.1.6集成spring session redis实现session共享</a>
-                </h1>
-                <div class="post-meta">  &bull;
-                    <time class="post-date" datetime="" title="">
-                        2019年10月11日
-                    </time>
+
+    
+        <div class="post-footer">
+            <div class="col-sm-10">
+                <div>
+                    <b>本文链接</b>：<a href="/spring/whats-the-difference-between-component-repository-service-controller-annotations-in/" target="_blank">聊聊@Repository、@Component、@Controller、@Service有什么区别</a>
+                </div>
+                <div>
+                    
+                        转载声明：本博客由筱进GG创作，采用 <a href="https://creativecommons.org/licenses/by-nc-nd/3.0/" target="_blank"> CC BY 3.0 CN </a> 许可协议。可自由转载、引用，但需署名作者且注明文章出处。如转载至微信公众号，请在文末添加作者公众号二维码。
+                    
+                </div>
+                <div>
+                    
                 </div>
             </div>
-            <p class="brief">
-                
-                    使用 Redis 实现 Session 共享1 什么是 Session由于 HTTP 协议是无状态的协议，因而服务端需要记录用户的状态时，就需要用某种机制来识具体的用户。Session 是另一种记录客户状态的机制，不同的是 Cookie 保存在客户端浏览器中，而 Session 保存在服务器上。客户端浏览器访问服务器的时候，服务器把客户端信息以某种形式记录在服务器上，这就是 Session。...
-                
-            </p>
+            <div class="col-sm-2">
+                <img src="/icons/wx.jpg" width=100%/>
+            </div>
         </div>
-    </article>
- 
+    
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+    
+        <a target="_blank" href="/springboot/springboot-banner/" class="next-post btn btn-default"
+           title='Spring Boot自定义Banner'>
+            <span class="hidden-lg">下一篇</span>
+            <span class="hidden-xs">Spring Boot自定义Banner</span><i class="fa fa-angle-right fa-fw"></i>
+        </a>
+    
+</div>
 
 
+    <div id="comments">
+        
+	<link rel="stylesheet" href="https://cdn.bootcss.com/gitalk/1.4.1/gitalk.min.css">
+<script src="//cdn.bootcss.com/gitalk/1.4.1/gitalk.min.js"></script>
+<script src="//cdn.bootcss.com/blueimp-md5/2.9.0/js/md5.min.js"></script>
 
+<div id="gitalk-container"></div>
+<script type="text/javascript">
+    var gitalk = new Gitalk({
+        // Gitalk配置
+        language: "zh-CN",
+        clientID: "934e6c8b8e5d8796b4c3",
+        clientSecret: "c6b01f8df89c3a426a0eb019ebe5f71620814aee",
+        repo: "zhaokejin.github.io",
+        owner: "zhaokejin",
+        admin: ["zhaokejin"],
+        id: md5(location.pathname),
+        distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+</script>
+
+
+    </div>
 
 
 
@@ -370,7 +555,7 @@
         
     <div class="widget">
         <h3 class="title">分类</h3>
-        <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/"><i class="fa" aria-hidden="true">Docker</i></a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/HTTP/"><i class="fa" aria-hidden="true">HTTP</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/"><i class="fa" aria-hidden="true">Redis</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/"><i class="fa" aria-hidden="true">Spring</i></a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringBoot/"><i class="fa" aria-hidden="true">SpringBoot</i></a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link current" href="/categories/SpringSession/"><i class="fa" aria-hidden="true">SpringSession</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/maven/"><i class="fa" aria-hidden="true">maven</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/主键/"><i class="fa" aria-hidden="true">主键</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/其他/"><i class="fa" aria-hidden="true">其他</i></a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/安装教程/"><i class="fa" aria-hidden="true">安装教程</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/工具/"><i class="fa" aria-hidden="true">工具</i></a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/微服务/"><i class="fa" aria-hidden="true">微服务</i></a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据库/"><i class="fa" aria-hidden="true">数据库</i></a><span class="category-list-count">1</span></li></ul>
+        <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/"><i class="fa" aria-hidden="true">Docker</i></a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/HTTP/"><i class="fa" aria-hidden="true">HTTP</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/"><i class="fa" aria-hidden="true">Redis</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link current" href="/categories/Spring/"><i class="fa" aria-hidden="true">Spring</i></a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringBoot/"><i class="fa" aria-hidden="true">SpringBoot</i></a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringSession/"><i class="fa" aria-hidden="true">SpringSession</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/maven/"><i class="fa" aria-hidden="true">maven</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/主键/"><i class="fa" aria-hidden="true">主键</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/其他/"><i class="fa" aria-hidden="true">其他</i></a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/安装教程/"><i class="fa" aria-hidden="true">安装教程</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/工具/"><i class="fa" aria-hidden="true">工具</i></a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/微服务/"><i class="fa" aria-hidden="true">微服务</i></a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据库/"><i class="fa" aria-hidden="true">数据库</i></a><span class="category-list-count">1</span></li></ul>
     </div>
 
 
