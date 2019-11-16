@@ -386,7 +386,7 @@ Docker 中国官方镜像加速
 <h2 id="查看运行的mysql容器"><a href="#查看运行的mysql容器" class="headerlink" title="查看运行的mysql容器"></a>查看运行的mysql容器</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker ps</span><br></pre></td></tr></table></figure>
 
 <p>如下图：</p>
-<p><img src="/images/docker/1527526836293-2e4d3281-6899-4152-9d43-90779c839812.png" alt="图片描述"></p>
+<p><img src="/images/docker/1527526836293-2e4d3281-6899-4152-9d43-90779c839812.png" alt="在Docker中安装Mysql"></p>
 <blockquote>
 <p>mysql容器已经正常启动了！</p>
 </blockquote>
@@ -400,20 +400,21 @@ Docker 中国官方镜像加速
 <p>其中的“c9”指的当前mysql容器ID的前面部分值（在上图就可以看出来mysql容器的ID是 c94faeed480a）。</p>
 </blockquote>
 <p>回车运行效果如下图：</p>
-<p><img src="/images/docker/1527526967580-238a65ec-9f53-41fe-b9ef-b3b966c132fb.png" alt="图片描述"></p>
+<p><img src="/images/docker/1527526967580-238a65ec-9f53-41fe-b9ef-b3b966c132fb.png" alt="在Docker中安装Mysql"></p>
 <blockquote>
 <p>其实这个时候，命令行控制台可以输入mysql相关的命令了。</p>
 </blockquote>
 <h2 id="连接mysql数据库"><a href="#连接mysql数据库" class="headerlink" title="连接mysql数据库"></a>连接mysql数据库</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql -u root -p123456</span><br></pre></td></tr></table></figure>
 
 <p>如下图：</p>
-<p><img src="/images/docker/1527527263102-cce7533d-a941-41e9-994c-18365f1031f0.png" alt="图片描述"></p>
+<p><img src="/images/docker/1527527263102-cce7533d-a941-41e9-994c-18365f1031f0.png" alt="在Docker中安装Mysql"></p>
 <p>这个就是我们非常熟悉的mysql命令行界面了！</p>
 <p>我们可以在这里创建数据库、表等操作。再次印证了Docker的强大和方便！<img src="/images/docker/1527527324223-e0be6ce6-e27b-4ba9-9eb0-821cb8f0509e.jpeg" alt="图片描述"></p>
 <h2 id="查看当前所有的数据库"><a href="#查看当前所有的数据库" class="headerlink" title="查看当前所有的数据库"></a>查看当前所有的数据库</h2><p>在mysql命令行中执行命令：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">show databases;</span><br></pre></td></tr></table></figure>
 
-<p>如下图所示：<img src="/images/docker/1527527456368-1f8820d5-c683-4524-9a0b-587b80904bd3.png" alt="图片描述"></p>
+<p>如下图所示：</p>
+<p><img src="/images/docker/1527527456368-1f8820d5-c683-4524-9a0b-587b80904bd3.png" alt="在Docker中安装Mysql"></p>
 <blockquote>
 <p>完全就是和平常使用mysql一样。</p>
 </blockquote>
@@ -423,7 +424,7 @@ Docker 中国官方镜像加速
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create database docker_test;</span><br></pre></td></tr></table></figure>
 
 <p>效果如下图：</p>
-<p><img src="/images/docker/1527527630068-b5963a1f-6e4b-4afb-90fa-6aff56bb5f2d.png" alt="图片描述"></p>
+<p><img src="/images/docker/1527527630068-b5963a1f-6e4b-4afb-90fa-6aff56bb5f2d.png" alt="在Docker中安装Mysql"></p>
 <blockquote>
 <p>这里我就创建了一个数据库docker_test</p>
 </blockquote>
@@ -461,7 +462,7 @@ Docker 中国官方镜像加速
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; select * from test;</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
 </blockquote>
 <blockquote>
-<p><img src="/images/docker/1527528167233-6f90706b-e238-4a4f-8fd8-af625fbcee85.png" alt="图片描述"></p>
+<p><img src="/images/docker/1527528167233-6f90706b-e238-4a4f-8fd8-af625fbcee85.png" alt="在Docker中安装Mysql"></p>
 </blockquote>
 <blockquote>
 <p>一切OK！</p>
@@ -477,14 +478,14 @@ Docker 中国官方镜像加速
 <p>如果版本低的话，可以到官方下载最新版本 <a href="https://www.jetbrains.com/datagrip/" target="_blank" rel="noopener">https://www.jetbrains.com/datagrip/</a></p>
 </blockquote>
 <p><strong>打开本地DataGrip客户端，新建连接mysql数据库</strong></p>
-<p><img src="/images/docker/1527528495532-b4f5af7a-8094-4bfa-a22c-f0a97be1529d.png" alt="图片描述"></p>
+<p><img src="/images/docker/1527528495532-b4f5af7a-8094-4bfa-a22c-f0a97be1529d.png" alt="在Docker中安装Mysql"></p>
 <p><strong>输入正确的mysql相关信息，连接数据库：</strong></p>
-<p><img src="/images/docker/1527528735459-411b5fbb-6f1d-4ccb-8f04-4e2098a853cc.png" alt="图片描述"></p>
+<p><img src="/images/docker/1527528735459-411b5fbb-6f1d-4ccb-8f04-4e2098a853cc.png" alt="在Docker中安装Mysql"></p>
 <blockquote>
 <p>输入完成之后，可以点击下方的 Test Connection 按钮，来测试连接是否正常。</p>
 </blockquote>
 <p><strong>查看创建的**</strong>数据库和表：**</p>
-<p><img src="/images/docker/1527528859607-0993eb10-0919-413f-90a0-5913fd4ef031.png" alt="图片描述"></p>
+<p><img src="/images/docker/1527528859607-0993eb10-0919-413f-90a0-5913fd4ef031.png" alt="在Docker中安装Mysql"></p>
 <blockquote>
 <p>到此，mysql的相关服务已经正常访问和操作了。这和我们传统的使用mysql没有什么不同。</p>
 </blockquote>
@@ -493,20 +494,20 @@ Docker 中国官方镜像加速
 <p>我们通过DataGrip客户端，在test表中手动再添加一条数据，然后我们在docker中看看是否能查看到新增的数据：</p>
 </blockquote>
 <blockquote>
-<p><img src="/images/docker/1527529149115-b76ddbb0-d5d6-47c2-994a-5e6b7c86b9aa.png" alt="图片描述"></p>
+<p><img src="/images/docker/1527529149115-b76ddbb0-d5d6-47c2-994a-5e6b7c86b9aa.png" alt="在Docker中安装Mysql"></p>
 </blockquote>
 <blockquote>
 <p>【注意】：我这里添加了一条带有中文的数据。</p>
 </blockquote>
 <p><strong>进入mysql容器中查询表数据</strong></p>
 <blockquote>
-<p><img src="/images/docker/1527529312296-ce33f0fb-2226-4cab-9a18-456d9938b58f.png" alt="图片描述"></p>
+<p><img src="/images/docker/1527529312296-ce33f0fb-2226-4cab-9a18-456d9938b58f.png" alt="在Docker中安装Mysql"></p>
 </blockquote>
 <blockquote>
 <p>呀！是不是发现问题了~ 没错，中文乱码！怎么解决呢？</p>
 </blockquote>
 <h2 id="mysql容器中解决表数据中文乱码"><a href="#mysql容器中解决表数据中文乱码" class="headerlink" title="mysql容器中解决表数据中文乱码"></a><strong>mysql容器中解决表数据中文乱码</strong></h2><p><strong>查看mysql容器的ID</strong>：</p>
-<p><img src="/images/docker/1527529722916-b668aa57-db51-4822-a342-00316b09bf5d.png" alt="图片描述"></p>
+<p><img src="/images/docker/1527529722916-b668aa57-db51-4822-a342-00316b09bf5d.png" alt="在Docker中安装Mysql"></p>
 <p><strong>进入mysql的docker容器</strong>：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker exec -it c9 /bin/bash</span><br></pre></td></tr></table></figure>
 
@@ -524,20 +525,20 @@ Docker 中国官方镜像加速
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[mysqld]</span><br><span class="line">character-set-server=utf8 </span><br><span class="line">[client]</span><br><span class="line">default-character-set=utf8 </span><br><span class="line">[mysql]</span><br><span class="line">default-character-set=utf8</span><br></pre></td></tr></table></figure>
 
 <p>最终修改结果为：</p>
-<p><img src="/images/docker/1527530651772-65e37c7b-f8bd-4600-82d3-bbc899c75588.png" alt="图片描述"></p>
+<p><img src="/images/docker/1527530651772-65e37c7b-f8bd-4600-82d3-bbc899c75588.png" alt="在Docker中安装Mysql"></p>
 <p><strong>重新进入mysql容器，查询表数据</strong>，显示结果为：</p>
-<p><img src="/images/docker/1527530803010-56bd8f5a-b406-43e8-b8d2-21f5eea67add.png" alt="图片描述"></p>
+<p><img src="/images/docker/1527530803010-56bd8f5a-b406-43e8-b8d2-21f5eea67add.png" alt="在Docker中安装Mysql"></p>
 <blockquote>
 <p>可以看到，已经正常显示中文了！</p>
 </blockquote>
-<h2 id="停止并重启mysql容器，再次查看效果"><a href="#停止并重启mysql容器，再次查看效果" class="headerlink" title="停止并重启mysql容器，再次查看效果"></a>停止并重启mysql容器，再次查看效果</h2><p><img src="/images/docker/1527531064156-dd3d8b97-58ea-45e1-a0a3-c197f1bf4053.png" alt="图片描述"></p>
+<h2 id="停止并重启mysql容器，再次查看效果"><a href="#停止并重启mysql容器，再次查看效果" class="headerlink" title="停止并重启mysql容器，再次查看效果"></a>停止并重启mysql容器，再次查看效果</h2><p><img src="/images/docker/1527531064156-dd3d8b97-58ea-45e1-a0a3-c197f1bf4053.png" alt="在Docker中安装Mysql"></p>
 <p><strong>客户端DataGrip重新连接mysql：</strong></p>
-<p><img src="/images/docker/1527531133633-c2fa79b6-d15b-4339-b062-ef0514e77940.png" alt="图片描述"></p>
+<p><img src="/images/docker/1527531133633-c2fa79b6-d15b-4339-b062-ef0514e77940.png" alt="在Docker中安装Mysql"></p>
 <blockquote>
 <p>客户端连接正常！</p>
 </blockquote>
 <p><strong>进入mysql容器，查看表数据：</strong></p>
-<p><img src="/images/docker/1527531255245-7550ddea-a30d-4795-880b-d17ddecd3345.png" alt="图片描述"></p>
+<p><img src="/images/docker/1527531255245-7550ddea-a30d-4795-880b-d17ddecd3345.png" alt="在Docker中安装Mysql"></p>
 <blockquote>
 <p>mysql容器重启之后，查询数据正常显示中文！一切没什么问题了~</p>
 </blockquote>
@@ -554,24 +555,24 @@ Docker 中国官方镜像加速
 <p>其中，“c9”就是指的容器ID，新的镜像名称为“mysql-new”。</p>
 </blockquote>
 <p>如下图：</p>
-<p><img src="/images/docker/1527531803451-9e5877e4-43d7-4661-a577-961c2332fe2d.png" alt="图片描述"></p>
+<p><img src="/images/docker/1527531803451-9e5877e4-43d7-4661-a577-961c2332fe2d.png" alt="在Docker中安装Mysql"></p>
 <p>查看所有镜像列表：</p>
-<p><img src="/images/docker/1527532053082-2e7691e6-6219-455b-906d-f4534476b913.png" alt="图片描述"></p>
+<p><img src="/images/docker/1527532053082-2e7691e6-6219-455b-906d-f4534476b913.png" alt="在Docker中安装Mysql"></p>
 <blockquote>
 <p>是不是发现了我们创建的新的镜像mysql-new了。</p>
 </blockquote>
-<h3 id="启动新创建的mysql镜像"><a href="#启动新创建的mysql镜像" class="headerlink" title="启动新创建的mysql镜像"></a><strong>启动新创建的mysql镜像</strong></h3><p><img src="/images/docker/1527532239704-6e772c1c-551f-42f6-9b45-39137f38bea5.png" alt="图片描述"></p>
+<h3 id="启动新创建的mysql镜像"><a href="#启动新创建的mysql镜像" class="headerlink" title="启动新创建的mysql镜像"></a><strong>启动新创建的mysql镜像</strong></h3><p><img src="/images/docker/1527532239704-6e772c1c-551f-42f6-9b45-39137f38bea5.png" alt="在Docker中安装Mysql"></p>
 <blockquote>
 <p>由于上面我们已经运行了一个mysql的容器了，端口是3306，所以我们新运行一个mysql容器的时候，端口号就不能是3306了，这里我指定为3307，且容器的别名是mysql-new，方便区分查看。</p>
 </blockquote>
 <h3 id="进入新创建的mysql容器"><a href="#进入新创建的mysql容器" class="headerlink" title="进入新创建的mysql容器"></a><strong>进入新创建的mysql容器</strong></h3><ul>
 <li><h4 id="查看mysql数据库信息"><a href="#查看mysql数据库信息" class="headerlink" title="查看mysql数据库信息"></a><strong>查看mysql数据库信息</strong></h4></li>
 </ul>
-<p><img src="/images/docker/1527532534611-7677fed8-a17e-463c-93bb-62a1f7dfbb21.png" alt="图片描述"></p>
+<p><img src="/images/docker/1527532534611-7677fed8-a17e-463c-93bb-62a1f7dfbb21.png" alt="在Docker中安装Mysql"></p>
 <ul>
 <li><h4 id="查看my-cnf配置文件内容"><a href="#查看my-cnf配置文件内容" class="headerlink" title="查看my.cnf配置文件内容"></a>查看my.cnf配置文件内容</h4></li>
 </ul>
-<p><img src="/images/docker/1527532760600-5a1830ab-633e-4d00-a15a-23b6c2e0d677.png" alt="图片描述"></p>
+<p><img src="/images/docker/1527532760600-5a1830ab-633e-4d00-a15a-23b6c2e0d677.png" alt="在Docker中安装Mysql"></p>
 <p>从上面2张图中，可以明显的看到，我们之前创建的数据库docker_test、表test，都没有了！但是修改的my.cnf配置文件的内容还是保留着的。</p>
 <p>why？？？ 为什么会这样呢？</p>
 <blockquote>
@@ -597,25 +598,25 @@ Docker 中国官方镜像加速
 <p>我们可以通过命令查看到别名是“mysql”的容器挂载数据卷的目录。</p>
 <p>看一下我们的“mysql”容器的ID信息，方便查看。</p>
 <blockquote>
-<p><img src="/images/docker/1527546716034-2e7873e1-883c-4d60-bdd6-bd75962b403a.png" alt="图片描述"></p>
+<p><img src="/images/docker/1527546716034-2e7873e1-883c-4d60-bdd6-bd75962b403a.png" alt="在Docker中安装Mysql"></p>
 </blockquote>
 <p>通过命令docker inspect查看mysql这个容器的数据卷挂载信息：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker inspect c9</span><br></pre></td></tr></table></figure>
 
 <p>执行命令之后，由于显示的内容比较多，这里我们就贴一下重要的信息：</p>
 <blockquote>
-<p><img src="/images/docker/1527546766842-6a1ebb25-6a86-4a67-b202-05382a3ca083.png" alt="图片描述"></p>
+<p><img src="/images/docker/1527546766842-6a1ebb25-6a86-4a67-b202-05382a3ca083.png" alt="在Docker中安装Mysql"></p>
 </blockquote>
 <p>通过图中可以看到，mysql容器将容器内的/var/lib/mysql路径作为volume挂载。真正的数据库相关数据文件所在的目录就是“Source”对应的目录，即：/var/lib/docker/volumes/1b0b17f6a4f78d357a187116d75991db8ee784213e67cc9b9988c8ef647fe563/_data</p>
 <p>我们可以进入mysql容器查看/var/lib/mysql目录下的内容：</p>
-<p><img src="/images/docker/1527546887058-112f86c9-f2ae-4cae-9540-6da58fe3e8aa.png" alt="图片描述"></p>
+<p><img src="/images/docker/1527546887058-112f86c9-f2ae-4cae-9540-6da58fe3e8aa.png" alt="在Docker中安装Mysql"></p>
 <blockquote>
 <p>发现的确是mysql数据库的数据文件（红色区域）。</p>
 </blockquote>
 <p>这时候，我们切换到Linux命令行，进入到mysql容器的数据挂载目录，看看该目录下有什么内容：</p>
 <p>/var/lib/docker/volumes/1b0b17f6a4f78d357a187116d75991db8ee784213e67cc9b9988c8ef647fe563/_data</p>
 <p>如下图所示：</p>
-<p><img src="/images/docker/1527546977803-7124018a-3f0e-447b-88d8-80b442be4539.png" alt="图片描述"></p>
+<p><img src="/images/docker/1527546977803-7124018a-3f0e-447b-88d8-80b442be4539.png" alt="在Docker中安装Mysql"></p>
 <p>咦~ 是不是发现了什么！把黄色区域的内容与上图中红色区域内容进行对比，是不是内容一模一样！</p>
 <p>这也就印证了，当初我们在mysql容器中创建的数据库、表等，真正的数据库文件存放的位置就是在宿主机下面，而不是存放在容器中。</p>
 <p>到此，我们终于知道了为何mysql-new容器中的数据库、表都不见了，原来数据库文件是存放在宿主机上的。</p>
@@ -627,13 +628,13 @@ Docker 中国官方镜像加速
 </blockquote>
 <h3 id="使用-v-实现数据挂载（数据卷）"><a href="#使用-v-实现数据挂载（数据卷）" class="headerlink" title="使用 -v 实现数据挂载（数据卷）"></a>使用 <strong>-v 实现数据挂载（数据卷）</strong></h3><p>如果我们想在 run 一个新的mysql容器的时候，可以正常访问我们之前在mysql容器中创建的数据库、表数据，则在docker run命令启动容器的时候，就需要指定挂载目录。</p>
 <p><strong>注意：要想让新的mysql容器能正常挂载名称是“mysql”容器，前提是需要先停止名称是“mysql”的容器</strong>，不然的话，即使run命令配置正确，容器启动的时候会一直报错：</p>
-<p><img src="/images/docker/1527547243072-cf5029a8-3d60-434f-aeba-f314633d6b0b.png" alt="图片描述"></p>
+<p><img src="/images/docker/1527547243072-cf5029a8-3d60-434f-aeba-f314633d6b0b.png" alt="在Docker中安装Mysql"></p>
 <p>上图就是因为没有事先停止mysql容器导致的。</p>
 <p><strong>下面开始具体操作：</strong></p>
 <ul>
 <li>先停止mysql容器</li>
 </ul>
-<p><img src="/images/docker/1527547465870-974cfc00-44b0-4a09-87a9-b6035b4adbf5.png" alt="图片描述"></p>
+<p><img src="/images/docker/1527547465870-974cfc00-44b0-4a09-87a9-b6035b4adbf5.png" alt="在Docker中安装Mysql"></p>
 <ul>
 <li>重新启动一个新的mysql容器，命令如下：</li>
 </ul>
@@ -644,9 +645,9 @@ Docker 中国官方镜像加速
 <p>实现的效果就是说：新启动的容器，挂载宿主机的目录，实现数据共享。</p>
 </blockquote>
 <p>运行结果：</p>
-<p><img src="/images/docker/1527547916774-cd6487ee-4afc-42a6-b6bb-f2ce6cf71523.png" alt="图片描述"></p>
+<p><img src="/images/docker/1527547916774-cd6487ee-4afc-42a6-b6bb-f2ce6cf71523.png" alt="在Docker中安装Mysql"></p>
 <h4 id="登录新的mysql-v容器，查看数据库信息"><a href="#登录新的mysql-v容器，查看数据库信息" class="headerlink" title="登录新的mysql-v容器，查看数据库信息"></a><strong>登录新的mysql-v容器，查看数据库信息</strong></h4><p>直接看下图的命令操作吧：</p>
-<p><img src="/images/docker/1527548344772-a86dd217-1ad4-4a19-b443-d51d2d45a80a.png" alt="图片描述"></p>
+<p><img src="/images/docker/1527548344772-a86dd217-1ad4-4a19-b443-d51d2d45a80a.png" alt="在Docker中安装Mysql"></p>
 <p>看到效果了吧！在这个mysql-v的新容器里面，已经可以看到我们一开始在“mysql”容器中创建的数据库和表了。</p>
 <p>也就实现了容器之间的数据共享。</p>
 <p>核心的实现就是在run命令里面加入了 -v 参数。如果不太明白-v的含义的，可以自行网上查询资料了解学习，加深印象。</p>
@@ -674,7 +675,7 @@ Docker 中国官方镜像加速
 </blockquote>
 <p>（这里就不多做说明了，有兴趣的可以网上自行查阅资料研究）</p>
 
-        <h2>相关文章</h2><ul><li><a href="/docker/12-docker-lession-index/">Docker部署Spring Boot项目</a></li><li><a href="/docker/01-docker-lession-index/">传统项目开发部署的流程是怎样的？</a></li><li><a href="/docker/00-docker-lession-index/">Docker系列教程</a></li><li><a href="/docker/03-docker-lession-index/">Docker镜像、容器、仓库的介绍</a></li><li><a href="/docker/07-docker-lession-index/">在Docker中安装Tomcat</a></li></ul>
+        <h2>相关文章</h2><ul><li><a href="/docker/04-docker-lession-index/">在Centos系统中安装Docker</a></li><li><a href="/docker/01-docker-lession-index/">传统项目开发部署的流程是怎样的？</a></li><li><a href="/docker/03-docker-lession-index/">Docker镜像、容器、仓库的介绍</a></li><li><a href="/docker/00-docker-lession-index/">Docker系列教程</a></li><li><a href="/docker/07-docker-lession-index/">在Docker中安装Tomcat</a></li></ul>
     </div>
     
 

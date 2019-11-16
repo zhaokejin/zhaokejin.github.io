@@ -376,7 +376,7 @@
 
 
 <p>如下图所示，将上面的命令copy一下，并在Linux命令行下面直接回车运行：</p>
-<p><img src="/images/docker/1527433039734-c65fa38a-5bba-4ecd-88f2-b0c1f6402449.png" alt="图片描述"></p>
+<p><img src="/images/docker/1527433039734-c65fa38a-5bba-4ecd-88f2-b0c1f6402449.png" alt="在Centos系统中安装Docker"></p>
 <p>如图中所示，最后出现 No Packages marked for removal 的提示信息，说明没有需要删除的资源包了，标明旧版本的docker资源包以及相关依赖包都已经删除掉了。</p>
 <h1 id="安装Docker-CE"><a href="#安装Docker-CE" class="headerlink" title="安装Docker CE"></a>安装Docker CE</h1><p>Docker CE安装的不同方式</p>
 <ul>
@@ -435,11 +435,11 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install docker-ce</span><br></pre></td></tr></table></figure>
 
 <p>如果命令行下面出现如下图所示的确认信息，请输入“y”继续，主要是用于处理依赖包的事情：</p>
-<p><img src="/images/docker/1527434165078-d4b449d2-24f3-4acc-90b1-033301c4fbce.png" alt="图片描述"></p>
+<p><img src="/images/docker/1527434165078-d4b449d2-24f3-4acc-90b1-033301c4fbce.png" alt="在Centos系统中安装Docker"></p>
 <p>上一步输入“y”之后，后面可能会遇到下图所示的确认提示信息，同样的输入“y”即可：</p>
-<p><img src="/images/docker/docker20190928193304.png" alt="图片描述"></p>
+<p><img src="/images/docker/docker20190928193304.png" alt="在Centos系统中安装Docker"></p>
 <p>稍作等待，当命令行最终输出“Complete！”即表示安装完成：</p>
-<p><img src="/images/docker/1527434407450-6dfd4362-9cfa-4d44-9952-f98f0ac131be.png" alt="图片描述"></p>
+<p><img src="/images/docker/1527434407450-6dfd4362-9cfa-4d44-9952-f98f0ac131be.png" alt="在Centos系统中安装Docker"></p>
 <p>启动Docker</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl start docker</span><br></pre></td></tr></table></figure>
 
@@ -452,7 +452,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker version</span><br></pre></td></tr></table></figure>
 
 <p>如果出现如下图所示信息，说明Docker以及安装成功了！</p>
-<p><img src="/images/docker/1527434705959-d735ef69-e1b2-4068-be34-6059bdac6ce1.png" alt="图片描述"></p>
+<p><img src="/images/docker/1527434705959-d735ef69-e1b2-4068-be34-6059bdac6ce1.png" alt="在Centos系统中安装Docker"></p>
 <p>【可选】：当然，你也可以通过运行 hello-world 映像来检验Docker是否安装成功：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run hello-world</span><br></pre></td></tr></table></figure>
 
@@ -461,9 +461,9 @@
 <p>执行上面的命令之后，Docker会自动下载hello-world镜像并自动运行到容器中，当命令行中出现“Hello from Docker!”的字样，说明已经成功运行了hello-world镜像，一切就OK了！</p>
 <p>这里就简单的作为Docker的入门操作，很简单的吧。让你有一个比较直观的感觉~</p>
 </blockquote>
-<p><img src="/images/docker/1527435003794-e3f46a08-79d7-41a9-97a5-c6c534875084.png" alt="图片描述"></p>
+<p><img src="/images/docker/1527435003794-e3f46a08-79d7-41a9-97a5-c6c534875084.png" alt="在Centos系统中安装Docker"></p>
 <h1 id="Docker默认挂载目录"><a href="#Docker默认挂载目录" class="headerlink" title="Docker默认挂载目录"></a>Docker默认挂载目录</h1><p>Docker CE安装成功之后，你可以发现 /var/lib 目录下有一个 docker 目录，你可以进入Docker目录查看Docker的一些结构，如下图所示：</p>
-<p><img src="/images/docker/1527436337336-77e3ab6f-f8ca-401e-9f35-e0d9e53d5482.png" alt="图片描述"></p>
+<p><img src="/images/docker/1527436337336-77e3ab6f-f8ca-401e-9f35-e0d9e53d5482.png" alt="在Centos系统中安装Docker"></p>
 <p>其中有一个containers 目录，这个目录就是存放Docker容器的。上面我们有提及到 hello-world 镜像，如果你运行了 hello-world 镜像，那么这个镜像所生成的容器信息，就会存储在 containers 目录中。</p>
 <blockquote>
 <p>具体 containers 目录中存放了什么内容，可自行网上查询资料学习。</p>
@@ -473,7 +473,7 @@
 <blockquote>
 <p>这里是使用我的阿里云服务器作为测试，在阿里云的后台系统中手动重启了服务器，服务器启动完成并正常运行后，在我的本地电脑使用客户端软件连接Linux服务器的时候（可以使用XShell、或者其他终端软件），通过执行 docker version 命令查看Docker服务运行状况，如下图结果：</p>
 </blockquote>
-<p><img src="/images/docker/1527443469344-fc8be4f0-bd24-4310-812a-76aabeb63570.png" alt="图片描述"></p>
+<p><img src="/images/docker/1527443469344-fc8be4f0-bd24-4310-812a-76aabeb63570.png" alt="在Centos系统中安装Docker"></p>
 <blockquote>
 <p>从图中可以看到，Docker Server 没有正常启动，原因很简单，就是没有设置Docker在服务器重启之后，没有自动启动导致。</p>
 </blockquote>
@@ -490,7 +490,7 @@
 <blockquote>
 <p>这时候重新在命令行中执行 docker version命令，效果如下：</p>
 </blockquote>
-<p><img src="/images/docker/1527443898882-6190e43b-4ebb-4d48-9a67-63f18b632d73.png" alt="图片描述"></p>
+<p><img src="/images/docker/1527443898882-6190e43b-4ebb-4d48-9a67-63f18b632d73.png" alt="在Centos系统中安装Docker"></p>
 <blockquote>
 <p>出现Server相关的信息，标明Docker服务正常启动了，就可以对Docker进行一系列操作。</p>
 </blockquote>
@@ -516,7 +516,7 @@
 <blockquote>
 <p>执行该命令之后，会显示如下结果：</p>
 </blockquote>
-<p><img src="/images/docker/1527444603710-bb57afd6-df2d-49b2-894e-fc94f06fcef7.png" alt="图片描述"></p>
+<p><img src="/images/docker/1527444603710-bb57afd6-df2d-49b2-894e-fc94f06fcef7.png" alt="在Centos系统中安装Docker"></p>
 <blockquote>
 <p>主要的意思就是 设置Docker服务会随着服务器重启，会自动启动Docker服务。</p>
 <p>当然，执行该命令之后，对于当前的Docker服务状况是没有启动服务的，需要手动启动Docker服务；只有下次服务器重启，就无需手动启动Docker服务了。</p>
@@ -551,7 +551,7 @@
 <p>注意：必须手动删除任何已编辑的配置文件</p>
 </blockquote>
 
-        <h2>相关文章</h2><ul><li><a href="/docker/12-docker-lession-index/">Docker部署Spring Boot项目</a></li><li><a href="/docker/01-docker-lession-index/">传统项目开发部署的流程是怎样的？</a></li><li><a href="/docker/00-docker-lession-index/">Docker系列教程</a></li><li><a href="/docker/03-docker-lession-index/">Docker镜像、容器、仓库的介绍</a></li><li><a href="/docker/07-docker-lession-index/">在Docker中安装Tomcat</a></li></ul>
+        <h2>相关文章</h2><ul><li><a href="/docker/06-docker-lession-index/">在Docker中安装JDK</a></li><li><a href="/docker/01-docker-lession-index/">传统项目开发部署的流程是怎样的？</a></li><li><a href="/docker/03-docker-lession-index/">Docker镜像、容器、仓库的介绍</a></li><li><a href="/docker/00-docker-lession-index/">Docker系列教程</a></li><li><a href="/docker/07-docker-lession-index/">在Docker中安装Tomcat</a></li></ul>
     </div>
     
 

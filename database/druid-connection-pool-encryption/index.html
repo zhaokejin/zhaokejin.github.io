@@ -344,14 +344,14 @@
 
 <p>这样一串数字是无法破解的，是安全的。<br>那么如何得到可供druid解析的加密密码呢。</p>
 <p>首先要找到druid.jar所在位置：<br><code>D:\Java\m2\repository\com\alibaba\druid\0.2.23</code></p>
-<p><img src="/images/database/1573548540.png" alt="升级MySQL8问题总结"></p>
+<p><img src="/images/database/1573548540.png" alt="Druid连接池加密"></p>
 <p>shift右键进入命令窗口：</p>
-<p><img src="/images/database/1573548602.png" alt="升级MySQL8问题总结"></p>
+<p><img src="/images/database/1573548602.png" alt="Druid连接池加密"></p>
 <p>输入：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -cp druid-0.2.23.jar com.alibaba.druid.filter.config.ConfigTools 123456 （最后是要加密的密码）</span><br></pre></td></tr></table></figure>
 
 <p>得到：</p>
-<p><img src="/images/database/1573548651.png" alt="升级MySQL8问题总结"></p>
+<p><img src="/images/database/1573548651.png" alt="Druid连接池加密"></p>
 <p>那么在jdbc.properties中的jdbc.password可以写上面得到的值。</p>
 
         

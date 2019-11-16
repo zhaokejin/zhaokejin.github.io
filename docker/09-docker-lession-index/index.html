@@ -348,7 +348,7 @@
 <h2 id="查看下载的nginx镜像"><a href="#查看下载的nginx镜像" class="headerlink" title="查看下载的nginx镜像"></a>查看下载的nginx镜像</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker images</span><br></pre></td></tr></table></figure>
 
 <p>如下图：</p>
-<p><img src="/images/docker/1527832301031-bf1ad67d-a6a2-4c20-888e-970c41c7ae9d.png" alt="图片描述"></p>
+<p><img src="/images/docker/1527832301031-bf1ad67d-a6a2-4c20-888e-970c41c7ae9d.png" alt="在Docker中安装Nginx"></p>
 <h2 id="启动nginx镜像容器"><a href="#启动nginx镜像容器" class="headerlink" title="启动nginx镜像容器"></a>启动nginx镜像容器</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d -p 80:80 --name nginx nginx</span><br></pre></td></tr></table></figure>
 
 <blockquote>
@@ -361,7 +361,7 @@
 <p>我的阿里云服务器域名是 <a href="http://www.cicoding.com" target="_blank" rel="noopener"> http://www.cicoding.com</a></p>
 </blockquote>
 <p>在浏览器中输入域名 <a href="http://www.cicoding.com" target="_blank" rel="noopener">http://www.cicoding.com</a> ，回车看一下效果：</p>
-<p><img src="/images/docker/1527832846216-4d03013e-d0cd-434f-9069-10f2e38e67bf.png" alt="img"></p>
+<p><img src="/images/docker/1527832846216-4d03013e-d0cd-434f-9069-10f2e38e67bf.png" alt="在Docker中安装Nginx"></p>
 <blockquote>
 <p>出现上面的页面，说明nginx已经正常启动了。</p>
 </blockquote>
@@ -384,7 +384,7 @@
 <p>最终的目录结构如下：</p>
 </blockquote>
 <blockquote>
-<p><img src="/images/docker/1527833862890-ad0217c0-5bf3-46c9-b332-88a7b04da6ca.png" alt="img"></p>
+<p><img src="/images/docker/1527833862890-ad0217c0-5bf3-46c9-b332-88a7b04da6ca.png" alt="在Docker中安装Nginx"></p>
 </blockquote>
 <p>复制一份nginx.conf文件到宿主机对应的目录下：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker cp nginx:/etc/nginx/nginx.conf /opt/docker_nginx/conf/nginx.conf</span><br></pre></td></tr></table></figure>
@@ -393,7 +393,7 @@
 <p>这条命令的作用，就是复制nginx的docker容器中的 /etc/nginx/nginx.conf 文件到宿主机下的 /opt/docker_nginx/conf/ 目录下。这样可以直接进行默认的配置文件的编辑。</p>
 </blockquote>
 <p>看一下默认的nginx.conf配置文件的内容：</p>
-<p><img src="/images/docker/1527834624021-ba784d6a-6c4a-4d0d-a2dc-e2885999314d.png" alt="img"></p>
+<p><img src="/images/docker/1527834624021-ba784d6a-6c4a-4d0d-a2dc-e2885999314d.png" alt="在Docker中安装Nginx"></p>
 <p>编辑 nginx 的配置文件：</p>
 <blockquote>
 <p>我们暂时就修改其中的 access_log 、error_log 、root 这些基本配置。</p>
@@ -420,12 +420,12 @@
 <ul>
 <li>查看 /etc/nginx/conf.d/ 目录</li>
 </ul>
-<p><img src="/images/docker/1527835373585-7316d3b7-e789-4f62-8a6b-8c3953633697.png" alt="img"></p>
+<p><img src="/images/docker/1527835373585-7316d3b7-e789-4f62-8a6b-8c3953633697.png" alt="在Docker中安装Nginx"></p>
 <p>可以看到，里面有一个default.conf配置文件</p>
 <ul>
 <li>查看 default.conf配置文件</li>
 </ul>
-<p><img src="/images/docker/1527835468543-cbfd5cfc-ffcf-4512-abb9-46331febd3ae.png" alt="img"></p>
+<p><img src="/images/docker/1527835468543-cbfd5cfc-ffcf-4512-abb9-46331febd3ae.png" alt="在Docker中安装Nginx"></p>
 </blockquote>
 <blockquote>
 <p>其中用黄色圈起来的部分，是我们要修改的内容（上面说过了，目前就先简单修改基本的配置，只是方便大家看到一下效果，至于其他的配置，可自行按照这样的步骤自行编辑）。</p>
@@ -440,7 +440,7 @@
 </ul>
 </blockquote>
 <blockquote>
-<p><img src="/images/docker/1527837882497-2ef89731-6d8c-4639-b6cb-2c9d4034a2cd.png" alt="img"></p>
+<p><img src="/images/docker/1527837882497-2ef89731-6d8c-4639-b6cb-2c9d4034a2cd.png" alt="在Docker中安装Nginx"></p>
 <ul>
 <li>同样的，我们也需要把nginx的默认首页文件，复制到宿主机下面</li>
 </ul>
@@ -450,7 +450,7 @@
 <ul>
 <li><strong>首先修改 nginx.conf 配置文件</strong>，修改后结果是：</li>
 </ul>
-<p><img src="/images/docker/1527838034307-65530160-3710-4246-a816-9703af4fc524.png" alt="img"></p>
+<p><img src="/images/docker/1527838034307-65530160-3710-4246-a816-9703af4fc524.png" alt="在Docker中安装Nginx"></p>
 <blockquote>
 <p>其中error_log的配置，就是我们前面在宿主机下面创建的nginx的log目录。</p>
 <p>注意需要修改最下面的include配置，指定宿主机下面的default.conf配置文件（default/conf与nginx.conf在相同目录下，所以直接写名称即可，无需指定具体目录路径）</p>
@@ -464,7 +464,7 @@
 <p>修改文件中的 access_log 以及 root 配置，效果如下</p>
 </blockquote>
 <blockquote>
-<p><img src="/images/docker/1527838387330-9501c9c8-1d8b-44e0-a177-d61a8c4699fa.png" alt="img"></p>
+<p><img src="/images/docker/1527838387330-9501c9c8-1d8b-44e0-a177-d61a8c4699fa.png" alt="在Docker中安装Nginx"></p>
 <blockquote>
 <p>同样，access_log 以及 root 的配置，就是我们前面在宿主机下面创建的nginx的相关目录。</p>
 </blockquote>
@@ -493,13 +493,13 @@
 <ul>
 <li><strong>查看启动的nginx容器</strong></li>
 </ul>
-<p><img src="/images/docker/1527839391119-1d98218f-62eb-46d4-8c8e-3047e30c773c.png" alt="img"></p>
+<p><img src="/images/docker/1527839391119-1d98218f-62eb-46d4-8c8e-3047e30c773c.png" alt="在Docker中安装Nginx"></p>
 <ul>
 <li><strong>修改nginx默认首页内容</strong></li>
 </ul>
 <blockquote>
 <p>先看一下默认首页的样子：</p>
-<p><img src="/images/docker/1527840233785-22a458d3-1123-4249-b671-179ccc7e41fe.png" alt="img"></p>
+<p><img src="/images/docker/1527840233785-22a458d3-1123-4249-b671-179ccc7e41fe.png" alt="在Docker中安装Nginx"></p>
 </blockquote>
 <p>我们把这个首页内容全部删除掉，加入我们自己的内容！</p>
 <blockquote>
@@ -507,11 +507,11 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; vim /opt/docker_nginx/www/index.html</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
 </blockquote>
 <p>修改之后如下：</p>
-<p><img src="/images/docker/1527840219657-335ad4a0-276f-47d3-b49a-0b55fa8299fd.png" alt="img"></p>
+<p><img src="/images/docker/1527840219657-335ad4a0-276f-47d3-b49a-0b55fa8299fd.png" alt="在Docker中安装Nginx"></p>
 <ul>
 <li>重新访问服务器域名，查看最终效果</li>
 </ul>
-<p><img src="/images/docker/1527841014053-e2e485f8-a08e-40d7-bc05-603c7d32d43e.png" alt="图片描述"></p>
+<p><img src="/images/docker/1527841014053-e2e485f8-a08e-40d7-bc05-603c7d32d43e.png" alt="在Docker中安装Nginx"></p>
 <blockquote>
 <p>如果页面出现中文乱码的问题，可以在 index.html 好 <head><meta name="generator" content="Hexo 3.9.0"> 标签里面加入：</head></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; &lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=UTF-8&quot;&gt;</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
@@ -522,7 +522,7 @@
 <blockquote>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&gt; &lt;!DOCTYPE html&gt;</span><br><span class="line">&gt; &lt;html&gt;</span><br><span class="line">&gt; &lt;head&gt;</span><br><span class="line">&gt; &lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=UTF-8&quot;&gt;</span><br><span class="line">&gt; &lt;title&gt;Welcome to nginx!&lt;/title&gt;</span><br><span class="line">&gt; &lt;style&gt;</span><br><span class="line">&gt;     body &#123;</span><br><span class="line">&gt;         width: 35em;</span><br><span class="line">&gt;         margin: 0 auto;</span><br><span class="line">&gt;         font-family: Tahoma, Verdana, Arial, sans-serif;</span><br><span class="line">&gt;     &#125;</span><br><span class="line">&gt; &lt;/style&gt;</span><br><span class="line">&gt; &lt;/head&gt;</span><br><span class="line">&gt; &lt;body&gt;</span><br><span class="line">&gt; &lt;h1&gt;欢迎访问!&lt;/h1&gt;</span><br><span class="line">&gt; &lt;p&gt;当前nginx服务来源于Docker容器&lt;/p&gt;</span><br><span class="line">&gt; &lt;/body&gt;</span><br><span class="line">&gt; &lt;/html&gt;</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure></blockquote>
 
-        <h2>相关文章</h2><ul><li><a href="/docker/04-docker-lession-index/">在Centos系统中安装Docker</a></li><li><a href="/docker/01-docker-lession-index/">传统项目开发部署的流程是怎样的？</a></li><li><a href="/docker/00-docker-lession-index/">Docker系列教程</a></li><li><a href="/docker/03-docker-lession-index/">Docker镜像、容器、仓库的介绍</a></li><li><a href="/docker/07-docker-lession-index/">在Docker中安装Tomcat</a></li></ul>
+        <h2>相关文章</h2><ul><li><a href="/docker/04-docker-lession-index/">在Centos系统中安装Docker</a></li><li><a href="/docker/01-docker-lession-index/">传统项目开发部署的流程是怎样的？</a></li><li><a href="/docker/03-docker-lession-index/">Docker镜像、容器、仓库的介绍</a></li><li><a href="/docker/00-docker-lession-index/">Docker系列教程</a></li><li><a href="/docker/07-docker-lession-index/">在Docker中安装Tomcat</a></li></ul>
     </div>
     
 

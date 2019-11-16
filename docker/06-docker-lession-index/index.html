@@ -357,19 +357,19 @@ Docker 中国官方镜像加速 http://www.docker-cn.com/registry-mirror
 <p>latest是针对于镜像所在的仓库里面的软件最新版本。并非是软件本身的最新发布版本。</p>
 </blockquote>
 <p>回车执行，一开始会进行下载对应的依赖库，稍作等待：</p>
-<p><img src="/images/docker/1527493131430-18ae7efc-a90c-40b1-bc92-7de2f452e856.png" alt="图片描述"></p>
+<p><img src="/images/docker/1527493131430-18ae7efc-a90c-40b1-bc92-7de2f452e856.png" alt="在Docker中安装JDK"></p>
 <p>出现下面的信息，说明镜像下载完成：</p>
-<p><img src="/images/docker/1527493467069-43c9b820-1cc5-4d11-8586-8c9e2e1a173a.png" alt="图片描述"></p>
+<p><img src="/images/docker/1527493467069-43c9b820-1cc5-4d11-8586-8c9e2e1a173a.png" alt="在Docker中安装JDK"></p>
 <h2 id="查看下载的镜像"><a href="#查看下载的镜像" class="headerlink" title="查看下载的镜像"></a>查看下载的镜像</h2><p>命令行中执行命令，查看刚刚下载的JAVA镜像：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker images</span><br></pre></td></tr></table></figure>
 
 <p>如下图所示：</p>
-<p><img src="/images/docker/1527493583923-676d7898-0c67-43cb-8667-d6bc402f1a58.png" alt="图片描述"></p>
+<p><img src="/images/docker/1527493583923-676d7898-0c67-43cb-8667-d6bc402f1a58.png" alt="在Docker中安装JDK"></p>
 <h2 id="启动容器"><a href="#启动容器" class="headerlink" title="启动容器"></a>启动容器</h2><p>命令行中执行命令，启动JAVA镜像容器：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d -it --name java java</span><br></pre></td></tr></table></figure>
 
 <p>如下图所示，说明成功启动了容器：</p>
-<p><img src="/images/docker/1527493868661-32205398-7f92-4229-9722-b5ee66159c23.png" alt="图片描述"></p>
+<p><img src="/images/docker/1527493868661-32205398-7f92-4229-9722-b5ee66159c23.png" alt="在Docker中安装JDK"></p>
 <p>其中，–name后面的“java”是为容器指定了一个别名，而最后的那个“java”指的是下载镜像时的名称。</p>
 <blockquote>
 <p>命令以及参数的含义：</p>
@@ -389,12 +389,12 @@ Docker 中国官方镜像加速 http://www.docker-cn.com/registry-mirror
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker ps</span><br></pre></td></tr></table></figure>
 
 <p>因为在上面的操作步骤中，我们运行了java镜像，所以你会看到有一个名称为java的容器正在运行，如下图：</p>
-<p><img src="/images/docker/1527495291474-f65889f3-14fd-4a10-b7d1-6b95773f1bc2.png" alt="图片描述"></p>
+<p><img src="/images/docker/1527495291474-f65889f3-14fd-4a10-b7d1-6b95773f1bc2.png" alt="在Docker中安装JDK"></p>
 <p>通过输出的信息可以看到，当前容器的ID是“9179eb86b007”，容器别名是java（最后一列的值）。</p>
 <h2 id="登录容器"><a href="#登录容器" class="headerlink" title="登录容器"></a>登录容器</h2><p>【询问】：如果想查看容器中安装的jdk版本，该怎么做呢？</p>
 <blockquote>
 <p>如果直接在命令行输入java -version会报错的，如下图：</p>
-<p><img src="/images/docker/1527495437982-7aee34bf-9f5c-4ac5-8b8f-a3b21e9053c7.png" alt="图片描述"></p>
+<p><img src="/images/docker/1527495437982-7aee34bf-9f5c-4ac5-8b8f-a3b21e9053c7.png" alt="在Docker中安装JDK"></p>
 <p>原因是因为：jdk是安装在容器里面的，需要进入容器，才能查看。意思就是说，jdk环境是在容器里面的，并非是宿主机。</p>
 </blockquote>
 <h4 id="进入容器内部"><a href="#进入容器内部" class="headerlink" title="进入容器内部"></a>进入容器内部</h4><ul>
@@ -414,7 +414,7 @@ Docker 中国官方镜像加速 http://www.docker-cn.com/registry-mirror
 <p>回车，效果如下图：</p>
 </blockquote>
 <blockquote>
-<p><img src="/images/docker/1527495610202-3995506a-85ac-4a97-aeef-0edf11a8339a.png" alt="图片描述"></p>
+<p><img src="/images/docker/1527495610202-3995506a-85ac-4a97-aeef-0edf11a8339a.png" alt="在Docker中安装JDK"></p>
 </blockquote>
 <blockquote>
 <p>如果回车后没有反应，可以再次按下回车就可以进入容器的命令行模式了。</p>
@@ -448,7 +448,7 @@ Docker 中国官方镜像加速 http://www.docker-cn.com/registry-mirror
 <p>回车之后，就会看到命令行发生了一些变化：</p>
 </blockquote>
 <blockquote>
-<p><img src="/images/docker/1527506181535-4364031d-0caa-44fe-8a12-d87ccf46c97e.png" alt="图片描述"></p>
+<p><img src="/images/docker/1527506181535-4364031d-0caa-44fe-8a12-d87ccf46c97e.png" alt="在Docker中安装JDK"></p>
 </blockquote>
 <blockquote>
 <p>仔细看第二行的开头，@符号后面的“9179eb86b007”就是我们的java容器的ID吧，这也就说明，我们已经进入了容器内部了，可以对容器进行操作了。</p>
@@ -460,11 +460,11 @@ Docker 中国官方镜像加速 http://www.docker-cn.com/registry-mirror
 <ul>
 <li>attach命令进入容器，查看JDK版本信息</li>
 </ul>
-<p><img src="/images/docker/1527504069333-c1266217-f560-4a9d-b0d3-cac9f273dff0.png" alt="图片描述"></p>
+<p><img src="/images/docker/1527504069333-c1266217-f560-4a9d-b0d3-cac9f273dff0.png" alt="在Docker中安装JDK"></p>
 <ul>
 <li>exec命令进入容器，查看JDK版本信息</li>
 </ul>
-<p><img src="/images/docker/1527506442973-e6d97093-08df-46a7-89f8-7bd314c4733e.png" alt="图片描述"></p>
+<p><img src="/images/docker/1527506442973-e6d97093-08df-46a7-89f8-7bd314c4733e.png" alt="在Docker中安装JDK"></p>
 <h3 id="登陆Docker容器的方式"><a href="#登陆Docker容器的方式" class="headerlink" title="登陆Docker容器的方式"></a>登陆Docker容器的方式</h3><blockquote>
 <p>上面已经简单的介绍了attach、exec命令的使用，下面讲解一下这两个命令之间的区别。</p>
 </blockquote>
@@ -491,7 +491,7 @@ Docker 中国官方镜像加速 http://www.docker-cn.com/registry-mirror
 </blockquote>
 <h4 id="分别使用attach与exec进入容器，查看它们的区别"><a href="#分别使用attach与exec进入容器，查看它们的区别" class="headerlink" title="分别使用attach与exec进入容器，查看它们的区别"></a>分别使用attach与exec进入容器，查看它们的区别</h4><p>1、Docker attach必须是登陆到一个已经运行的容器里。需要注意的是如果从这个容器中exit退出的话，就会导致容器停止！！这是极其不方便的！</p>
 <p>见下图所示结果：</p>
-<p><img src="/images/docker/1527507117875-46795fe1-3255-46c0-a2bc-6bde4b1e51dd.png" alt="图片描述"></p>
+<p><img src="/images/docker/1527507117875-46795fe1-3255-46c0-a2bc-6bde4b1e51dd.png" alt="在Docker中安装JDK"></p>
 <blockquote>
 <p>你会发现通过attach进入容器的话，当使用exit退出容器的时候，对应的容器也停止运行了，所以在生产环境中很少使用。</p>
 </blockquote>
@@ -521,7 +521,7 @@ Docker 中国官方镜像加速 http://www.docker-cn.com/registry-mirror
 <p>上面是通过容器别名来停止容器的，你也可以使用容器ID。</p>
 </blockquote>
 
-        <h2>相关文章</h2><ul><li><a href="/docker/12-docker-lession-index/">Docker部署Spring Boot项目</a></li><li><a href="/docker/01-docker-lession-index/">传统项目开发部署的流程是怎样的？</a></li><li><a href="/docker/00-docker-lession-index/">Docker系列教程</a></li><li><a href="/docker/03-docker-lession-index/">Docker镜像、容器、仓库的介绍</a></li><li><a href="/docker/07-docker-lession-index/">在Docker中安装Tomcat</a></li></ul>
+        <h2>相关文章</h2><ul><li><a href="/docker/04-docker-lession-index/">在Centos系统中安装Docker</a></li><li><a href="/docker/01-docker-lession-index/">传统项目开发部署的流程是怎样的？</a></li><li><a href="/docker/03-docker-lession-index/">Docker镜像、容器、仓库的介绍</a></li><li><a href="/docker/00-docker-lession-index/">Docker系列教程</a></li><li><a href="/docker/07-docker-lession-index/">在Docker中安装Tomcat</a></li></ul>
     </div>
     
 

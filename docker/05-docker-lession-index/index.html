@@ -365,18 +365,18 @@ Doc...">
 <p><strong>由于大多数人的系统为win7系统，我的电脑系统也是win7，因此，我就选择 Docker Toolbox 来安装Docker服务了。</strong></p>
 <h2 id="安装-Docker-Toolbox"><a href="#安装-Docker-Toolbox" class="headerlink" title="安装 Docker Toolbox"></a>安装 Docker Toolbox</h2><p>下载好 Docker Toolbox 软件之后，本地双击运行安装就行了。</p>
 <p>安装完成后，你的电脑桌面上会出现以下几个应用图标：</p>
-<p><img src="/images/docker/1527438648649-ea32cc75-a102-4be0-8a9e-94e8bf897ae0.png" alt="图片描述"></p>
+<p><img src="/images/docker/1527438648649-ea32cc75-a102-4be0-8a9e-94e8bf897ae0.png" alt="在windows系统中安装Docker"></p>
 <p><strong>上面三个图标软件的含义：</strong></p>
 <h3 id="Docker-Quickstart-Terminal："><a href="#Docker-Quickstart-Terminal：" class="headerlink" title="Docker Quickstart Terminal："></a><strong>Docker Quickstart Terminal</strong>：</h3><p>Docker的启动器终端，可以在这里进行Docker的一系列操作。</p>
 <h4 id="首次启动Docker-Quickstart可能会遇到的问题"><a href="#首次启动Docker-Quickstart可能会遇到的问题" class="headerlink" title="首次启动Docker Quickstart可能会遇到的问题"></a><strong>首次启动Docker Quickstart可能会遇到的问题</strong></h4><p><strong>【问题一】：安装好Docker Toolbox之后，当运行Docker Quickstart Terminal的时候，可能会出现如下图所示的问题：</strong></p>
 <blockquote>
-<p><img src="/images/docker/1527441675004-851469d3-fbda-4035-a598-238a6c287daf.png" alt="图片描述"></p>
+<p><img src="/images/docker/1527441675004-851469d3-fbda-4035-a598-238a6c287daf.png" alt="在windows系统中安装Docker"></p>
 </blockquote>
 <blockquote>
 <p>首先需要明白bash.exe是什么？bash.exe是git软件的执行程序，因此，回想在安装Docker Toolbox时，会提示你安装一些软件，里面就有git选择。如下图（图片摘自网络）：</p>
 </blockquote>
 <blockquote>
-<p><img src="/images/docker/1527441908839-0b62ebc9-39db-47dc-b161-3fad63dfddd9.png" alt="图片描述"></p>
+<p><img src="/images/docker/1527441908839-0b62ebc9-39db-47dc-b161-3fad63dfddd9.png" alt="在windows系统中安装Docker"></p>
 </blockquote>
 <blockquote>
 <p>但是，有时候即使勾选了git选项，在启动Docker Quickstart Terminal的时候，还是提示找不到bash.exe文件，这时候怎么办呢？</p>
@@ -390,20 +390,20 @@ Doc...">
 <p>效果如下图：</p>
 </blockquote>
 <blockquote>
-<p><img src="/images/docker/1527442182482-a3dcc00c-ac8b-4836-80e7-b80bc846aa1e.png" alt="图片描述"></p>
+<p><img src="/images/docker/1527442182482-a3dcc00c-ac8b-4836-80e7-b80bc846aa1e.png" alt="在windows系统中安装Docker"></p>
 </blockquote>
 <blockquote>
 <p>因为我本地电脑之前已经安装过了git，所以直接使用这个bash.exe的路径即可，安装路径截图如下：</p>
 </blockquote>
 <blockquote>
-<p><img src="/images/docker/1527442355419-1e92985e-1ad9-4b9f-a2e0-71f29dc0634e.png" alt="图片描述"></p>
+<p><img src="/images/docker/1527442355419-1e92985e-1ad9-4b9f-a2e0-71f29dc0634e.png" alt="在windows系统中安装Docker"></p>
 </blockquote>
 <p><strong>【问题二】：双击运行Docker Quickstart Terminal应用的时候，不能正常启动。</strong></p>
 <blockquote>
 <p>错误信息如下图所示（图片摘自网络）：</p>
 </blockquote>
 <blockquote>
-<p><img src="/images/docker/1527447666503-80ea62f9-dcfc-4fc7-86b4-0ecafcc8e0e7.png" alt="图片描述"></p>
+<p><img src="/images/docker/1527447666503-80ea62f9-dcfc-4fc7-86b4-0ecafcc8e0e7.png" alt="在windows系统中安装Docker"></p>
 </blockquote>
 <blockquote>
 <p><strong>造成以上的问题的原因，可能是有以下几种情况：</strong></p>
@@ -427,7 +427,7 @@ Doc...">
 <li>如果本地目录C:\Users\Administrator.docker\machine\cache下面没有boot2docker.iso镜像文件的话，加上国外网络不理想，那么，还有一种解决方式就是：</li>
 </ul>
 <p>打开Docker Toolbox的安装目录，里面会有一个boot2docker.iso镜像文件，如下图所示（这是Docker Toolbox软件自带的镜像文件，肯定是兼容的）：</p>
-<p><img src="/images/docker/1527448514933-a006c45c-1c62-47dc-9bc1-55bc2415bf1f.png" alt="图片描述"></p>
+<p><img src="/images/docker/1527448514933-a006c45c-1c62-47dc-9bc1-55bc2415bf1f.png" alt="在windows系统中安装Docker"></p>
 <p>然后将boot2docker.iso文件复制到C:\Users\Administrator.docker\machine\cache目录下面，再重新启动Docker Quickstart Terminal应用即可。</p>
 </blockquote>
 <blockquote>
@@ -442,17 +442,17 @@ Doc...">
 <blockquote>
 <p>大概的运行情况如下图所示（图片摘自网络）：</p>
 </blockquote>
-<p><img src="/images/docker/1527439817131-5aab290a-2547-4659-9df1-2b3f14dbc2f9.png" alt="图片描述"></p>
+<p><img src="/images/docker/1527439817131-5aab290a-2547-4659-9df1-2b3f14dbc2f9.png" alt="在windows系统中安装Docker"></p>
 <blockquote>
 <p>以上输出结果，说明Docker Quickstart Terminal已经可以正常启动运行了。</p>
 </blockquote>
 <blockquote>
 <p>当下次运行该软件的时候，显示的信息如下图：</p>
-<p><img src="/images/docker/1527440031124-2211fe03-fad5-4d1c-be23-0062d55c1754.png" alt="图片描述"></p>
+<p><img src="/images/docker/1527440031124-2211fe03-fad5-4d1c-be23-0062d55c1754.png" alt="在windows系统中安装Docker"></p>
 </blockquote>
 <blockquote>
 <p>你可以在这里运行Docker命令，比如运行命令 docker images 查看安装的容器列表，效果如下图：</p>
-<p><img src="/images/docker/1527440175298-0f168862-7701-4515-b90c-e23909555029.png" alt="图片描述"></p>
+<p><img src="/images/docker/1527440175298-0f168862-7701-4515-b90c-e23909555029.png" alt="在windows系统中安装Docker"></p>
 </blockquote>
 <blockquote>
 <p><strong>特别说明：</strong></p>
@@ -461,7 +461,7 @@ Doc...">
 <p>当你第一次运行Docker Quickstart Terminal的时候，且该软件初始化成功之后，你会发现界面上会输出一个IP地址信息，如下图（该图是我本地电脑上的，并非第一次运行的效果，不过每次启动都会显示IP信息的）：</p>
 </blockquote>
 <blockquote>
-<p><img src="/images/docker/1527440414436-0a5dc579-3be1-4d7b-868f-7b319ae861af.png" alt="图片描述"></p>
+<p><img src="/images/docker/1527440414436-0a5dc579-3be1-4d7b-868f-7b319ae861af.png" alt="在windows系统中安装Docker"></p>
 </blockquote>
 <blockquote>
 <p>这个IP地址的含义是什么呢？</p>
@@ -475,7 +475,7 @@ Doc...">
 <p>Kitematic官方地址：<a href="https://kitematic.com/" target="_blank" rel="noopener">https://kitematic.com/</a></p>
 <blockquote>
 <p>软件首页如下图所示：</p>
-<p><img src="/images/docker/1527439514911-d18b3b47-17d4-4ae0-990e-53733f6d8e1e.png" alt="图片描述"></p>
+<p><img src="/images/docker/1527439514911-d18b3b47-17d4-4ae0-990e-53733f6d8e1e.png" alt="在windows系统中安装Docker"></p>
 </blockquote>
 <blockquote>
 <p>从上图软件界面可以知道，右侧就是列举了很多热门的开源镜像，方便进行操作使用。</p>
@@ -491,13 +491,13 @@ Doc...">
 </blockquote>
 <blockquote>
 <p><strong>MobaXterm软件效果截图</strong>：</p>
-<p><img src="/images/docker/1527446143899-e04bfb8d-6f59-44f7-9d4e-2a7ebce3d451.png" alt="图片描述"></p>
+<p><img src="/images/docker/1527446143899-e04bfb8d-6f59-44f7-9d4e-2a7ebce3d451.png" alt="在windows系统中安装Docker"></p>
 </blockquote>
 <blockquote>
-<p><img src="/images/docker/1527446197352-864b19ae-628c-4978-862c-dda7b97695c9.png" alt="图片描述"></p>
+<p><img src="/images/docker/1527446197352-864b19ae-628c-4978-862c-dda7b97695c9.png" alt="在windows系统中安装Docker"></p>
 </blockquote>
 <blockquote>
-<p><img src="/images/docker/1527446269814-26875fc5-6e26-4d0f-a4cc-1cfc053a5a62.png" alt="图片描述"></p>
+<p><img src="/images/docker/1527446269814-26875fc5-6e26-4d0f-a4cc-1cfc053a5a62.png" alt="在windows系统中安装Docker"></p>
 </blockquote>
 <h3 id="使用终端软件连接Docker服务-1"><a href="#使用终端软件连接Docker服务-1" class="headerlink" title="使用终端软件连接Docker服务"></a>使用终端软件连接Docker服务</h3><blockquote>
 <p>这里我就使用 MobaXterm 连接本地的Docker服务。</p>
@@ -507,15 +507,15 @@ Doc...">
 <p><strong>同时还需要注意一点，就是host，该填写什么IP呢？</strong></p>
 <p><strong>还记得上面讲过Docker Quickstart Terminal在初始化的时候，会默认分配一个IP地址，没错，就是填写这个IP地址。</strong></p>
 <p>具体的信息录入，我就不一一截图了，自己操作就行了，按照客户端提示填写即可。</p>
-<p><img src="/images/docker/1527446796204-65320e19-1b95-4884-a245-5a5d851dcb1e.png" alt="图片描述"></p>
+<p><img src="/images/docker/1527446796204-65320e19-1b95-4884-a245-5a5d851dcb1e.png" alt="在windows系统中安装Docker"></p>
 <p>最终成功连接Docker后的效果：</p>
-<p><img src="/images/docker/1527449070562-01507cc4-8b81-41b8-95c0-a91a2471d393.png" alt="图片描述"></p>
+<p><img src="/images/docker/1527449070562-01507cc4-8b81-41b8-95c0-a91a2471d393.png" alt="在windows系统中安装Docker"></p>
 <blockquote>
 <p>上图所示的输出信息，说明已经成功连接上Docker服务了。</p>
 <p>这样的话，你既可以使用Docker Quickstart Terminal来操作Docker服务，也可以使用其他客户端连接Docker服务并进行一系列的操作。</p>
 </blockquote>
 
-        <h2>相关文章</h2><ul><li><a href="/docker/12-docker-lession-index/">Docker部署Spring Boot项目</a></li><li><a href="/docker/01-docker-lession-index/">传统项目开发部署的流程是怎样的？</a></li><li><a href="/docker/00-docker-lession-index/">Docker系列教程</a></li><li><a href="/docker/03-docker-lession-index/">Docker镜像、容器、仓库的介绍</a></li><li><a href="/docker/07-docker-lession-index/">在Docker中安装Tomcat</a></li></ul>
+        <h2>相关文章</h2><ul><li><a href="/docker/04-docker-lession-index/">在Centos系统中安装Docker</a></li><li><a href="/docker/01-docker-lession-index/">传统项目开发部署的流程是怎样的？</a></li><li><a href="/docker/03-docker-lession-index/">Docker镜像、容器、仓库的介绍</a></li><li><a href="/docker/00-docker-lession-index/">Docker系列教程</a></li><li><a href="/docker/07-docker-lession-index/">在Docker中安装Tomcat</a></li></ul>
     </div>
     
 

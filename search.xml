@@ -8,9 +8,9 @@
         <category>工具</category>
       </categories>
       <tags>
+        <tag>Redis</tag>
         <tag>消息订阅</tag>
         <tag>发布</tag>
-        <tag>Redis</tag>
       </tags>
   </entry>
   <entry>
@@ -372,8 +372,8 @@
         <category>Redis</category>
       </categories>
       <tags>
-        <tag>Redis</tag>
         <tag>分布式</tag>
+        <tag>Redis</tag>
       </tags>
   </entry>
   <entry>

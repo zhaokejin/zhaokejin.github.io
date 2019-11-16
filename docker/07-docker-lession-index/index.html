@@ -348,7 +348,7 @@ Tomcat镜像中已经包含jdk环境依赖，所以我们可以不用去启动ja
 <h2 id="查询Tomcat镜像列表"><a href="#查询Tomcat镜像列表" class="headerlink" title="查询Tomcat镜像列表"></a>查询Tomcat镜像列表</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker search tomcat</span><br></pre></td></tr></table></figure>
 
 <p>运行结果如下图：</p>
-<p><img src="/images/docker/1527517450287-1696d578-d0f3-45c5-b339-80bc97371755.png" alt="图片描述"></p>
+<p><img src="/images/docker/1527517450287-1696d578-d0f3-45c5-b339-80bc97371755.png" alt="在Docker中安装Tomcat"></p>
 <blockquote>
 <p>一般情况下，都会选择下载stars数量最多的那个镜像，排在第一位的，一般都是官方提供的镜像。</p>
 </blockquote>
@@ -358,12 +358,12 @@ Tomcat镜像中已经包含jdk环境依赖，所以我们可以不用去启动ja
 <h2 id="运行Tomcat镜像"><a href="#运行Tomcat镜像" class="headerlink" title="运行Tomcat镜像"></a>运行Tomcat镜像</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -p 8081:8080 tomcat</span><br></pre></td></tr></table></figure>
 
 <p>运行效果如下图：</p>
-<p><img src="/images/docker/1527519416612-c6403cff-9c22-411a-8a2b-c73b2215b577.png" alt="图片描述"></p>
+<p><img src="/images/docker/1527519416612-c6403cff-9c22-411a-8a2b-c73b2215b577.png" alt="在Docker中安装Tomcat"></p>
 <p>访问tomcat：</p>
 <blockquote>
 <p>当前docker服务运行在我的阿里云服务器上的，公网IP是39.106.18.21，所以打开浏览器输入：<strong>39.106.18.21:8081</strong></p>
 <p>效果如下：</p>
-<p><img src="/images/docker/1527519586996-76a1474c-2d6f-42d8-9321-dc358d4c5907.png" alt="图片描述"></p>
+<p><img src="/images/docker/1527519586996-76a1474c-2d6f-42d8-9321-dc358d4c5907.png" alt="在Docker中安装Tomcat"></p>
 </blockquote>
 <blockquote>
 <p>是不是很简单，一个tomcat就这样启动完成了！不得不说docker的强大！</p>
@@ -383,19 +383,19 @@ Tomcat镜像中已经包含jdk环境依赖，所以我们可以不用去启动ja
 </blockquote>
 <blockquote>
 <p>解决办法其实很简单，答案就再在 docker run 命令里面设置一个 -d 的参数即可，如下：</p>
-<p><img src="/images/docker/1527519896142-5bf05811-b030-4014-9c1a-5067cc529300.png" alt="图片描述"></p>
+<p><img src="/images/docker/1527519896142-5bf05811-b030-4014-9c1a-5067cc529300.png" alt="在Docker中安装Tomcat"></p>
 </blockquote>
 <blockquote>
 <p>看到没有，和上面的启动tomcat的效果不同，控制台并未输出tomcat启动的日志信息，这时候我们打开浏览器，重新访问一下： <strong>00.00.00.00:8081</strong></p>
 <p>效果如下：</p>
-<p><img src="/images/docker/1527520045656-1155e57f-83d9-4b82-8e91-a305b69c14bc.png" alt="图片描述"></p>
+<p><img src="/images/docker/1527520045656-1155e57f-83d9-4b82-8e91-a305b69c14bc.png" alt="在Docker中安装Tomcat"></p>
 </blockquote>
 <p>通过上面两次docker run 启动tomcat的效果对比，我想大家也应该看得出区别了。所以，如果想让应用在后台一直运行的话，通过在 docker run 命令中使用“-d”参数来让容器处于后台运行。</p>
 <h2 id="查看运行中的Tomcat容器"><a href="#查看运行中的Tomcat容器" class="headerlink" title="查看运行中的Tomcat容器"></a>查看运行中的Tomcat容器</h2><p>通过下面命令，来查看当前服务器上运行的docker容器列表：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker ps</span><br></pre></td></tr></table></figure>
 
 <p>如下图所示：</p>
-<p><img src="/images/docker/1527520351094-ba1f43af-4670-4775-90c1-afc273bd0f9b.png" alt="图片描述"></p>
+<p><img src="/images/docker/1527520351094-ba1f43af-4670-4775-90c1-afc273bd0f9b.png" alt="在Docker中安装Tomcat"></p>
 <blockquote>
 <p>从图中可以看到tomcat容器的一些信息，在最后一列的“NAMES”显示的tomcat名称是“quirky_mayer”，这是因为你在docker run的时候，没有指定“–name”别名，docker会给你自动生成一个别名，一般情况下，我们还是建议使用–name来设置别名以及版本，方便实际使用容易区分。</p>
 <p>然后tomcat容器的“PORTS”这一列，可以看到8081 &gt; 8080 的信息，我们知道tomcat是运行在容器里面的，而tomcat默认的端口是8080，也就是说tomcat所在容器的对外端口是8080，我们如果想通过浏览器等访问到tomcat，就需要指定一个宿主机的端口与这个tomcat容器端口进行映射，也就是8081这个宿主机的端口。我们实际在浏览器访问的时候，就是通过8081来访问的，不能使用8080访问。端口号的话你也可以自定义的。</p>
@@ -407,17 +407,17 @@ Tomcat镜像中已经包含jdk环境依赖，所以我们可以不用去启动ja
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker ps</span><br></pre></td></tr></table></figure>
 
 <p>如下图：</p>
-<p><img src="/images/docker/1527521472435-a4d44ce3-d6bb-466a-aa1d-e2a78e321db7.png" alt="图片描述"></p>
+<p><img src="/images/docker/1527521472435-a4d44ce3-d6bb-466a-aa1d-e2a78e321db7.png" alt="在Docker中安装Tomcat"></p>
 <blockquote>
 <p>我们可以看到tomcat容器的ID以及别名的信息，这里我就直接使用ID进行容器的操作了。</p>
 </blockquote>
 <h4 id="通过docker-stop实现容器停止关闭："><a href="#通过docker-stop实现容器停止关闭：" class="headerlink" title="通过docker stop实现容器停止关闭："></a>通过docker stop实现容器停止关闭：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker stop 22</span><br></pre></td></tr></table></figure>
 
 <p>运行结果如图：</p>
-<p><img src="/images/docker/1527521553594-4fe1e073-4b38-41b8-a4e1-cab604f679e8.png" alt="图片描述"></p>
+<p><img src="/images/docker/1527521553594-4fe1e073-4b38-41b8-a4e1-cab604f679e8.png" alt="在Docker中安装Tomcat"></p>
 <p>回车之后，控制台输出“22”，表示已经成功停止了容器ID以“22”开头的tomcat容器。</p>
 <p>这时候在去查看一下当前处于运行状态的容器列表：</p>
-<p><img src="/images/docker/1527521646047-a631ca1d-544d-4055-a633-4f15774e5ddd.png" alt="图片描述"></p>
+<p><img src="/images/docker/1527521646047-a631ca1d-544d-4055-a633-4f15774e5ddd.png" alt="在Docker中安装Tomcat"></p>
 <blockquote>
 <p>可以看到，tomcat容器已经被关闭了。</p>
 </blockquote>
@@ -430,7 +430,7 @@ Tomcat镜像中已经包含jdk环境依赖，所以我们可以不用去启动ja
 <p>【<strong>解答</strong>】：</p>
 <blockquote>
 <p>我们要知道docker run这个命令的作用，其实是运行一个全新的容器。你执行一次docker run命令，就会生成一个新的容器，通过一个图来看一下具体情况：</p>
-<p><img src="/images/docker/1527521919194-08e09ebc-778b-4f01-b5d0-bc9e229734da.png" alt="图片描述"></p>
+<p><img src="/images/docker/1527521919194-08e09ebc-778b-4f01-b5d0-bc9e229734da.png" alt="在Docker中安装Tomcat"></p>
 </blockquote>
 <blockquote>
 <p>从图中可以看到，出现了很多tomcat的容器，而且“STATUS”状态为“Exited”。什么意思呢？因为我在操作的过程中，总共执行了5次docker run命令（这里忽略docker rm删除的容器），启动了5个全新的容器，每个容器之间是隔离的。同时，我又对每个tomcat容器执行了docker stop关闭命令，所以状态都是“Exited”。</p>
@@ -444,10 +444,10 @@ Tomcat镜像中已经包含jdk环境依赖，所以我们可以不用去启动ja
 </blockquote>
 <blockquote>
 <p>这时候通过docker ps查看处于运行状态的容器列表：</p>
-<p><img src="/images/docker/1527522366260-fea95bcb-fced-4f46-8234-c8e39393a245.png" alt="图片描述"></p>
+<p><img src="/images/docker/1527522366260-fea95bcb-fced-4f46-8234-c8e39393a245.png" alt="在Docker中安装Tomcat"></p>
 <p>说明tomcat容器已经启动成功了！</p>
 <p>我们再通过docker ps -a查看所有的容器列表（包括未运行的容器），主要看一下tomcat容器的数量是否和上面的5个一致，并未重新运行一个全新的容器：</p>
-<p><img src="/images/docker/1527522475276-0f83eb27-f7ef-4e5b-bcdc-39c32bdea54a.png" alt="图片描述"></p>
+<p><img src="/images/docker/1527522475276-0f83eb27-f7ef-4e5b-bcdc-39c32bdea54a.png" alt="在Docker中安装Tomcat"></p>
 <p>可以看到，tomcat容器的数量并未发生变化，其中的一个tomcat容器处于运行状态，剩余4个都是Exited停止状态。</p>
 </blockquote>
 <ul>
@@ -462,13 +462,13 @@ Tomcat镜像中已经包含jdk环境依赖，所以我们可以不用去启动ja
 </blockquote>
 <p>【解答】</p>
 <blockquote>
-<p>运行结果如下图：<img src="/images/docker/1527522929924-fbeab3d9-8623-4239-b816-d041b8da890a.png" alt="图片描述"></p>
+<p>运行结果如下图：<img src="/images/docker/1527522929924-fbeab3d9-8623-4239-b816-d041b8da890a.png" alt="在Docker中安装Tomcat"></p>
 <p>其实错误信息很明显了，就是容器的别名“quirky_mayer”已经存在了，别的tomcat容器的别名也存在一个是“quirky_mayer”的。</p>
 <p>这个别名校验是否重复，是针对所有容器而言的，并非是只判断运行状态的容器，那些Exited状态的容器也会进行校验。</p>
 <p>因此，我们在使用–name指定别名的时候，不要出现重复。</p>
 </blockquote>
 
-        <h2>相关文章</h2><ul><li><a href="/docker/04-docker-lession-index/">在Centos系统中安装Docker</a></li><li><a href="/docker/01-docker-lession-index/">传统项目开发部署的流程是怎样的？</a></li><li><a href="/docker/00-docker-lession-index/">Docker系列教程</a></li><li><a href="/docker/03-docker-lession-index/">Docker镜像、容器、仓库的介绍</a></li><li><a href="/docker/09-docker-lession-index/">在Docker中安装Nginx</a></li></ul>
+        <h2>相关文章</h2><ul><li><a href="/docker/06-docker-lession-index/">在Docker中安装JDK</a></li><li><a href="/docker/01-docker-lession-index/">传统项目开发部署的流程是怎样的？</a></li><li><a href="/docker/03-docker-lession-index/">Docker镜像、容器、仓库的介绍</a></li><li><a href="/docker/00-docker-lession-index/">Docker系列教程</a></li><li><a href="/docker/12-docker-lession-index/">Docker部署Spring Boot项目</a></li></ul>
     </div>
     
 

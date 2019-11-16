@@ -349,7 +349,7 @@
 <p>我本地是win7系统，因此下载的是windows环境的软件安装包。</p>
 </blockquote>
 <p>打开软件，数据相关IP以及端口号，连接redis服务，如下图：</p>
-<p><img src="/images/docker/1528191923922-104d510d-7340-4612-a091-a388f7613bfc.png" alt="img"></p>
+<p><img src="/images/docker/1528191923922-104d510d-7340-4612-a091-a388f7613bfc.png" alt="在Docker中安装Redis以及主从环境搭建"></p>
 <blockquote>
 <p>由于我是在我的阿里云服务器上安装的redis，IP就是外网IP地址，端口号就是redis默认的端口号6379。</p>
 <p>因为当前并未给redis设置密码验证，因此无需输入密码。</p>
@@ -366,7 +366,7 @@
 <p>其中的“e8”指的是redis容器的ID</p>
 </blockquote>
 <p>如下图所示（由于信息内容很多，我们只截取我们需要看的内容）：</p>
-<p><img src="/images/docker/1528192600677-0bbbde81-289f-457a-a164-55992c1d0c58.png" alt="img"></p>
+<p><img src="/images/docker/1528192600677-0bbbde81-289f-457a-a164-55992c1d0c58.png" alt="在Docker中安装Redis以及主从环境搭建"></p>
 <blockquote>
 <p>其中黄色圈起来的地方，就是redis数据存储的目录映射。“Source”指的是宿主机下的目录，“Destination”指的是容器中的目录。</p>
 </blockquote>
@@ -378,7 +378,7 @@
 <blockquote>
 <p>我们需要在宿主机上创建用于存储、管理redis相关数据以及配置文件的目录。</p>
 <p>这里我就在 /opt 目录下新建一个 “docker_redis” 目录，然后在“docker_redis”目录下新建 “data”和“conf”这两个目录，最终结构如下：</p>
-<p><img src="/images/docker/1528193115940-1af51c62-2ef6-4355-bb02-8f2e435f044c.png" alt="img"></p>
+<p><img src="/images/docker/1528193115940-1af51c62-2ef6-4355-bb02-8f2e435f044c.png" alt="在Docker中安装Redis以及主从环境搭建"></p>
 </blockquote>
 <p><strong>复制一份redis.conf文件到宿主机的 /opt/docker_redis/conf/ 目录下</strong></p>
 <blockquote>
@@ -387,7 +387,7 @@
 </blockquote>
 <blockquote>
 <p>上传成功后，在对应目录下就有了一个redis.conf文件：</p>
-<p><img src="/images/docker/1528195640699-f1e63986-f002-4b27-8119-635e973fbd1e.png" alt="img"></p>
+<p><img src="/images/docker/1528195640699-f1e63986-f002-4b27-8119-635e973fbd1e.png" alt="在Docker中安装Redis以及主从环境搭建"></p>
 </blockquote>
 <blockquote>
 <p>为了方便，这里我就上传一个redis.conf文件在附件里，如果有需要，可自行下载使用（redis版本是4.0.9）。</p>
@@ -422,7 +422,7 @@
 <p>回车运行，如下图所示：</p>
 </blockquote>
 <blockquote>
-<p><img src="/images/docker/1528198667744-19f58395-7aa1-4898-99e6-6c6db04d3813.png" alt="img"></p>
+<p><img src="/images/docker/1528198667744-19f58395-7aa1-4898-99e6-6c6db04d3813.png" alt="在Docker中安装Redis以及主从环境搭建"></p>
 </blockquote>
 <blockquote>
 <p>可以明显看到，当前redis容器的IP地址是 172.18.0.3</p>
@@ -459,7 +459,7 @@
 </blockquote>
 <blockquote>
 <p>回车即可连接到redis服务，同时我们也可以在里面验证一个密码是否有效，如下图所示：</p>
-<p><img src="/images/docker/1528199950586-7af88a93-7648-4fb1-a4bd-ab5150ba3c5d.png" alt="img"></p>
+<p><img src="/images/docker/1528199950586-7af88a93-7648-4fb1-a4bd-ab5150ba3c5d.png" alt="在Docker中安装Redis以及主从环境搭建"></p>
 </blockquote>
 <blockquote>
 <p>可以看到，当执行“keys *”命令的时候，redis会提示你认证失败，原因是因为我们在redis.conf文件中设置了密码，所以，只有正确输入密码，才能执行命令并返回结果。</p>
@@ -473,7 +473,7 @@
 <blockquote>
 <p>在本地电脑上，通过RedisDesktopManager软件来测试连接，这一种连接还是很简单的。</p>
 </blockquote>
-<p><img src="/images/docker/1528200198791-a5284287-be3c-4415-80d2-3697d6ead6c0.png" alt="img"></p>
+<p><img src="/images/docker/1528200198791-a5284287-be3c-4415-80d2-3697d6ead6c0.png" alt="在Docker中安装Redis以及主从环境搭建"></p>
 <blockquote>
 <p>其中的IP地址，指的是我的阿里云服务器的外网IP。</p>
 <p>这次我们就需要输入密码才能访问redis服务。</p>
@@ -504,7 +504,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-compose up -d</span><br></pre></td></tr></table></figure>
 
 <p>运行效果如下图：</p>
-<p><img src="/images/docker/1528211115458-a0737b35-4978-43b2-a821-6bc374603eb8.png" alt="img"></p>
+<p><img src="/images/docker/1528211115458-a0737b35-4978-43b2-a821-6bc374603eb8.png" alt="在Docker中安装Redis以及主从环境搭建"></p>
 <blockquote>
 <p>你会看到日志打印出了我们在yml文件中定义的2个容器名称。</p>
 </blockquote>
@@ -515,13 +515,13 @@
 <li>通过 docker ps 命令查看运行中的容器列表</li>
 </ul>
 <blockquote>
-<p><img src="/images/docker/1528211309292-484b9317-8996-4a98-9025-6070e262060c.png" alt="img"></p>
+<p><img src="/images/docker/1528211309292-484b9317-8996-4a98-9025-6070e262060c.png" alt="在Docker中安装Redis以及主从环境搭建"></p>
 </blockquote>
 <ul>
 <li>通过 docker-compose ps 命令查看运行中的</li>
 </ul>
 <blockquote>
-<p><img src="/images/docker/1528211350991-465734e9-cb7e-491e-b18e-b052f392775f.png" alt="img"></p>
+<p><img src="/images/docker/1528211350991-465734e9-cb7e-491e-b18e-b052f392775f.png" alt="在Docker中安装Redis以及主从环境搭建"></p>
 <blockquote>
 <p>可以看到，其中的“State”列的值都是“Up”状态，说明容器处于正常运行。</p>
 </blockquote>
@@ -532,11 +532,11 @@
 <p>其中，7010这个端口对应的redis是一个master角色（主节点），而7011对应的redis是一个slave角色（从节点），因为，从上面的yml文件中就看的出来，7011的配置项中通过“links”来指向了7010的容器。</p>
 </blockquote>
 <p>如下图所示：</p>
-<p><img src="/images/docker/1528212246016-67e5a289-789f-4918-9d3f-59a4995aeca4.png" alt="img"></p>
+<p><img src="/images/docker/1528212246016-67e5a289-789f-4918-9d3f-59a4995aeca4.png" alt="在Docker中安装Redis以及主从环境搭建"></p>
 <p>在master节点下面新增一个数据（直接在软件上手动新增一条数据）：</p>
-<p><img src="/images/docker/1528212449655-57cfad5e-3634-46d5-8000-58a2406dc731.png" alt="img"></p>
+<p><img src="/images/docker/1528212449655-57cfad5e-3634-46d5-8000-58a2406dc731.png" alt="在Docker中安装Redis以及主从环境搭建"></p>
 <p>我们已经在master节点下面新增了一条测试数据，然后我们手动刷新一下下面的slave节点，看看db0下面是否会出现和master的db0下面相同的数据，刷新后如下图：</p>
-<p><img src="/images/docker/1528212552337-0c5de4f5-581b-4616-b7ea-202c6a6b2788.png" alt="img"></p>
+<p><img src="/images/docker/1528212552337-0c5de4f5-581b-4616-b7ea-202c6a6b2788.png" alt="在Docker中安装Redis以及主从环境搭建"></p>
 <blockquote>
 <p>可以看到，数据已经自动同步到slave节点上了。redis主从可以说已经搭建好了。^_^</p>
 </blockquote>
@@ -544,7 +544,7 @@
 <ul>
 <li>在“redis-slave-7011”这个从节点下面手动新增一个K-V数据，看看是否能成功写数据，最终效果如下：</li>
 </ul>
-<p><img src="/images/docker/1528212803701-175bb729-5195-4147-ba70-8decb429528b.png" alt="img"></p>
+<p><img src="/images/docker/1528212803701-175bb729-5195-4147-ba70-8decb429528b.png" alt="在Docker中安装Redis以及主从环境搭建"></p>
 <blockquote>
 <p>通过上图可以看到，控制台信息打印出“You can’t write against a read only slave.”，意思也就是，你不能在只读模式的节点下面进行写操作。这也就验证了我们的从节点是只读的。</p>
 </blockquote>
@@ -562,7 +562,7 @@
 <p>“redis-slave-7011”这个 从节点 下面的相同数据也同步被删除掉了。</p>
 <p><strong>通过上面的3个验证方式，印证了我们上面说的，master是可读写的，slave是只读的，不可写。</strong></p>
 
-        <h2>相关文章</h2><ul><li><a href="/docker/04-docker-lession-index/">在Centos系统中安装Docker</a></li><li><a href="/docker/01-docker-lession-index/">传统项目开发部署的流程是怎样的？</a></li><li><a href="/docker/00-docker-lession-index/">Docker系列教程</a></li><li><a href="/docker/03-docker-lession-index/">Docker镜像、容器、仓库的介绍</a></li><li><a href="/docker/07-docker-lession-index/">在Docker中安装Tomcat</a></li></ul>
+        <h2>相关文章</h2><ul><li><a href="/docker/06-docker-lession-index/">在Docker中安装JDK</a></li><li><a href="/docker/01-docker-lession-index/">传统项目开发部署的流程是怎样的？</a></li><li><a href="/docker/03-docker-lession-index/">Docker镜像、容器、仓库的介绍</a></li><li><a href="/docker/00-docker-lession-index/">Docker系列教程</a></li><li><a href="/docker/07-docker-lession-index/">在Docker中安装Tomcat</a></li></ul>
     </div>
     
 
