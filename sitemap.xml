@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://www.cicoding.cn/redis/redis-and-memcache/</loc>
+    
+    <lastmod>2019-12-04T08:47:46.739Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://www.cicoding.cn/springboot/springboot-and-mongotemplate-tutorials/</loc>
     
     <lastmod>2019-11-26T02:51:06.693Z</lastmod>
@@ -96,6 +103,13 @@
     <loc>https://www.cicoding.cn/micro-service/feign-set-assesstoken/</loc>
     
     <lastmod>2019-11-16T10:34:49.747Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.cicoding.cn/other/ali-interview-questions001/</loc>
+    
+    <lastmod>2019-11-12T08:54:05.064Z</lastmod>
     
   </url>
   
@@ -233,7 +247,7 @@
   </url>
   
   <url>
-    <loc>https://www.cicoding.cn/other/Why-do-we-do-distributed-use-Redis%20-%20%E5%89%AF%E6%9C%AC/</loc>
+    <loc>https://www.cicoding.cn/other/Why-do-we-do-distributed-use-Redis/</loc>
     
     <lastmod>2019-09-28T04:56:25.161Z</lastmod>
     
