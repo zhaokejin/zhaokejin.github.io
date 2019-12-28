@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://www.cicoding.cn/java/CountDownLatch-CyclicBarrier-Semaphorepy/</loc>
+    
+    <lastmod>2019-12-28T08:13:47.726Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://www.cicoding.cn/micro-service/microservice/</loc>
     
     <lastmod>2019-12-26T01:21:39.872Z</lastmod>
