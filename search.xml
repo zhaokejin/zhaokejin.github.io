@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[聊聊@Controller和@RestController的区别？]]></title>
+    <url>%2Fspring%2Fspring-controller-restcontroller%2F</url>
+    <content type="text"><![CDATA[知识点：@RestController注解相当于@ResponseBody ＋ @Controller合在一起的作用。 1) 如果只是使用@RestController注解Controller，则Controller中的方法无法返回jsp页面，或者html，配置的视图解析器 InternalResourceViewResolver不起作用，返回的内容就是Return 里的内容。 2) 如果需要返回到指定页面，则需要用 @Controller配合视图解析器InternalResourceViewResolver才行。如果需要返回JSON，XML或自定义mediaType内容到页面，则需要在对应的方法上加上@ResponseBody注解。 例如： 使用@Controller 注解，在对应的方法上，视图解析器可以解析return 的jsp,html页面，并且跳转到相应页面 若返回json等内容到页面，则需要加@ResponseBody注解 123456789101112131415161718@CrossOrigin@Controllerpublic class FileUploadController &#123;//跳转到上传文件的页面@RequestMapping(value="/gouploadimg", method = RequestMethod.GET)public String goUploadImg() &#123; //跳转到 templates 目录下的 uploadimg.html return "uploadimg";&#125;//处理文件上传@RequestMapping(value="/testuploadimg", method = RequestMethod.POST)public @ResponseBody String uploadImg(@RequestParam("file") MultipartFile file, HttpServletRequest request) &#123; System.out.println("调用文件上传方法"); String contentType = file.getContentType(); String fileName = file.getOriginalFilename(); @RestController注解，相当于@Controller+@ResponseBody两个注解的结合，返回json数据不需要在方法前面加@ResponseBody注解了，但使用@RestController这个注解，就不能返回jsp,html页面，视图解析器无法解析jsp,html页面 123@CrossOrigin@RestController /* @Controller + @ResponseBody*/public class HospitalController &#123; 12345678910111213//注入Service服务对象@Autowiredprivate HospitalService hospitalService;/** * 查询所有医院信息（未分页） */@RequestMapping(value = "findAllHospital",method = RequestMethod.GET)public List&lt;Hospital&gt; findAllHospital()&#123; List&lt;Hospital&gt; hospitalList= hospitalService.findAllHospital(); return hospitalList;&#125;]]></content>
+      <categories>
+        <category>Spring</category>
+      </categories>
+      <tags>
+        <tag>Spring</tag>
+        <tag>Java-b2-spring注解</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[SpringBoot2.1.X整合MongoDB（支持事务）]]></title>
     <url>%2Fspringboot%2Fspringboot-and-mongotemplate-transactional%2F</url>
     <content type="text"><![CDATA[简述本周主要的工作任务是，将mongDB集成到Springboot中，并且要用注解事务（@Transactional），本文记录下集成过程。 前期依赖准备 要支持多文档事务，mongo版本必须为4.0以上 开启replica-set（多文档事务必须要在replica-set的基础上才能开启，MongoDB官网上有描述），具体怎么开启可参考此文： windows下配置replica-set 查看mongodb的数据库是否能正确连接 此处推荐mongodb数据的可视化工具：adminMongo，或者用官方的mongoCompass。 ​ 加依赖1234&lt;dependency&gt; &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt; &lt;artifactId&gt;spring-boot-starter-data-mongodb&lt;/artifactId&gt;&lt;/dependency&gt; 加配置1spring.data.mongodb.uri=mongodb://10.254.193.30:27017/test?maxPoolSize=512 事务开启创建配置类，开启事务 12345678910111213141516package com.example.config;import org.springframework.context.annotation.Bean;import org.springframework.context.annotation.Configuration;import org.springframework.data.mongodb.MongoDbFactory;import org.springframework.data.mongodb.MongoTransactionManager;@Configurationpublic class TransactionConfig &#123; @Bean MongoTransactionManager transactionManager(MongoDbFactory factory)&#123; return new MongoTransactionManager(factory); &#125;&#125; 然后方法注解 @Transactional(rollbackFor = Throwable.class) 12345@Transactional(rollbackFor = Throwable.class)public void saveTest(Mongo test) &#123; mongoTemplate.save(test); int i = 1/0;&#125; 在启动类上加上事务注解@EnableTransactionManagement。 注：以上为MongoTemplate方式，MongoTemplate和MongoRepository方式都与Spring整合SpringDataMongoDB相同]]></content>
@@ -22,9 +34,9 @@
         <category>微服务</category>
       </categories>
       <tags>
+        <tag>Feign</tag>
         <tag>微服务</tag>
         <tag>Spring Cloud</tag>
-        <tag>Feign</tag>
       </tags>
   </entry>
   <entry>

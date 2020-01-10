@@ -1,0 +1,1560 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>DefaultMQProducer API Reference · Apache RocketMQ开发者指南</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        <meta name="author" content="RocketMQ官方">
+        
+        
+    
+    <link rel="stylesheet" href="../../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-anchor-navigation-ex/style/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    
+    <link rel="prev" href="../../operation.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+    
+        
+        <li>
+            <a href="http://www.cicoding.cn" target="_blank" class="custom-link">博客首页</a>
+        </li>
+    
+        
+        <li>
+            <a href="http://rocketmq.apache.org" target="_blank" class="custom-link">RocketMQ官方网站</a>
+        </li>
+    
+    
+
+    
+    <li class="divider"></li>
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../../">
+            
+                <a href="../../">
+            
+                    
+                    README
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../../concept.html">
+            
+                <a href="../../concept.html">
+            
+                    
+                    概念(Concept)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="../../features.html">
+            
+                <a href="../../features.html">
+            
+                    
+                    特性(Features)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="../../architecture.html">
+            
+                <a href="../../architecture.html">
+            
+                    
+                    架构(Architecture)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="../../design.html">
+            
+                <a href="../../design.html">
+            
+                    
+                    设计(Design)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="../../RocketMQ_Example.html">
+            
+                <a href="../../RocketMQ_Example.html">
+            
+                    
+                    样例(Example)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="../../best_practice.html">
+            
+                <a href="../../best_practice.html">
+            
+                    
+                    最佳实践（Best Practice）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="../../msg_trace/user_guide.html">
+            
+                <a href="../../msg_trace/user_guide.html">
+            
+                    
+                    消息轨迹指南(Message Trace)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" data-path="../../acl/user_guide.html">
+            
+                <a href="../../acl/user_guide.html">
+            
+                    
+                    权限管理(Auth Management)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" data-path="../../dledger/quick_start.html">
+            
+                <a href="../../dledger/quick_start.html">
+            
+                    
+                    Dledger快速搭建(Quick Start)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11" data-path="../../dledger/deploy_guide.html">
+            
+                <a href="../../dledger/deploy_guide.html">
+            
+                    
+                    集群部署(Cluster Deployment)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12" data-path="../../operation.html">
+            
+                <a href="../../operation.html">
+            
+                    
+                    集群部署(Operation)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.13" data-path="API_Reference_DefaultMQProducer.html">
+            
+                <a href="API_Reference_DefaultMQProducer.html">
+            
+                    
+                    DefaultMQProducer API Reference
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="../.." >DefaultMQProducer API Reference</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h2 id="defaultmqproducer"><a name="defaultmqproducer" class="anchor-navigation-ex-anchor" href="#defaultmqproducer"><i class="fa fa-link" aria-hidden="true"></i></a>DefaultMQProducer</h2>
+<hr>
+<h3 id="&#x7C7B;&#x7B80;&#x4ECB;"><a name="&#x7C7B;&#x7B80;&#x4ECB;" class="anchor-navigation-ex-anchor" href="#&#x7C7B;&#x7B80;&#x4ECB;"><i class="fa fa-link" aria-hidden="true"></i></a>&#x7C7B;&#x7B80;&#x4ECB;</h3>
+<p><code>public class DefaultMQProducer 
+extends ClientConfig 
+implements MQProducer</code></p>
+<blockquote>
+<p><code>DefaultMQProducer</code>&#x7C7B;&#x662F;&#x5E94;&#x7528;&#x7528;&#x6765;&#x6295;&#x9012;&#x6D88;&#x606F;&#x7684;&#x5165;&#x53E3;&#xFF0C;&#x5F00;&#x7BB1;&#x5373;&#x7528;&#xFF0C;&#x53EF;&#x901A;&#x8FC7;&#x65E0;&#x53C2;&#x6784;&#x9020;&#x65B9;&#x6CD5;&#x5FEB;&#x901F;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x751F;&#x4EA7;&#x8005;&#x3002;&#x4E3B;&#x8981;&#x8D1F;&#x8D23;&#x6D88;&#x606F;&#x7684;&#x53D1;&#x9001;&#xFF0C;&#x652F;&#x6301;&#x540C;&#x6B65;/&#x5F02;&#x6B65;/oneway&#x7684;&#x53D1;&#x9001;&#x65B9;&#x5F0F;&#xFF0C;&#x8FD9;&#x4E9B;&#x53D1;&#x9001;&#x65B9;&#x5F0F;&#x5747;&#x652F;&#x6301;&#x6279;&#x91CF;&#x53D1;&#x9001;&#x3002;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x8BE5;&#x7C7B;&#x63D0;&#x4F9B;&#x7684;getter/setter&#x65B9;&#x6CD5;&#xFF0C;&#x8C03;&#x6574;&#x53D1;&#x9001;&#x8005;&#x7684;&#x53C2;&#x6570;&#x3002;<code>DefaultMQProducer</code>&#x63D0;&#x4F9B;&#x4E86;&#x591A;&#x4E2A;send&#x65B9;&#x6CD5;&#xFF0C;&#x6BCF;&#x4E2A;send&#x65B9;&#x6CD5;&#x7565;&#x6709;&#x4E0D;&#x540C;&#xFF0C;&#x5728;&#x4F7F;&#x7528;&#x524D;&#x52A1;&#x5FC5;&#x8BE6;&#x7EC6;&#x4E86;&#x89E3;&#x5176;&#x610F;&#x56FE;&#x3002;&#x4E0B;&#x9762;&#x7ED9;&#x51FA;&#x4E00;&#x4E2A;&#x751F;&#x4EA7;&#x8005;&#x793A;&#x4F8B;&#x4EE3;&#x7801;&#xFF0C;<a href="https://github.com/apache/rocketmq/blob/master/example/src/main/java/org/apache/rocketmq/example/" target="_blank">&#x70B9;&#x51FB;&#x67E5;&#x770B;&#x66F4;&#x591A;&#x793A;&#x4F8B;&#x4EE3;&#x7801;</a>&#x3002;</p>
+</blockquote>
+<pre><code class="lang-java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Producer</span> </span>{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> MQClientException </span>{
+        <span class="hljs-comment">// &#x521B;&#x5EFA;&#x6307;&#x5B9A;&#x5206;&#x7EC4;&#x540D;&#x7684;&#x751F;&#x4EA7;&#x8005;</span>
+        DefaultMQProducer producer = <span class="hljs-keyword">new</span> DefaultMQProducer(<span class="hljs-string">&quot;ProducerGroupName&quot;</span>);
+
+        <span class="hljs-comment">// &#x542F;&#x52A8;&#x751F;&#x4EA7;&#x8005;</span>
+        producer.start();
+
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">128</span>; i++)
+            <span class="hljs-keyword">try</span> {
+                <span class="hljs-comment">// &#x6784;&#x5EFA;&#x6D88;&#x606F;</span>
+                Message msg = <span class="hljs-keyword">new</span> Message(<span class="hljs-string">&quot;TopicTest&quot;</span>,
+                        <span class="hljs-string">&quot;TagA&quot;</span>,
+                        <span class="hljs-string">&quot;OrderID188&quot;</span>,
+                        <span class="hljs-string">&quot;Hello world&quot;</span>.getBytes(RemotingHelper.DEFAULT_CHARSET));
+
+                <span class="hljs-comment">// &#x540C;&#x6B65;&#x53D1;&#x9001;</span>
+                SendResult sendResult = producer.send(msg);
+
+                <span class="hljs-comment">// &#x6253;&#x5370;&#x53D1;&#x9001;&#x7ED3;&#x679C;</span>
+                System.out.printf(<span class="hljs-string">&quot;%s%n&quot;</span>, sendResult);
+            } <span class="hljs-keyword">catch</span> (Exception e) {
+                e.printStackTrace();
+            }
+
+        producer.shutdown();
+    }
+}
+</code></pre>
+<p><strong>&#x6CE8;&#x610F;</strong>&#xFF1A;&#x8BE5;&#x7C7B;&#x662F;&#x7EBF;&#x7A0B;&#x5B89;&#x5168;&#x7684;&#x3002;&#x5728;&#x914D;&#x7F6E;&#x5E76;&#x542F;&#x52A8;&#x5B8C;&#x6210;&#x540E;&#x53EF;&#x5728;&#x591A;&#x4E2A;&#x7EBF;&#x7A0B;&#x95F4;&#x5B89;&#x5168;&#x5171;&#x4EAB;&#x3002;</p>
+<h3 id="&#x5B57;&#x6BB5;&#x6458;&#x8981;"><a name="&#x5B57;&#x6BB5;&#x6458;&#x8981;" class="anchor-navigation-ex-anchor" href="#&#x5B57;&#x6BB5;&#x6458;&#x8981;"><i class="fa fa-link" aria-hidden="true"></i></a>&#x5B57;&#x6BB5;&#x6458;&#x8981;</h3>
+<table>
+<thead>
+<tr>
+<th>&#x7C7B;&#x578B;</th>
+<th>&#x5B57;&#x6BB5;&#x540D;&#x79F0;</th>
+<th>&#x63CF;&#x8FF0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DefaultMQProducerImpl</td>
+<td>defaultMQProducerImpl</td>
+<td>&#x751F;&#x4EA7;&#x8005;&#x7684;&#x5185;&#x90E8;&#x9ED8;&#x8BA4;&#x5B9E;&#x73B0;</td>
+</tr>
+<tr>
+<td>String</td>
+<td>producerGroup</td>
+<td>&#x751F;&#x4EA7;&#x8005;&#x5206;&#x7EC4;</td>
+</tr>
+<tr>
+<td>String</td>
+<td>createTopicKey</td>
+<td>&#x5728;&#x53D1;&#x9001;&#x6D88;&#x606F;&#x65F6;&#xFF0C;&#x81EA;&#x52A8;&#x521B;&#x5EFA;&#x670D;&#x52A1;&#x5668;&#x4E0D;&#x5B58;&#x5728;&#x7684;topic</td>
+</tr>
+<tr>
+<td>int</td>
+<td>defaultTopicQueueNums</td>
+<td>&#x521B;&#x5EFA;topic&#x65F6;&#x9ED8;&#x8BA4;&#x7684;&#x961F;&#x5217;&#x6570;&#x91CF;</td>
+</tr>
+<tr>
+<td>int</td>
+<td>sendMsgTimeout</td>
+<td>&#x53D1;&#x9001;&#x6D88;&#x606F;&#x7684;&#x8D85;&#x65F6;&#x65F6;&#x95F4;</td>
+</tr>
+<tr>
+<td>int</td>
+<td>compressMsgBodyOverHowmuch</td>
+<td>&#x538B;&#x7F29;&#x6D88;&#x606F;&#x4F53;&#x7684;&#x9608;&#x503C;</td>
+</tr>
+<tr>
+<td>int</td>
+<td>retryTimesWhenSendFailed</td>
+<td>&#x540C;&#x6B65;&#x6A21;&#x5F0F;&#x4E0B;&#x5185;&#x90E8;&#x5C1D;&#x8BD5;&#x53D1;&#x9001;&#x6D88;&#x606F;&#x7684;&#x6700;&#x5927;&#x6B21;&#x6570;</td>
+</tr>
+<tr>
+<td>int</td>
+<td>retryTimesWhenSendAsyncFailed</td>
+<td>&#x5F02;&#x6B65;&#x6A21;&#x5F0F;&#x4E0B;&#x5185;&#x90E8;&#x5C1D;&#x8BD5;&#x53D1;&#x9001;&#x6D88;&#x606F;&#x7684;&#x6700;&#x5927;&#x6B21;&#x6570;</td>
+</tr>
+<tr>
+<td>boolean</td>
+<td>retryAnotherBrokerWhenNotStoreOK</td>
+<td>&#x662F;&#x5426;&#x5728;&#x5185;&#x90E8;&#x53D1;&#x9001;&#x5931;&#x8D25;&#x65F6;&#x91CD;&#x8BD5;&#x53E6;&#x4E00;&#x4E2A;broker</td>
+</tr>
+<tr>
+<td>int</td>
+<td>maxMessageSize</td>
+<td>&#x6D88;&#x606F;&#x7684;&#x6700;&#x5927;&#x957F;&#x5EA6;</td>
+</tr>
+<tr>
+<td>TraceDispatcher</td>
+<td>traceDispatcher</td>
+<td>&#x6D88;&#x606F;&#x8FFD;&#x8E2A;&#x5668;&#x3002;&#x4F7F;&#x7528;rcpHook&#x6765;&#x8FFD;&#x8E2A;&#x6D88;&#x606F;</td>
+</tr>
+</tbody>
+</table>
+<h3 id="&#x6784;&#x9020;&#x65B9;&#x6CD5;&#x6458;&#x8981;"><a name="&#x6784;&#x9020;&#x65B9;&#x6CD5;&#x6458;&#x8981;" class="anchor-navigation-ex-anchor" href="#&#x6784;&#x9020;&#x65B9;&#x6CD5;&#x6458;&#x8981;"><i class="fa fa-link" aria-hidden="true"></i></a>&#x6784;&#x9020;&#x65B9;&#x6CD5;&#x6458;&#x8981;</h3>
+<table>
+<thead>
+<tr>
+<th>&#x65B9;&#x6CD5;&#x540D;&#x79F0;</th>
+<th>&#x65B9;&#x6CD5;&#x63CF;&#x8FF0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DefaultMQProducer()</td>
+<td>&#x7531;&#x9ED8;&#x8BA4;&#x53C2;&#x6570;&#x503C;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x751F;&#x4EA7;&#x8005;</td>
+</tr>
+<tr>
+<td>DefaultMQProducer(final String producerGroup)</td>
+<td>&#x4F7F;&#x7528;&#x6307;&#x5B9A;&#x7684;&#x5206;&#x7EC4;&#x540D;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x751F;&#x4EA7;&#x8005;</td>
+</tr>
+<tr>
+<td>DefaultMQProducer(final String producerGroup, boolean enableMsgTrace)</td>
+<td>&#x4F7F;&#x7528;&#x6307;&#x5B9A;&#x7684;&#x5206;&#x7EC4;&#x540D;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x751F;&#x4EA7;&#x8005;&#xFF0C;&#x5E76;&#x8BBE;&#x7F6E;&#x662F;&#x5426;&#x5F00;&#x542F;&#x6D88;&#x606F;&#x8FFD;&#x8E2A;</td>
+</tr>
+<tr>
+<td>DefaultMQProducer(final String producerGroup, boolean enableMsgTrace, final String customizedTraceTopic)</td>
+<td>&#x4F7F;&#x7528;&#x6307;&#x5B9A;&#x7684;&#x5206;&#x7EC4;&#x540D;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x751F;&#x4EA7;&#x8005;&#xFF0C;&#x5E76;&#x8BBE;&#x7F6E;&#x662F;&#x5426;&#x5F00;&#x542F;&#x6D88;&#x606F;&#x8FFD;&#x8E2A;&#x53CA;&#x8FFD;&#x8E2A;topic&#x7684;&#x540D;&#x79F0;</td>
+</tr>
+<tr>
+<td>DefaultMQProducer(RPCHook rpcHook)</td>
+<td>&#x4F7F;&#x7528;&#x6307;&#x5B9A;&#x7684;hook&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x751F;&#x4EA7;&#x8005;</td>
+</tr>
+<tr>
+<td>DefaultMQProducer(final String producerGroup, RPCHook rpcHook)</td>
+<td>&#x4F7F;&#x7528;&#x6307;&#x5B9A;&#x7684;&#x5206;&#x7EC4;&#x540D;&#x53CA;&#x81EA;&#x5B9A;&#x4E49;hook&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x751F;&#x4EA7;&#x8005;</td>
+</tr>
+<tr>
+<td>DefaultMQProducer(final String producerGroup, RPCHook rpcHook, boolean enableMsgTrace,final String customizedTraceTopic)</td>
+<td>&#x4F7F;&#x7528;&#x6307;&#x5B9A;&#x7684;&#x5206;&#x7EC4;&#x540D;&#x53CA;&#x81EA;&#x5B9A;&#x4E49;hook&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x751F;&#x4EA7;&#x8005;&#xFF0C;&#x5E76;&#x8BBE;&#x7F6E;&#x662F;&#x5426;&#x5F00;&#x542F;&#x6D88;&#x606F;&#x8FFD;&#x8E2A;&#x53CA;&#x8FFD;&#x8E2A;topic&#x7684;&#x540D;&#x79F0;</td>
+</tr>
+</tbody>
+</table>
+<h3 id="&#x4F7F;&#x7528;&#x65B9;&#x6CD5;&#x6458;&#x8981;"><a name="&#x4F7F;&#x7528;&#x65B9;&#x6CD5;&#x6458;&#x8981;" class="anchor-navigation-ex-anchor" href="#&#x4F7F;&#x7528;&#x65B9;&#x6CD5;&#x6458;&#x8981;"><i class="fa fa-link" aria-hidden="true"></i></a>&#x4F7F;&#x7528;&#x65B9;&#x6CD5;&#x6458;&#x8981;</h3>
+<table>
+<thead>
+<tr>
+<th>&#x8FD4;&#x56DE;&#x503C;</th>
+<th>&#x65B9;&#x6CD5;&#x540D;&#x79F0;</th>
+<th>&#x65B9;&#x6CD5;&#x63CF;&#x8FF0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>void</td>
+<td>createTopic(String key, String newTopic, int queueNum)</td>
+<td>&#x5728;broker&#x4E0A;&#x521B;&#x5EFA;&#x6307;&#x5B9A;&#x7684;topic</td>
+</tr>
+<tr>
+<td>void</td>
+<td>createTopic(String key, String newTopic, int queueNum, int topicSysFlag)</td>
+<td>&#x5728;broker&#x4E0A;&#x521B;&#x5EFA;&#x6307;&#x5B9A;&#x7684;topic</td>
+</tr>
+<tr>
+<td>long</td>
+<td>earliestMsgStoreTime(MessageQueue mq)</td>
+<td>&#x67E5;&#x8BE2;&#x6700;&#x65E9;&#x7684;&#x6D88;&#x606F;&#x5B58;&#x50A8;&#x65F6;&#x95F4;</td>
+</tr>
+<tr>
+<td>List<messagequeue></messagequeue></td>
+<td>fetchPublishMessageQueues(String topic)</td>
+<td>&#x83B7;&#x53D6;topic&#x7684;&#x6D88;&#x606F;&#x961F;&#x5217;</td>
+</tr>
+<tr>
+<td>long</td>
+<td>maxOffset(MessageQueue mq)</td>
+<td>&#x67E5;&#x8BE2;&#x7ED9;&#x5B9A;&#x6D88;&#x606F;&#x961F;&#x5217;&#x7684;&#x6700;&#x5927;offset</td>
+</tr>
+<tr>
+<td>long</td>
+<td>minOffset(MessageQueue mq)</td>
+<td>&#x67E5;&#x8BE2;&#x7ED9;&#x5B9A;&#x6D88;&#x606F;&#x961F;&#x5217;&#x7684;&#x6700;&#x5C0F;offset</td>
+</tr>
+<tr>
+<td>QueryResult</td>
+<td>queryMessage(String topic, String key, int maxNum, long begin, long end)</td>
+<td>&#x6309;&#x5173;&#x952E;&#x5B57;&#x67E5;&#x8BE2;&#x6D88;&#x606F;</td>
+</tr>
+<tr>
+<td>long</td>
+<td>searchOffset(MessageQueue mq, long timestamp)</td>
+<td>&#x67E5;&#x627E;&#x6307;&#x5B9A;&#x65F6;&#x95F4;&#x7684;&#x6D88;&#x606F;&#x961F;&#x5217;&#x7684;&#x7269;&#x7406;offset</td>
+</tr>
+<tr>
+<td>SendResult</td>
+<td>send(Collection<message> msgs)</message></td>
+<td>&#x540C;&#x6B65;&#x6279;&#x91CF;&#x53D1;&#x9001;&#x6D88;&#x606F;</td>
+</tr>
+<tr>
+<td>SendResult</td>
+<td>send(Collection<message> msgs, long timeout)</message></td>
+<td>&#x540C;&#x6B65;&#x6279;&#x91CF;&#x53D1;&#x9001;&#x6D88;&#x606F;</td>
+</tr>
+<tr>
+<td>SendResult</td>
+<td>send(Collection<message> msgs, MessageQueue messageQueue)</message></td>
+<td>&#x5411;&#x6307;&#x5B9A;&#x7684;&#x6D88;&#x606F;&#x961F;&#x5217;&#x540C;&#x6B65;&#x6279;&#x91CF;&#x53D1;&#x9001;&#x6D88;&#x606F;</td>
+</tr>
+<tr>
+<td>SendResult</td>
+<td>send(Collection<message> msgs, MessageQueue messageQueue, long timeout)</message></td>
+<td>&#x5411;&#x6307;&#x5B9A;&#x7684;&#x6D88;&#x606F;&#x961F;&#x5217;&#x540C;&#x6B65;&#x6279;&#x91CF;&#x53D1;&#x9001;&#x6D88;&#x606F;&#xFF0C;&#x5E76;&#x6307;&#x5B9A;&#x8D85;&#x65F6;&#x65F6;&#x95F4;</td>
+</tr>
+<tr>
+<td>SendResult</td>
+<td>send(Message msg)</td>
+<td>&#x540C;&#x6B65;&#x5355;&#x6761;&#x53D1;&#x9001;&#x6D88;&#x606F;</td>
+</tr>
+<tr>
+<td>SendResult</td>
+<td>send(Message msg, long timeout)</td>
+<td>&#x540C;&#x6B65;&#x53D1;&#x9001;&#x5355;&#x6761;&#x6D88;&#x606F;&#xFF0C;&#x5E76;&#x6307;&#x5B9A;&#x8D85;&#x65F6;&#x65F6;&#x95F4;</td>
+</tr>
+<tr>
+<td>SendResult</td>
+<td>send(Message msg, MessageQueue mq)</td>
+<td>&#x5411;&#x6307;&#x5B9A;&#x7684;&#x6D88;&#x606F;&#x961F;&#x5217;&#x540C;&#x6B65;&#x53D1;&#x9001;&#x5355;&#x6761;&#x6D88;&#x606F;</td>
+</tr>
+<tr>
+<td>SendResult</td>
+<td>send(Message msg, MessageQueue mq, long timeout)</td>
+<td>&#x5411;&#x6307;&#x5B9A;&#x7684;&#x6D88;&#x606F;&#x961F;&#x5217;&#x540C;&#x6B65;&#x5355;&#x6761;&#x53D1;&#x9001;&#x6D88;&#x606F;&#xFF0C;&#x5E76;&#x6307;&#x5B9A;&#x8D85;&#x65F6;&#x65F6;&#x95F4;</td>
+</tr>
+<tr>
+<td>void</td>
+<td>send(Message msg, MessageQueue mq, SendCallback sendCallback)</td>
+<td>&#x5411;&#x6307;&#x5B9A;&#x7684;&#x6D88;&#x606F;&#x961F;&#x5217;&#x5F02;&#x6B65;&#x5355;&#x6761;&#x53D1;&#x9001;&#x6D88;&#x606F;&#xFF0C;&#x5E76;&#x6307;&#x5B9A;&#x56DE;&#x8C03;&#x65B9;&#x6CD5;</td>
+</tr>
+<tr>
+<td>void</td>
+<td>send(Message msg, MessageQueue mq, SendCallback sendCallback, long timeout)</td>
+<td>&#x5411;&#x6307;&#x5B9A;&#x7684;&#x6D88;&#x606F;&#x961F;&#x5217;&#x5F02;&#x6B65;&#x5355;&#x6761;&#x53D1;&#x9001;&#x6D88;&#x606F;&#xFF0C;&#x5E76;&#x6307;&#x5B9A;&#x56DE;&#x8C03;&#x65B9;&#x6CD5;&#x548C;&#x8D85;&#x65F6;&#x65F6;&#x95F4;</td>
+</tr>
+<tr>
+<td>SendResult</td>
+<td>send(Message msg, MessageQueueSelector selector, Object arg)</td>
+<td>&#x5411;&#x6D88;&#x606F;&#x961F;&#x5217;&#x540C;&#x6B65;&#x5355;&#x6761;&#x53D1;&#x9001;&#x6D88;&#x606F;&#xFF0C;&#x5E76;&#x6307;&#x5B9A;&#x53D1;&#x9001;&#x961F;&#x5217;&#x9009;&#x62E9;&#x5668;</td>
+</tr>
+<tr>
+<td>SendResult</td>
+<td>send(Message msg, MessageQueueSelector selector, Object arg, long timeout)</td>
+<td>&#x5411;&#x6D88;&#x606F;&#x961F;&#x5217;&#x540C;&#x6B65;&#x5355;&#x6761;&#x53D1;&#x9001;&#x6D88;&#x606F;&#xFF0C;&#x5E76;&#x6307;&#x5B9A;&#x53D1;&#x9001;&#x961F;&#x5217;&#x9009;&#x62E9;&#x5668;&#x4E0E;&#x8D85;&#x65F6;&#x65F6;&#x95F4;</td>
+</tr>
+<tr>
+<td>void</td>
+<td>send(Message msg, MessageQueueSelector selector, Object arg, SendCallback sendCallback)</td>
+<td>&#x5411;&#x6307;&#x5B9A;&#x7684;&#x6D88;&#x606F;&#x961F;&#x5217;&#x5F02;&#x6B65;&#x5355;&#x6761;&#x53D1;&#x9001;&#x6D88;&#x606F;</td>
+</tr>
+<tr>
+<td>void</td>
+<td>send(Message msg, MessageQueueSelector selector, Object arg, SendCallback sendCallback, long timeout)</td>
+<td>&#x5411;&#x6307;&#x5B9A;&#x7684;&#x6D88;&#x606F;&#x961F;&#x5217;&#x5F02;&#x6B65;&#x5355;&#x6761;&#x53D1;&#x9001;&#x6D88;&#x606F;&#xFF0C;&#x5E76;&#x6307;&#x5B9A;&#x8D85;&#x65F6;&#x65F6;&#x95F4;</td>
+</tr>
+<tr>
+<td>void</td>
+<td>send(Message msg, SendCallback sendCallback)</td>
+<td>&#x5F02;&#x6B65;&#x53D1;&#x9001;&#x6D88;&#x606F;</td>
+</tr>
+<tr>
+<td>void</td>
+<td>send(Message msg, SendCallback sendCallback, long timeout)</td>
+<td>&#x5F02;&#x6B65;&#x53D1;&#x9001;&#x6D88;&#x606F;&#xFF0C;&#x5E76;&#x6307;&#x5B9A;&#x56DE;&#x8C03;&#x65B9;&#x6CD5;&#x548C;&#x8D85;&#x65F6;&#x65F6;&#x95F4;</td>
+</tr>
+<tr>
+<td>TransactionSendResult</td>
+<td>sendMessageInTransaction(Message msg, LocalTransactionExecuter tranExecuter, final Object arg)</td>
+<td>&#x53D1;&#x9001;&#x4E8B;&#x52A1;&#x6D88;&#x606F;&#xFF0C;&#x5E76;&#x6307;&#x5B9A;&#x672C;&#x5730;&#x6267;&#x884C;&#x4E8B;&#x52A1;&#x5B9E;&#x4F8B;</td>
+</tr>
+<tr>
+<td>TransactionSendResult</td>
+<td>sendMessageInTransaction(Message msg, Object arg)</td>
+<td>&#x53D1;&#x9001;&#x4E8B;&#x52A1;&#x6D88;&#x606F;</td>
+</tr>
+<tr>
+<td>void</td>
+<td>sendOneway(Message msg)</td>
+<td>&#x5355;&#x5411;&#x53D1;&#x9001;&#x6D88;&#x606F;&#xFF0C;&#x4E0D;&#x7B49;&#x5F85;broker&#x54CD;&#x5E94;</td>
+</tr>
+<tr>
+<td>void</td>
+<td>sendOneway(Message msg, MessageQueue mq)</td>
+<td>&#x5355;&#x5411;&#x53D1;&#x9001;&#x6D88;&#x606F;&#x5230;&#x6307;&#x5B9A;&#x961F;&#x5217;&#xFF0C;&#x4E0D;&#x7B49;&#x5F85;broker&#x54CD;&#x5E94;</td>
+</tr>
+<tr>
+<td>void</td>
+<td>sendOneway(Message msg, MessageQueueSelector selector, Object arg)</td>
+<td>&#x5355;&#x5411;&#x53D1;&#x9001;&#x6D88;&#x606F;&#x5230;&#x961F;&#x5217;&#x9009;&#x62E9;&#x5668;&#x7684;&#x9009;&#x4E2D;&#x7684;&#x961F;&#x5217;&#xFF0C;&#x4E0D;&#x7B49;&#x5F85;broker&#x54CD;&#x5E94;</td>
+</tr>
+<tr>
+<td>void</td>
+<td>shutdown()</td>
+<td>&#x5173;&#x95ED;&#x5F53;&#x524D;&#x751F;&#x4EA7;&#x8005;&#x5B9E;&#x4F8B;&#x5E76;&#x91CA;&#x653E;&#x76F8;&#x5173;&#x8D44;&#x6E90;</td>
+</tr>
+<tr>
+<td>void</td>
+<td>start()</td>
+<td>&#x542F;&#x52A8;&#x751F;&#x4EA7;&#x8005;</td>
+</tr>
+<tr>
+<td>MessageExt</td>
+<td>viewMessage(String offsetMsgId)</td>
+<td>&#x6839;&#x636E;&#x7ED9;&#x5B9A;&#x7684;msgId&#x67E5;&#x8BE2;&#x6D88;&#x606F;</td>
+</tr>
+<tr>
+<td>MessageExt</td>
+<td>public MessageExt viewMessage(String topic, String msgId)</td>
+<td>&#x6839;&#x636E;&#x7ED9;&#x5B9A;&#x7684;msgId&#x67E5;&#x8BE2;&#x6D88;&#x606F;&#xFF0C;&#x5E76;&#x6307;&#x5B9A;topic</td>
+</tr>
+</tbody>
+</table>
+<h3 id="&#x5B57;&#x6BB5;&#x8BE6;&#x7EC6;&#x4FE1;&#x606F;"><a name="&#x5B57;&#x6BB5;&#x8BE6;&#x7EC6;&#x4FE1;&#x606F;" class="anchor-navigation-ex-anchor" href="#&#x5B57;&#x6BB5;&#x8BE6;&#x7EC6;&#x4FE1;&#x606F;"><i class="fa fa-link" aria-hidden="true"></i></a>&#x5B57;&#x6BB5;&#x8BE6;&#x7EC6;&#x4FE1;&#x606F;</h3>
+<ul>
+<li><p><a href="http://rocketmq.apache.org/docs/core-concept/" target="_blank">producerGroup</a></p>
+<p>  <code>private String producerGroup</code></p>
+<p>  &#x751F;&#x4EA7;&#x8005;&#x7684;&#x5206;&#x7EC4;&#x540D;&#x79F0;&#x3002;&#x76F8;&#x540C;&#x7684;&#x5206;&#x7EC4;&#x540D;&#x79F0;&#x8868;&#x660E;&#x751F;&#x4EA7;&#x8005;&#x5B9E;&#x4F8B;&#x5728;&#x6982;&#x5FF5;&#x4E0A;&#x5F52;&#x5C5E;&#x4E8E;&#x540C;&#x4E00;&#x5206;&#x7EC4;&#x3002;&#x8FD9;&#x5BF9;&#x4E8B;&#x52A1;&#x6D88;&#x606F;&#x5341;&#x5206;&#x91CD;&#x8981;&#xFF0C;&#x5982;&#x679C;&#x539F;&#x59CB;&#x751F;&#x4EA7;&#x8005;&#x5728;&#x4E8B;&#x52A1;&#x4E4B;&#x540E;&#x5D29;&#x6E83;&#xFF0C;&#x90A3;&#x4E48;broker&#x53EF;&#x4EE5;&#x8054;&#x7CFB;&#x540C;&#x4E00;&#x751F;&#x4EA7;&#x8005;&#x5206;&#x7EC4;&#x7684;&#x4E0D;&#x540C;&#x751F;&#x4EA7;&#x8005;&#x5B9E;&#x4F8B;&#x6765;&#x63D0;&#x4EA4;&#x6216;&#x56DE;&#x6EDA;&#x4E8B;&#x52A1;&#x3002;</p>
+<p>  &#x9ED8;&#x8BA4;&#x503C;&#xFF1A;DEFAULT_PRODUCER</p>
+<p>  &#x6CE8;&#x610F;&#xFF1A; &#x7531;&#x6570;&#x5B57;&#x3001;&#x5B57;&#x6BCD;&#x3001;&#x4E0B;&#x5212;&#x7EBF;&#x3001;&#x6A2A;&#x6760;&#xFF08;-&#xFF09;&#x3001;&#x7AD6;&#x7EBF;&#xFF08;|&#xFF09;&#x6216;&#x767E;&#x5206;&#x53F7;&#x7EC4;&#x6210;&#xFF1B;&#x4E0D;&#x80FD;&#x4E3A;&#x7A7A;&#xFF1B;&#x957F;&#x5EA6;&#x4E0D;&#x80FD;&#x8D85;&#x8FC7;255&#x3002;</p>
+</li>
+<li><p>defaultMQProducerImpl</p>
+<p>  <code>protected final transient DefaultMQProducerImpl defaultMQProducerImpl</code></p>
+<p>  &#x751F;&#x4EA7;&#x8005;&#x7684;&#x5185;&#x90E8;&#x9ED8;&#x8BA4;&#x5B9E;&#x73B0;&#xFF0C;&#x5728;&#x6784;&#x9020;&#x751F;&#x4EA7;&#x8005;&#x65F6;&#x5185;&#x90E8;&#x81EA;&#x52A8;&#x521D;&#x59CB;&#x5316;&#xFF0C;&#x63D0;&#x4F9B;&#x4E86;&#x5927;&#x90E8;&#x5206;&#x65B9;&#x6CD5;&#x7684;&#x5185;&#x90E8;&#x5B9E;&#x73B0;&#x3002;</p>
+</li>
+<li><p>createTopicKey</p>
+<p>  <code>private String createTopicKey = MixAll.AUTO_CREATE_TOPIC_KEY_TOPIC</code></p>
+<p>  &#x5728;&#x53D1;&#x9001;&#x6D88;&#x606F;&#x65F6;&#xFF0C;&#x81EA;&#x52A8;&#x521B;&#x5EFA;&#x670D;&#x52A1;&#x5668;&#x4E0D;&#x5B58;&#x5728;&#x7684;topic&#xFF0C;&#x9700;&#x8981;&#x6307;&#x5B9A;Key&#xFF0C;&#x8BE5;Key&#x53EF;&#x7528;&#x4E8E;&#x914D;&#x7F6E;&#x53D1;&#x9001;&#x6D88;&#x606F;&#x6240;&#x5728;topic&#x7684;&#x9ED8;&#x8BA4;&#x8DEF;&#x7531;&#x3002;</p>
+<p>  &#x9ED8;&#x8BA4;&#x503C;&#xFF1A;TBW102</p>
+<p>  &#x5EFA;&#x8BAE;&#xFF1A;&#x6D4B;&#x8BD5;&#x6216;&#x8005;demo&#x4F7F;&#x7528;&#xFF0C;&#x751F;&#x4EA7;&#x73AF;&#x5883;&#x4E0B;&#x4E0D;&#x5EFA;&#x8BAE;&#x6253;&#x5F00;&#x81EA;&#x52A8;&#x521B;&#x5EFA;&#x914D;&#x7F6E;&#x3002;</p>
+</li>
+<li><p>defaultTopicQueueNums</p>
+<p>  <code>private volatile int defaultTopicQueueNums = 4</code></p>
+<p>  &#x521B;&#x5EFA;topic&#x65F6;&#x9ED8;&#x8BA4;&#x7684;&#x961F;&#x5217;&#x6570;&#x91CF;&#x3002;</p>
+<p>  &#x9ED8;&#x8BA4;&#x503C;&#xFF1A;4</p>
+</li>
+<li><p>sendMsgTimeout</p>
+<p>  <code>private int sendMsgTimeout = 3000</code></p>
+<p>  &#x53D1;&#x9001;&#x6D88;&#x606F;&#x65F6;&#x7684;&#x8D85;&#x65F6;&#x65F6;&#x95F4;&#x3002;</p>
+<p>  &#x9ED8;&#x8BA4;&#x503C;&#xFF1A;3000&#xFF0C;&#x5355;&#x4F4D;&#xFF1A;&#x6BEB;&#x79D2; </p>
+<p>  &#x5EFA;&#x8BAE;&#xFF1A;&#x4E0D;&#x5EFA;&#x8BAE;&#x4FEE;&#x6539;&#x8BE5;&#x503C;&#xFF0C;&#x8BE5;&#x503C;&#x5E94;&#x8BE5;&#x4E0E;broker&#x914D;&#x7F6E;&#x4E2D;&#x7684;sendTimeout&#x4E00;&#x81F4;&#xFF0C;&#x53D1;&#x9001;&#x8D85;&#x65F6;&#xFF0C;&#x53EF;&#x4E34;&#x65F6;&#x4FEE;&#x6539;&#x8BE5;&#x503C;&#xFF0C;&#x5EFA;&#x8BAE;&#x89E3;&#x51B3;&#x8D85;&#x65F6;&#x95EE;&#x9898;&#xFF0C;&#x63D0;&#x9AD8;broker&#x96C6;&#x7FA4;&#x7684;Tps&#x3002;</p>
+</li>
+<li><p>compressMsgBodyOverHowmuch</p>
+<p>  <code>private int compressMsgBodyOverHowmuch = 1024 * 4</code></p>
+<p>  &#x538B;&#x7F29;&#x6D88;&#x606F;&#x4F53;&#x9608;&#x503C;&#x3002;&#x5927;&#x4E8E;4K&#x7684;&#x6D88;&#x606F;&#x4F53;&#x5C06;&#x9ED8;&#x8BA4;&#x8FDB;&#x884C;&#x538B;&#x7F29;&#x3002;</p>
+<p>  &#x9ED8;&#x8BA4;&#x503C;&#xFF1A;1024 * 4&#xFF0C;&#x5355;&#x4F4D;&#xFF1A;&#x5B57;&#x8282;</p>
+<p>  &#x5EFA;&#x8BAE;&#xFF1A;&#x53EF;&#x901A;&#x8FC7;DefaultMQProducerImpl.setZipCompressLevel&#x65B9;&#x6CD5;&#x8BBE;&#x7F6E;&#x538B;&#x7F29;&#x7387;&#xFF08;&#x9ED8;&#x8BA4;&#x4E3A;5&#xFF0C;&#x53EF;&#x9009;&#x8303;&#x56F4;[0,9]&#xFF09;&#xFF1B;&#x53EF;&#x901A;&#x8FC7;DefaultMQProducerImpl.tryToCompressMessage&#x65B9;&#x6CD5;&#x6D4B;&#x8BD5;&#x51FA;compressLevel&#x4E0E;compressMsgBodyOverHowmuch&#x6700;&#x4F73;&#x503C;&#x3002;</p>
+</li>
+<li><p>retryTimesWhenSendFailed</p>
+<p>  <code>private int retryTimesWhenSendFailed = 2</code></p>
+<p>  &#x540C;&#x6B65;&#x6A21;&#x5F0F;&#x4E0B;&#xFF0C;&#x5728;&#x8FD4;&#x56DE;&#x53D1;&#x9001;&#x5931;&#x8D25;&#x4E4B;&#x524D;&#xFF0C;&#x5185;&#x90E8;&#x5C1D;&#x8BD5;&#x91CD;&#x65B0;&#x53D1;&#x9001;&#x6D88;&#x606F;&#x7684;&#x6700;&#x5927;&#x6B21;&#x6570;&#x3002;</p>
+<p>  &#x9ED8;&#x8BA4;&#x503C;&#xFF1A;2&#xFF0C;&#x5373;&#xFF1A;&#x9ED8;&#x8BA4;&#x60C5;&#x51B5;&#x4E0B;&#x4E00;&#x6761;&#x6D88;&#x606F;&#x6700;&#x591A;&#x4F1A;&#x88AB;&#x6295;&#x9012;3&#x6B21;&#x3002;</p>
+<p>  &#x6CE8;&#x610F;&#xFF1A;&#x5728;&#x6781;&#x7AEF;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x8FD9;&#x53EF;&#x80FD;&#x4F1A;&#x5BFC;&#x81F4;&#x6D88;&#x606F;&#x7684;&#x91CD;&#x590D;&#x3002;</p>
+</li>
+<li><p>retryTimesWhenSendAsyncFailed</p>
+<p>  <code>private int retryTimesWhenSendAsyncFailed = 2</code></p>
+<p>  &#x5F02;&#x6B65;&#x6A21;&#x5F0F;&#x4E0B;&#xFF0C;&#x5728;&#x53D1;&#x9001;&#x5931;&#x8D25;&#x4E4B;&#x524D;&#xFF0C;&#x5185;&#x90E8;&#x5C1D;&#x8BD5;&#x91CD;&#x65B0;&#x53D1;&#x9001;&#x6D88;&#x606F;&#x7684;&#x6700;&#x5927;&#x6B21;&#x6570;&#x3002;</p>
+<p>  &#x9ED8;&#x8BA4;&#x503C;&#xFF1A;2&#xFF0C;&#x5373;&#xFF1A;&#x9ED8;&#x8BA4;&#x60C5;&#x51B5;&#x4E0B;&#x4E00;&#x6761;&#x6D88;&#x606F;&#x6700;&#x591A;&#x4F1A;&#x88AB;&#x6295;&#x9012;3&#x6B21;&#x3002;</p>
+<p>  &#x6CE8;&#x610F;&#xFF1A;&#x5728;&#x6781;&#x7AEF;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x8FD9;&#x53EF;&#x80FD;&#x4F1A;&#x5BFC;&#x81F4;&#x6D88;&#x606F;&#x7684;&#x91CD;&#x590D;&#x3002;</p>
+</li>
+<li><p>retryAnotherBrokerWhenNotStoreOK</p>
+<p>  <code>private boolean retryAnotherBrokerWhenNotStoreOK = false</code></p>
+<p>  &#x540C;&#x6B65;&#x6A21;&#x5F0F;&#x4E0B;&#xFF0C;&#x6D88;&#x606F;&#x4FDD;&#x5B58;&#x5931;&#x8D25;&#x65F6;&#x662F;&#x5426;&#x91CD;&#x8BD5;&#x5176;&#x4ED6;broker&#x3002;</p>
+<p>  &#x9ED8;&#x8BA4;&#x503C;&#xFF1A;false</p>
+<p>  &#x6CE8;&#x610F;&#xFF1A;&#x6B64;&#x914D;&#x7F6E;&#x5173;&#x95ED;&#x65F6;&#xFF0C;&#x975E;&#x6295;&#x9012;&#x65F6;&#x4EA7;&#x751F;&#x5F02;&#x5E38;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x4F1A;&#x5FFD;&#x7565;retryTimesWhenSendFailed&#x914D;&#x7F6E;&#x3002;</p>
+</li>
+<li><p>maxMessageSize</p>
+<p>  <code>private int maxMessageSize = 1024 * 1024 * 4</code></p>
+<p>  &#x6D88;&#x606F;&#x7684;&#x6700;&#x5927;&#x5927;&#x5C0F;&#x3002;&#x5F53;&#x6D88;&#x606F;&#x9898;&#x7684;&#x5B57;&#x8282;&#x6570;&#x8D85;&#x8FC7;maxMessageSize&#x5C31;&#x53D1;&#x9001;&#x5931;&#x8D25;&#x3002;</p>
+<p>  &#x9ED8;&#x8BA4;&#x503C;&#xFF1A;1024 <em> 1024 </em> 4&#xFF0C;&#x5355;&#x4F4D;&#xFF1A;&#x5B57;&#x8282;</p>
+</li>
+<li><p><a href="https://github.com/apache/rocketmq/wiki/RIP-6-Message-Trace" target="_blank">traceDispatcher</a></p>
+<p>  <code>private TraceDispatcher traceDispatcher = null</code></p>
+<p>  &#x5728;&#x5F00;&#x542F;&#x6D88;&#x606F;&#x8FFD;&#x8E2A;&#x540E;&#xFF0C;&#x8BE5;&#x7C7B;&#x901A;&#x8FC7;hook&#x7684;&#x65B9;&#x5F0F;&#x628A;&#x6D88;&#x606F;&#x751F;&#x4EA7;&#x8005;&#xFF0C;&#x6D88;&#x606F;&#x5B58;&#x50A8;&#x7684;broker&#x548C;&#x6D88;&#x8D39;&#x8005;&#x6D88;&#x8D39;&#x6D88;&#x606F;&#x7684;&#x4FE1;&#x606F;&#x50CF;&#x94FE;&#x8DEF;&#x4E00;&#x6837;&#x8BB0;&#x5F55;&#x4E0B;&#x6765;&#x3002;&#x5728;&#x6784;&#x9020;&#x751F;&#x4EA7;&#x8005;&#x65F6;&#x6839;&#x636E;&#x6784;&#x9020;&#x5165;&#x53C2;enableMsgTrace&#x6765;&#x51B3;&#x5B9A;&#x662F;&#x5426;&#x521B;&#x5EFA;&#x8BE5;&#x5BF9;&#x8C61;&#x3002;</p>
+</li>
+</ul>
+<h3 id="&#x6784;&#x9020;&#x65B9;&#x6CD5;&#x8BE6;&#x7EC6;&#x4FE1;&#x606F;"><a name="&#x6784;&#x9020;&#x65B9;&#x6CD5;&#x8BE6;&#x7EC6;&#x4FE1;&#x606F;" class="anchor-navigation-ex-anchor" href="#&#x6784;&#x9020;&#x65B9;&#x6CD5;&#x8BE6;&#x7EC6;&#x4FE1;&#x606F;"><i class="fa fa-link" aria-hidden="true"></i></a>&#x6784;&#x9020;&#x65B9;&#x6CD5;&#x8BE6;&#x7EC6;&#x4FE1;&#x606F;</h3>
+<ol>
+<li><p>DefaultMQProducer</p>
+<p> <code>public DefaultMQProducer()</code></p>
+<p> &#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x65B0;&#x7684;&#x751F;&#x4EA7;&#x8005;&#x3002;</p>
+</li>
+<li><p>DefaultMQProducer</p>
+<p> <code>DefaultMQProducer(final String producerGroup)</code></p>
+<p> &#x4F7F;&#x7528;&#x6307;&#x5B9A;&#x7684;&#x5206;&#x7EC4;&#x540D;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x751F;&#x4EA7;&#x8005;&#x3002;</p>
+<ul>
+<li><p>&#x5165;&#x53C2;&#x63CF;&#x8FF0;&#xFF1A;</p>
+<p>  &#x53C2;&#x6570;&#x540D; | &#x7C7B;&#x578B; | &#x662F;&#x5426;&#x5FC5;&#x987B; | &#x7F3A;&#x7701;&#x503C; |&#x63CF;&#x8FF0;
+  ---|---|---|---|---
+  producerGroup | String | &#x662F; | DEFAULT_PRODUCER | &#x751F;&#x4EA7;&#x8005;&#x7684;&#x5206;&#x7EC4;&#x540D;&#x79F0;</p>
+</li>
+</ul>
+</li>
+<li><p>DefaultMQProducer</p>
+<p> <code>DefaultMQProducer(final String producerGroup, boolean enableMsgTrace)</code></p>
+<p> &#x4F7F;&#x7528;&#x6307;&#x5B9A;&#x7684;&#x5206;&#x7EC4;&#x540D;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x751F;&#x4EA7;&#x8005;&#xFF0C;&#x5E76;&#x8BBE;&#x7F6E;&#x662F;&#x5426;&#x5F00;&#x542F;&#x6D88;&#x606F;&#x8FFD;&#x8E2A;&#x3002;</p>
+<ul>
+<li><p>&#x5165;&#x53C2;&#x63CF;&#x8FF0;&#xFF1A;</p>
+<p>  &#x53C2;&#x6570;&#x540D; | &#x7C7B;&#x578B; | &#x662F;&#x5426;&#x5FC5;&#x987B; | &#x7F3A;&#x7701;&#x503C; |&#x63CF;&#x8FF0;
+  ---|---|---|---|---
+  producerGroup | String | &#x662F; | DEFAULT_PRODUCER | &#x751F;&#x4EA7;&#x8005;&#x7684;&#x5206;&#x7EC4;&#x540D;&#x79F0;
+  enableMsgTrace | boolean | &#x662F; | false |&#x662F;&#x5426;&#x5F00;&#x542F;&#x6D88;&#x606F;&#x8FFD;&#x8E2A;</p>
+</li>
+</ul>
+</li>
+<li><p>DefaultMQProducer</p>
+<p> <code>DefaultMQProducer(final String producerGroup, boolean enableMsgTrace, final String customizedTraceTopic)</code></p>
+<p> &#x4F7F;&#x7528;&#x6307;&#x5B9A;&#x7684;&#x5206;&#x7EC4;&#x540D;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x751F;&#x4EA7;&#x8005;&#xFF0C;&#x5E76;&#x8BBE;&#x7F6E;&#x662F;&#x5426;&#x5F00;&#x542F;&#x6D88;&#x606F;&#x8FFD;&#x8E2A;&#x53CA;&#x8FFD;&#x8E2A;topic&#x7684;&#x540D;&#x79F0;&#x3002;</p>
+<ul>
+<li><p>&#x5165;&#x53C2;&#x63CF;&#x8FF0;&#xFF1A;</p>
+<p>  &#x53C2;&#x6570;&#x540D; | &#x7C7B;&#x578B; | &#x662F;&#x5426;&#x5FC5;&#x987B; | &#x7F3A;&#x7701;&#x503C; |&#x63CF;&#x8FF0;
+  ---|---|---|---|---
+  producerGroup | String | &#x662F; | DEFAULT_PRODUCER | &#x751F;&#x4EA7;&#x8005;&#x7684;&#x5206;&#x7EC4;&#x540D;&#x79F0;
+  rpcHook | RPCHook | &#x5426; | null |&#x6BCF;&#x4E2A;&#x8FDC;&#x7A0B;&#x547D;&#x4EE4;&#x6267;&#x884C;&#x540E;&#x4F1A;&#x56DE;&#x8C03;rpcHook
+  enableMsgTrace | boolean | &#x662F; | false |&#x662F;&#x5426;&#x5F00;&#x542F;&#x6D88;&#x606F;&#x8FFD;&#x8E2A;
+  customizedTraceTopic | String | &#x5426; | RMQ_SYS_TRACE_TOPIC | &#x6D88;&#x606F;&#x8DDF;&#x8E2A;topic&#x7684;&#x540D;&#x79F0;</p>
+</li>
+</ul>
+</li>
+<li><p>DefaultMQProducer</p>
+<p> <code>DefaultMQProducer(RPCHook rpcHook)</code></p>
+<p> &#x4F7F;&#x7528;&#x6307;&#x5B9A;&#x7684;hook&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x751F;&#x4EA7;&#x8005;&#x3002;</p>
+<ul>
+<li><p>&#x5165;&#x53C2;&#x63CF;&#x8FF0;&#xFF1A;</p>
+<p>  &#x53C2;&#x6570;&#x540D; | &#x7C7B;&#x578B; | &#x662F;&#x5426;&#x5FC5;&#x987B; | &#x7F3A;&#x7701;&#x503C; |&#x63CF;&#x8FF0;
+  ---|---|---|---|---
+  rpcHook | RPCHook | &#x5426; | null |&#x6BCF;&#x4E2A;&#x8FDC;&#x7A0B;&#x547D;&#x4EE4;&#x6267;&#x884C;&#x540E;&#x4F1A;&#x56DE;&#x8C03;rpcHook</p>
+</li>
+</ul>
+</li>
+<li><p>DefaultMQProducer</p>
+<p> <code>DefaultMQProducer(final String producerGroup, RPCHook rpcHook)</code></p>
+<p> &#x4F7F;&#x7528;&#x6307;&#x5B9A;&#x7684;&#x5206;&#x7EC4;&#x540D;&#x53CA;&#x81EA;&#x5B9A;&#x4E49;hook&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x751F;&#x4EA7;&#x8005;&#x3002;</p>
+<ul>
+<li><p>&#x5165;&#x53C2;&#x63CF;&#x8FF0;&#xFF1A;</p>
+<p>  &#x53C2;&#x6570;&#x540D; | &#x7C7B;&#x578B; | &#x662F;&#x5426;&#x5FC5;&#x987B; | &#x7F3A;&#x7701;&#x503C; |&#x63CF;&#x8FF0;
+  ---|---|---|---|---
+  producerGroup | String | &#x662F; | DEFAULT_PRODUCER | &#x751F;&#x4EA7;&#x8005;&#x7684;&#x5206;&#x7EC4;&#x540D;&#x79F0;
+  rpcHook | RPCHook | &#x5426; | null |&#x6BCF;&#x4E2A;&#x8FDC;&#x7A0B;&#x547D;&#x4EE4;&#x6267;&#x884C;&#x540E;&#x4F1A;&#x56DE;&#x8C03;rpcHook</p>
+</li>
+</ul>
+</li>
+<li><p>DefaultMQProducer</p>
+<p> <code>DefaultMQProducer(final String producerGroup, RPCHook rpcHook, boolean enableMsgTrace,final String customizedTraceTopic)</code></p>
+<p> &#x4F7F;&#x7528;&#x6307;&#x5B9A;&#x7684;&#x5206;&#x7EC4;&#x540D;&#x53CA;&#x81EA;&#x5B9A;&#x4E49;hook&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x751F;&#x4EA7;&#x8005;&#xFF0C;&#x5E76;&#x8BBE;&#x7F6E;&#x662F;&#x5426;&#x5F00;&#x542F;&#x6D88;&#x606F;&#x8FFD;&#x8E2A;&#x53CA;&#x8FFD;&#x8E2A;topic&#x7684;&#x540D;&#x79F0;&#x3002;</p>
+<ul>
+<li><p>&#x5165;&#x53C2;&#x63CF;&#x8FF0;&#xFF1A;</p>
+<p>&#x53C2;&#x6570;&#x540D; | &#x7C7B;&#x578B; | &#x662F;&#x5426;&#x5FC5;&#x987B; | &#x7F3A;&#x7701;&#x503C; |&#x63CF;&#x8FF0;
+---|---|---|---|---
+producerGroup | String | &#x662F; | DEFAULT_PRODUCER | &#x751F;&#x4EA7;&#x8005;&#x7684;&#x5206;&#x7EC4;&#x540D;&#x79F0;
+rpcHook | RPCHook | &#x5426; | null |&#x6BCF;&#x4E2A;&#x8FDC;&#x7A0B;&#x547D;&#x4EE4;&#x6267;&#x884C;&#x540E;&#x4F1A;&#x56DE;&#x8C03;rpcHook
+enableMsgTrace | boolean | &#x662F; | false |&#x662F;&#x5426;&#x5F00;&#x542F;&#x6D88;&#x606F;&#x8FFD;&#x8E2A;
+customizedTraceTopic | String | &#x5426; | RMQ_SYS_TRACE_TOPIC | &#x6D88;&#x606F;&#x8DDF;&#x8E2A;topic&#x7684;&#x540D;&#x79F0;</p>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="&#x4F7F;&#x7528;&#x65B9;&#x6CD5;&#x8BE6;&#x7EC6;&#x4FE1;&#x606F;"><a name="&#x4F7F;&#x7528;&#x65B9;&#x6CD5;&#x8BE6;&#x7EC6;&#x4FE1;&#x606F;" class="anchor-navigation-ex-anchor" href="#&#x4F7F;&#x7528;&#x65B9;&#x6CD5;&#x8BE6;&#x7EC6;&#x4FE1;&#x606F;"><i class="fa fa-link" aria-hidden="true"></i></a>&#x4F7F;&#x7528;&#x65B9;&#x6CD5;&#x8BE6;&#x7EC6;&#x4FE1;&#x606F;</h3>
+<ol>
+<li><p>createTopic</p>
+<p><code>public void createTopic(String key, String newTopic, int queueNum)</code></p>
+<p>&#x5728;broker&#x4E0A;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;topic&#x3002;</p>
+<ul>
+<li><p>&#x5165;&#x53C2;&#x63CF;&#x8FF0;&#xFF1A;</p>
+<p>  &#x53C2;&#x6570;&#x540D; | &#x7C7B;&#x578B; | &#x662F;&#x5426;&#x5FC5;&#x987B; | &#x9ED8;&#x8BA4;&#x503C; |&#x503C;&#x8303;&#x56F4; | &#x8BF4;&#x660E;
+  ---|---|---|---|---|---
+  key | String | &#x662F; | | | &#x8BBF;&#x95EE;&#x5BC6;&#x94A5;&#x3002;
+  newTopic | String | &#x662F; | |  | &#x65B0;&#x5EFA;topic&#x7684;&#x540D;&#x79F0;&#x3002;&#x7531;&#x6570;&#x5B57;&#x3001;&#x5B57;&#x6BCD;&#x3001;&#x4E0B;&#x5212;&#x7EBF;&#xFF08;_&#xFF09;&#x3001;&#x6A2A;&#x6760;&#xFF08;-&#xFF09;&#x3001;&#x7AD6;&#x7EBF;&#xFF08;|&#xFF09;&#x6216;&#x767E;&#x5206;&#x53F7;&#xFF08;%&#xFF09;&#x7EC4;&#x6210;&#xFF1B;<br>&#x957F;&#x5EA6;&#x5C0F;&#x4E8E;255&#xFF1B;&#x4E0D;&#x80FD;&#x4E3A;TBW102&#x6216;&#x7A7A;&#x3002;
+  queueNum | int | &#x662F; | 0 | (0, maxIntValue] | topic&#x7684;&#x961F;&#x5217;&#x6570;&#x91CF;&#x3002;</p>
+</li>
+<li><p>&#x8FD4;&#x56DE;&#x503C;&#x63CF;&#x8FF0;&#xFF1A;</p>
+<p>  void</p>
+</li>
+<li><p>&#x5F02;&#x5E38;&#x63CF;&#x8FF0;&#xFF1A;</p>
+<p>  MQClientException - &#x751F;&#x4EA7;&#x8005;&#x72B6;&#x6001;&#x975E;Running&#xFF1B;&#x672A;&#x627E;&#x5230;broker&#x7B49;&#x5BA2;&#x6237;&#x7AEF;&#x5F02;&#x5E38;&#x3002;</p>
+</li>
+</ul>
+</li>
+<li><p>createTopic</p>
+<p><code>public void createTopic(String key, String newTopic, int queueNum, int topicSysFlag)</code></p>
+<p>&#x5728;broker&#x4E0A;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;topic&#x3002;</p>
+<ul>
+<li><p>&#x5165;&#x53C2;&#x63CF;&#x8FF0;&#xFF1A;</p>
+<p>  &#x53C2;&#x6570;&#x540D; | &#x7C7B;&#x578B; | &#x662F;&#x5426;&#x5FC5;&#x987B; | &#x9ED8;&#x8BA4;&#x503C; |&#x503C;&#x8303;&#x56F4; | &#x8BF4;&#x660E;
+  ---|---|---|---|---|---
+  key | String | &#x662F; | | | &#x8BBF;&#x95EE;&#x5BC6;&#x94A5;&#x3002;
+  newTopic | String | &#x662F; | |  | &#x65B0;&#x5EFA;topic&#x7684;&#x540D;&#x79F0;&#x3002;
+  queueNum | int | &#x662F; | 0 | (0, maxIntValue] | topic&#x7684;&#x961F;&#x5217;&#x6570;&#x91CF;&#x3002;
+  topicSysFlag | int | &#x662F; | 0 | | &#x4FDD;&#x7559;&#x5B57;&#x6BB5;&#xFF0C;&#x6682;&#x672A;&#x4F7F;&#x7528;&#x3002;</p>
+</li>
+<li><p>&#x8FD4;&#x56DE;&#x503C;&#x63CF;&#x8FF0;&#xFF1A;</p>
+<p>  void</p>
+</li>
+<li><p>&#x5F02;&#x5E38;&#x63CF;&#x8FF0;&#xFF1A;</p>
+<p>  MQClientException - &#x751F;&#x4EA7;&#x8005;&#x72B6;&#x6001;&#x975E;Running&#xFF1B;&#x672A;&#x627E;&#x5230;broker&#x7B49;&#x5BA2;&#x6237;&#x7AEF;&#x5F02;&#x5E38;&#x3002;</p>
+</li>
+</ul>
+</li>
+<li><p>earliestMsgStoreTime</p>
+<p> <code>public long earliestMsgStoreTime(MessageQueue mq)</code></p>
+<p> &#x67E5;&#x8BE2;&#x6700;&#x65E9;&#x7684;&#x6D88;&#x606F;&#x5B58;&#x50A8;&#x65F6;&#x95F4;&#x3002;</p>
+<ul>
+<li><p>&#x5165;&#x53C2;&#x63CF;&#x8FF0;&#xFF1A;</p>
+<p>  &#x53C2;&#x6570;&#x540D; | &#x7C7B;&#x578B; | &#x662F;&#x5426;&#x5FC5;&#x987B; | &#x9ED8;&#x8BA4;&#x503C; | &#x503C;&#x8303;&#x56F4; | &#x8BF4;&#x660E;
+  ---|---|---|---|---|---
+  mq | MessageQueue | &#x662F; | | | &#x8981;&#x67E5;&#x8BE2;&#x7684;&#x6D88;&#x606F;&#x961F;&#x5217;</p>
+</li>
+<li><p>&#x8FD4;&#x56DE;&#x503C;&#x63CF;&#x8FF0;&#xFF1A;</p>
+<p>  &#x6307;&#x5B9A;&#x961F;&#x5217;&#x6700;&#x65E9;&#x7684;&#x6D88;&#x606F;&#x5B58;&#x50A8;&#x65F6;&#x95F4;&#x3002;&#x5355;&#x4F4D;&#xFF1A;&#x6BEB;&#x79D2;&#x3002;</p>
+</li>
+<li><p>&#x5F02;&#x5E38;&#x63CF;&#x8FF0;&#xFF1A;</p>
+<p>  MQClientException - &#x751F;&#x4EA7;&#x8005;&#x72B6;&#x6001;&#x975E;Running&#xFF1B;&#x6CA1;&#x6709;&#x627E;&#x5230;broker&#xFF1B;broker&#x8FD4;&#x56DE;&#x5931;&#x8D25;&#xFF1B;&#x7F51;&#x7EDC;&#x5F02;&#x5E38;&#xFF1B;&#x7EBF;&#x7A0B;&#x4E2D;&#x65AD;&#x7B49;&#x5BA2;&#x6237;&#x7AEF;&#x5F02;&#x5E38;&#x3002;</p>
+</li>
+</ul>
+</li>
+<li><p>fetchPublishMessageQueues</p>
+<p> <code>public List&lt;MessageQueue&gt; fetchPublishMessageQueues(String topic)</code></p>
+<p> &#x83B7;&#x53D6;topic&#x7684;&#x6D88;&#x606F;&#x961F;&#x5217;&#x3002;</p>
+<ul>
+<li><p>&#x5165;&#x53C2;&#x63CF;&#x8FF0;&#xFF1A;</p>
+<p>  &#x53C2;&#x6570;&#x540D; | &#x7C7B;&#x578B; | &#x662F;&#x5426;&#x5FC5;&#x987B; | &#x9ED8;&#x8BA4;&#x503C; | &#x503C;&#x8303;&#x56F4; | &#x8BF4;&#x660E;
+  ---|---|---|---|---|---
+  topic | String | &#x662F; | | | topic&#x540D;&#x79F0;</p>
+</li>
+<li><p>&#x8FD4;&#x56DE;&#x503C;&#x63CF;&#x8FF0;&#xFF1A;</p>
+<p>  &#x4F20;&#x5165;topic&#x4E0B;&#x7684;&#x6D88;&#x606F;&#x961F;&#x5217;&#x3002;</p>
+</li>
+<li><p>&#x5F02;&#x5E38;&#x63CF;&#x8FF0;&#xFF1A;</p>
+<p>  MQClientException - &#x751F;&#x4EA7;&#x8005;&#x72B6;&#x6001;&#x975E;Running&#xFF1B;&#x6CA1;&#x6709;&#x627E;&#x5230;broker&#xFF1B;broker&#x8FD4;&#x56DE;&#x5931;&#x8D25;&#xFF1B;&#x7F51;&#x7EDC;&#x5F02;&#x5E38;&#xFF1B;&#x7EBF;&#x7A0B;&#x4E2D;&#x65AD;&#x7B49;&#x5BA2;&#x6237;&#x7AEF;&#x5F02;&#x5E38;&#x3002;</p>
+</li>
+</ul>
+</li>
+<li><p>maxOffset</p>
+<p> <code>public long maxOffset(MessageQueue mq)</code></p>
+<p> &#x67E5;&#x8BE2;&#x6D88;&#x606F;&#x961F;&#x5217;&#x7684;&#x6700;&#x5927;&#x7269;&#x7406;&#x504F;&#x79FB;&#x91CF;&#x3002;</p>
+<ul>
+<li><p>&#x5165;&#x53C2;&#x63CF;&#x8FF0;&#xFF1A;</p>
+<p>  &#x53C2;&#x6570;&#x540D; | &#x7C7B;&#x578B; | &#x662F;&#x5426;&#x5FC5;&#x987B; | &#x9ED8;&#x8BA4;&#x503C; | &#x503C;&#x8303;&#x56F4; | &#x8BF4;&#x660E;
+  ---|---|---|---|---|---
+  mq | MessageQueue | &#x662F; | | | &#x8981;&#x67E5;&#x8BE2;&#x7684;&#x6D88;&#x606F;&#x961F;&#x5217;</p>
+</li>
+<li><p>&#x8FD4;&#x56DE;&#x503C;&#x63CF;&#x8FF0;&#xFF1A;</p>
+<p>  &#x7ED9;&#x5B9A;&#x6D88;&#x606F;&#x961F;&#x5217;&#x7684;&#x6700;&#x5927;&#x7269;&#x7406;&#x504F;&#x79FB;&#x91CF;&#x3002;</p>
+</li>
+<li><p>&#x5F02;&#x5E38;&#x63CF;&#x8FF0;&#xFF1A;</p>
+<p>  MQClientException - &#x751F;&#x4EA7;&#x8005;&#x72B6;&#x6001;&#x975E;Running&#xFF1B;&#x6CA1;&#x6709;&#x627E;&#x5230;broker&#xFF1B;broker&#x8FD4;&#x56DE;&#x5931;&#x8D25;&#xFF1B;&#x7F51;&#x7EDC;&#x5F02;&#x5E38;&#xFF1B;&#x7EBF;&#x7A0B;&#x4E2D;&#x65AD;&#x7B49;&#x5BA2;&#x6237;&#x7AEF;&#x5F02;&#x5E38;&#x3002;</p>
+</li>
+</ul>
+</li>
+<li><p>minOffset</p>
+<p> <code>public long minOffset(MessageQueue mq)</code></p>
+<p> &#x67E5;&#x8BE2;&#x7ED9;&#x5B9A;&#x6D88;&#x606F;&#x961F;&#x5217;&#x7684;&#x6700;&#x5C0F;&#x7269;&#x7406;&#x504F;&#x79FB;&#x91CF;&#x3002;</p>
+<ul>
+<li><p>&#x5165;&#x53C2;&#x63CF;&#x8FF0;&#xFF1A;</p>
+<p>  &#x53C2;&#x6570;&#x540D; | &#x7C7B;&#x578B; | &#x662F;&#x5426;&#x5FC5;&#x987B; | &#x9ED8;&#x8BA4;&#x503C; | &#x503C;&#x8303;&#x56F4; | &#x8BF4;&#x660E;
+  ---|---|---|---|---|---
+  mq | MessageQueue | &#x662F; | | | &#x8981;&#x67E5;&#x8BE2;&#x7684;&#x6D88;&#x606F;&#x961F;&#x5217;</p>
+</li>
+<li><p>&#x8FD4;&#x56DE;&#x503C;&#x63CF;&#x8FF0;&#xFF1A;</p>
+<p>  &#x7ED9;&#x5B9A;&#x6D88;&#x606F;&#x961F;&#x5217;&#x7684;&#x6700;&#x5C0F;&#x7269;&#x7406;&#x504F;&#x79FB;&#x91CF;&#x3002;</p>
+</li>
+<li><p>&#x5F02;&#x5E38;&#x63CF;&#x8FF0;&#xFF1A;</p>
+<p>  MQClientException - &#x751F;&#x4EA7;&#x8005;&#x72B6;&#x6001;&#x975E;Running&#xFF1B;&#x6CA1;&#x6709;&#x627E;&#x5230;broker&#xFF1B;broker&#x8FD4;&#x56DE;&#x5931;&#x8D25;&#xFF1B;&#x7F51;&#x7EDC;&#x5F02;&#x5E38;&#xFF1B;&#x7EBF;&#x7A0B;&#x4E2D;&#x65AD;&#x7B49;&#x5BA2;&#x6237;&#x7AEF;&#x5F02;&#x5E38;&#x3002;</p>
+</li>
+</ul>
+</li>
+<li><p>queryMessage</p>
+<p> <code>public QueryResult queryMessage(String topic, String key, int maxNum, long begin, long end)</code></p>
+<p> &#x6309;&#x5173;&#x952E;&#x5B57;&#x67E5;&#x8BE2;&#x6D88;&#x606F;&#x3002;</p>
+<ul>
+<li><p>&#x5165;&#x53C2;&#x63CF;&#x8FF0;&#xFF1A;</p>
+<p>  &#x53C2;&#x6570;&#x540D; | &#x7C7B;&#x578B; | &#x662F;&#x5426;&#x5FC5;&#x987B; | &#x9ED8;&#x8BA4;&#x503C; | &#x503C;&#x8303;&#x56F4; | &#x8BF4;&#x660E;
+  ---|---|---|---|---|---
+  topic | String | &#x662F; | | | topic&#x540D;&#x79F0;
+  key | String | &#x5426; | null | | &#x67E5;&#x627E;&#x7684;&#x5173;&#x952E;&#x5B57;
+  maxNum | int | &#x662F; | | | &#x8FD4;&#x56DE;&#x6D88;&#x606F;&#x7684;&#x6700;&#x5927;&#x6570;&#x91CF;
+  begin | long | &#x662F; | | | &#x5F00;&#x59CB;&#x65F6;&#x95F4;&#x6233;&#xFF0C;&#x5355;&#x4F4D;&#xFF1A;&#x6BEB;&#x79D2;
+  end | long | &#x662F; | | | &#x7ED3;&#x675F;&#x65F6;&#x95F4;&#x6233;&#xFF0C;&#x5355;&#x4F4D;&#xFF1A;&#x6BEB;&#x79D2;</p>
+</li>
+<li><p>&#x8FD4;&#x56DE;&#x503C;&#x63CF;&#x8FF0;&#xFF1A;</p>
+<p>  &#x67E5;&#x8BE2;&#x5230;&#x7684;&#x6D88;&#x606F;&#x96C6;&#x5408;&#x3002;</p>
+</li>
+<li><p>&#x5F02;&#x5E38;&#x63CF;&#x8FF0;&#xFF1A;</p>
+<p>  MQClientException - &#x751F;&#x4EA7;&#x8005;&#x72B6;&#x6001;&#x975E;Running&#xFF1B;&#x6CA1;&#x6709;&#x627E;&#x5230;broker&#xFF1B;broker&#x8FD4;&#x56DE;&#x5931;&#x8D25;&#xFF1B;&#x7F51;&#x7EDC;&#x5F02;&#x5E38;&#x7B49;&#x5BA2;&#x6237;&#x7AEF;&#x5F02;&#x5E38;&#x5BA2;&#x6237;&#x7AEF;&#x5F02;&#x5E38;&#x3002;<br>
+  InterruptedException - &#x7EBF;&#x7A0B;&#x4E2D;&#x65AD;&#x3002;</p>
+</li>
+</ul>
+</li>
+<li><p>searchOffset</p>
+<p> <code>public long searchOffset(MessageQueue mq, long timestamp)</code></p>
+<p> &#x67E5;&#x627E;&#x6307;&#x5B9A;&#x65F6;&#x95F4;&#x7684;&#x6D88;&#x606F;&#x961F;&#x5217;&#x7684;&#x7269;&#x7406;&#x504F;&#x79FB;&#x91CF;&#x3002;</p>
+<ul>
+<li><p>&#x5165;&#x53C2;&#x63CF;&#x8FF0;&#xFF1A;</p>
+<p>  &#x53C2;&#x6570;&#x540D; | &#x7C7B;&#x578B; | &#x662F;&#x5426;&#x5FC5;&#x987B; | &#x9ED8;&#x8BA4;&#x503C; | &#x503C;&#x8303;&#x56F4; | &#x8BF4;&#x660E;
+  ---|---|---|---|---|---
+  mq | MessageQueue | &#x662F; | | | &#x8981;&#x67E5;&#x8BE2;&#x7684;&#x6D88;&#x606F;&#x961F;&#x5217;&#x3002;
+  timestamp | long | &#x662F; | | | &#x6307;&#x5B9A;&#x8981;&#x67E5;&#x8BE2;&#x65F6;&#x95F4;&#x7684;&#x65F6;&#x95F4;&#x6233;&#x3002;&#x5355;&#x4F4D;&#xFF1A;&#x6BEB;&#x79D2;&#x3002;</p>
+</li>
+<li><p>&#x8FD4;&#x56DE;&#x503C;&#x63CF;&#x8FF0;&#xFF1A;</p>
+<p>  &#x6307;&#x5B9A;&#x65F6;&#x95F4;&#x7684;&#x6D88;&#x606F;&#x961F;&#x5217;&#x7684;&#x7269;&#x7406;&#x504F;&#x79FB;&#x91CF;&#x3002;</p>
+</li>
+<li><p>&#x5F02;&#x5E38;&#x63CF;&#x8FF0;&#xFF1A;</p>
+<p>  MQClientException - &#x751F;&#x4EA7;&#x8005;&#x72B6;&#x6001;&#x975E;Running&#xFF1B;&#x6CA1;&#x6709;&#x627E;&#x5230;broker&#xFF1B;broker&#x8FD4;&#x56DE;&#x5931;&#x8D25;&#xFF1B;&#x7F51;&#x7EDC;&#x5F02;&#x5E38;&#xFF1B;&#x7EBF;&#x7A0B;&#x4E2D;&#x65AD;&#x7B49;&#x5BA2;&#x6237;&#x7AEF;&#x5F02;&#x5E38;&#x3002;</p>
+</li>
+</ul>
+</li>
+<li><p>send</p>
+<p> <code>public SendResult send(Collection&lt;Message&gt; msgs)</code></p>
+<p> &#x540C;&#x6B65;&#x6279;&#x91CF;&#x53D1;&#x9001;&#x6D88;&#x606F;&#x3002;&#x5728;&#x8FD4;&#x56DE;&#x53D1;&#x9001;&#x5931;&#x8D25;&#x4E4B;&#x524D;&#xFF0C;&#x5185;&#x90E8;&#x5C1D;&#x8BD5;&#x91CD;&#x65B0;&#x53D1;&#x9001;&#x6D88;&#x606F;&#x7684;&#x6700;&#x5927;&#x6B21;&#x6570;&#xFF08;&#x53C2;&#x89C1;<em>retryTimesWhenSendFailed</em>&#x5C5E;&#x6027;&#xFF09;&#x3002;&#x672A;&#x660E;&#x786E;&#x6307;&#x5B9A;&#x53D1;&#x9001;&#x961F;&#x5217;&#xFF0C;&#x9ED8;&#x8BA4;&#x91C7;&#x53D6;&#x8F6E;&#x8BE2;&#x7B56;&#x7565;&#x53D1;&#x9001;&#x3002;</p>
+<ul>
+<li><p>&#x5165;&#x53C2;&#x63CF;&#x8FF0;&#xFF1A;</p>
+<p>  &#x53C2;&#x6570;&#x540D; | &#x7C7B;&#x578B; | &#x662F;&#x5426;&#x5FC5;&#x987B; | &#x9ED8;&#x8BA4;&#x503C; | &#x503C;&#x8303;&#x56F4; | &#x8BF4;&#x660E;
+  ---|---|---|---|---|---
+  msgs | Collection<message> | &#x662F; | | | &#x5F85;&#x53D1;&#x9001;&#x7684;&#x6D88;&#x606F;&#x96C6;&#x5408;&#x3002;&#x96C6;&#x5408;&#x5185;&#x7684;&#x6D88;&#x606F;&#x5FC5;&#x987B;&#x5C5E;&#x540C;&#x4E00;&#x4E2A;topic&#x3002;</message></p>
+</li>
+<li><p>&#x8FD4;&#x56DE;&#x503C;&#x63CF;&#x8FF0;&#xFF1A;</p>
+<p>  &#x6279;&#x91CF;&#x6D88;&#x606F;&#x7684;&#x53D1;&#x9001;&#x7ED3;&#x679C;&#xFF0C;&#x5305;&#x542B;msgId&#xFF0C;&#x53D1;&#x9001;&#x72B6;&#x6001;&#x7B49;&#x4FE1;&#x606F;&#x3002;</p>
+</li>
+<li><p>&#x5F02;&#x5E38;&#x63CF;&#x8FF0;&#xFF1A;</p>
+<p>  MQClientException - broker&#x4E0D;&#x5B58;&#x5728;&#x6216;&#x672A;&#x627E;&#x5230;&#xFF1B;namesrv&#x5730;&#x5740;&#x4E3A;&#x7A7A;&#xFF1B;&#x672A;&#x627E;&#x5230;topic&#x7684;&#x8DEF;&#x7531;&#x4FE1;&#x606F;&#x7B49;&#x5BA2;&#x6237;&#x7AEF;&#x5F02;&#x5E38;&#x3002;<br>
+  RemotingException - &#x7F51;&#x7EDC;&#x5F02;&#x5E38;&#x3002;<br>
+  MQBrokerException - broker&#x53D1;&#x751F;&#x9519;&#x8BEF;&#x3002;<br>
+  InterruptedException - &#x53D1;&#x9001;&#x7EBF;&#x7A0B;&#x4E2D;&#x65AD;&#x3002;<br>
+  RemotingTooMuchRequestException - &#x53D1;&#x9001;&#x8D85;&#x65F6;&#x3002;</p>
+</li>
+</ul>
+</li>
+<li><p>send</p>
+<p><code>public SendResult send(Collection&lt;Message&gt; msgs, long timeout)</code></p>
+<p>&#x540C;&#x6B65;&#x6279;&#x91CF;&#x53D1;&#x9001;&#x6D88;&#x606F;&#xFF0C;&#x5982;&#x679C;&#x5728;&#x6307;&#x5B9A;&#x7684;&#x8D85;&#x65F6;&#x65F6;&#x95F4;&#x5185;&#x672A;&#x5B8C;&#x6210;&#x6D88;&#x606F;&#x6295;&#x9012;&#xFF0C;&#x4F1A;&#x629B;&#x51FA;<em>RemotingTooMuchRequestException</em>&#x3002;
+&#x5728;&#x8FD4;&#x56DE;&#x53D1;&#x9001;&#x5931;&#x8D25;&#x4E4B;&#x524D;&#xFF0C;&#x5185;&#x90E8;&#x5C1D;&#x8BD5;&#x91CD;&#x65B0;&#x53D1;&#x9001;&#x6D88;&#x606F;&#x7684;&#x6700;&#x5927;&#x6B21;&#x6570;&#xFF08;&#x53C2;&#x89C1;<em>retryTimesWhenSendFailed</em>&#x5C5E;&#x6027;&#xFF09;&#x3002;&#x672A;&#x660E;&#x786E;&#x6307;&#x5B9A;&#x53D1;&#x9001;&#x961F;&#x5217;&#xFF0C;&#x9ED8;&#x8BA4;&#x91C7;&#x53D6;&#x8F6E;&#x8BE2;&#x7B56;&#x7565;&#x53D1;&#x9001;&#x3002;</p>
+<ul>
+<li><p>&#x5165;&#x53C2;&#x63CF;&#x8FF0;&#xFF1A;</p>
+<p>  &#x53C2;&#x6570;&#x540D; | &#x7C7B;&#x578B; | &#x662F;&#x5426;&#x5FC5;&#x987B; | &#x9ED8;&#x8BA4;&#x503C; | &#x503C;&#x8303;&#x56F4; | &#x8BF4;&#x660E;
+  ---|---|---|---|---|---
+  msgs | Collection<message> | &#x662F; | | | &#x5F85;&#x53D1;&#x9001;&#x7684;&#x6D88;&#x606F;&#x96C6;&#x5408;&#x3002;&#x96C6;&#x5408;&#x5185;&#x7684;&#x6D88;&#x606F;&#x5FC5;&#x987B;&#x5C5E;&#x540C;&#x4E00;&#x4E2A;topic&#x3002;
+  timeout | long | &#x662F; | &#x53C2;&#x89C1;<em>sendMsgTimeout</em>&#x5C5E;&#x6027; | | &#x53D1;&#x9001;&#x8D85;&#x65F6;&#x65F6;&#x95F4;&#xFF0C;&#x5355;&#x4F4D;&#xFF1A;&#x6BEB;&#x79D2;&#x3002;</message></p>
+</li>
+<li><p>&#x8FD4;&#x56DE;&#x503C;&#x63CF;&#x8FF0;&#xFF1A;</p>
+<p>  &#x6279;&#x91CF;&#x6D88;&#x606F;&#x7684;&#x53D1;&#x9001;&#x7ED3;&#x679C;&#xFF0C;&#x5305;&#x542B;msgId&#xFF0C;&#x53D1;&#x9001;&#x72B6;&#x6001;&#x7B49;&#x4FE1;&#x606F;&#x3002;</p>
+</li>
+<li><p>&#x5F02;&#x5E38;&#x63CF;&#x8FF0;&#xFF1A;</p>
+<p>  MQClientException - broker&#x4E0D;&#x5B58;&#x5728;&#x6216;&#x672A;&#x627E;&#x5230;&#xFF1B;namesrv&#x5730;&#x5740;&#x4E3A;&#x7A7A;&#xFF1B;&#x672A;&#x627E;&#x5230;topic&#x7684;&#x8DEF;&#x7531;&#x4FE1;&#x606F;&#x7B49;&#x5BA2;&#x6237;&#x7AEF;&#x5F02;&#x5E38;&#x3002;<br>
+  RemotingException - &#x7F51;&#x7EDC;&#x5F02;&#x5E38;&#x3002;<br>
+  MQBrokerException - broker&#x53D1;&#x751F;&#x9519;&#x8BEF;&#x3002;<br>
+  InterruptedException - &#x53D1;&#x9001;&#x7EBF;&#x7A0B;&#x4E2D;&#x65AD;&#x3002;<br>
+  RemotingTooMuchRequestException - &#x53D1;&#x9001;&#x8D85;&#x65F6;&#x3002;</p>
+</li>
+</ul>
+</li>
+<li><p>send</p>
+<p><code>public SendResult send(Collection&lt;Message&gt; msgs, MessageQueue messageQueue)</code></p>
+<p>&#x5411;&#x7ED9;&#x5B9A;&#x961F;&#x5217;&#x540C;&#x6B65;&#x6279;&#x91CF;&#x53D1;&#x9001;&#x6D88;&#x606F;&#x3002;</p>
+<p>&#x6CE8;&#x610F;&#xFF1A;&#x6307;&#x5B9A;&#x961F;&#x5217;&#x610F;&#x5473;&#x7740;&#x6240;&#x6709;&#x6D88;&#x606F;&#x5747;&#x4E3A;&#x540C;&#x4E00;&#x4E2A;topic&#x3002;</p>
+<ul>
+<li><p>&#x5165;&#x53C2;&#x63CF;&#x8FF0;&#xFF1A;</p>
+<p>  &#x53C2;&#x6570;&#x540D; | &#x7C7B;&#x578B; | &#x662F;&#x5426;&#x5FC5;&#x987B; | &#x9ED8;&#x8BA4;&#x503C; | &#x503C;&#x8303;&#x56F4; | &#x8BF4;&#x660E;
+  ---|---|---|---|---|---
+  msgs | Collection<message> | &#x662F; | | | &#x5F85;&#x53D1;&#x9001;&#x7684;&#x6D88;&#x606F;&#x96C6;&#x5408;&#x3002;&#x96C6;&#x5408;&#x5185;&#x7684;&#x6D88;&#x606F;&#x5FC5;&#x987B;&#x5C5E;&#x540C;&#x4E00;&#x4E2A;topic&#x3002;
+  messageQueue | MessageQueue | &#x662F; | | | &#x5F85;&#x6295;&#x9012;&#x7684;&#x6D88;&#x606F;&#x961F;&#x5217;&#x3002;&#x6307;&#x5B9A;&#x961F;&#x5217;&#x610F;&#x5473;&#x7740;&#x5F85;&#x6295;&#x9012;&#x6D88;&#x606F;&#x5747;&#x4E3A;&#x540C;&#x4E00;&#x4E2A;topic&#x3002;</message></p>
+</li>
+<li><p>&#x8FD4;&#x56DE;&#x503C;&#x63CF;&#x8FF0;&#xFF1A;</p>
+<p>  &#x6279;&#x91CF;&#x6D88;&#x606F;&#x7684;&#x53D1;&#x9001;&#x7ED3;&#x679C;&#xFF0C;&#x5305;&#x542B;msgId&#xFF0C;&#x53D1;&#x9001;&#x72B6;&#x6001;&#x7B49;&#x4FE1;&#x606F;&#x3002;</p>
+</li>
+<li><p>&#x5F02;&#x5E38;&#x63CF;&#x8FF0;&#xFF1A;</p>
+<p>  MQClientException - broker&#x4E0D;&#x5B58;&#x5728;&#x6216;&#x672A;&#x627E;&#x5230;&#xFF1B;namesrv&#x5730;&#x5740;&#x4E3A;&#x7A7A;&#xFF1B;&#x672A;&#x627E;&#x5230;topic&#x7684;&#x8DEF;&#x7531;&#x4FE1;&#x606F;&#x7B49;&#x5BA2;&#x6237;&#x7AEF;&#x5F02;&#x5E38;&#x3002;<br>
+  RemotingException - &#x7F51;&#x7EDC;&#x5F02;&#x5E38;&#x3002;<br>
+  MQBrokerException - broker&#x53D1;&#x751F;&#x9519;&#x8BEF;&#x3002;<br>
+  InterruptedException - &#x53D1;&#x9001;&#x7EBF;&#x7A0B;&#x4E2D;&#x65AD;&#x3002;<br>
+  RemotingTooMuchRequestException - &#x53D1;&#x9001;&#x8D85;&#x65F6;&#x3002;</p>
+</li>
+</ul>
+</li>
+<li><p>send</p>
+<p><code>public SendResult send(Collection&lt;Message&gt; msgs, MessageQueue messageQueue, long timeout)</code></p>
+<p>&#x5411;&#x7ED9;&#x5B9A;&#x961F;&#x5217;&#x540C;&#x6B65;&#x6279;&#x91CF;&#x53D1;&#x9001;&#x6D88;&#x606F;&#xFF0C;&#x5982;&#x679C;&#x5728;&#x6307;&#x5B9A;&#x7684;&#x8D85;&#x65F6;&#x65F6;&#x95F4;&#x5185;&#x672A;&#x5B8C;&#x6210;&#x6D88;&#x606F;&#x6295;&#x9012;&#xFF0C;&#x4F1A;&#x629B;&#x51FA;<em>RemotingTooMuchRequestException</em>&#x3002;</p>
+<p>&#x6CE8;&#x610F;&#xFF1A;&#x6307;&#x5B9A;&#x961F;&#x5217;&#x610F;&#x5473;&#x7740;&#x6240;&#x6709;&#x6D88;&#x606F;&#x5747;&#x4E3A;&#x540C;&#x4E00;&#x4E2A;topic&#x3002;</p>
+<ul>
+<li><p>&#x5165;&#x53C2;&#x63CF;&#x8FF0;&#xFF1A;</p>
+<p>  &#x53C2;&#x6570;&#x540D; | &#x7C7B;&#x578B; | &#x662F;&#x5426;&#x5FC5;&#x987B; | &#x9ED8;&#x8BA4;&#x503C; | &#x503C;&#x8303;&#x56F4; | &#x8BF4;&#x660E;
+  ---|---|---|---|---|---
+  msgs | Collection<message> | &#x662F; | | | &#x5F85;&#x53D1;&#x9001;&#x7684;&#x6D88;&#x606F;&#x96C6;&#x5408;&#x3002;&#x96C6;&#x5408;&#x5185;&#x7684;&#x6D88;&#x606F;&#x5FC5;&#x987B;&#x5C5E;&#x540C;&#x4E00;&#x4E2A;topic&#x3002;
+  timeout | long | &#x662F; | &#x53C2;&#x89C1;<em>sendMsgTimeout</em>&#x5C5E;&#x6027; | | &#x53D1;&#x9001;&#x8D85;&#x65F6;&#x65F6;&#x95F4;&#xFF0C;&#x5355;&#x4F4D;&#xFF1A;&#x6BEB;&#x79D2;&#x3002;
+  messageQueue | MessageQueue | &#x662F; | | | &#x5F85;&#x6295;&#x9012;&#x7684;&#x6D88;&#x606F;&#x961F;&#x5217;&#x3002;&#x6307;&#x5B9A;&#x961F;&#x5217;&#x610F;&#x5473;&#x7740;&#x5F85;&#x6295;&#x9012;&#x6D88;&#x606F;&#x5747;&#x4E3A;&#x540C;&#x4E00;&#x4E2A;topic&#x3002;</message></p>
+</li>
+<li><p>&#x8FD4;&#x56DE;&#x503C;&#x63CF;&#x8FF0;&#xFF1A;</p>
+<p>  &#x6279;&#x91CF;&#x6D88;&#x606F;&#x7684;&#x53D1;&#x9001;&#x7ED3;&#x679C;&#xFF0C;&#x5305;&#x542B;msgId&#xFF0C;&#x53D1;&#x9001;&#x72B6;&#x6001;&#x7B49;&#x4FE1;&#x606F;&#x3002;</p>
+</li>
+<li><p>&#x5F02;&#x5E38;&#x63CF;&#x8FF0;&#xFF1A;</p>
+<p>  MQClientException - broker&#x4E0D;&#x5B58;&#x5728;&#x6216;&#x672A;&#x627E;&#x5230;&#xFF1B;namesrv&#x5730;&#x5740;&#x4E3A;&#x7A7A;&#xFF1B;&#x672A;&#x627E;&#x5230;topic&#x7684;&#x8DEF;&#x7531;&#x4FE1;&#x606F;&#x7B49;&#x5BA2;&#x6237;&#x7AEF;&#x5F02;&#x5E38;&#x3002;<br>
+  RemotingException - &#x7F51;&#x7EDC;&#x5F02;&#x5E38;&#x3002;<br>
+  MQBrokerException - broker&#x53D1;&#x751F;&#x9519;&#x8BEF;&#x3002;<br>
+  InterruptedException - &#x53D1;&#x9001;&#x7EBF;&#x7A0B;&#x4E2D;&#x65AD;&#x3002;<br>
+  RemotingTooMuchRequestException - &#x53D1;&#x9001;&#x8D85;&#x65F6;&#x3002;</p>
+</li>
+</ul>
+</li>
+<li><p>send</p>
+<p><code>public SendResult send(Message msg)</code></p>
+<p>&#x4EE5;&#x540C;&#x6B65;&#x6A21;&#x5F0F;&#x53D1;&#x9001;&#x6D88;&#x606F;&#xFF0C;&#x4EC5;&#x5F53;&#x53D1;&#x9001;&#x8FC7;&#x7A0B;&#x5B8C;&#x5168;&#x5B8C;&#x6210;&#x65F6;&#xFF0C;&#x6B64;&#x65B9;&#x6CD5;&#x624D;&#x4F1A;&#x8FD4;&#x56DE;&#x3002;
+&#x5728;&#x8FD4;&#x56DE;&#x53D1;&#x9001;&#x5931;&#x8D25;&#x4E4B;&#x524D;&#xFF0C;&#x5185;&#x90E8;&#x5C1D;&#x8BD5;&#x91CD;&#x65B0;&#x53D1;&#x9001;&#x6D88;&#x606F;&#x7684;&#x6700;&#x5927;&#x6B21;&#x6570;&#xFF08;&#x53C2;&#x89C1;<em>retryTimesWhenSendFailed</em>&#x5C5E;&#x6027;&#xFF09;&#x3002;&#x672A;&#x660E;&#x786E;&#x6307;&#x5B9A;&#x53D1;&#x9001;&#x961F;&#x5217;&#xFF0C;&#x9ED8;&#x8BA4;&#x91C7;&#x53D6;&#x8F6E;&#x8BE2;&#x7B56;&#x7565;&#x53D1;&#x9001;&#x3002;</p>
+<ul>
+<li><p>&#x5165;&#x53C2;&#x63CF;&#x8FF0;&#xFF1A;</p>
+<p>  &#x53C2;&#x6570;&#x540D; | &#x7C7B;&#x578B; | &#x662F;&#x5426;&#x5FC5;&#x987B; | &#x9ED8;&#x8BA4;&#x503C; | &#x503C;&#x8303;&#x56F4; | &#x8BF4;&#x660E;
+  ---|---|---|---|---|---
+  msg | Message | &#x662F; | | | &#x5F85;&#x53D1;&#x9001;&#x7684;&#x6D88;&#x606F;&#x3002;</p>
+</li>
+<li><p>&#x8FD4;&#x56DE;&#x503C;&#x63CF;&#x8FF0;&#xFF1A;</p>
+<p>  &#x6D88;&#x606F;&#x7684;&#x53D1;&#x9001;&#x7ED3;&#x679C;&#xFF0C;&#x5305;&#x542B;msgId&#xFF0C;&#x53D1;&#x9001;&#x72B6;&#x6001;&#x7B49;&#x4FE1;&#x606F;&#x3002;</p>
+</li>
+<li><p>&#x5F02;&#x5E38;&#x63CF;&#x8FF0;&#xFF1A;</p>
+<p>  MQClientException - broker&#x4E0D;&#x5B58;&#x5728;&#x6216;&#x672A;&#x627E;&#x5230;&#xFF1B;namesrv&#x5730;&#x5740;&#x4E3A;&#x7A7A;&#xFF1B;&#x672A;&#x627E;&#x5230;topic&#x7684;&#x8DEF;&#x7531;&#x4FE1;&#x606F;&#x7B49;&#x5BA2;&#x6237;&#x7AEF;&#x5F02;&#x5E38;&#x3002;<br>
+  RemotingException - &#x7F51;&#x7EDC;&#x5F02;&#x5E38;&#x3002;<br>
+  MQBrokerException - broker&#x53D1;&#x751F;&#x9519;&#x8BEF;&#x3002;<br>
+  InterruptedException - &#x53D1;&#x9001;&#x7EBF;&#x7A0B;&#x4E2D;&#x65AD;&#x3002;<br>
+  RemotingTooMuchRequestException - &#x53D1;&#x9001;&#x8D85;&#x65F6;&#x3002;</p>
+</li>
+</ul>
+</li>
+<li><p>send</p>
+<p><code>public SendResult send(Message msg, long timeout)</code></p>
+<p>&#x4EE5;&#x540C;&#x6B65;&#x6A21;&#x5F0F;&#x53D1;&#x9001;&#x6D88;&#x606F;&#xFF0C;&#x5982;&#x679C;&#x5728;&#x6307;&#x5B9A;&#x7684;&#x8D85;&#x65F6;&#x65F6;&#x95F4;&#x5185;&#x672A;&#x5B8C;&#x6210;&#x6D88;&#x606F;&#x6295;&#x9012;&#xFF0C;&#x4F1A;&#x629B;&#x51FA;<em>RemotingTooMuchRequestException</em>&#x3002;&#x4EC5;&#x5F53;&#x53D1;&#x9001;&#x8FC7;&#x7A0B;&#x5B8C;&#x5168;&#x5B8C;&#x6210;&#x65F6;&#xFF0C;&#x6B64;&#x65B9;&#x6CD5;&#x624D;&#x4F1A;&#x8FD4;&#x56DE;&#x3002;
+&#x5728;&#x8FD4;&#x56DE;&#x53D1;&#x9001;&#x5931;&#x8D25;&#x4E4B;&#x524D;&#xFF0C;&#x5185;&#x90E8;&#x5C1D;&#x8BD5;&#x91CD;&#x65B0;&#x53D1;&#x9001;&#x6D88;&#x606F;&#x7684;&#x6700;&#x5927;&#x6B21;&#x6570;&#xFF08;&#x53C2;&#x89C1;<em>retryTimesWhenSendFailed</em>&#x5C5E;&#x6027;&#xFF09;&#x3002;&#x672A;&#x660E;&#x786E;&#x6307;&#x5B9A;&#x53D1;&#x9001;&#x961F;&#x5217;&#xFF0C;&#x9ED8;&#x8BA4;&#x91C7;&#x53D6;&#x8F6E;&#x8BE2;&#x7B56;&#x7565;&#x53D1;&#x9001;&#x3002;</p>
+<ul>
+<li><p>&#x5165;&#x53C2;&#x63CF;&#x8FF0;&#xFF1A;</p>
+<p>  &#x53C2;&#x6570;&#x540D; | &#x7C7B;&#x578B; | &#x662F;&#x5426;&#x5FC5;&#x987B; | &#x9ED8;&#x8BA4;&#x503C; | &#x503C;&#x8303;&#x56F4; | &#x8BF4;&#x660E;
+  ---|---|---|---|---|---
+  msg | Message | &#x662F; | | | &#x5F85;&#x53D1;&#x9001;&#x7684;&#x6D88;&#x606F;&#x3002;
+  timeout | long | &#x662F; | &#x53C2;&#x89C1;<em>sendMsgTimeout</em>&#x5C5E;&#x6027; | | &#x53D1;&#x9001;&#x8D85;&#x65F6;&#x65F6;&#x95F4;&#xFF0C;&#x5355;&#x4F4D;&#xFF1A;&#x6BEB;&#x79D2;&#x3002;</p>
+</li>
+<li><p>&#x8FD4;&#x56DE;&#x503C;&#x63CF;&#x8FF0;&#xFF1A;</p>
+<p>  &#x6D88;&#x606F;&#x7684;&#x53D1;&#x9001;&#x7ED3;&#x679C;&#xFF0C;&#x5305;&#x542B;msgId&#xFF0C;&#x53D1;&#x9001;&#x72B6;&#x6001;&#x7B49;&#x4FE1;&#x606F;&#x3002;</p>
+</li>
+<li><p>&#x5F02;&#x5E38;&#x63CF;&#x8FF0;&#xFF1A;</p>
+<p>  MQClientException - broker&#x4E0D;&#x5B58;&#x5728;&#x6216;&#x672A;&#x627E;&#x5230;&#xFF1B;namesrv&#x5730;&#x5740;&#x4E3A;&#x7A7A;&#xFF1B;&#x672A;&#x627E;&#x5230;topic&#x7684;&#x8DEF;&#x7531;&#x4FE1;&#x606F;&#x7B49;&#x5BA2;&#x6237;&#x7AEF;&#x5F02;&#x5E38;&#x3002;<br>
+  RemotingException - &#x7F51;&#x7EDC;&#x5F02;&#x5E38;&#x3002;<br>
+  MQBrokerException - broker&#x53D1;&#x751F;&#x9519;&#x8BEF;&#x3002;<br>
+  InterruptedException - &#x53D1;&#x9001;&#x7EBF;&#x7A0B;&#x4E2D;&#x65AD;&#x3002;<br>
+  RemotingTooMuchRequestException - &#x53D1;&#x9001;&#x8D85;&#x65F6;&#x3002;</p>
+</li>
+</ul>
+</li>
+<li><p>send</p>
+<p><code>public SendResult send(Message msg, MessageQueue mq)</code></p>
+<p>&#x5411;&#x6307;&#x5B9A;&#x7684;&#x6D88;&#x606F;&#x961F;&#x5217;&#x540C;&#x6B65;&#x53D1;&#x9001;&#x5355;&#x6761;&#x6D88;&#x606F;&#x3002;&#x4EC5;&#x5F53;&#x53D1;&#x9001;&#x8FC7;&#x7A0B;&#x5B8C;&#x5168;&#x5B8C;&#x6210;&#x65F6;&#xFF0C;&#x6B64;&#x65B9;&#x6CD5;&#x624D;&#x4F1A;&#x8FD4;&#x56DE;&#x3002;</p>
+<ul>
+<li><p>&#x5165;&#x53C2;&#x63CF;&#x8FF0;&#xFF1A;</p>
+<p>  &#x53C2;&#x6570;&#x540D; | &#x7C7B;&#x578B; | &#x662F;&#x5426;&#x5FC5;&#x987B; | &#x9ED8;&#x8BA4;&#x503C; | &#x503C;&#x8303;&#x56F4; | &#x8BF4;&#x660E;
+  ---|---|---|---|---|---
+  msg | Message | &#x662F; | | | &#x5F85;&#x53D1;&#x9001;&#x7684;&#x6D88;&#x606F;&#x3002;
+  mq | MessageQueue | &#x662F; | | | &#x5F85;&#x6295;&#x9012;&#x7684;&#x6D88;&#x606F;&#x961F;&#x5217;&#x3002;</p>
+</li>
+<li><p>&#x8FD4;&#x56DE;&#x503C;&#x63CF;&#x8FF0;&#xFF1A;</p>
+<p>  &#x6D88;&#x606F;&#x7684;&#x53D1;&#x9001;&#x7ED3;&#x679C;&#xFF0C;&#x5305;&#x542B;msgId&#xFF0C;&#x53D1;&#x9001;&#x72B6;&#x6001;&#x7B49;&#x4FE1;&#x606F;&#x3002;</p>
+</li>
+<li><p>&#x5F02;&#x5E38;&#x63CF;&#x8FF0;&#xFF1A;</p>
+<p>  MQClientException - broker&#x4E0D;&#x5B58;&#x5728;&#x6216;&#x672A;&#x627E;&#x5230;&#xFF1B;namesrv&#x5730;&#x5740;&#x4E3A;&#x7A7A;&#xFF1B;&#x672A;&#x627E;&#x5230;topic&#x7684;&#x8DEF;&#x7531;&#x4FE1;&#x606F;&#x7B49;&#x5BA2;&#x6237;&#x7AEF;&#x5F02;&#x5E38;&#x3002;<br>
+  RemotingException - &#x7F51;&#x7EDC;&#x5F02;&#x5E38;&#x3002;<br>
+  MQBrokerException - broker&#x53D1;&#x751F;&#x9519;&#x8BEF;&#x3002;<br>
+  InterruptedException - &#x53D1;&#x9001;&#x7EBF;&#x7A0B;&#x4E2D;&#x65AD;&#x3002;<br>
+  RemotingTooMuchRequestException - &#x53D1;&#x9001;&#x8D85;&#x65F6;&#x3002;</p>
+</li>
+</ul>
+</li>
+<li><p>send</p>
+<p><code>public SendResult send(Message msg, MessageQueue mq, long timeout)</code></p>
+<p>&#x5411;&#x6307;&#x5B9A;&#x7684;&#x6D88;&#x606F;&#x961F;&#x5217;&#x540C;&#x6B65;&#x53D1;&#x9001;&#x5355;&#x6761;&#x6D88;&#x606F;&#xFF0C;&#x5982;&#x679C;&#x5728;&#x6307;&#x5B9A;&#x7684;&#x8D85;&#x65F6;&#x65F6;&#x95F4;&#x5185;&#x672A;&#x5B8C;&#x6210;&#x6D88;&#x606F;&#x6295;&#x9012;&#xFF0C;&#x4F1A;&#x629B;&#x51FA;<em>RemotingTooMuchRequestException</em>&#x3002;&#x4EC5;&#x5F53;&#x53D1;&#x9001;&#x8FC7;&#x7A0B;&#x5B8C;&#x5168;&#x5B8C;&#x6210;&#x65F6;&#xFF0C;&#x6B64;&#x65B9;&#x6CD5;&#x624D;&#x4F1A;&#x8FD4;&#x56DE;&#x3002;</p>
+<ul>
+<li><p>&#x5165;&#x53C2;&#x63CF;&#x8FF0;&#xFF1A;</p>
+<p>  &#x53C2;&#x6570;&#x540D; | &#x7C7B;&#x578B; | &#x662F;&#x5426;&#x5FC5;&#x987B; | &#x9ED8;&#x8BA4;&#x503C; | &#x503C;&#x8303;&#x56F4; | &#x8BF4;&#x660E;
+  ---|---|---|---|---|---
+  msg | Message | &#x662F; | | | &#x5F85;&#x53D1;&#x9001;&#x7684;&#x6D88;&#x606F;&#x3002;
+  timeout | long | &#x662F; | &#x53C2;&#x89C1;<em>sendMsgTimeout</em>&#x5C5E;&#x6027; | | &#x53D1;&#x9001;&#x8D85;&#x65F6;&#x65F6;&#x95F4;&#xFF0C;&#x5355;&#x4F4D;&#xFF1A;&#x6BEB;&#x79D2;&#x3002;
+  mq | MessageQueue | &#x662F; | | | &#x5F85;&#x6295;&#x9012;&#x7684;&#x6D88;&#x606F;&#x961F;&#x5217;&#x3002;&#x6307;&#x5B9A;&#x961F;&#x5217;&#x610F;&#x5473;&#x7740;&#x5F85;&#x6295;&#x9012;&#x6D88;&#x606F;&#x5747;&#x4E3A;&#x540C;&#x4E00;&#x4E2A;topic&#x3002;</p>
+</li>
+<li><p>&#x8FD4;&#x56DE;&#x503C;&#x63CF;&#x8FF0;&#xFF1A;</p>
+<p>  &#x6D88;&#x606F;&#x7684;&#x53D1;&#x9001;&#x7ED3;&#x679C;&#xFF0C;&#x5305;&#x542B;msgId&#xFF0C;&#x53D1;&#x9001;&#x72B6;&#x6001;&#x7B49;&#x4FE1;&#x606F;&#x3002;</p>
+</li>
+<li><p>&#x5F02;&#x5E38;&#x63CF;&#x8FF0;&#xFF1A;</p>
+<p>  MQClientException - broker&#x4E0D;&#x5B58;&#x5728;&#x6216;&#x672A;&#x627E;&#x5230;&#xFF1B;namesrv&#x5730;&#x5740;&#x4E3A;&#x7A7A;&#xFF1B;&#x672A;&#x627E;&#x5230;topic&#x7684;&#x8DEF;&#x7531;&#x4FE1;&#x606F;&#x7B49;&#x5BA2;&#x6237;&#x7AEF;&#x5F02;&#x5E38;&#x3002;<br>
+  RemotingException - &#x7F51;&#x7EDC;&#x5F02;&#x5E38;&#x3002;<br>
+  MQBrokerException - broker&#x53D1;&#x751F;&#x9519;&#x8BEF;&#x3002;<br>
+  InterruptedException - &#x53D1;&#x9001;&#x7EBF;&#x7A0B;&#x4E2D;&#x65AD;&#x3002;<br>
+  RemotingTooMuchRequestException - &#x53D1;&#x9001;&#x8D85;&#x65F6;&#x3002;</p>
+</li>
+</ul>
+</li>
+<li><p>send</p>
+<p><code>public void send(Message msg, MessageQueue mq, SendCallback sendCallback)</code></p>
+<p>&#x5411;&#x6307;&#x5B9A;&#x7684;&#x6D88;&#x606F;&#x961F;&#x5217;&#x5F02;&#x6B65;&#x53D1;&#x9001;&#x5355;&#x6761;&#x6D88;&#x606F;&#xFF0C;&#x5F02;&#x6B65;&#x53D1;&#x9001;&#x8C03;&#x7528;&#x540E;&#x76F4;&#x63A5;&#x8FD4;&#x56DE;&#xFF0C;&#x5E76;&#x5728;&#x5728;&#x53D1;&#x9001;&#x6210;&#x529F;&#x6216;&#x8005;&#x5F02;&#x5E38;&#x65F6;&#x56DE;&#x8C03;<code>sendCallback</code>&#xFF0C;&#x6240;&#x4EE5;&#x5F02;&#x6B65;&#x53D1;&#x9001;&#x65F6;<code>sendCallback</code>&#x53C2;&#x6570;&#x4E0D;&#x80FD;&#x4E3A;null&#xFF0C;&#x5426;&#x5219;&#x5728;&#x56DE;&#x8C03;&#x65F6;&#x4F1A;&#x629B;&#x51FA;<code>NullPointerException</code>&#x3002;
+&#x5F02;&#x6B65;&#x53D1;&#x9001;&#x65F6;&#xFF0C;&#x5728;&#x6210;&#x529F;&#x53D1;&#x9001;&#x524D;&#xFF0C;&#x5176;&#x5185;&#x90E8;&#x4F1A;&#x5C1D;&#x8BD5;&#x91CD;&#x65B0;&#x53D1;&#x9001;&#x6D88;&#x606F;&#x7684;&#x6700;&#x5927;&#x6B21;&#x6570;&#xFF08;&#x53C2;&#x89C1;<em>retryTimesWhenSendAsyncFailed</em>&#x5C5E;&#x6027;&#xFF09;&#x3002;</p>
+<ul>
+<li><p>&#x5165;&#x53C2;&#x63CF;&#x8FF0;&#xFF1A;</p>
+<p>  &#x53C2;&#x6570;&#x540D; | &#x7C7B;&#x578B; | &#x662F;&#x5426;&#x5FC5;&#x987B; | &#x9ED8;&#x8BA4;&#x503C; | &#x503C;&#x8303;&#x56F4; | &#x8BF4;&#x660E;
+  ---|---|---|---|---|---
+  msg | Message | &#x662F; | | | &#x5F85;&#x53D1;&#x9001;&#x7684;&#x6D88;&#x606F;&#x3002;
+  mq | MessageQueue | &#x662F; | | | &#x5F85;&#x6295;&#x9012;&#x7684;&#x6D88;&#x606F;&#x961F;&#x5217;&#x3002;&#x6307;&#x5B9A;&#x961F;&#x5217;&#x610F;&#x5473;&#x7740;&#x5F85;&#x6295;&#x9012;&#x6D88;&#x606F;&#x5747;&#x4E3A;&#x540C;&#x4E00;&#x4E2A;topic&#x3002;
+  sendCallback | SendCallback | &#x662F; | | | &#x56DE;&#x8C03;&#x63A5;&#x53E3;&#x7684;&#x5B9E;&#x73B0;&#x3002;</p>
+</li>
+<li><p>&#x8FD4;&#x56DE;&#x503C;&#x63CF;&#x8FF0;&#xFF1A;</p>
+<p>  void</p>
+</li>
+<li><p>&#x5F02;&#x5E38;&#x63CF;&#x8FF0;&#xFF1A;</p>
+<p>  MQClientException - broker&#x4E0D;&#x5B58;&#x5728;&#x6216;&#x672A;&#x627E;&#x5230;&#xFF1B;namesrv&#x5730;&#x5740;&#x4E3A;&#x7A7A;&#xFF1B;&#x672A;&#x627E;&#x5230;topic&#x7684;&#x8DEF;&#x7531;&#x4FE1;&#x606F;&#x7B49;&#x5BA2;&#x6237;&#x7AEF;&#x5F02;&#x5E38;&#x3002;<br>
+  RemotingException - &#x7F51;&#x7EDC;&#x5F02;&#x5E38;&#x3002;<br>
+  InterruptedException - &#x53D1;&#x9001;&#x7EBF;&#x7A0B;&#x4E2D;&#x65AD;&#x3002;</p>
+</li>
+</ul>
+</li>
+<li><p>send</p>
+<p><code>public void send(Message msg, MessageQueue mq, SendCallback sendCallback, long timeout)</code></p>
+<p>&#x5411;&#x6307;&#x5B9A;&#x7684;&#x6D88;&#x606F;&#x961F;&#x5217;&#x5F02;&#x6B65;&#x53D1;&#x9001;&#x5355;&#x6761;&#x6D88;&#x606F;&#xFF0C;&#x5F02;&#x6B65;&#x53D1;&#x9001;&#x8C03;&#x7528;&#x540E;&#x76F4;&#x63A5;&#x8FD4;&#x56DE;&#xFF0C;&#x5E76;&#x5728;&#x5728;&#x53D1;&#x9001;&#x6210;&#x529F;&#x6216;&#x8005;&#x5F02;&#x5E38;&#x65F6;&#x56DE;&#x8C03;<code>sendCallback</code>&#xFF0C;&#x6240;&#x4EE5;&#x5F02;&#x6B65;&#x53D1;&#x9001;&#x65F6;<code>sendCallback</code>&#x53C2;&#x6570;&#x4E0D;&#x80FD;&#x4E3A;null&#xFF0C;&#x5426;&#x5219;&#x5728;&#x56DE;&#x8C03;&#x65F6;&#x4F1A;&#x629B;&#x51FA;<code>NullPointerException</code>&#x3002;
+&#x82E5;&#x5728;&#x6307;&#x5B9A;&#x65F6;&#x95F4;&#x5185;&#x6D88;&#x606F;&#x672A;&#x53D1;&#x9001;&#x6210;&#x529F;&#xFF0C;&#x56DE;&#x8C03;&#x65B9;&#x6CD5;&#x4F1A;&#x6536;&#x5230;<em>RemotingTooMuchRequestException</em>&#x5F02;&#x5E38;&#x3002;
+&#x5F02;&#x6B65;&#x53D1;&#x9001;&#x65F6;&#xFF0C;&#x5728;&#x6210;&#x529F;&#x53D1;&#x9001;&#x524D;&#xFF0C;&#x5176;&#x5185;&#x90E8;&#x4F1A;&#x5C1D;&#x8BD5;&#x91CD;&#x65B0;&#x53D1;&#x9001;&#x6D88;&#x606F;&#x7684;&#x6700;&#x5927;&#x6B21;&#x6570;&#xFF08;&#x53C2;&#x89C1;<em>retryTimesWhenSendAsyncFailed</em>&#x5C5E;&#x6027;&#xFF09;&#x3002;</p>
+<ul>
+<li><p>&#x5165;&#x53C2;&#x63CF;&#x8FF0;&#xFF1A;</p>
+<p>  &#x53C2;&#x6570;&#x540D; | &#x7C7B;&#x578B; | &#x662F;&#x5426;&#x5FC5;&#x987B; | &#x9ED8;&#x8BA4;&#x503C; | &#x503C;&#x8303;&#x56F4; | &#x8BF4;&#x660E;
+  ---|---|---|---|---|---
+  msg | Message | &#x662F; | | | &#x5F85;&#x53D1;&#x9001;&#x7684;&#x6D88;&#x606F;&#x3002;
+  mq | MessageQueue | &#x662F; | | | &#x5F85;&#x6295;&#x9012;&#x7684;&#x6D88;&#x606F;&#x961F;&#x5217;&#x3002;
+  sendCallback | SendCallback | &#x662F; | | | &#x56DE;&#x8C03;&#x63A5;&#x53E3;&#x7684;&#x5B9E;&#x73B0;&#x3002;
+  timeout | long | &#x662F; | &#x53C2;&#x89C1;<em>sendMsgTimeout</em>&#x5C5E;&#x6027; | | &#x53D1;&#x9001;&#x8D85;&#x65F6;&#x65F6;&#x95F4;&#xFF0C;&#x5355;&#x4F4D;&#xFF1A;&#x6BEB;&#x79D2;&#x3002;</p>
+</li>
+<li><p>&#x8FD4;&#x56DE;&#x503C;&#x63CF;&#x8FF0;&#xFF1A;
+  void</p>
+</li>
+<li><p>&#x5F02;&#x5E38;&#x63CF;&#x8FF0;&#xFF1A;</p>
+<p>  MQClientException - broker&#x4E0D;&#x5B58;&#x5728;&#x6216;&#x672A;&#x627E;&#x5230;&#xFF1B;namesrv&#x5730;&#x5740;&#x4E3A;&#x7A7A;&#xFF1B;&#x672A;&#x627E;&#x5230;topic&#x7684;&#x8DEF;&#x7531;&#x4FE1;&#x606F;&#x7B49;&#x5BA2;&#x6237;&#x7AEF;&#x5F02;&#x5E38;&#x3002;<br>
+  RemotingException - &#x7F51;&#x7EDC;&#x5F02;&#x5E38;&#x3002;<br>
+  InterruptedException - &#x53D1;&#x9001;&#x7EBF;&#x7A0B;&#x4E2D;&#x65AD;&#x3002;</p>
+</li>
+</ul>
+</li>
+<li><p>send</p>
+<p><code>public SendResult send(Message msg, MessageQueueSelector selector, Object arg)</code></p>
+<p>&#x5411;&#x901A;&#x8FC7;<code>MessageQueueSelector</code>&#x8BA1;&#x7B97;&#x51FA;&#x7684;&#x961F;&#x5217;&#x540C;&#x6B65;&#x53D1;&#x9001;&#x6D88;&#x606F;&#x3002;</p>
+<p>&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x81EA;&#x5B9E;&#x73B0;<code>MessageQueueSelector</code>&#x63A5;&#x53E3;&#xFF0C;&#x5C06;&#x67D0;&#x4E00;&#x7C7B;&#x6D88;&#x606F;&#x53D1;&#x9001;&#x81F3;&#x56FA;&#x5B9A;&#x7684;&#x961F;&#x5217;&#x3002;&#x6BD4;&#x5982;&#xFF1A;&#x5C06;&#x540C;&#x4E00;&#x4E2A;&#x8BA2;&#x5355;&#x7684;&#x72B6;&#x6001;&#x53D8;&#x66F4;&#x6D88;&#x606F;&#x6295;&#x9012;&#x81F3;&#x56FA;&#x5B9A;&#x7684;&#x961F;&#x5217;&#x3002;</p>
+<p>&#x6CE8;&#x610F;&#xFF1A;&#x6B64;&#x6D88;&#x606F;&#x53D1;&#x9001;&#x5931;&#x8D25;&#x5185;&#x90E8;&#x4E0D;&#x4F1A;&#x91CD;&#x8BD5;&#x3002;</p>
+<ul>
+<li><p>&#x5165;&#x53C2;&#x63CF;&#x8FF0;&#xFF1A;</p>
+<p>  &#x53C2;&#x6570;&#x540D; | &#x7C7B;&#x578B; | &#x662F;&#x5426;&#x5FC5;&#x987B; | &#x9ED8;&#x8BA4;&#x503C; | &#x503C;&#x8303;&#x56F4; | &#x8BF4;&#x660E;
+  ---|---|---|---|---|---
+  msg | Message | &#x662F; | | | &#x5F85;&#x53D1;&#x9001;&#x7684;&#x6D88;&#x606F;&#x3002;
+  selector | MessageQueueSelector | &#x662F; | | | &#x961F;&#x5217;&#x9009;&#x62E9;&#x5668;&#x3002;
+  arg | Object | &#x5426; | | | &#x4F9B;&#x961F;&#x5217;&#x9009;&#x62E9;&#x5668;&#x4F7F;&#x7528;&#x7684;&#x53C2;&#x6570;&#x5BF9;&#x8C61;&#x3002;</p>
+</li>
+<li><p>&#x8FD4;&#x56DE;&#x503C;&#x63CF;&#x8FF0;&#xFF1A;</p>
+<p>  &#x6D88;&#x606F;&#x7684;&#x53D1;&#x9001;&#x7ED3;&#x679C;&#xFF0C;&#x5305;&#x542B;msgId&#xFF0C;&#x53D1;&#x9001;&#x72B6;&#x6001;&#x7B49;&#x4FE1;&#x606F;&#x3002;</p>
+</li>
+<li><p>&#x5F02;&#x5E38;&#x63CF;&#x8FF0;&#xFF1A;</p>
+<p>  MQClientException - broker&#x4E0D;&#x5B58;&#x5728;&#x6216;&#x672A;&#x627E;&#x5230;&#xFF1B;namesrv&#x5730;&#x5740;&#x4E3A;&#x7A7A;&#xFF1B;&#x672A;&#x627E;&#x5230;topic&#x7684;&#x8DEF;&#x7531;&#x4FE1;&#x606F;&#x7B49;&#x5BA2;&#x6237;&#x7AEF;&#x5F02;&#x5E38;&#x3002;<br>
+  RemotingException - &#x7F51;&#x7EDC;&#x5F02;&#x5E38;&#x3002;<br>
+  MQBrokerException - broker&#x53D1;&#x751F;&#x9519;&#x8BEF;&#x3002;<br>
+  InterruptedException - &#x53D1;&#x9001;&#x7EBF;&#x7A0B;&#x4E2D;&#x65AD;&#x3002;<br>
+  RemotingTooMuchRequestException - &#x53D1;&#x9001;&#x8D85;&#x65F6;&#x3002;</p>
+</li>
+</ul>
+</li>
+<li><p>send</p>
+<p><code>public SendResult send(Message msg, MessageQueueSelector selector, Object arg, long timeout)</code></p>
+<p>&#x5411;&#x901A;&#x8FC7;<code>MessageQueueSelector</code>&#x8BA1;&#x7B97;&#x51FA;&#x7684;&#x961F;&#x5217;&#x540C;&#x6B65;&#x53D1;&#x9001;&#x6D88;&#x606F;&#xFF0C;&#x5E76;&#x6307;&#x5B9A;&#x53D1;&#x9001;&#x8D85;&#x65F6;&#x65F6;&#x95F4;&#x3002;</p>
+<p>&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x81EA;&#x5B9E;&#x73B0;<code>MessageQueueSelector</code>&#x63A5;&#x53E3;&#xFF0C;&#x5C06;&#x67D0;&#x4E00;&#x7C7B;&#x6D88;&#x606F;&#x53D1;&#x9001;&#x81F3;&#x56FA;&#x5B9A;&#x7684;&#x961F;&#x5217;&#x3002;&#x6BD4;&#x5982;&#xFF1A;&#x5C06;&#x540C;&#x4E00;&#x4E2A;&#x8BA2;&#x5355;&#x7684;&#x72B6;&#x6001;&#x53D8;&#x66F4;&#x6D88;&#x606F;&#x6295;&#x9012;&#x81F3;&#x56FA;&#x5B9A;&#x7684;&#x961F;&#x5217;&#x3002;</p>
+<p>&#x6CE8;&#x610F;&#xFF1A;&#x6B64;&#x6D88;&#x606F;&#x53D1;&#x9001;&#x5931;&#x8D25;&#x5185;&#x90E8;&#x4E0D;&#x4F1A;&#x91CD;&#x8BD5;&#x3002;</p>
+<ul>
+<li><p>&#x5165;&#x53C2;&#x63CF;&#x8FF0;&#xFF1A;</p>
+<p>  &#x53C2;&#x6570;&#x540D; | &#x7C7B;&#x578B; | &#x662F;&#x5426;&#x5FC5;&#x987B; | &#x9ED8;&#x8BA4;&#x503C; | &#x503C;&#x8303;&#x56F4; | &#x8BF4;&#x660E;
+  ---|---|---|---|---|---
+  msg | Message | &#x662F; | | | &#x5F85;&#x53D1;&#x9001;&#x7684;&#x6D88;&#x606F;&#x3002;
+  selector | MessageQueueSelector | &#x662F; | | | &#x961F;&#x5217;&#x9009;&#x62E9;&#x5668;&#x3002;
+  arg | Object | &#x5426; | | | &#x4F9B;&#x961F;&#x5217;&#x9009;&#x62E9;&#x5668;&#x4F7F;&#x7528;&#x7684;&#x53C2;&#x6570;&#x5BF9;&#x8C61;&#x3002;
+  timeout | long | &#x662F; | &#x53C2;&#x89C1;<em>sendMsgTimeout</em>&#x5C5E;&#x6027; | | &#x53D1;&#x9001;&#x8D85;&#x65F6;&#x65F6;&#x95F4;&#xFF0C;&#x5355;&#x4F4D;&#xFF1A;&#x6BEB;&#x79D2;&#x3002;</p>
+</li>
+<li><p>&#x8FD4;&#x56DE;&#x503C;&#x63CF;&#x8FF0;&#xFF1A;</p>
+<p>  &#x6D88;&#x606F;&#x7684;&#x53D1;&#x9001;&#x7ED3;&#x679C;&#xFF0C;&#x5305;&#x542B;msgId&#xFF0C;&#x53D1;&#x9001;&#x72B6;&#x6001;&#x7B49;&#x4FE1;&#x606F;&#x3002;</p>
+</li>
+<li><p>&#x5F02;&#x5E38;&#x63CF;&#x8FF0;&#xFF1A;
+  MQClientException - broker&#x4E0D;&#x5B58;&#x5728;&#x6216;&#x672A;&#x627E;&#x5230;&#xFF1B;namesrv&#x5730;&#x5740;&#x4E3A;&#x7A7A;&#xFF1B;&#x672A;&#x627E;&#x5230;topic&#x7684;&#x8DEF;&#x7531;&#x4FE1;&#x606F;&#x7B49;&#x5BA2;&#x6237;&#x7AEF;&#x5F02;&#x5E38;&#x3002;<br>
+  RemotingException - &#x7F51;&#x7EDC;&#x5F02;&#x5E38;&#x3002;<br>
+  MQBrokerException - broker&#x53D1;&#x751F;&#x9519;&#x8BEF;&#x3002;<br>
+  InterruptedException - &#x53D1;&#x9001;&#x7EBF;&#x7A0B;&#x4E2D;&#x65AD;&#x3002;<br>
+  RemotingTooMuchRequestException - &#x53D1;&#x9001;&#x8D85;&#x65F6;&#x3002;</p>
+</li>
+</ul>
+</li>
+<li><p>send</p>
+<p><code>public void send(Message msg, MessageQueueSelector selector, Object arg, SendCallback sendCallback)</code></p>
+<p>&#x5411;&#x901A;&#x8FC7;<code>MessageQueueSelector</code>&#x8BA1;&#x7B97;&#x51FA;&#x7684;&#x961F;&#x5217;&#x5F02;&#x6B65;&#x53D1;&#x9001;&#x5355;&#x6761;&#x6D88;&#x606F;&#xFF0C;&#x5F02;&#x6B65;&#x53D1;&#x9001;&#x8C03;&#x7528;&#x540E;&#x76F4;&#x63A5;&#x8FD4;&#x56DE;&#xFF0C;&#x5E76;&#x5728;&#x5728;&#x53D1;&#x9001;&#x6210;&#x529F;&#x6216;&#x8005;&#x5F02;&#x5E38;&#x65F6;&#x56DE;&#x8C03;<code>sendCallback</code>&#xFF0C;&#x6240;&#x4EE5;&#x5F02;&#x6B65;&#x53D1;&#x9001;&#x65F6;<code>sendCallback</code>&#x53C2;&#x6570;&#x4E0D;&#x80FD;&#x4E3A;null&#xFF0C;&#x5426;&#x5219;&#x5728;&#x56DE;&#x8C03;&#x65F6;&#x4F1A;&#x629B;&#x51FA;<code>NullPointerException</code>&#x3002;
+&#x5F02;&#x6B65;&#x53D1;&#x9001;&#x65F6;&#xFF0C;&#x5728;&#x6210;&#x529F;&#x53D1;&#x9001;&#x524D;&#xFF0C;&#x5176;&#x5185;&#x90E8;&#x4F1A;&#x5C1D;&#x8BD5;&#x91CD;&#x65B0;&#x53D1;&#x9001;&#x6D88;&#x606F;&#x7684;&#x6700;&#x5927;&#x6B21;&#x6570;&#xFF08;&#x53C2;&#x89C1;<em>retryTimesWhenSendAsyncFailed</em>&#x5C5E;&#x6027;&#xFF09;&#x3002;</p>
+<p>&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x81EA;&#x5B9E;&#x73B0;<code>MessageQueueSelector</code>&#x63A5;&#x53E3;&#xFF0C;&#x5C06;&#x67D0;&#x4E00;&#x7C7B;&#x6D88;&#x606F;&#x53D1;&#x9001;&#x81F3;&#x56FA;&#x5B9A;&#x7684;&#x961F;&#x5217;&#x3002;&#x6BD4;&#x5982;&#xFF1A;&#x5C06;&#x540C;&#x4E00;&#x4E2A;&#x8BA2;&#x5355;&#x7684;&#x72B6;&#x6001;&#x53D8;&#x66F4;&#x6D88;&#x606F;&#x6295;&#x9012;&#x81F3;&#x56FA;&#x5B9A;&#x7684;&#x961F;&#x5217;&#x3002;</p>
+<ul>
+<li><p>&#x5165;&#x53C2;&#x63CF;&#x8FF0;&#xFF1A;</p>
+<p>  &#x53C2;&#x6570;&#x540D; | &#x7C7B;&#x578B; | &#x662F;&#x5426;&#x5FC5;&#x987B; | &#x9ED8;&#x8BA4;&#x503C; | &#x503C;&#x8303;&#x56F4; | &#x8BF4;&#x660E;
+  ---|---|---|---|---|---
+  msg | Message | &#x662F; | | | &#x5F85;&#x53D1;&#x9001;&#x7684;&#x6D88;&#x606F;&#x3002;
+  selector | MessageQueueSelector | &#x662F; | | | &#x961F;&#x5217;&#x9009;&#x62E9;&#x5668;&#x3002;
+  arg | Object | &#x5426; | | | &#x4F9B;&#x961F;&#x5217;&#x9009;&#x62E9;&#x5668;&#x4F7F;&#x7528;&#x7684;&#x53C2;&#x6570;&#x5BF9;&#x8C61;&#x3002;
+  sendCallback | SendCallback | &#x662F; | | | &#x56DE;&#x8C03;&#x63A5;&#x53E3;&#x7684;&#x5B9E;&#x73B0;&#x3002;</p>
+</li>
+<li><p>&#x8FD4;&#x56DE;&#x503C;&#x63CF;&#x8FF0;&#xFF1A;</p>
+<p>  void</p>
+</li>
+<li><p>&#x5F02;&#x5E38;&#x63CF;&#x8FF0;&#xFF1A;</p>
+<p>  MQClientException - broker&#x4E0D;&#x5B58;&#x5728;&#x6216;&#x672A;&#x627E;&#x5230;&#xFF1B;namesrv&#x5730;&#x5740;&#x4E3A;&#x7A7A;&#xFF1B;&#x672A;&#x627E;&#x5230;topic&#x7684;&#x8DEF;&#x7531;&#x4FE1;&#x606F;&#x7B49;&#x5BA2;&#x6237;&#x7AEF;&#x5F02;&#x5E38;&#x3002;<br>
+  RemotingException - &#x7F51;&#x7EDC;&#x5F02;&#x5E38;&#x3002;<br>
+  InterruptedException - &#x53D1;&#x9001;&#x7EBF;&#x7A0B;&#x4E2D;&#x65AD;&#x3002;</p>
+</li>
+</ul>
+</li>
+<li><p>send</p>
+<p><code>public void send(Message msg, MessageQueueSelector selector, Object arg, SendCallback sendCallback, long timeout)</code></p>
+<p>&#x5411;&#x901A;&#x8FC7;<code>MessageQueueSelector</code>&#x8BA1;&#x7B97;&#x51FA;&#x7684;&#x961F;&#x5217;&#x5F02;&#x6B65;&#x53D1;&#x9001;&#x5355;&#x6761;&#x6D88;&#x606F;&#xFF0C;&#x5F02;&#x6B65;&#x53D1;&#x9001;&#x8C03;&#x7528;&#x540E;&#x76F4;&#x63A5;&#x8FD4;&#x56DE;&#xFF0C;&#x5E76;&#x5728;&#x5728;&#x53D1;&#x9001;&#x6210;&#x529F;&#x6216;&#x8005;&#x5F02;&#x5E38;&#x65F6;&#x56DE;&#x8C03;<code>sendCallback</code>&#xFF0C;&#x6240;&#x4EE5;&#x5F02;&#x6B65;&#x53D1;&#x9001;&#x65F6;<code>sendCallback</code>&#x53C2;&#x6570;&#x4E0D;&#x80FD;&#x4E3A;null&#xFF0C;&#x5426;&#x5219;&#x5728;&#x56DE;&#x8C03;&#x65F6;&#x4F1A;&#x629B;&#x51FA;<code>NullPointerException</code>&#x3002;
+&#x5F02;&#x6B65;&#x53D1;&#x9001;&#x65F6;&#xFF0C;&#x5728;&#x6210;&#x529F;&#x53D1;&#x9001;&#x524D;&#xFF0C;&#x5176;&#x5185;&#x90E8;&#x4F1A;&#x5C1D;&#x8BD5;&#x91CD;&#x65B0;&#x53D1;&#x9001;&#x6D88;&#x606F;&#x7684;&#x6700;&#x5927;&#x6B21;&#x6570;&#xFF08;&#x53C2;&#x89C1;<em>retryTimesWhenSendAsyncFailed</em>&#x5C5E;&#x6027;&#xFF09;&#x3002;</p>
+<p>&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x81EA;&#x5B9E;&#x73B0;<code>MessageQueueSelector</code>&#x63A5;&#x53E3;&#xFF0C;&#x5C06;&#x67D0;&#x4E00;&#x7C7B;&#x6D88;&#x606F;&#x53D1;&#x9001;&#x81F3;&#x56FA;&#x5B9A;&#x7684;&#x961F;&#x5217;&#x3002;&#x6BD4;&#x5982;&#xFF1A;&#x5C06;&#x540C;&#x4E00;&#x4E2A;&#x8BA2;&#x5355;&#x7684;&#x72B6;&#x6001;&#x53D8;&#x66F4;&#x6D88;&#x606F;&#x6295;&#x9012;&#x81F3;&#x56FA;&#x5B9A;&#x7684;&#x961F;&#x5217;&#x3002;</p>
+<ul>
+<li><p>&#x5165;&#x53C2;&#x63CF;&#x8FF0;&#xFF1A;</p>
+<p>  &#x53C2;&#x6570;&#x540D; | &#x7C7B;&#x578B; | &#x662F;&#x5426;&#x5FC5;&#x987B; | &#x9ED8;&#x8BA4;&#x503C; | &#x503C;&#x8303;&#x56F4; | &#x8BF4;&#x660E;
+  ---|---|---|---|---|---
+  msg | Message | &#x662F; | | | &#x5F85;&#x53D1;&#x9001;&#x7684;&#x6D88;&#x606F;&#x3002;
+  selector | MessageQueueSelector | &#x662F; | | | &#x961F;&#x5217;&#x9009;&#x62E9;&#x5668;&#x3002;
+  arg | Object | &#x5426; | | | &#x4F9B;&#x961F;&#x5217;&#x9009;&#x62E9;&#x5668;&#x4F7F;&#x7528;&#x7684;&#x53C2;&#x6570;&#x5BF9;&#x8C61;&#x3002;
+  sendCallback | SendCallback | &#x662F; | | | &#x56DE;&#x8C03;&#x63A5;&#x53E3;&#x7684;&#x5B9E;&#x73B0;&#x3002;
+  timeout | long | &#x662F; | &#x53C2;&#x89C1;<em>sendMsgTimeout</em>&#x5C5E;&#x6027; | | &#x53D1;&#x9001;&#x8D85;&#x65F6;&#x65F6;&#x95F4;&#xFF0C;&#x5355;&#x4F4D;&#xFF1A;&#x6BEB;&#x79D2;&#x3002;</p>
+</li>
+<li><p>&#x8FD4;&#x56DE;&#x503C;&#x63CF;&#x8FF0;&#xFF1A;</p>
+<p>  void</p>
+</li>
+<li><p>&#x5F02;&#x5E38;&#x63CF;&#x8FF0;&#xFF1A;</p>
+<p>  MQClientException - broker&#x4E0D;&#x5B58;&#x5728;&#x6216;&#x672A;&#x627E;&#x5230;&#xFF1B;namesrv&#x5730;&#x5740;&#x4E3A;&#x7A7A;&#xFF1B;&#x672A;&#x627E;&#x5230;topic&#x7684;&#x8DEF;&#x7531;&#x4FE1;&#x606F;&#x7B49;&#x5BA2;&#x6237;&#x7AEF;&#x5F02;&#x5E38;&#x3002;<br>
+  RemotingException - &#x7F51;&#x7EDC;&#x5F02;&#x5E38;&#x3002;<br>
+  InterruptedException - &#x53D1;&#x9001;&#x7EBF;&#x7A0B;&#x4E2D;&#x65AD;&#x3002;</p>
+</li>
+</ul>
+</li>
+<li><p>send</p>
+<p><code>public void send(Message msg, SendCallback sendCallback)</code></p>
+<p>&#x5F02;&#x6B65;&#x53D1;&#x9001;&#x5355;&#x6761;&#x6D88;&#x606F;&#xFF0C;&#x5F02;&#x6B65;&#x53D1;&#x9001;&#x8C03;&#x7528;&#x540E;&#x76F4;&#x63A5;&#x8FD4;&#x56DE;&#xFF0C;&#x5E76;&#x5728;&#x5728;&#x53D1;&#x9001;&#x6210;&#x529F;&#x6216;&#x8005;&#x5F02;&#x5E38;&#x65F6;&#x56DE;&#x8C03;<code>sendCallback</code>&#xFF0C;&#x6240;&#x4EE5;&#x5F02;&#x6B65;&#x53D1;&#x9001;&#x65F6;<code>sendCallback</code>&#x53C2;&#x6570;&#x4E0D;&#x80FD;&#x4E3A;null&#xFF0C;&#x5426;&#x5219;&#x5728;&#x56DE;&#x8C03;&#x65F6;&#x4F1A;&#x629B;&#x51FA;<code>NullPointerException</code>&#x3002;
+&#x5F02;&#x6B65;&#x53D1;&#x9001;&#x65F6;&#xFF0C;&#x5728;&#x6210;&#x529F;&#x53D1;&#x9001;&#x524D;&#xFF0C;&#x5176;&#x5185;&#x90E8;&#x4F1A;&#x5C1D;&#x8BD5;&#x91CD;&#x65B0;&#x53D1;&#x9001;&#x6D88;&#x606F;&#x7684;&#x6700;&#x5927;&#x6B21;&#x6570;&#xFF08;&#x53C2;&#x89C1;<em>retryTimesWhenSendAsyncFailed</em>&#x5C5E;&#x6027;&#xFF09;&#x3002;</p>
+<ul>
+<li><p>&#x5165;&#x53C2;&#x63CF;&#x8FF0;&#xFF1A;</p>
+<p>  &#x53C2;&#x6570;&#x540D; | &#x7C7B;&#x578B; | &#x662F;&#x5426;&#x5FC5;&#x987B; | &#x9ED8;&#x8BA4;&#x503C; | &#x503C;&#x8303;&#x56F4; | &#x8BF4;&#x660E;
+  ---|---|---|---|---|---
+  msg | Message | &#x662F; | | | &#x5F85;&#x53D1;&#x9001;&#x7684;&#x6D88;&#x606F;&#x3002;
+  sendCallback | SendCallback | &#x662F; | | | &#x56DE;&#x8C03;&#x63A5;&#x53E3;&#x7684;&#x5B9E;&#x73B0;&#x3002;</p>
+</li>
+<li><p>&#x8FD4;&#x56DE;&#x503C;&#x63CF;&#x8FF0;&#xFF1A;</p>
+<p>  void</p>
+</li>
+<li><p>&#x5F02;&#x5E38;&#x63CF;&#x8FF0;&#xFF1A;</p>
+<p>  MQClientException - broker&#x4E0D;&#x5B58;&#x5728;&#x6216;&#x672A;&#x627E;&#x5230;&#xFF1B;namesrv&#x5730;&#x5740;&#x4E3A;&#x7A7A;&#xFF1B;&#x672A;&#x627E;&#x5230;topic&#x7684;&#x8DEF;&#x7531;&#x4FE1;&#x606F;&#x7B49;&#x5BA2;&#x6237;&#x7AEF;&#x5F02;&#x5E38;&#x3002;<br>
+  RemotingException - &#x7F51;&#x7EDC;&#x5F02;&#x5E38;&#x3002;<br>
+  InterruptedException - &#x53D1;&#x9001;&#x7EBF;&#x7A0B;&#x4E2D;&#x65AD;&#x3002;</p>
+</li>
+</ul>
+</li>
+<li><p>send</p>
+<p><code>public void send(Message msg, SendCallback sendCallback, long timeout)</code></p>
+<p>&#x5F02;&#x6B65;&#x53D1;&#x9001;&#x5355;&#x6761;&#x6D88;&#x606F;&#xFF0C;&#x5F02;&#x6B65;&#x53D1;&#x9001;&#x8C03;&#x7528;&#x540E;&#x76F4;&#x63A5;&#x8FD4;&#x56DE;&#xFF0C;&#x5E76;&#x5728;&#x5728;&#x53D1;&#x9001;&#x6210;&#x529F;&#x6216;&#x8005;&#x5F02;&#x5E38;&#x65F6;&#x56DE;&#x8C03;<code>sendCallback</code>&#xFF0C;&#x6240;&#x4EE5;&#x5F02;&#x6B65;&#x53D1;&#x9001;&#x65F6;<code>sendCallback</code>&#x53C2;&#x6570;&#x4E0D;&#x80FD;&#x4E3A;null&#xFF0C;&#x5426;&#x5219;&#x5728;&#x56DE;&#x8C03;&#x65F6;&#x4F1A;&#x629B;&#x51FA;<code>NullPointerException</code>&#x3002;
+&#x5F02;&#x6B65;&#x53D1;&#x9001;&#x65F6;&#xFF0C;&#x5728;&#x6210;&#x529F;&#x53D1;&#x9001;&#x524D;&#xFF0C;&#x5176;&#x5185;&#x90E8;&#x4F1A;&#x5C1D;&#x8BD5;&#x91CD;&#x65B0;&#x53D1;&#x9001;&#x6D88;&#x606F;&#x7684;&#x6700;&#x5927;&#x6B21;&#x6570;&#xFF08;&#x53C2;&#x89C1;<em>retryTimesWhenSendAsyncFailed</em>&#x5C5E;&#x6027;&#xFF09;&#x3002;</p>
+<ul>
+<li><p>&#x5165;&#x53C2;&#x63CF;&#x8FF0;&#xFF1A;</p>
+<p>  &#x53C2;&#x6570;&#x540D; | &#x7C7B;&#x578B; | &#x662F;&#x5426;&#x5FC5;&#x987B; | &#x9ED8;&#x8BA4;&#x503C; | &#x503C;&#x8303;&#x56F4; | &#x8BF4;&#x660E;
+  ---|---|---|---|---|---
+  msg | Message | &#x662F; | | | &#x5F85;&#x53D1;&#x9001;&#x7684;&#x6D88;&#x606F;&#x3002;
+  sendCallback | SendCallback | &#x662F; | | | &#x56DE;&#x8C03;&#x63A5;&#x53E3;&#x7684;&#x5B9E;&#x73B0;&#x3002;
+  timeout | long | &#x662F; | &#x53C2;&#x89C1;<em>sendMsgTimeout</em>&#x5C5E;&#x6027; | | &#x53D1;&#x9001;&#x8D85;&#x65F6;&#x65F6;&#x95F4;&#xFF0C;&#x5355;&#x4F4D;&#xFF1A;&#x6BEB;&#x79D2;&#x3002;</p>
+</li>
+<li><p>&#x8FD4;&#x56DE;&#x503C;&#x63CF;&#x8FF0;&#xFF1A;</p>
+<p>  void</p>
+</li>
+<li><p>&#x5F02;&#x5E38;&#x63CF;&#x8FF0;&#xFF1A;</p>
+<p>  MQClientException - broker&#x4E0D;&#x5B58;&#x5728;&#x6216;&#x672A;&#x627E;&#x5230;&#xFF1B;namesrv&#x5730;&#x5740;&#x4E3A;&#x7A7A;&#xFF1B;&#x672A;&#x627E;&#x5230;topic&#x7684;&#x8DEF;&#x7531;&#x4FE1;&#x606F;&#x7B49;&#x5BA2;&#x6237;&#x7AEF;&#x5F02;&#x5E38;&#x3002;<br>
+  RemotingException - &#x7F51;&#x7EDC;&#x5F02;&#x5E38;&#x3002;<br>
+  InterruptedException - &#x53D1;&#x9001;&#x7EBF;&#x7A0B;&#x4E2D;&#x65AD;&#x3002;</p>
+</li>
+</ul>
+</li>
+<li><p>sendMessageInTransaction</p>
+<p><code>public TransactionSendResult sendMessageInTransaction(Message msg, LocalTransactionExecuter tranExecuter, final Object arg)</code></p>
+<p>&#x53D1;&#x9001;&#x4E8B;&#x52A1;&#x6D88;&#x606F;&#x3002;&#x8BE5;&#x7C7B;&#x4E0D;&#x505A;&#x9ED8;&#x8BA4;&#x5B9E;&#x73B0;&#xFF0C;&#x629B;&#x51FA;<code>RuntimeException</code>&#x5F02;&#x5E38;&#x3002;&#x53C2;&#x89C1;&#xFF1A;<code>TransactionMQProducer</code>&#x7C7B;&#x3002;</p>
+<ul>
+<li><p>&#x5165;&#x53C2;&#x63CF;&#x8FF0;&#xFF1A;</p>
+<p>  &#x53C2;&#x6570;&#x540D; | &#x7C7B;&#x578B; | &#x662F;&#x5426;&#x5FC5;&#x987B; | &#x9ED8;&#x8BA4;&#x503C; | &#x503C;&#x8303;&#x56F4; | &#x8BF4;&#x660E;
+  ---|---|---|---|---|---
+  msg | Message | &#x662F; | | | &#x5F85;&#x6295;&#x9012;&#x7684;&#x4E8B;&#x52A1;&#x6D88;&#x606F;
+  tranExecuter | <code>LocalTransactionExecuter</code> | &#x662F; | | | &#x672C;&#x5730;&#x4E8B;&#x52A1;&#x6267;&#x884C;&#x5668;&#x3002;&#x8BE5;&#x7C7B;<em>&#x5DF2;&#x8FC7;&#x671F;</em>&#xFF0C;&#x5C06;&#x5728;5.0.0&#x7248;&#x672C;&#x4E2D;&#x79FB;&#x9664;&#x3002;&#x8BF7;&#x52FF;&#x4F7F;&#x7528;&#x8BE5;&#x65B9;&#x6CD5;&#x3002;
+  arg | Object | &#x662F; | | | &#x4F9B;&#x672C;&#x5730;&#x4E8B;&#x52A1;&#x6267;&#x884C;&#x7A0B;&#x5E8F;&#x4F7F;&#x7528;&#x7684;&#x53C2;&#x6570;&#x5BF9;&#x8C61;</p>
+</li>
+<li><p>&#x8FD4;&#x56DE;&#x503C;&#x63CF;&#x8FF0;&#xFF1A;</p>
+<p>  &#x4E8B;&#x52A1;&#x7ED3;&#x679C;&#xFF0C;&#x53C2;&#x89C1;&#xFF1A;<code>LocalTransactionState</code>&#x7C7B;&#x3002;</p>
+</li>
+<li><p>&#x5F02;&#x5E38;&#x63CF;&#x8FF0;&#xFF1A;</p>
+<p>  RuntimeException - &#x6C38;&#x8FDC;&#x629B;&#x51FA;&#x8BE5;&#x5F02;&#x5E38;&#x3002;</p>
+</li>
+</ul>
+</li>
+<li><p>sendMessageInTransaction</p>
+<p><code>public TransactionSendResult sendMessageInTransaction(Message msg, final Object arg)</code></p>
+<p>&#x53D1;&#x9001;&#x4E8B;&#x52A1;&#x6D88;&#x606F;&#x3002;&#x8BE5;&#x7C7B;&#x4E0D;&#x505A;&#x9ED8;&#x8BA4;&#x5B9E;&#x73B0;&#xFF0C;&#x629B;&#x51FA;<code>RuntimeException</code>&#x5F02;&#x5E38;&#x3002;&#x53C2;&#x89C1;&#xFF1A;<code>TransactionMQProducer</code>&#x7C7B;&#x3002;</p>
+<ul>
+<li><p>&#x5165;&#x53C2;&#x63CF;&#x8FF0;&#xFF1A;</p>
+<p>  &#x53C2;&#x6570;&#x540D; | &#x7C7B;&#x578B; | &#x662F;&#x5426;&#x5FC5;&#x987B; | &#x9ED8;&#x8BA4;&#x503C; | &#x503C;&#x8303;&#x56F4; | &#x8BF4;&#x660E;
+  ---|---|---|---|---|---
+  msg | Message | &#x662F; | | | &#x5F85;&#x6295;&#x9012;&#x7684;&#x4E8B;&#x52A1;&#x6D88;&#x606F;
+  arg | Object | &#x662F; | | | &#x4F9B;&#x672C;&#x5730;&#x4E8B;&#x52A1;&#x6267;&#x884C;&#x7A0B;&#x5E8F;&#x4F7F;&#x7528;&#x7684;&#x53C2;&#x6570;&#x5BF9;&#x8C61;</p>
+</li>
+<li><p>&#x8FD4;&#x56DE;&#x503C;&#x63CF;&#x8FF0;&#xFF1A;</p>
+<p>  &#x4E8B;&#x52A1;&#x7ED3;&#x679C;&#xFF0C;&#x53C2;&#x89C1;&#xFF1A;<code>LocalTransactionState</code>&#x7C7B;&#x3002;</p>
+</li>
+<li><p>&#x5F02;&#x5E38;&#x63CF;&#x8FF0;&#xFF1A;</p>
+<p>  RuntimeException - &#x6C38;&#x8FDC;&#x629B;&#x51FA;&#x8BE5;&#x5F02;&#x5E38;&#x3002;</p>
+</li>
+</ul>
+</li>
+<li><p>sendOneway</p>
+<p><code>public void sendOneway(Message msg)</code></p>
+<p>  &#x4EE5;oneway&#x5F62;&#x5F0F;&#x53D1;&#x9001;&#x6D88;&#x606F;&#xFF0C;broker&#x4E0D;&#x4F1A;&#x54CD;&#x5E94;&#x4EFB;&#x4F55;&#x6267;&#x884C;&#x7ED3;&#x679C;&#xFF0C;&#x548C;<a href="https://en.wikipedia.org/wiki/User_Datagram_Protocol" target="_blank">UDP</a>&#x7C7B;&#x4F3C;&#x3002;&#x5B83;&#x5177;&#x6709;&#x6700;&#x5927;&#x7684;&#x541E;&#x5410;&#x91CF;&#x4F46;&#x6D88;&#x606F;&#x53EF;&#x80FD;&#x4F1A;&#x4E22;&#x5931;&#x3002;</p>
+<p>  &#x53EF;&#x5728;&#x6D88;&#x606F;&#x91CF;&#x5927;&#xFF0C;&#x8FFD;&#x6C42;&#x9AD8;&#x541E;&#x5410;&#x91CF;&#x5E76;&#x5141;&#x8BB8;&#x6D88;&#x606F;&#x4E22;&#x5931;&#x7684;&#x60C5;&#x51B5;&#x4E0B;&#x4F7F;&#x7528;&#x8BE5;&#x65B9;&#x5F0F;&#x3002;</p>
+<ul>
+<li><p>&#x5165;&#x53C2;&#x63CF;&#x8FF0;&#xFF1A;</p>
+<p>  &#x53C2;&#x6570;&#x540D; | &#x7C7B;&#x578B; | &#x662F;&#x5426;&#x5FC5;&#x987B; | &#x9ED8;&#x8BA4;&#x503C; | &#x503C;&#x8303;&#x56F4; | &#x8BF4;&#x660E;
+  ---|---|---|---|---|---
+  msg | Message | &#x662F; | | | &#x5F85;&#x6295;&#x9012;&#x7684;&#x6D88;&#x606F;</p>
+</li>
+<li><p>&#x8FD4;&#x56DE;&#x503C;&#x63CF;&#x8FF0;&#xFF1A;</p>
+<p>  void</p>
+</li>
+<li><p>&#x5F02;&#x5E38;&#x63CF;&#x8FF0;&#xFF1A;</p>
+<p>  MQClientException - broker&#x4E0D;&#x5B58;&#x5728;&#x6216;&#x672A;&#x627E;&#x5230;&#xFF1B;namesrv&#x5730;&#x5740;&#x4E3A;&#x7A7A;&#xFF1B;&#x672A;&#x627E;&#x5230;topic&#x7684;&#x8DEF;&#x7531;&#x4FE1;&#x606F;&#x7B49;&#x5BA2;&#x6237;&#x7AEF;&#x5F02;&#x5E38;&#x3002;<br>
+  RemotingException - &#x7F51;&#x7EDC;&#x5F02;&#x5E38;&#x3002;<br>
+  InterruptedException - &#x53D1;&#x9001;&#x7EBF;&#x7A0B;&#x4E2D;&#x65AD;&#x3002;</p>
+</li>
+</ul>
+</li>
+<li><p>sendOneway</p>
+<p><code>public void sendOneway(Message msg, MessageQueue mq)</code></p>
+<p>  &#x5411;&#x6307;&#x5B9A;&#x961F;&#x5217;&#x4EE5;oneway&#x5F62;&#x5F0F;&#x53D1;&#x9001;&#x6D88;&#x606F;&#xFF0C;broker&#x4E0D;&#x4F1A;&#x54CD;&#x5E94;&#x4EFB;&#x4F55;&#x6267;&#x884C;&#x7ED3;&#x679C;&#xFF0C;&#x548C;<a href="https://en.wikipedia.org/wiki/User_Datagram_Protocol" target="_blank">UDP</a>&#x7C7B;&#x4F3C;&#x3002;&#x5B83;&#x5177;&#x6709;&#x6700;&#x5927;&#x7684;&#x541E;&#x5410;&#x91CF;&#x4F46;&#x6D88;&#x606F;&#x53EF;&#x80FD;&#x4F1A;&#x4E22;&#x5931;&#x3002;</p>
+<p>  &#x53EF;&#x5728;&#x6D88;&#x606F;&#x91CF;&#x5927;&#xFF0C;&#x8FFD;&#x6C42;&#x9AD8;&#x541E;&#x5410;&#x91CF;&#x5E76;&#x5141;&#x8BB8;&#x6D88;&#x606F;&#x4E22;&#x5931;&#x7684;&#x60C5;&#x51B5;&#x4E0B;&#x4F7F;&#x7528;&#x8BE5;&#x65B9;&#x5F0F;&#x3002;</p>
+<ul>
+<li><p>&#x5165;&#x53C2;&#x63CF;&#x8FF0;&#xFF1A;</p>
+<p>  &#x53C2;&#x6570;&#x540D; | &#x7C7B;&#x578B; | &#x662F;&#x5426;&#x5FC5;&#x987B; | &#x9ED8;&#x8BA4;&#x503C; | &#x503C;&#x8303;&#x56F4; | &#x8BF4;&#x660E;
+  ---|---|---|---|---|---
+  msg | Message | &#x662F; | | | &#x5F85;&#x6295;&#x9012;&#x7684;&#x6D88;&#x606F;
+  mq | MessageQueue | &#x662F; | | | &#x5F85;&#x6295;&#x9012;&#x7684;&#x6D88;&#x606F;&#x961F;&#x5217;</p>
+</li>
+<li><p>&#x8FD4;&#x56DE;&#x503C;&#x63CF;&#x8FF0;&#xFF1A;
+  void</p>
+</li>
+<li>&#x5F02;&#x5E38;&#x63CF;&#x8FF0;&#xFF1A;
+  MQClientException - broker&#x4E0D;&#x5B58;&#x5728;&#x6216;&#x672A;&#x627E;&#x5230;&#xFF1B;namesrv&#x5730;&#x5740;&#x4E3A;&#x7A7A;&#xFF1B;&#x672A;&#x627E;&#x5230;topic&#x7684;&#x8DEF;&#x7531;&#x4FE1;&#x606F;&#x7B49;&#x5BA2;&#x6237;&#x7AEF;&#x5F02;&#x5E38;&#x3002;<br>
+  RemotingException - &#x7F51;&#x7EDC;&#x5F02;&#x5E38;&#x3002;<br>
+  InterruptedException - &#x53D1;&#x9001;&#x7EBF;&#x7A0B;&#x4E2D;&#x65AD;&#x3002;</li>
+</ul>
+</li>
+<li><p>sendOneway</p>
+<p><code>public void sendOneway(Message msg, MessageQueueSelector selector, Object arg)</code></p>
+<p>  &#x5411;&#x901A;&#x8FC7;<code>MessageQueueSelector</code>&#x8BA1;&#x7B97;&#x51FA;&#x7684;&#x961F;&#x5217;&#x4EE5;oneway&#x5F62;&#x5F0F;&#x53D1;&#x9001;&#x6D88;&#x606F;&#xFF0C;broker&#x4E0D;&#x4F1A;&#x54CD;&#x5E94;&#x4EFB;&#x4F55;&#x6267;&#x884C;&#x7ED3;&#x679C;&#xFF0C;&#x548C;<a href="https://en.wikipedia.org/wiki/User_Datagram_Protocol" target="_blank">UDP</a>&#x7C7B;&#x4F3C;&#x3002;&#x5B83;&#x5177;&#x6709;&#x6700;&#x5927;&#x7684;&#x541E;&#x5410;&#x91CF;&#x4F46;&#x6D88;&#x606F;&#x53EF;&#x80FD;&#x4F1A;&#x4E22;&#x5931;&#x3002;</p>
+<p>  &#x53EF;&#x5728;&#x6D88;&#x606F;&#x91CF;&#x5927;&#xFF0C;&#x8FFD;&#x6C42;&#x9AD8;&#x541E;&#x5410;&#x91CF;&#x5E76;&#x5141;&#x8BB8;&#x6D88;&#x606F;&#x4E22;&#x5931;&#x7684;&#x60C5;&#x51B5;&#x4E0B;&#x4F7F;&#x7528;&#x8BE5;&#x65B9;&#x5F0F;&#x3002;</p>
+<ul>
+<li><p>&#x5165;&#x53C2;&#x63CF;&#x8FF0;&#xFF1A;</p>
+<p>  &#x53C2;&#x6570;&#x540D; | &#x7C7B;&#x578B; | &#x662F;&#x5426;&#x5FC5;&#x987B; | &#x9ED8;&#x8BA4;&#x503C; | &#x503C;&#x8303;&#x56F4; | &#x8BF4;&#x660E;
+  ---|---|---|---|---|---
+  msg | Message | &#x662F; | | | &#x5F85;&#x53D1;&#x9001;&#x7684;&#x6D88;&#x606F;&#x3002;
+  selector | MessageQueueSelector | &#x662F; | | | &#x961F;&#x5217;&#x9009;&#x62E9;&#x5668;&#x3002;
+  arg | Object | &#x5426; | | | &#x4F9B;&#x961F;&#x5217;&#x9009;&#x62E9;&#x5668;&#x4F7F;&#x7528;&#x7684;&#x53C2;&#x6570;&#x5BF9;&#x8C61;&#x3002;</p>
+</li>
+<li><p>&#x8FD4;&#x56DE;&#x503C;&#x63CF;&#x8FF0;&#xFF1A;</p>
+<p>  void</p>
+</li>
+<li><p>&#x5F02;&#x5E38;&#x63CF;&#x8FF0;&#xFF1A;</p>
+<p>  MQClientException - broker&#x4E0D;&#x5B58;&#x5728;&#x6216;&#x672A;&#x627E;&#x5230;&#xFF1B;namesrv&#x5730;&#x5740;&#x4E3A;&#x7A7A;&#xFF1B;&#x672A;&#x627E;&#x5230;topic&#x7684;&#x8DEF;&#x7531;&#x4FE1;&#x606F;&#x7B49;&#x5BA2;&#x6237;&#x7AEF;&#x5F02;&#x5E38;&#x3002;<br>
+  RemotingException - &#x7F51;&#x7EDC;&#x5F02;&#x5E38;&#x3002;<br>
+  InterruptedException - &#x53D1;&#x9001;&#x7EBF;&#x7A0B;&#x4E2D;&#x65AD;&#x3002;</p>
+</li>
+</ul>
+</li>
+<li><p>shutdown</p>
+<p><code>public void shutdown()</code></p>
+<p>&#x5173;&#x95ED;&#x5F53;&#x524D;&#x751F;&#x4EA7;&#x8005;&#x5B9E;&#x4F8B;&#x5E76;&#x91CA;&#x653E;&#x76F8;&#x5173;&#x8D44;&#x6E90;&#x3002;</p>
+<ul>
+<li><p>&#x5165;&#x53C2;&#x63CF;&#x8FF0;&#xFF1A;</p>
+<p>  &#x65E0;&#x3002;</p>
+</li>
+<li><p>&#x8FD4;&#x56DE;&#x503C;&#x63CF;&#x8FF0;&#xFF1A;</p>
+<p>  void</p>
+</li>
+<li><p>&#x5F02;&#x5E38;&#x63CF;&#x8FF0;&#xFF1A;</p>
+</li>
+</ul>
+</li>
+<li><p>start</p>
+<p><code>public void start()</code></p>
+<p>&#x542F;&#x52A8;&#x751F;&#x4EA7;&#x8005;&#x5B9E;&#x4F8B;&#x3002;&#x5728;&#x53D1;&#x9001;&#x6216;&#x67E5;&#x8BE2;&#x6D88;&#x606F;&#x4E4B;&#x524D;&#x5FC5;&#x987B;&#x8C03;&#x7528;&#x6B64;&#x65B9;&#x6CD5;&#x3002;&#x5B83;&#x6267;&#x884C;&#x4E86;&#x8BB8;&#x591A;&#x5185;&#x90E8;&#x521D;&#x59CB;&#x5316;&#xFF0C;&#x6BD4;&#x5982;&#xFF1A;&#x68C0;&#x67E5;&#x914D;&#x7F6E;&#x3001;&#x4E0E;namesrv&#x5EFA;&#x7ACB;&#x8FDE;&#x63A5;&#x3001;&#x542F;&#x52A8;&#x4E00;&#x7CFB;&#x5217;&#x5FC3;&#x8DF3;&#x7B49;&#x5B9A;&#x65F6;&#x4EFB;&#x52A1;&#x7B49;&#x3002;</p>
+<ul>
+<li><p>&#x5165;&#x53C2;&#x63CF;&#x8FF0;&#xFF1A;</p>
+<p>  &#x65E0;&#x3002;</p>
+</li>
+<li><p>&#x8FD4;&#x56DE;&#x503C;&#x63CF;&#x8FF0;&#xFF1A;</p>
+<p>  void</p>
+</li>
+<li><p>&#x5F02;&#x5E38;&#x63CF;&#x8FF0;&#xFF1A;</p>
+<p>  MQClientException - &#x521D;&#x59CB;&#x5316;&#x8FC7;&#x7A0B;&#x4E2D;&#x51FA;&#x73B0;&#x5931;&#x8D25;&#x3002;</p>
+</li>
+</ul>
+</li>
+<li><p>viewMessage</p>
+<p><code>public MessageExt viewMessage(String offsetMsgId)</code></p>
+<p>&#x6839;&#x636E;&#x7ED9;&#x5B9A;&#x7684;msgId&#x67E5;&#x8BE2;&#x6D88;&#x606F;&#x3002;</p>
+<ul>
+<li><p>&#x5165;&#x53C2;&#x63CF;&#x8FF0;&#xFF1A;</p>
+<p>  &#x53C2;&#x6570;&#x540D; | &#x7C7B;&#x578B; | &#x662F;&#x5426;&#x5FC5;&#x987B; | &#x9ED8;&#x8BA4;&#x503C; | &#x503C;&#x8303;&#x56F4; | &#x8BF4;&#x660E;
+  ---|---|---|---|---|---
+  offsetMsgId | String | &#x662F; | | | offsetMsgId</p>
+</li>
+<li><p>&#x8FD4;&#x56DE;&#x503C;&#x63CF;&#x8FF0;&#xFF1A;</p>
+<p>  &#x8FD4;&#x56DE;<code>MessageExt</code>&#xFF0C;&#x5305;&#x542B;&#xFF1A;topic&#x540D;&#x79F0;&#xFF0C;&#x6D88;&#x606F;&#x9898;&#xFF0C;&#x6D88;&#x606F;ID&#xFF0C;&#x6D88;&#x8D39;&#x6B21;&#x6570;&#xFF0C;&#x751F;&#x4EA7;&#x8005;host&#x7B49;&#x4FE1;&#x606F;&#x3002;</p>
+</li>
+<li><p>&#x5F02;&#x5E38;&#x63CF;&#x8FF0;&#xFF1A;</p>
+<p>  RemotingException - &#x7F51;&#x7EDC;&#x5C42;&#x53D1;&#x751F;&#x9519;&#x8BEF;&#x3002;<br>
+  MQBrokerException - broker&#x53D1;&#x751F;&#x9519;&#x8BEF;&#x3002;<br>
+  InterruptedException - &#x7EBF;&#x7A0B;&#x88AB;&#x4E2D;&#x65AD;&#x3002;<br>
+  MQClientException - &#x751F;&#x4EA7;&#x8005;&#x72B6;&#x6001;&#x975E;Running&#xFF1B;msgId&#x975E;&#x6CD5;&#x7B49;&#x3002;</p>
+</li>
+</ul>
+</li>
+<li><p>viewMessage</p>
+<p><code>public MessageExt viewMessage(String topic, String msgId)</code></p>
+<p>&#x6839;&#x636E;&#x7ED9;&#x5B9A;&#x7684;msgId&#x67E5;&#x8BE2;&#x6D88;&#x606F;&#xFF0C;&#x5E76;&#x6307;&#x5B9A;topic&#x3002;</p>
+<ul>
+<li><p>&#x5165;&#x53C2;&#x63CF;&#x8FF0;&#xFF1A;</p>
+<p>  &#x53C2;&#x6570;&#x540D; | &#x7C7B;&#x578B; | &#x662F;&#x5426;&#x5FC5;&#x987B; | &#x9ED8;&#x8BA4;&#x503C; | &#x503C;&#x8303;&#x56F4; | &#x8BF4;&#x660E;
+  ---|---|---|---|---|---
+  msgId | String | &#x662F; | | | msgId
+  topic | String | &#x662F; | | | topic&#x540D;&#x79F0;</p>
+</li>
+<li><p>&#x8FD4;&#x56DE;&#x503C;&#x63CF;&#x8FF0;&#xFF1A;</p>
+<p>  &#x8FD4;&#x56DE;<code>MessageExt</code>&#xFF0C;&#x5305;&#x542B;&#xFF1A;topic&#x540D;&#x79F0;&#xFF0C;&#x6D88;&#x606F;&#x9898;&#xFF0C;&#x6D88;&#x606F;ID&#xFF0C;&#x6D88;&#x8D39;&#x6B21;&#x6570;&#xFF0C;&#x751F;&#x4EA7;&#x8005;host&#x7B49;&#x4FE1;&#x606F;&#x3002;</p>
+</li>
+<li><p>&#x5F02;&#x5E38;&#x63CF;&#x8FF0;&#xFF1A;</p>
+<p>  RemotingException - &#x7F51;&#x7EDC;&#x5C42;&#x53D1;&#x751F;&#x9519;&#x8BEF;&#x3002;<br>
+  MQBrokerException - broker&#x53D1;&#x751F;&#x9519;&#x8BEF;&#x3002;<br>
+  InterruptedException - &#x7EBF;&#x7A0B;&#x88AB;&#x4E2D;&#x65AD;&#x3002;<br>
+  MQClientException - &#x751F;&#x4EA7;&#x8005;&#x72B6;&#x6001;&#x975E;Running&#xFF1B;msgId&#x975E;&#x6CD5;&#x7B49;&#x3002;</p>
+</li>
+</ul>
+</li>
+</ol>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="../../operation.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page: 集群部署(Operation)">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"DefaultMQProducer API Reference","level":"1.13","depth":1,"previous":{"title":"集群部署(Operation)","level":"1.12","depth":1,"path":"operation.md","ref":"operation.md","articles":[]},"dir":"ltr"},"config":{"plugins":["3-ba@^0.9.0","anchor-navigation-ex@0.1.8","livereload"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"livereload":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"anchor-navigation-ex":{"isRewritePageTitle":true,"isShowTocTitleIcon":true,"tocLevel1Icon":"fa fa-hand-o-right","tocLevel2Icon":"fa fa-hand-o-right","tocLevel3Icon":"fa fa-hand-o-right"},"3-ba":{"configuration":"auto","token":"13766878cde148282622871dd245a973"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"RocketMQ官方","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Apache RocketMQ开发者指南","links":{"sidebar":{"博客首页":"http://www.cicoding.cn","RocketMQ官方网站":"http://rocketmq.apache.org"}},"gitbook":"*"},"file":{"path":"client/java/API_Reference_DefaultMQProducer.md","mtime":"2019-10-29T05:35:22.930Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-12-21T04:46:39.495Z"},"basePath":"../..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../../gitbook/gitbook.js"></script>
+    <script src="../../gitbook/theme.js"></script>
+    
+        
+        <script src="../../gitbook/gitbook-plugin-3-ba/plugin.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-livereload/plugin.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+
