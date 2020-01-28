@@ -2,6 +2,41 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://www.cicoding.cn/spring/spring-profile-aop/</loc>
+    
+    <lastmod>2020-01-28T11:04:27.364Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.cicoding.cn/spring/spring-characteristics/</loc>
+    
+    <lastmod>2020-01-28T10:47:26.028Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.cicoding.cn/spring/spring-component/</loc>
+    
+    <lastmod>2020-01-28T08:50:01.212Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.cicoding.cn/spring/spring-configuration-bean-componentscan-scope/</loc>
+    
+    <lastmod>2020-01-28T08:23:42.895Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.cicoding.cn/spring/difference-between-configuration-and-component/</loc>
+    
+    <lastmod>2020-01-28T05:48:17.201Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://www.cicoding.cn/micro-service/springcloud-stream-integrates-rocketmq/</loc>
     
     <lastmod>2020-01-27T13:50:17.045Z</lastmod>
