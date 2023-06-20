@@ -1,0 +1,871 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="小小冒险家的博客">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.2.3">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="https://www.cicoding.cn">
+    <!--SEO-->
+
+    <meta name="keywords" content="RocketMQ,SpringCloud Stream">
+
+
+    <meta name="description" content="RocketMQ 介绍RocketMQ 是一款开源的分布式消息系统，基于高可用分布式集群技术，提供低延时的、高可靠的消息发布与订阅服务。同时，广泛应用于多个领域，包括异步通信解耦、企业解决方案、金融支付、电信、电子商务、快递物流、广告营销、社交、即时通信、移动应用、手游、视频、物联网、车联网等...">
+
+
+
+<meta name="robots" content="all">
+<meta name="google" content="all">
+<meta name="googlebot" content="all">
+<meta name="verify" content="all">
+    <!--Title-->
+
+
+<title>SpringCloud Stream整合RocketMQ实现消息发送与接收 | 小小冒险家的博客</title>
+
+
+    <link rel="alternate" href="/atom.xml" title="小小冒险家的博客" type="application/atom+xml">
+
+
+    <link rel="icon" href="/favicon.png">
+
+    
+
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7">
+<link rel="stylesheet" href="/jquery.fancybox.css?v=2.1.5">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.5.0">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash">
+
+
+
+
+    
+
+
+
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?601ebec7733383ef248ca61fc0a0db95";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+
+
+    
+
+</head>
+
+</html>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+
+<body>
+    
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row clearfix">
+            <div class="col-md-12 column">
+                <nav class="navbar navbar-default" style="background-color:#fff;border:0;margin-bottom:0"
+                     role="navigation">
+                    <div class="navbar-header">
+<!--                        <button type="button" class="navbar-toggle" data-toggle="collapse"-->
+<!--                                data-target="#navbar-collapse-1">-->
+<!--                            <span class="sr-only">切</span>-->
+<!--                            <span class="icon-bar"></span>-->
+<!--                            <span class="icon-bar"></span>-->
+<!--                            <span class="icon-bar"></span>-->
+<!--                        </button>-->
+                        <a class="logo" href="/">
+                            <img src="/favicon.png"/>小小冒险家的博客
+                        </a>
+                    </div>
+
+                    <div class="collapse navbar-collapse" style="border:0;" id="navbar-collapse-1">
+                        <ul class="nav navbar-nav">
+                            
+                                
+                                    <li>
+                                        <a href="/" >
+                                            <i class="fa fa-home"></i>
+                                            首页
+                                        </a>
+                                    </li>
+                                
+                            
+                                
+                                    <li>
+                                        <a href="/archives" >
+                                            <i class="fa fa-sort"></i>
+                                            归档
+                                        </a>
+                                    </li>
+                                
+                            
+                                
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                                           data-hover="dropdown">
+                                            <i class="fa fa-fire"></i>
+                                            系列教程
+                                            <strong class="caret"></strong>
+                                        </a>
+                                        <ul class="dropdown-menu">
+                                            
+                                                <li>
+                                                    <a href="/docker/00-docker-lession-index" target="_blank">
+                                                        <i class="fa "></i>
+                                                        Docker系列教程
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="/micro-service/microservice/" target="_blank">
+                                                        <i class="fa "></i>
+                                                        SpringCloud微服务架构
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="/micro-service/microservice-alibaba/" target="_blank">
+                                                        <i class="fa "></i>
+                                                        SpringCloud Alibaba微服务架构
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="/sharding-jdbc/sharding-jdbc000/" target="_blank">
+                                                        <i class="fa "></i>
+                                                        Sharding-JDBC教程
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="/springboot/springboot-source-code/" target="_blank">
+                                                        <i class="fa "></i>
+                                                        SpringBoot源码系列
+                                                    </a>
+                                                </li>
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+                                
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                                           data-hover="dropdown">
+                                            <i class="fa fa-book"></i>
+                                            在线文档
+                                            <strong class="caret"></strong>
+                                        </a>
+                                        <ul class="dropdown-menu">
+                                            
+                                                <li>
+                                                    <a href="https://spring.io/docs/" target="_blank">
+                                                        <i class="fa "></i>
+                                                        Spring Reference
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="https://spring.io/projects/spring-boot/" target="_blank">
+                                                        <i class="fa "></i>
+                                                        SpringBoot Reference
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="https://spring.io/projects/spring-cloud/" target="_blank">
+                                                        <i class="fa "></i>
+                                                        SpringCloud Reference
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="https://docs.spring.io/spring-security/site/docs/current/reference/htmlsingle/" target="_blank">
+                                                        <i class="fa "></i>
+                                                        Spring Security Reference
+                                                    </a>
+                                                </li>
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+                                
+                                    <li>
+                                        <a href="/other/jrebel-activation" >
+                                            <i class="fa fa-fire"></i>
+                                            JRebel激活
+                                        </a>
+                                    </li>
+                                
+                            
+                                
+                                    <li>
+                                        <a href="/about" >
+                                            <i class="fa fa-user"></i>
+                                            关于我
+                                        </a>
+                                    </li>
+                                
+                            
+                        </ul>
+                        
+                            <form id="search-form" class="navbar-form navbar-right">
+                                <div class="form-group input-group">
+                                    <input type="text" id="local-search-input" class="form-control"
+                                           placeholder="搜我..."/>
+                                    <span class="input-group-btn">
+                                        <a class="btn btn-default">
+                                            <i class="fa fa-search"></i>
+                                        </a>
+                                    </span>
+                                </div>
+                                <div id="local-search-result" class="local-search-result-cls"></div>
+                            </form>
+                        
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </div>
+</nav>
+
+    <a href="http://github.com/zhaokejin" target="_blank">
+        <img style="position: absolute; width:100px; top: 0; left: 0; border: 0;"
+             src="/img/fork-me.png"
+             alt="Fork me on GitHub">
+    </a>
+
+
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    
+    
+        <div class="ad">
+            <div class="row">
+                
+                    <div class="col-md-12">
+                        <a href="https://promotion.aliyun.com/ntms/act/qwbk.html?userCode=qhtujh03" rel="nofollow" target="_blank">
+                            <img class="img-responsive center-block"
+                                 src="/icons/810x100.png"
+                                 title="阿里全民云计算"
+                            >
+                        </a>
+                    </div>
+                
+            </div>
+        </div>
+    
+
+
+<p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="SpringCloud Stream整合RocketMQ实现消息发送与接收">
+            
+                SpringCloud Stream整合RocketMQ实现消息发送与接收
+            
+        </h1>
+        <div class="post-meta">
+    
+
+    
+        <span class="categories-meta fa-wrap">
+            <i class="fa fa-folder-open-o"></i>
+            <a class="category-link" href="/categories/工具/">工具</a>
+        </span>
+    
+
+    
+        <span class="fa-wrap">
+            <i class="fa fa-tags"></i>
+            <span class="tags-meta">
+                
+                    <a class="tag-link" href="/tags/RocketMQ/">RocketMQ</a> <a class="tag-link" href="/tags/SpringCloud-Stream/">SpringCloud Stream</a>
+                
+            </span>
+        </span>
+    
+
+    
+        
+        <span class="fa-wrap">
+            <i class="fa fa-clock-o"></i>
+            <span class="date-meta">2020/01/27</span>
+        </span>
+        
+            <span class="fa-wrap">
+                <i class="fa fa-eye"></i>
+                <span id="busuanzi_value_page_pv"></span>
+            </span>
+        
+    
+</div>
+        
+        
+    </div>
+    
+    <div class="post-body post-content" id="container">
+        
+    <div class="toc-article">
+        <strong>
+            目录
+        </strong>
+        <div class="toc-content">
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#RocketMQ-介绍"><span class="toc-text">RocketMQ 介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RocketMQ-基本使用"><span class="toc-text">RocketMQ 基本使用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Spring-Cloud-Stream-介绍"><span class="toc-text">Spring Cloud Stream 介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#如何使用-Spring-Cloud-Alibaba-RocketMQ-Binder"><span class="toc-text">如何使用 Spring Cloud Alibaba RocketMQ Binder</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Spring-Cloud-Alibaba-RocketMQ-Binder-实现"><span class="toc-text">Spring Cloud Alibaba RocketMQ Binder 实现</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MessageSource-支持"><span class="toc-text">MessageSource 支持</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#配置选项"><span class="toc-text">配置选项</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#RocketMQ-Binder-Properties"><span class="toc-text">RocketMQ Binder Properties</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#RocketMQ-Consumer-Properties"><span class="toc-text">RocketMQ Consumer Properties</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#RocketMQ-Provider-Properties"><span class="toc-text">RocketMQ Provider Properties</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#官方文档"><span class="toc-text">官方文档</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Spring-Cloud-Stream编写生产者"><span class="toc-text">Spring Cloud Stream编写生产者</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Spring-Cloud-Stream编写消费者"><span class="toc-text">Spring Cloud Stream编写消费者</span></a></li></ol>
+        </div>
+    </div>
+
+
+        <h3 id="RocketMQ-介绍"><a href="#RocketMQ-介绍" class="headerlink" title="RocketMQ 介绍"></a>RocketMQ 介绍</h3><p><a href="https://rocketmq.apache.org/" target="_blank" rel="noopener">RocketMQ</a> 是一款开源的分布式消息系统，基于高可用分布式集群技术，提供低延时的、高可靠的消息发布与订阅服务。同时，广泛应用于多个领域，包括异步通信解耦、企业解决方案、金融支付、电信、电子商务、快递物流、广告营销、社交、即时通信、移动应用、手游、视频、物联网、车联网等。</p>
+<p>具有以下特点：</p>
+<ul>
+<li>能够保证严格的消息顺序</li>
+<li>提供丰富的消息拉取模式</li>
+<li>高效的订阅者水平扩展能力</li>
+<li>实时的消息订阅机制</li>
+<li>亿级消息堆积能力</li>
+</ul>
+<h3 id="RocketMQ-基本使用"><a href="#RocketMQ-基本使用" class="headerlink" title="RocketMQ 基本使用"></a>RocketMQ 基本使用</h3><ul>
+<li>下载 RocketMQ</li>
+</ul>
+<p>下载 <a href="https://www.apache.org/dyn/closer.cgi?path=rocketmq/4.3.2/rocketmq-all-4.3.2-bin-release.zip" target="_blank" rel="noopener">RocketMQ最新的二进制文件</a>，并解压</p>
+<p>解压后的目录结构如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">apache-rocketmq</span><br><span class="line">├── LICENSE</span><br><span class="line">├── NOTICE</span><br><span class="line">├── README.md</span><br><span class="line">├── benchmark</span><br><span class="line">├── bin</span><br><span class="line">├── conf</span><br><span class="line">└── lib</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>启动 NameServer</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">nohup sh bin/mqnamesrv &amp;</span><br><span class="line">tail -f ~/logs/rocketmqlogs/namesrv.log</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>启动 Broker</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">nohup sh bin/mqbroker -n localhost:9876 &amp;</span><br><span class="line">tail -f ~/logs/rocketmqlogs/broker.log</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>发送、接收消息</li>
+</ul>
+<p>发送消息：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sh bin/tools.sh org.apache.rocketmq.example.quickstart.Producer</span><br></pre></td></tr></table></figure>
+
+<p>发送成功后显示：<code>SendResult [sendStatus=SEND_OK, msgId= …</code></p>
+<p>接收消息：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sh bin/tools.sh org.apache.rocketmq.example.quickstart.Consumer</span><br></pre></td></tr></table></figure>
+
+<p>接收成功后显示：<code>ConsumeMessageThread_%d Receive New Messages: [MessageExt…</code></p>
+<ul>
+<li>关闭 Server</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sh bin/mqshutdown broker</span><br><span class="line">sh bin/mqshutdown namesrv</span><br></pre></td></tr></table></figure>
+
+<h3 id="Spring-Cloud-Stream-介绍"><a href="#Spring-Cloud-Stream-介绍" class="headerlink" title="Spring Cloud Stream 介绍"></a>Spring Cloud Stream 介绍</h3><p>Spring Cloud Stream 是一个用于构建基于消息的微服务应用框架。它基于 SpringBoot 来创建具有生产级别的单机 Spring 应用，并且使用 <code>Spring Integration</code> 与 Broker 进行连接。</p>
+<p>Spring Cloud Stream 提供了消息中间件配置的统一抽象，推出了 publish-subscribe、consumer groups、partition 这些统一的概念。</p>
+<p>Spring Cloud Stream 内部有两个概念：Binder 和 Binding。</p>
+<ul>
+<li>Binder: 跟外部消息中间件集成的组件，用来创建 Binding，各消息中间件都有自己的 Binder 实现。</li>
+</ul>
+<p>比如 <code>Kafka</code> 的实现 <code>KafkaMessageChannelBinder</code>，<code>RabbitMQ</code> 的实现 <code>RabbitMessageChannelBinder</code> 以及 <code>RocketMQ</code> 的实现 <code>RocketMQMessageChannelBinder</code>。</p>
+<ul>
+<li>Binding: 包括 Input Binding 和 Output Binding。</li>
+</ul>
+<p>Binding 在消息中间件与应用程序提供的 Provider 和 Consumer 之间提供了一个桥梁，实现了开发者只需使用应用程序的 Provider 或 Consumer 生产或消费数据即可，屏蔽了开发者与底层消息中间件的接触。</p>
+<p><img src="/images/micro-service/742d6f766572766965772e706e67.png" alt="SpringCloud Stream整合RocketMQ实现消息发送与接收"></p>
+<p>Figure 1. Spring Cloud Stream</p>
+<p>使用 Spring Cloud Stream 完成一段简单的消息发送和消息接收代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">MessageChannel messageChannel = new DirectChannel();</span><br><span class="line"></span><br><span class="line">// 消息订阅</span><br><span class="line">((SubscribableChannel) messageChannel).subscribe(new MessageHandler() &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void handleMessage(Message&lt;?&gt; message) throws MessagingException &#123;</span><br><span class="line">        System.out.println(&quot;receive msg: &quot; + message.getPayload());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">// 消息发送</span><br><span class="line">messageChannel.send(MessageBuilder.withPayload(&quot;simple msg&quot;).build());</span><br></pre></td></tr></table></figure>
+
+<p>这段代码所有的消息类都是 <code>spring-messaging</code> 模块里提供的。屏蔽具体消息中间件的底层实现，如果想用更换消息中间件，在配置文件里配置相关消息中间件信息以及修改 binder 依赖即可。</p>
+<p><strong>Spring Cloud Stream 底层基于这段代码去做了各种抽象。</strong></p>
+<h3 id="如何使用-Spring-Cloud-Alibaba-RocketMQ-Binder"><a href="#如何使用-Spring-Cloud-Alibaba-RocketMQ-Binder" class="headerlink" title="如何使用 Spring Cloud Alibaba RocketMQ Binder"></a>如何使用 Spring Cloud Alibaba RocketMQ Binder</h3><p>如果要在您的项目中引入 RocketMQ Binder，需要引入如下 maven 依赖：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">  &lt;groupId&gt;com.alibaba.cloud&lt;/groupId&gt;</span><br><span class="line">  &lt;artifactId&gt;spring-cloud-stream-binder-rocketmq&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+
+<p>或者可以使用 Spring Cloud Stream RocketMQ Starter：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;com.alibaba.cloud&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-cloud-starter-stream-rocketmq&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Spring-Cloud-Alibaba-RocketMQ-Binder-实现"><a href="#Spring-Cloud-Alibaba-RocketMQ-Binder-实现" class="headerlink" title="Spring Cloud Alibaba RocketMQ Binder 实现"></a>Spring Cloud Alibaba RocketMQ Binder 实现</h3><p>RocketMQ Binder 的实现依赖于 <a href="https://github.com/apache/rocketmq-spring" target="_blank" rel="noopener">RocketMQ-Spring</a> 框架。</p>
+<p>RocketMQ-Spring 框架是 RocketMQ 与 Spring Boot 的整合，RocketMQ Spring 主要提供了 3 个特性：</p>
+<ol>
+<li>使用 <code>RocketMQTemplate</code> 用来统一发送消息，包括同步、异步发送消息和事务消息</li>
+<li><code>@RocketMQTransactionListener</code> 注解用来处理事务消息的监听和回查</li>
+<li><code>@RocketMQMessageListener</code> 注解用来消费消息</li>
+</ol>
+<p>RocketMQ Binder 的核心类 RocketMQMessageChannelBinder 实现了 Spring Cloud Stream 规范，内部构建会 <code>RocketMQInboundChannelAdapter</code> 和 <code>RocketMQMessageHandler</code>。</p>
+<p><code>RocketMQMessageHandler</code> 会基于 Binding 配置构造 <code>RocketMQTemplate</code>，<code>RocketMQTemplate</code> 内部会把 <code>spring-messaging</code> 模块内 <code>org.springframework.messaging.Message</code> 消息类转换成 RocketMQ 的消息类 <code>org.apache.rocketmq.common.message.Message</code>，然后发送出去。</p>
+<p><code>RocketMQInboundChannelAdapter</code> 也会基于 Binding 配置构造 <code>RocketMQListenerBindingContainer</code>，<code>RocketMQListenerBindingContainer</code> 内部会启动 RocketMQ <code>Consumer</code> 接收消息。</p>
+<table>
+<thead>
+<tr>
+<th>Note</th>
+<th>在使用 RocketMQ Binder 的同时也可以配置 rocketmq.** 用于触发 RocketMQ Spring 相关的 AutoConfiguration</th>
+</tr>
+</thead>
+<tbody><tr>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<p>目前 Binder 支持在 <code>Header</code> 中设置相关的 key 来进行 RocketMQ Message 消息的特性设置。</p>
+<p>比如 <code>TAGS</code>、<code>DELAY</code>、<code>TRANSACTIONAL_ARG</code>、<code>KEYS</code>、<code>WAIT_STORE_MSG_OK</code>、<code>FLAG</code> 表示 RocketMQ 消息对应的标签，</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">MessageBuilder builder = MessageBuilder.withPayload(msg)</span><br><span class="line">    .setHeader(RocketMQHeaders.TAGS, &quot;binder&quot;)</span><br><span class="line">    .setHeader(RocketMQHeaders.KEYS, &quot;my-key&quot;)</span><br><span class="line">    .setHeader(&quot;DELAY&quot;, &quot;1&quot;);</span><br><span class="line">Message message = builder.build();</span><br><span class="line">output().send(message);</span><br></pre></td></tr></table></figure>
+
+<h3 id="MessageSource-支持"><a href="#MessageSource-支持" class="headerlink" title="MessageSource 支持"></a>MessageSource 支持</h3><p>目前 RocketMQ 已经支持 <code>MessageSource</code>，可以进行消息的拉取，例子如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">@SpringBootApplication</span><br><span class="line">@EnableBinding(MQApplication.PolledProcessor.class)</span><br><span class="line">public class MQApplication &#123;</span><br><span class="line"></span><br><span class="line">  private final Logger logger =</span><br><span class="line">  	  LoggerFactory.getLogger(MQApplication.class);</span><br><span class="line"></span><br><span class="line">  public static void main(String[] args) &#123;</span><br><span class="line">    SpringApplication.run(MQApplication.class, args);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  @Bean</span><br><span class="line">  public ApplicationRunner runner(PollableMessageSource source,</span><br><span class="line">  	    MessageChannel dest) &#123;</span><br><span class="line">    return args -&gt; &#123;</span><br><span class="line">      while (true) &#123;</span><br><span class="line">        boolean result = source.poll(m -&gt; &#123;</span><br><span class="line">          String payload = (String) m.getPayload();</span><br><span class="line">          logger.info(&quot;Received: &quot; + payload);</span><br><span class="line">          dest.send(MessageBuilder.withPayload(payload.toUpperCase())</span><br><span class="line">              .copyHeaders(m.getHeaders())</span><br><span class="line">              .build());</span><br><span class="line">        &#125;, new ParameterizedTypeReference&lt;String&gt;() &#123; &#125;);</span><br><span class="line">        if (result) &#123;</span><br><span class="line">          logger.info(&quot;Processed a message&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">        else &#123;</span><br><span class="line">          logger.info(&quot;Nothing to do&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">        Thread.sleep(5_000);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  public static interface PolledProcessor &#123;</span><br><span class="line"></span><br><span class="line">    @Input</span><br><span class="line">    PollableMessageSource source();</span><br><span class="line"></span><br><span class="line">    @Output</span><br><span class="line">    MessageChannel dest();</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="配置选项"><a href="#配置选项" class="headerlink" title="配置选项"></a>配置选项</h3><h4 id="RocketMQ-Binder-Properties"><a href="#RocketMQ-Binder-Properties" class="headerlink" title="RocketMQ Binder Properties"></a>RocketMQ Binder Properties</h4><ul>
+<li><p>spring.cloud.stream.rocketmq.binder.name-server</p>
+<p>RocketMQ NameServer 地址(老版本使用 namesrv-addr 配置项)。Default: <code>127.0.0.1:9876</code>.</p>
+</li>
+<li><p>spring.cloud.stream.rocketmq.binder.access-key</p>
+<p>阿里云账号 AccessKey。Default: null.</p>
+</li>
+<li><p>spring.cloud.stream.rocketmq.binder.secret-key</p>
+<p>阿里云账号 SecretKey。Default: null.</p>
+</li>
+<li><p>spring.cloud.stream.rocketmq.binder.enable-msg-trace</p>
+<p>是否为 Producer 和 Consumer 开启消息轨迹功能Default: <code>true</code>.</p>
+</li>
+<li><p>spring.cloud.stream.rocketmq.binder.customized-trace-topic</p>
+<p>消息轨迹开启后存储的 topic 名称。Default: <code>RMQ_SYS_TRACE_TOPIC</code>.</p>
+</li>
+</ul>
+<h4 id="RocketMQ-Consumer-Properties"><a href="#RocketMQ-Consumer-Properties" class="headerlink" title="RocketMQ Consumer Properties"></a>RocketMQ Consumer Properties</h4><p>下面的这些配置是以 <code>spring.cloud.stream.rocketmq.bindings..consumer.</code> 为前缀的 RocketMQ Consumer 相关的配置。</p>
+<ul>
+<li><p>enable</p>
+<p>是否启用 Consumer。默认值: <code>true</code>.</p>
+</li>
+<li><p>tags</p>
+<p>Consumer 基于 TAGS 订阅，多个 tag 以 <code>||</code> 分割。默认值: empty.</p>
+</li>
+<li><p>sql</p>
+<p>Consumer 基于 SQL 订阅。默认值: empty.</p>
+</li>
+<li><p>broadcasting</p>
+<p>Consumer 是否是广播消费模式。如果想让所有的订阅者都能接收到消息，可以使用广播模式。默认值: <code>false</code>.</p>
+</li>
+<li><p>orderly</p>
+<p>Consumer 是否同步消费消息模式。默认值: <code>false</code>.</p>
+</li>
+<li><p>delayLevelWhenNextConsume</p>
+<p>异步消费消息模式下消费失败重试策略：-1,不重复，直接放入死信队列0,broker 控制重试策略&gt;0,client 控制重试策略默认值: <code>0</code>.</p>
+</li>
+<li><p>suspendCurrentQueueTimeMillis</p>
+<p>同步消费消息模式下消费失败后再次消费的时间间隔。默认值: <code>1000</code>.</p>
+</li>
+</ul>
+<h4 id="RocketMQ-Provider-Properties"><a href="#RocketMQ-Provider-Properties" class="headerlink" title="RocketMQ Provider Properties"></a>RocketMQ Provider Properties</h4><p>下面的这些配置是以 <code>spring.cloud.stream.rocketmq.bindings..producer.</code> 为前缀的 RocketMQ Producer 相关的配置。</p>
+<ul>
+<li><p>enable</p>
+<p>是否启用 Producer。默认值: <code>true</code>.</p>
+</li>
+<li><p>group</p>
+<p>Producer group name。默认值: empty.</p>
+</li>
+<li><p>maxMessageSize</p>
+<p>消息发送的最大字节数。默认值: <code>8249344</code>.</p>
+</li>
+<li><p>transactional</p>
+<p>是否发送事务消息。默认值: <code>false</code>.</p>
+</li>
+<li><p>sync</p>
+<p>是否使用同步得方式发送消息。默认值: <code>false</code>.</p>
+</li>
+<li><p>vipChannelEnabled</p>
+<p>是否在 Vip Channel 上发送消息。默认值: <code>true</code>.</p>
+</li>
+<li><p>sendMessageTimeout</p>
+<p>发送消息的超时时间(毫秒)。默认值: <code>3000</code>.</p>
+</li>
+<li><p>compressMessageBodyThreshold</p>
+<p>消息体压缩阀值(当消息体超过 4k 的时候会被压缩)。默认值: <code>4096</code>.</p>
+</li>
+<li><p>retryTimesWhenSendFailed</p>
+<p>在同步发送消息的模式下，消息发送失败的重试次数。默认值: <code>2</code>.</p>
+</li>
+<li><p>retryTimesWhenSendAsyncFailed</p>
+<p>在异步发送消息的模式下，消息发送失败的重试次数。默认值: <code>2</code>.</p>
+</li>
+<li><p>retryNextServer</p>
+<p>消息发送失败的情况下是否重试其它的 broker。默认值: <code>false</code>.</p>
+</li>
+</ul>
+<h3 id="官方文档"><a href="#官方文档" class="headerlink" title="官方文档"></a>官方文档</h3><p><a href="https://cloud.spring.io/spring-cloud-static/spring-cloud-stream/2.2.0.RELEASE/spring-cloud-stream.html" target="_blank" rel="noopener">https://cloud.spring.io/spring-cloud-static/spring-cloud-stream/2.2.0.RELEASE/spring-cloud-stream.html</a></p>
+<h3 id="Spring-Cloud-Stream编写生产者"><a href="#Spring-Cloud-Stream编写生产者" class="headerlink" title="Spring Cloud Stream编写生产者"></a>Spring Cloud Stream编写生产者</h3><p>加依赖</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-stream-rocketmq<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>加注解</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@EnableBinding</span>(Source.class)</span><br></pre></td></tr></table></figure>
+
+<p>加配置</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span> </span><br><span class="line"><span class="attr">  cloud:</span></span><br><span class="line"><span class="attr">    stream:</span></span><br><span class="line"><span class="attr">      rocketmq:</span></span><br><span class="line"><span class="attr">        binder:</span></span><br><span class="line"><span class="attr">          name-server:</span> <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span><span class="string">:9876</span></span><br><span class="line"><span class="attr">      bindings:</span></span><br><span class="line"><span class="attr">        output:</span></span><br><span class="line">          <span class="comment"># 指定topic</span></span><br><span class="line"><span class="attr">          destination:</span> <span class="string">stream-test-topic</span></span><br></pre></td></tr></table></figure>
+
+<p>创建消息</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@GetMapping</span>(<span class="string">"test-stream"</span>)</span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">testStream</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.source.output().send(</span><br><span class="line">        MessageBuilder.withPayload(<span class="string">"消息！！"</span>).build()</span><br><span class="line">    );</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="string">"success"</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Spring-Cloud-Stream编写消费者"><a href="#Spring-Cloud-Stream编写消费者" class="headerlink" title="Spring Cloud Stream编写消费者"></a>Spring Cloud Stream编写消费者</h3><p>加依赖</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-stream-rocketmq<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>加注解</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@EnableBinding</span>(&#123;Sink.class&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>加配置</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span> </span><br><span class="line"><span class="attr">  cloud:</span></span><br><span class="line"><span class="attr">    stream:</span></span><br><span class="line"><span class="attr">      rocketmq:</span></span><br><span class="line"><span class="attr">        binder:</span></span><br><span class="line"><span class="attr">          name-server:</span> <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span><span class="string">:9876</span></span><br><span class="line"><span class="attr">      bindings:</span></span><br><span class="line"><span class="attr">        input:</span></span><br><span class="line"><span class="attr">          destination:</span> <span class="string">stream-test-topic</span></span><br><span class="line">          <span class="comment"># rocketmq一定要设置group（随便写） 其他的mq可留空</span></span><br><span class="line"><span class="attr">          group:</span> <span class="string">binding-group</span></span><br></pre></td></tr></table></figure>
+
+<p>消费消息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">package cn.cicoding.usercenter.rocketmq;</span><br><span class="line"></span><br><span class="line">import lombok.extern.slf4j.Slf4j;</span><br><span class="line">import org.springframework.cloud.stream.annotation.StreamListener;</span><br><span class="line">import org.springframework.cloud.stream.messaging.Sink;</span><br><span class="line">import org.springframework.stereotype.Service;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * @author zhaokejin</span><br><span class="line"> * @description</span><br><span class="line"> * @date 2019/11/15</span><br><span class="line"> */</span><br><span class="line">@Service</span><br><span class="line">@Slf4j</span><br><span class="line">public class TestStreamConsumer &#123;</span><br><span class="line"></span><br><span class="line">	@StreamListener(Sink.INPUT)</span><br><span class="line">	public void receive(String messageBody)&#123;</span><br><span class="line">		log.info(&quot;通过stream收到消息，messageBody = &#123;&#125;&quot;, messageBody);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>启动测试！可以看到控制台收到的消息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">2019-12-28 11:54:08.988  INFO 14568 --- [MessageThread_1] c.c.m.consumer.TestStreamConsumer        : 通过stream收到消息，messageBody = RocketMQ消息！！</span><br><span class="line">2019-12-28 11:54:11.814  INFO 14568 --- [MessageThread_1] c.c.m.consumer.TestStreamConsumer        : 通过stream收到消息，messageBody = RocketMQ消息！！</span><br><span class="line">2019-12-28 11:54:12.435  INFO 14568 --- [MessageThread_1] c.c.m.consumer.TestStreamConsumer        : 通过stream收到消息，messageBody = RocketMQ消息！！</span><br><span class="line">2019-12-28 11:54:12.612  INFO 14568 --- [MessageThread_1] c.c.m.consumer.TestStreamConsumer        : 通过stream收到消息，messageBody = RocketMQ消息！！</span><br></pre></td></tr></table></figure>
+
+
+        <h2>相关文章</h2><ul><li><a href="/rocketmq/rocketmq-message-dedup/">RocketMQ--消息幂等（去重）通用解决方案</a></li><li><a href="/rocketmq/rocketmq-clean-commitlog/">RocketMQ--消息文件过期原理</a></li><li><a href="/rocketmq/rocketmq-consume-offset-management/">RocketMQ--消息ACK机制及消费进度管理</a></li><li><a href="/rocketmq/rocketmq-rebalance/">RocketMQ--水平扩展及负载均衡详解</a></li><li><a href="/rocketmq/rocketmq-acl-user-guide/">RocketMQ--权限控制</a></li></ul>
+    </div>
+    
+        <div class="reward" ontouchstart>
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+            
+                <span class="reward-type">
+                    <img class="wechat" src="/images/weixin.png"><b>微信打赏</b>
+                </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">赞赏是不耍流氓的鼓励</p>
+</div>
+
+
+    
+
+
+    
+        <div class="post-footer">
+            <div class="col-sm-10">
+                <div>
+                    <b>本文链接</b>：<a href="/micro-service/springcloud-stream-integrates-rocketmq/" target="_blank">SpringCloud Stream整合RocketMQ实现消息发送与接收</a>
+                </div>
+                <div>
+                    
+                        转载声明：本博客由小小冒险家创作，采用 <a href="https://creativecommons.org/licenses/by-nc-nd/3.0/" target="_blank"> CC BY 3.0 CN </a> 许可协议。可自由转载、引用，但需署名作者且注明文章出处。如转载至微信公众号，请在文末添加作者公众号二维码。
+                    
+                </div>
+                <div>
+                    
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <img src="/icons/wx.jpg" width=100%/>
+            </div>
+        </div>
+    
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+        <a target="_blank" href="/spring/difference-between-configuration-and-component/" class="pre-post btn btn-default"
+           title='Spring @Configuration和@Component区别'>
+            <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+            <span class="hidden-xs">Spring @Configuration和@Component区别</span>
+        </a>
+    
+    
+        <a target="_blank" href="/micro-service/microservice11/" class="next-post btn btn-default"
+           title='Spring Cloud Sleuth与Zipkin配合使用'>
+            <span class="hidden-lg">下一篇</span>
+            <span class="hidden-xs">Spring Cloud Sleuth与Zipkin配合使用</span><i class="fa fa-angle-right fa-fw"></i>
+        </a>
+    
+</div>
+
+
+    <div id="comments">
+        
+   <p>评论系统未开启，无法评论！</p>
+
+    </div>
+
+
+
+
+
+
+                </main>
+                
+    <aside class="col-md-4 sidebar">
+        
+        <div class="widget about-me">
+    <div class="row">
+        <div class="col-md-5">
+            <img src="/icons/wx.jpg" alt="公众号" class="img-responsive center-block">
+        </div>
+        <div class="col-md-7">
+            <a class="series-a" href="javascript:void(0)">公众号</a>
+            <ul>
+                <li>• 技术干货推送</li>
+                <li>• 日常好文分享</li>
+                <li><b>• 扫码领取更多惊喜</b></li>
+            </ul>
+        </div>
+    </div>
+    
+<!--        <div class="row">-->
+<!--            <div class="col-md-5">-->
+<!--                <img src="/icons/xcx.jpg" alt="小程序" class="img-responsive">-->
+<!--            </div>-->
+<!--            <div class="col-md-7">-->
+<!--                <a class="series-a" href="javascript:void(0)">小程序</a>-->
+<!--                <ul>-->
+<!--                    <li>• 原创笔记</li>-->
+<!--                    <li>• 独家心法</li>-->
+<!--                    <li><b>• 扫码领取</b></li>-->
+<!--                </ul>-->
+<!--            </div>-->
+<!--        </div>-->
+    
+</div>
+
+
+
+
+        
+        
+    <div class="widget">
+        <h3 class="title">网站公告</h3>
+        <div class="notification">
+            <p>
+  <b>QQ群</b>：415777345<br/>
+</p>
+
+<p>
+<b>联系博主QQ</b>：210006540<br/>
+</p>
+        </div>
+    </div>
+
+        
+        
+    
+        <div class="ad">
+            <div class="row">
+                <div class="col-md-12">
+                    <a href="https://promotion.aliyun.com/ntms/act/qwbk.html?userCode=qhtujh03" rel="nofollow" target="_blank">
+                        <img class="img-responsive center-block"
+                             title="阿里全民云计算"
+                             src="/icons/380-120.png"
+                        >
+                    </a>
+                </div>
+            </div>
+        </div>
+    
+
+
+
+
+        
+        
+    <div class="widget">
+        <h3 class="title">分类</h3>
+        <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Ajax/"><i class="fa" aria-hidden="true">Ajax</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/"><i class="fa" aria-hidden="true">Docker</i></a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Druid/"><i class="fa" aria-hidden="true">Druid</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Feign/"><i class="fa" aria-hidden="true">Feign</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/HTTP/"><i class="fa" aria-hidden="true">HTTP</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/"><i class="fa" aria-hidden="true">Hexo</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JRebel/"><i class="fa" aria-hidden="true">JRebel</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/"><i class="fa" aria-hidden="true">Java</i></a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Maven/"><i class="fa" aria-hidden="true">Maven</i></a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MongoDB/"><i class="fa" aria-hidden="true">MongoDB</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MySQL/"><i class="fa" aria-hidden="true">MySQL</i></a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Nexus3-x/"><i class="fa" aria-hidden="true">Nexus3.x</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/PowerShell/"><i class="fa" aria-hidden="true">PowerShell</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Quartz/"><i class="fa" aria-hidden="true">Quartz</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/"><i class="fa" aria-hidden="true">Redis</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/RocketMQ/"><i class="fa" aria-hidden="true">RocketMQ</i></a><span class="category-list-count">12</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Sharding-JDBC/"><i class="fa" aria-hidden="true">Sharding-JDBC</i></a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/"><i class="fa" aria-hidden="true">Spring</i></a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring-Cloud/"><i class="fa" aria-hidden="true">Spring Cloud</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringBoot/"><i class="fa" aria-hidden="true">SpringBoot</i></a><span class="category-list-count">15</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringCloud-Alibaba/"><i class="fa" aria-hidden="true">SpringCloud Alibaba</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringSession/"><i class="fa" aria-hidden="true">SpringSession</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/主键/"><i class="fa" aria-hidden="true">主键</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/其他/"><i class="fa" aria-hidden="true">其他</i></a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/安装教程/"><i class="fa" aria-hidden="true">安装教程</i></a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link current" href="/categories/工具/"><i class="fa" aria-hidden="true">工具</i></a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/微服务/"><i class="fa" aria-hidden="true">微服务</i></a><span class="category-list-count">17</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据库/"><i class="fa" aria-hidden="true">数据库</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/面试/"><i class="fa" aria-hidden="true">面试</i></a><span class="category-list-count">1</span></li></ul>
+    </div>
+
+
+        
+        
+  <div class="widget">
+    <h3 class="title">标签云</h3>
+    <div class="content tag-cloud">
+        
+            <canvas width="300" height="300" id="tag-cloud-3d">
+                <a href="/tags/Ajax/" style="font-size: 10px;">Ajax</a> <a href="/tags/Alibaba/" style="font-size: 10px;">Alibaba</a> <a href="/tags/Banner/" style="font-size: 10px;">Banner</a> <a href="/tags/Centos/" style="font-size: 10px;">Centos</a> <a href="/tags/Docker/" style="font-size: 17.5px;">Docker</a> <a href="/tags/Druid/" style="font-size: 10px;">Druid</a> <a href="/tags/Eureka/" style="font-size: 10.83px;">Eureka</a> <a href="/tags/FastDFS/" style="font-size: 10.83px;">FastDFS</a> <a href="/tags/Feign/" style="font-size: 13.33px;">Feign</a> <a href="/tags/File/" style="font-size: 10px;">File</a> <a href="/tags/HTTP/" style="font-size: 10px;">HTTP</a> <a href="/tags/Hexo/" style="font-size: 10.83px;">Hexo</a> <a href="/tags/HikariCP/" style="font-size: 10px;">HikariCP</a> <a href="/tags/Hystrix/" style="font-size: 10.83px;">Hystrix</a> <a href="/tags/Hystrix-Dashboard/" style="font-size: 10px;">Hystrix Dashboard</a> <a href="/tags/IDEA/" style="font-size: 10px;">IDEA</a> <a href="/tags/JDK/" style="font-size: 10px;">JDK</a> <a href="/tags/JRebel/" style="font-size: 10px;">JRebel</a> <a href="/tags/Java/" style="font-size: 12.5px;">Java</a> <a href="/tags/Java-b2-spring注解/" style="font-size: 15.83px;">Java-b2-spring注解</a> <a href="/tags/Map/" style="font-size: 10px;">Map</a> <a href="/tags/Maven/" style="font-size: 12.5px;">Maven</a> <a href="/tags/Memcache/" style="font-size: 10px;">Memcache</a> <a href="/tags/MongoDB/" style="font-size: 10.83px;">MongoDB</a> <a href="/tags/MongoTemplate/" style="font-size: 10.83px;">MongoTemplate</a> <a href="/tags/MySQL/" style="font-size: 15px;">MySQL</a> <a href="/tags/MySQL8/" style="font-size: 10px;">MySQL8</a> <a href="/tags/Mysql/" style="font-size: 10px;">Mysql</a> <a href="/tags/Navicat/" style="font-size: 10px;">Navicat</a> <a href="/tags/Nexus3-x/" style="font-size: 10.83px;">Nexus3.x</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/PowerShell/" style="font-size: 10px;">PowerShell</a> <a href="/tags/Quartz/" style="font-size: 10px;">Quartz</a> <a href="/tags/RabbitMQ/" style="font-size: 10px;">RabbitMQ</a> <a href="/tags/Redis/" style="font-size: 12.5px;">Redis</a> <a href="/tags/Ribbon/" style="font-size: 10.83px;">Ribbon</a> <a href="/tags/RocketMQ/" style="font-size: 18.33px;">RocketMQ</a> <a href="/tags/Sharding-JDBC/" style="font-size: 14.17px;">Sharding-JDBC</a> <a href="/tags/SonarQube/" style="font-size: 10px;">SonarQube</a> <a href="/tags/Spring/" style="font-size: 16.67px;">Spring</a> <a href="/tags/Spring-Boot/" style="font-size: 11.67px;">Spring Boot</a> <a href="/tags/Spring-Cloud/" style="font-size: 16.67px;">Spring Cloud</a> <a href="/tags/Spring-Cloud-Gateway/" style="font-size: 10.83px;">Spring Cloud Gateway</a> <a href="/tags/Spring-Cloud-Sleuth/" style="font-size: 10px;">Spring Cloud Sleuth</a> <a href="/tags/SpringBoot/" style="font-size: 20px;">SpringBoot</a> <a href="/tags/SpringCloud/" style="font-size: 10px;">SpringCloud</a> <a href="/tags/SpringCloud-Alibaba/" style="font-size: 10px;">SpringCloud Alibaba</a> <a href="/tags/SpringCloud-Stream/" style="font-size: 10px;">SpringCloud Stream</a> <a href="/tags/SpringSession/" style="font-size: 10px;">SpringSession</a> <a href="/tags/Tomcat/" style="font-size: 10px;">Tomcat</a> <a href="/tags/Transaction/" style="font-size: 10px;">Transaction</a> <a href="/tags/Turbine/" style="font-size: 10px;">Turbine</a> <a href="/tags/Web应用/" style="font-size: 10px;">Web应用</a> <a href="/tags/Windows/" style="font-size: 10px;">Windows</a> <a href="/tags/Windows-11/" style="font-size: 10px;">Windows 11</a> <a href="/tags/Zipkin/" style="font-size: 10px;">Zipkin</a> <a href="/tags/Zookeeper/" style="font-size: 10px;">Zookeeper</a> <a href="/tags/Zuul/" style="font-size: 10px;">Zuul</a> <a href="/tags/assessToken/" style="font-size: 10px;">assessToken</a> <a href="/tags/httpclient/" style="font-size: 10px;">httpclient</a> <a href="/tags/logback/" style="font-size: 10px;">logback</a> <a href="/tags/session共享/" style="font-size: 10px;">session共享</a> <a href="/tags/theme/" style="font-size: 10px;">theme</a> <a href="/tags/互联网产品/" style="font-size: 10px;">互联网产品</a> <a href="/tags/其他/" style="font-size: 10px;">其他</a> <a href="/tags/分布式/" style="font-size: 10.83px;">分布式</a> <a href="/tags/加密/" style="font-size: 10px;">加密</a> <a href="/tags/原理/" style="font-size: 10px;">原理</a> <a href="/tags/发布/" style="font-size: 10px;">发布</a> <a href="/tags/图片水印/" style="font-size: 10px;">图片水印</a> <a href="/tags/工具/" style="font-size: 10px;">工具</a> <a href="/tags/并发编程/" style="font-size: 10px;">并发编程</a> <a href="/tags/循环依赖/" style="font-size: 10px;">循环依赖</a> <a href="/tags/微服务/" style="font-size: 19.17px;">微服务</a> <a href="/tags/时间工具类/" style="font-size: 10px;">时间工具类</a> <a href="/tags/注解/" style="font-size: 10.83px;">注解</a> <a href="/tags/消息订阅/" style="font-size: 10px;">消息订阅</a> <a href="/tags/索引/" style="font-size: 14.17px;">索引</a> <a href="/tags/红黑树/" style="font-size: 10px;">红黑树</a>
+            </canvas>
+        
+    </div>
+  </div>
+
+
+        
+        
+    <div class="widget">
+        <h3 class="title">归档</h3>
+        <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/"><i class="fa" aria-hidden="true">2022年09月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/05/"><i class="fa" aria-hidden="true">2022年05月</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/"><i class="fa" aria-hidden="true">2021年07月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/"><i class="fa" aria-hidden="true">2021年06月</i></a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/"><i class="fa" aria-hidden="true">2021年03月</i></a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/"><i class="fa" aria-hidden="true">2021年02月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/"><i class="fa" aria-hidden="true">2020年11月</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/"><i class="fa" aria-hidden="true">2020年09月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/"><i class="fa" aria-hidden="true">2020年08月</i></a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/"><i class="fa" aria-hidden="true">2020年07月</i></a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/"><i class="fa" aria-hidden="true">2020年06月</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/"><i class="fa" aria-hidden="true">2020年04月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/"><i class="fa" aria-hidden="true">2020年03月</i></a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/"><i class="fa" aria-hidden="true">2020年02月</i></a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/"><i class="fa" aria-hidden="true">2020年01月</i></a><span class="archive-list-count">23</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/"><i class="fa" aria-hidden="true">2019年12月</i></a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/"><i class="fa" aria-hidden="true">2019年11月</i></a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/"><i class="fa" aria-hidden="true">2019年10月</i></a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/"><i class="fa" aria-hidden="true">2019年09月</i></a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/"><i class="fa" aria-hidden="true">2019年08月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/"><i class="fa" aria-hidden="true">2019年05月</i></a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/"><i class="fa" aria-hidden="true">2019年04月</i></a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/"><i class="fa" aria-hidden="true">2019年03月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/"><i class="fa" aria-hidden="true">2019年02月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/"><i class="fa" aria-hidden="true">2019年01月</i></a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/"><i class="fa" aria-hidden="true">2018年12月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/"><i class="fa" aria-hidden="true">2018年10月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/"><i class="fa" aria-hidden="true">2018年09月</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/"><i class="fa" aria-hidden="true">2018年08月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/"><i class="fa" aria-hidden="true">2018年06月</i></a><span class="archive-list-count">2</span></li></ul>
+    </div>
+
+
+        
+        
+    <div class="widget">
+      <h3 class="title">社交</h3> 
+        <div class="content social">
+            
+	            <a href="//github.com/zhaokejin" rel="external nofollow" title="GitHub" target="_blank">
+			    	<i class="github fa fa-github"></i>
+			    </a>
+            
+	            <a href="//gitee.com/zhaokejin" rel="external nofollow" title="Gitee" target="_blank">
+			    	<i class="git fa fa-git"></i>
+			    </a>
+            
+	            <a href="mailto:210006540qq.com" rel="external nofollow" title="邮箱" target="_blank">
+			    	<i class="envelope-o fa fa-envelope-o"></i>
+			    </a>
+            
+	            <a href="//wpa.qq.com/msgrd?v=3&uin=210006540&site=qq&menu=yes" rel="external nofollow" title="QQ" target="_blank">
+			    	<i class="qq fa fa-qq"></i>
+			    </a>
+            
+	            <a href="//shang.qq.com/wpa/qunwpa?idkey=7b19717710dcc2c78996f316db3ab3365bde39bc3c60de7a6c59fe07231e231a" rel="external nofollow" title="QQ群" target="_blank">
+			    	<i class="group fa fa-group"></i>
+			    </a>
+            
+	            <a href="/atom.xml" rel="external nofollow" title="RSS" target="_blank">
+			    	<i class="feed fa fa-feed"></i>
+			    </a>
+            
+        </div>
+    </div>
+
+
+        
+        
+
+        
+    </aside>
+
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+
+<a id="back-to-top" class="icon-btn hide">
+	<i class="fa fa-chevron-up"></i>
+</a>
+
+
+
+
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+        访问量:
+        <strong id="busuanzi_value_site_pv">
+            <i class="fa fa-spinner fa-spin"></i>
+        </strong>
+        &nbsp; | &nbsp;
+        访客数:
+        <strong id="busuanzi_value_site_uv">
+            <i class="fa fa-spinner fa-spin"></i>
+        </strong>
+<!--        &nbsp; <strong>Since 2018-12-26</strong>-->
+    
+</div>
+
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy; 2018 - 2023
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    <a href="//www.beian.miit.gov.cn/" class="copyright-links" target="_blank" rel="nofollow">鲁ICP备18033870号</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/js/jquery.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/bootstrap-hover-dropdown.min.js"></script>
+
+
+	<script src="/js/search.js?rev=@@hash"></script>
+
+
+
+    <script src="/assets/tagcanvas.min.js?rev=2.9"></script>
+    <script>
+        var tagOption = {
+            textColour: '#29afec', // 字体颜色
+            outlineMethod: 'block', // 选中模式
+            outlineColour: '#FFDAB9', // 选中模式的颜色
+            interval: 30 || 30, // 动画帧之间的时间间隔，值越大，转动幅度越大
+            textHeight: 13,
+            outlineRadius: 3,
+            freezeActive: true || '', // 选中的标签是否继续滚动
+            frontSelect: true || '', // 不选标签云后部的标签
+            initial: [0.1, -0.1],
+            depth: 0.5,
+            decel: 0.95,
+            maxSpeed: 0.03,
+            reverse: true || '', // 是否反向触发
+            fadeIn: 500, // 进入动画时间
+            wheelZoom: false || '' // 是否启用鼠标滚轮
+        }
+        TagCanvas.Start('tag-cloud-3d','',tagOption);
+    </script>
+
+
+
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<script src="/js/app.js?rev=@@hash"></script>
+<script src="/jquery.fancybox.js?v=2.1.5"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('.fancybox').fancybox();
+    });
+    // 给图片添加链接
+    $(document).ready(function() {
+        $("p img").each(function() {
+            var strA = "<a id='yourid' class='fancybox' data-fancybox-group='gallery'  href='" + this.src + "'></a>";
+            $(this).wrapAll(strA);
+        });
+    });
+    // fancybox
+    $("#yourid").fancybox({
+        openEffect    : 'elastic',
+        closeEffect   : 'elastic',
+    });
+</script>
+
+</body>
+</html>

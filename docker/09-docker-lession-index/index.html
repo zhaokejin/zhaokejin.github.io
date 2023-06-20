@@ -1,0 +1,853 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="小小冒险家的博客">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.2.3">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="https://www.cicoding.cn">
+    <!--SEO-->
+
+    <meta name="keywords" content="Docker,Nginx">
+
+
+    <meta name="description" content="
+前言
+由于nginx是一个反向代理服务器，涉及到一些配置。如果你对nginx一点都不懂的话，那么，你在学习下面的内容的时候，可能就会不太懂，因为我们是要在docker中操作nginx，同时需要编辑一些配置文件。
+适合对于nginx有一定了解的朋友参考使用。
+
+下载nginx镜像1docker...">
+
+
+
+<meta name="robots" content="all">
+<meta name="google" content="all">
+<meta name="googlebot" content="all">
+<meta name="verify" content="all">
+    <!--Title-->
+
+
+<title>在Docker中安装Nginx | 小小冒险家的博客</title>
+
+
+    <link rel="alternate" href="/atom.xml" title="小小冒险家的博客" type="application/atom+xml">
+
+
+    <link rel="icon" href="/favicon.png">
+
+    
+
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7">
+<link rel="stylesheet" href="/jquery.fancybox.css?v=2.1.5">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.5.0">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash">
+
+
+
+
+    
+
+
+
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?601ebec7733383ef248ca61fc0a0db95";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+
+
+    
+
+</head>
+
+</html>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+
+<body>
+    
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row clearfix">
+            <div class="col-md-12 column">
+                <nav class="navbar navbar-default" style="background-color:#fff;border:0;margin-bottom:0"
+                     role="navigation">
+                    <div class="navbar-header">
+<!--                        <button type="button" class="navbar-toggle" data-toggle="collapse"-->
+<!--                                data-target="#navbar-collapse-1">-->
+<!--                            <span class="sr-only">切</span>-->
+<!--                            <span class="icon-bar"></span>-->
+<!--                            <span class="icon-bar"></span>-->
+<!--                            <span class="icon-bar"></span>-->
+<!--                        </button>-->
+                        <a class="logo" href="/">
+                            <img src="/favicon.png"/>小小冒险家的博客
+                        </a>
+                    </div>
+
+                    <div class="collapse navbar-collapse" style="border:0;" id="navbar-collapse-1">
+                        <ul class="nav navbar-nav">
+                            
+                                
+                                    <li>
+                                        <a href="/" >
+                                            <i class="fa fa-home"></i>
+                                            首页
+                                        </a>
+                                    </li>
+                                
+                            
+                                
+                                    <li>
+                                        <a href="/archives" >
+                                            <i class="fa fa-sort"></i>
+                                            归档
+                                        </a>
+                                    </li>
+                                
+                            
+                                
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                                           data-hover="dropdown">
+                                            <i class="fa fa-fire"></i>
+                                            系列教程
+                                            <strong class="caret"></strong>
+                                        </a>
+                                        <ul class="dropdown-menu">
+                                            
+                                                <li>
+                                                    <a href="/docker/00-docker-lession-index" target="_blank">
+                                                        <i class="fa "></i>
+                                                        Docker系列教程
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="/micro-service/microservice/" target="_blank">
+                                                        <i class="fa "></i>
+                                                        SpringCloud微服务架构
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="/micro-service/microservice-alibaba/" target="_blank">
+                                                        <i class="fa "></i>
+                                                        SpringCloud Alibaba微服务架构
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="/sharding-jdbc/sharding-jdbc000/" target="_blank">
+                                                        <i class="fa "></i>
+                                                        Sharding-JDBC教程
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="/springboot/springboot-source-code/" target="_blank">
+                                                        <i class="fa "></i>
+                                                        SpringBoot源码系列
+                                                    </a>
+                                                </li>
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+                                
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                                           data-hover="dropdown">
+                                            <i class="fa fa-book"></i>
+                                            在线文档
+                                            <strong class="caret"></strong>
+                                        </a>
+                                        <ul class="dropdown-menu">
+                                            
+                                                <li>
+                                                    <a href="https://spring.io/docs/" target="_blank">
+                                                        <i class="fa "></i>
+                                                        Spring Reference
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="https://spring.io/projects/spring-boot/" target="_blank">
+                                                        <i class="fa "></i>
+                                                        SpringBoot Reference
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="https://spring.io/projects/spring-cloud/" target="_blank">
+                                                        <i class="fa "></i>
+                                                        SpringCloud Reference
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="https://docs.spring.io/spring-security/site/docs/current/reference/htmlsingle/" target="_blank">
+                                                        <i class="fa "></i>
+                                                        Spring Security Reference
+                                                    </a>
+                                                </li>
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+                                
+                                    <li>
+                                        <a href="/other/jrebel-activation" >
+                                            <i class="fa fa-fire"></i>
+                                            JRebel激活
+                                        </a>
+                                    </li>
+                                
+                            
+                                
+                                    <li>
+                                        <a href="/about" >
+                                            <i class="fa fa-user"></i>
+                                            关于我
+                                        </a>
+                                    </li>
+                                
+                            
+                        </ul>
+                        
+                            <form id="search-form" class="navbar-form navbar-right">
+                                <div class="form-group input-group">
+                                    <input type="text" id="local-search-input" class="form-control"
+                                           placeholder="搜我..."/>
+                                    <span class="input-group-btn">
+                                        <a class="btn btn-default">
+                                            <i class="fa fa-search"></i>
+                                        </a>
+                                    </span>
+                                </div>
+                                <div id="local-search-result" class="local-search-result-cls"></div>
+                            </form>
+                        
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </div>
+</nav>
+
+    <a href="http://github.com/zhaokejin" target="_blank">
+        <img style="position: absolute; width:100px; top: 0; left: 0; border: 0;"
+             src="/img/fork-me.png"
+             alt="Fork me on GitHub">
+    </a>
+
+
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    
+    
+        <div class="ad">
+            <div class="row">
+                
+                    <div class="col-md-12">
+                        <a href="https://promotion.aliyun.com/ntms/act/qwbk.html?userCode=qhtujh03" rel="nofollow" target="_blank">
+                            <img class="img-responsive center-block"
+                                 src="/icons/810x100.png"
+                                 title="阿里全民云计算"
+                            >
+                        </a>
+                    </div>
+                
+            </div>
+        </div>
+    
+
+
+<p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="在Docker中安装Nginx">
+            
+                在Docker中安装Nginx
+            
+        </h1>
+        <div class="post-meta">
+    
+
+    
+        <span class="categories-meta fa-wrap">
+            <i class="fa fa-folder-open-o"></i>
+            <a class="category-link" href="/categories/Docker/">Docker</a>
+        </span>
+    
+
+    
+        <span class="fa-wrap">
+            <i class="fa fa-tags"></i>
+            <span class="tags-meta">
+                
+                    <a class="tag-link" href="/tags/Docker/">Docker</a> <a class="tag-link" href="/tags/Nginx/">Nginx</a>
+                
+            </span>
+        </span>
+    
+
+    
+        
+        <span class="fa-wrap">
+            <i class="fa fa-clock-o"></i>
+            <span class="date-meta">2019/10/16</span>
+        </span>
+        
+            <span class="fa-wrap">
+                <i class="fa fa-eye"></i>
+                <span id="busuanzi_value_page_pv"></span>
+            </span>
+        
+    
+</div>
+        
+        
+    </div>
+    
+    <div class="post-body post-content" id="container">
+        
+    <div class="toc-article">
+        <strong>
+            目录
+        </strong>
+        <div class="toc-content">
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#下载nginx镜像"><span class="toc-text">下载nginx镜像</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#查看下载的nginx镜像"><span class="toc-text">查看下载的nginx镜像</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#启动nginx镜像容器"><span class="toc-text">启动nginx镜像容器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#访问服务器"><span class="toc-text">访问服务器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#将nginx的配置文件、日志目录映射到宿主机"><span class="toc-text">将nginx的配置文件、日志目录映射到宿主机</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#在宿主机中创建nginx相关目录"><span class="toc-text">在宿主机中创建nginx相关目录</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#编辑宿主机上的nginx相关配置文件"><span class="toc-text">编辑宿主机上的nginx相关配置文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#重启nginx容器"><span class="toc-text">重启nginx容器</span></a></li></ol></li></ol>
+        </div>
+    </div>
+
+
+        <blockquote>
+<p>前言</p>
+<p>由于nginx是一个反向代理服务器，涉及到一些配置。如果你对nginx一点都不懂的话，那么，你在学习下面的内容的时候，可能就会不太懂，因为我们是要在docker中操作nginx，同时需要编辑一些配置文件。</p>
+<p>适合对于nginx有一定了解的朋友参考使用。</p>
+</blockquote>
+<h2 id="下载nginx镜像"><a href="#下载nginx镜像" class="headerlink" title="下载nginx镜像"></a>下载nginx镜像</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull nginx</span><br></pre></td></tr></table></figure>
+
+<h2 id="查看下载的nginx镜像"><a href="#查看下载的nginx镜像" class="headerlink" title="查看下载的nginx镜像"></a>查看下载的nginx镜像</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker images</span><br></pre></td></tr></table></figure>
+
+<p>如下图：</p>
+<p><img src="/images/docker/1527832301031-bf1ad67d-a6a2-4c20-888e-970c41c7ae9d.png" alt="在Docker中安装Nginx"></p>
+<h2 id="启动nginx镜像容器"><a href="#启动nginx镜像容器" class="headerlink" title="启动nginx镜像容器"></a>启动nginx镜像容器</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d -p 80:80 --name nginx nginx</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>nginx是一个代理，端口默认是80</p>
+</blockquote>
+<h2 id="访问服务器"><a href="#访问服务器" class="headerlink" title="访问服务器"></a>访问服务器</h2><blockquote>
+<p>当前nginx是安装在我的阿里云服务器上的，所以，我们可以访问一下阿里云服务器。</p>
+</blockquote>
+<blockquote>
+<p>我的阿里云服务器域名是 <a href="http://www.cicoding.com" target="_blank" rel="noopener"> http://www.cicoding.com</a></p>
+</blockquote>
+<p>在浏览器中输入域名 <a href="http://www.cicoding.com" target="_blank" rel="noopener">http://www.cicoding.com</a> ，回车看一下效果：</p>
+<p><img src="/images/docker/1527832846216-4d03013e-d0cd-434f-9069-10f2e38e67bf.png" alt="在Docker中安装Nginx"></p>
+<blockquote>
+<p>出现上面的页面，说明nginx已经正常启动了。</p>
+</blockquote>
+<h2 id="将nginx的配置文件、日志目录映射到宿主机"><a href="#将nginx的配置文件、日志目录映射到宿主机" class="headerlink" title="将nginx的配置文件、日志目录映射到宿主机"></a>将nginx的配置文件、日志目录映射到宿主机</h2><blockquote>
+<p>在测试环境、生产环境的话，都是需要编辑一些nginx的配置的，最常见的修改就是nginx.conf文件。</p>
+</blockquote>
+<blockquote>
+<p>将nginx的配置文件、日志目录等，映射到宿主机上进行管理维护，是很方便的，也是推荐的做法。</p>
+</blockquote>
+<h3 id="在宿主机中创建nginx相关目录"><a href="#在宿主机中创建nginx相关目录" class="headerlink" title="在宿主机中创建nginx相关目录"></a>在宿主机中创建nginx相关目录</h3><blockquote>
+<p>首先在宿主机中创建一个用于存放nginx相关文件的目录，这里我就在 /opt 目录下新建了一个 docker_nginx 的目录文件。</p>
+<p>然后在 docker_nginx 目录下新建 conf 、log 、www 这三个目录，目录含义是：</p>
+<p>conf：存放nginx的相关配置文件，比如 nginx.conf</p>
+<p>log：存放nginx的日志文件</p>
+<p>www：存放相关静态资源文件</p>
+</blockquote>
+<blockquote>
+</blockquote>
+<blockquote>
+<p>最终的目录结构如下：</p>
+</blockquote>
+<blockquote>
+<p><img src="/images/docker/1527833862890-ad0217c0-5bf3-46c9-b332-88a7b04da6ca.png" alt="在Docker中安装Nginx"></p>
+</blockquote>
+<p>复制一份nginx.conf文件到宿主机对应的目录下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker cp nginx:/etc/nginx/nginx.conf /opt/docker_nginx/conf/nginx.conf</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>这条命令的作用，就是复制nginx的docker容器中的 /etc/nginx/nginx.conf 文件到宿主机下的 /opt/docker_nginx/conf/ 目录下。这样可以直接进行默认的配置文件的编辑。</p>
+</blockquote>
+<p>看一下默认的nginx.conf配置文件的内容：</p>
+<p><img src="/images/docker/1527834624021-ba784d6a-6c4a-4d0d-a2dc-e2885999314d.png" alt="在Docker中安装Nginx"></p>
+<p>编辑 nginx 的配置文件：</p>
+<blockquote>
+<p>我们暂时就修改其中的 access_log 、error_log 、root 这些基本配置。</p>
+</blockquote>
+<blockquote>
+<p>从上图可以看到，配置文件最下面，有这样一段配置：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; include /etc/nginx/conf.d/*.conf;</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<p>意思也就是引入了其他配置文件。</p>
+<p>既然我们要在宿主机上管理nginx的配置文件，所以对于上面的include引入的文件，我们也要复制一份到对应的宿主机上。</p>
+</blockquote>
+<blockquote>
+<p>我们进入nginx容器，去查看一下这个路径下面有哪些文件：</p>
+<ul>
+<li>进入nginx容器</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; docker exec -it e4 /bin/bash</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<p>其中的 e4 指的是容器ID的前2位字符串。</p>
+</blockquote>
+<blockquote>
+<ul>
+<li>查看 /etc/nginx/conf.d/ 目录</li>
+</ul>
+<p><img src="/images/docker/1527835373585-7316d3b7-e789-4f62-8a6b-8c3953633697.png" alt="在Docker中安装Nginx"></p>
+<p>可以看到，里面有一个default.conf配置文件</p>
+<ul>
+<li>查看 default.conf配置文件</li>
+</ul>
+<p><img src="/images/docker/1527835468543-cbfd5cfc-ffcf-4512-abb9-46331febd3ae.png" alt="在Docker中安装Nginx"></p>
+</blockquote>
+<blockquote>
+<p>其中用黄色圈起来的部分，是我们要修改的内容（上面说过了，目前就先简单修改基本的配置，只是方便大家看到一下效果，至于其他的配置，可自行按照这样的步骤自行编辑）。</p>
+<ul>
+<li>复制一份default.conf文件到宿主机对应的目录下</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; docker cp nginx:/etc/nginx/conf.d/default.conf /opt/docker_nginx/conf/default.conf</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<ul>
+<li>查看一下目前宿主机下面的nginx配置文件情况</li>
+</ul>
+</blockquote>
+<blockquote>
+<p><img src="/images/docker/1527837882497-2ef89731-6d8c-4639-b6cb-2c9d4034a2cd.png" alt="在Docker中安装Nginx"></p>
+<ul>
+<li>同样的，我们也需要把nginx的默认首页文件，复制到宿主机下面</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; docker cp nginx:/usr/share/nginx/html/index.html /opt/docker_nginx/www/</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<h3 id="编辑宿主机上的nginx相关配置文件"><a href="#编辑宿主机上的nginx相关配置文件" class="headerlink" title="编辑宿主机上的nginx相关配置文件"></a>编辑宿主机上的nginx相关配置文件</h3><blockquote>
+<ul>
+<li><strong>首先修改 nginx.conf 配置文件</strong>，修改后结果是：</li>
+</ul>
+<p><img src="/images/docker/1527838034307-65530160-3710-4246-a816-9703af4fc524.png" alt="在Docker中安装Nginx"></p>
+<blockquote>
+<p>其中error_log的配置，就是我们前面在宿主机下面创建的nginx的log目录。</p>
+<p>注意需要修改最下面的include配置，指定宿主机下面的default.conf配置文件（default/conf与nginx.conf在相同目录下，所以直接写名称即可，无需指定具体目录路径）</p>
+</blockquote>
+<ul>
+<li><strong>编辑default.conf文件</strong></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; vim /opt/docker_nginx/conf/default.conf</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<p>修改文件中的 access_log 以及 root 配置，效果如下</p>
+</blockquote>
+<blockquote>
+<p><img src="/images/docker/1527838387330-9501c9c8-1d8b-44e0-a177-d61a8c4699fa.png" alt="在Docker中安装Nginx"></p>
+<blockquote>
+<p>同样，access_log 以及 root 的配置，就是我们前面在宿主机下面创建的nginx的相关目录。</p>
+</blockquote>
+</blockquote>
+<h3 id="重启nginx容器"><a href="#重启nginx容器" class="headerlink" title="重启nginx容器"></a>重启nginx容器</h3><ul>
+<li><strong>先停止之前启动的nginx容器</strong></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker stop e4</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>重启nginx容器</strong></li>
+</ul>
+<blockquote>
+<p>这次重启nginx容器的话，就不能使用一开始那种简单的run命令了，需要添加一些参数，具体命令如下：</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">docker run -p 80:80 --name nginx-new \</span><br><span class="line">    -v /opt/docker_nginx/www:/usr/share/nginx/html \</span><br><span class="line">    -v /opt/docker_nginx/log:/var/log/nginx \</span><br><span class="line">    -v /opt/docker_nginx/conf/nginx.conf:/etc/nginx/conf \</span><br><span class="line">    -d nginx</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>这里的 -v 参数的含义是，将宿主机上的目录挂载到容器中的对应目录。</p>
+<p>“：”冒号前面是宿主机的目录，后面是容器中的目录。</p>
+</blockquote>
+<blockquote>
+<p>有些朋友可能会不搞不明白冒号后面的容器路径是怎么来的，这里解释一下，其实很简单，就是指的是nginx的默认的日志路径、配置文件路径。</p>
+<p>你在nginx容器中去查看一下nginx.conf以及default.conf配置文件的内容，就可以看到log和配置文件的默认存储路径了。文章上面也有截图出来nginx.conf以及default.conf的默认配置截图，可自行翻阅到上面查看。</p>
+</blockquote>
+<ul>
+<li><strong>查看启动的nginx容器</strong></li>
+</ul>
+<p><img src="/images/docker/1527839391119-1d98218f-62eb-46d4-8c8e-3047e30c773c.png" alt="在Docker中安装Nginx"></p>
+<ul>
+<li><strong>修改nginx默认首页内容</strong></li>
+</ul>
+<blockquote>
+<p>先看一下默认首页的样子：</p>
+<p><img src="/images/docker/1527840233785-22a458d3-1123-4249-b671-179ccc7e41fe.png" alt="在Docker中安装Nginx"></p>
+</blockquote>
+<p>我们把这个首页内容全部删除掉，加入我们自己的内容！</p>
+<blockquote>
+<p>编辑宿主机下面的 /opt/docker_nginx/www/index.html 文件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; vim /opt/docker_nginx/www/index.html</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<p>修改之后如下：</p>
+<p><img src="/images/docker/1527840219657-335ad4a0-276f-47d3-b49a-0b55fa8299fd.png" alt="在Docker中安装Nginx"></p>
+<ul>
+<li>重新访问服务器域名，查看最终效果</li>
+</ul>
+<p><img src="/images/docker/1527841014053-e2e485f8-a08e-40d7-bc05-603c7d32d43e.png" alt="在Docker中安装Nginx"></p>
+<blockquote>
+<p>如果页面出现中文乱码的问题，可以在 index.html 好 <head><meta name="generator" content="Hexo 3.9.0"> 标签里面加入：</head></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; &lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=UTF-8&quot;&gt;</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<p>最终index.html文件内容如下：</p>
+</blockquote>
+<blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&gt; &lt;!DOCTYPE html&gt;</span><br><span class="line">&gt; &lt;html&gt;</span><br><span class="line">&gt; &lt;head&gt;</span><br><span class="line">&gt; &lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=UTF-8&quot;&gt;</span><br><span class="line">&gt; &lt;title&gt;Welcome to nginx!&lt;/title&gt;</span><br><span class="line">&gt; &lt;style&gt;</span><br><span class="line">&gt;     body &#123;</span><br><span class="line">&gt;         width: 35em;</span><br><span class="line">&gt;         margin: 0 auto;</span><br><span class="line">&gt;         font-family: Tahoma, Verdana, Arial, sans-serif;</span><br><span class="line">&gt;     &#125;</span><br><span class="line">&gt; &lt;/style&gt;</span><br><span class="line">&gt; &lt;/head&gt;</span><br><span class="line">&gt; &lt;body&gt;</span><br><span class="line">&gt; &lt;h1&gt;欢迎访问!&lt;/h1&gt;</span><br><span class="line">&gt; &lt;p&gt;当前nginx服务来源于Docker容器&lt;/p&gt;</span><br><span class="line">&gt; &lt;/body&gt;</span><br><span class="line">&gt; &lt;/html&gt;</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure></blockquote>
+
+        <h2>相关文章</h2><ul><li><a href="/spring/docker-of-springboot-and-publish-to-remote-server/">SpringBoot应用docker化并发布到远程服务器</a></li><li><a href="/docker/12-docker-lession-index/">Docker部署Spring Boot项目</a></li><li><a href="/docker/11-docker-lession-index/">在Docker中安装Redis以及主从环境搭建</a></li><li><a href="/docker/10-docker-lession-index/">在Docker中安装Zookeeper以及集群环境搭建</a></li><li><a href="/docker/08-docker-lession-index/">在Docker中安装Mysql</a></li></ul>
+    </div>
+    
+        <div class="reward" ontouchstart>
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+            
+                <span class="reward-type">
+                    <img class="wechat" src="/images/weixin.png"><b>微信打赏</b>
+                </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">赞赏是不耍流氓的鼓励</p>
+</div>
+
+
+    
+
+
+    
+        <div class="post-footer">
+            <div class="col-sm-10">
+                <div>
+                    <b>本文链接</b>：<a href="/docker/09-docker-lession-index/" target="_blank">在Docker中安装Nginx</a>
+                </div>
+                <div>
+                    
+                        转载声明：本博客由小小冒险家创作，采用 <a href="https://creativecommons.org/licenses/by-nc-nd/3.0/" target="_blank"> CC BY 3.0 CN </a> 许可协议。可自由转载、引用，但需署名作者且注明文章出处。如转载至微信公众号，请在文末添加作者公众号二维码。
+                    
+                </div>
+                <div>
+                    
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <img src="/icons/wx.jpg" width=100%/>
+            </div>
+        </div>
+    
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+        <a target="_blank" href="/springboot/springboot-HikariCP/" class="pre-post btn btn-default"
+           title='SpringBoot那些好用的连接池HikariCP'>
+            <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+            <span class="hidden-xs">SpringBoot那些好用的连接池HikariCP</span>
+        </a>
+    
+    
+        <a target="_blank" href="/micro-service/microservice02/" class="next-post btn btn-default"
+           title='服务发现 - Eureka'>
+            <span class="hidden-lg">下一篇</span>
+            <span class="hidden-xs">服务发现 - Eureka</span><i class="fa fa-angle-right fa-fw"></i>
+        </a>
+    
+</div>
+
+
+
+
+
+
+
+                </main>
+                
+    <aside class="col-md-4 sidebar">
+        
+        <div class="widget about-me">
+    <div class="row">
+        <div class="col-md-5">
+            <img src="/icons/wx.jpg" alt="公众号" class="img-responsive center-block">
+        </div>
+        <div class="col-md-7">
+            <a class="series-a" href="javascript:void(0)">公众号</a>
+            <ul>
+                <li>• 技术干货推送</li>
+                <li>• 日常好文分享</li>
+                <li><b>• 扫码领取更多惊喜</b></li>
+            </ul>
+        </div>
+    </div>
+    
+<!--        <div class="row">-->
+<!--            <div class="col-md-5">-->
+<!--                <img src="/icons/xcx.jpg" alt="小程序" class="img-responsive">-->
+<!--            </div>-->
+<!--            <div class="col-md-7">-->
+<!--                <a class="series-a" href="javascript:void(0)">小程序</a>-->
+<!--                <ul>-->
+<!--                    <li>• 原创笔记</li>-->
+<!--                    <li>• 独家心法</li>-->
+<!--                    <li><b>• 扫码领取</b></li>-->
+<!--                </ul>-->
+<!--            </div>-->
+<!--        </div>-->
+    
+</div>
+
+
+
+
+        
+        
+    <div class="widget">
+        <h3 class="title">网站公告</h3>
+        <div class="notification">
+            <p>
+  <b>QQ群</b>：415777345<br/>
+</p>
+
+<p>
+<b>联系博主QQ</b>：210006540<br/>
+</p>
+        </div>
+    </div>
+
+        
+        
+    
+        <div class="ad">
+            <div class="row">
+                <div class="col-md-12">
+                    <a href="https://promotion.aliyun.com/ntms/act/qwbk.html?userCode=qhtujh03" rel="nofollow" target="_blank">
+                        <img class="img-responsive center-block"
+                             title="阿里全民云计算"
+                             src="/icons/380-120.png"
+                        >
+                    </a>
+                </div>
+            </div>
+        </div>
+    
+
+
+
+
+        
+        
+    <div class="widget">
+        <h3 class="title">分类</h3>
+        <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Ajax/"><i class="fa" aria-hidden="true">Ajax</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link current" href="/categories/Docker/"><i class="fa" aria-hidden="true">Docker</i></a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Druid/"><i class="fa" aria-hidden="true">Druid</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Feign/"><i class="fa" aria-hidden="true">Feign</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/HTTP/"><i class="fa" aria-hidden="true">HTTP</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/"><i class="fa" aria-hidden="true">Hexo</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JRebel/"><i class="fa" aria-hidden="true">JRebel</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/"><i class="fa" aria-hidden="true">Java</i></a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Maven/"><i class="fa" aria-hidden="true">Maven</i></a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MongoDB/"><i class="fa" aria-hidden="true">MongoDB</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MySQL/"><i class="fa" aria-hidden="true">MySQL</i></a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Nexus3-x/"><i class="fa" aria-hidden="true">Nexus3.x</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/PowerShell/"><i class="fa" aria-hidden="true">PowerShell</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Quartz/"><i class="fa" aria-hidden="true">Quartz</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/"><i class="fa" aria-hidden="true">Redis</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/RocketMQ/"><i class="fa" aria-hidden="true">RocketMQ</i></a><span class="category-list-count">12</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Sharding-JDBC/"><i class="fa" aria-hidden="true">Sharding-JDBC</i></a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/"><i class="fa" aria-hidden="true">Spring</i></a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring-Cloud/"><i class="fa" aria-hidden="true">Spring Cloud</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringBoot/"><i class="fa" aria-hidden="true">SpringBoot</i></a><span class="category-list-count">15</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringCloud-Alibaba/"><i class="fa" aria-hidden="true">SpringCloud Alibaba</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringSession/"><i class="fa" aria-hidden="true">SpringSession</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/主键/"><i class="fa" aria-hidden="true">主键</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/其他/"><i class="fa" aria-hidden="true">其他</i></a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/安装教程/"><i class="fa" aria-hidden="true">安装教程</i></a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/工具/"><i class="fa" aria-hidden="true">工具</i></a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/微服务/"><i class="fa" aria-hidden="true">微服务</i></a><span class="category-list-count">17</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据库/"><i class="fa" aria-hidden="true">数据库</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/面试/"><i class="fa" aria-hidden="true">面试</i></a><span class="category-list-count">1</span></li></ul>
+    </div>
+
+
+        
+        
+  <div class="widget">
+    <h3 class="title">标签云</h3>
+    <div class="content tag-cloud">
+        
+            <canvas width="300" height="300" id="tag-cloud-3d">
+                <a href="/tags/Ajax/" style="font-size: 10px;">Ajax</a> <a href="/tags/Alibaba/" style="font-size: 10px;">Alibaba</a> <a href="/tags/Banner/" style="font-size: 10px;">Banner</a> <a href="/tags/Centos/" style="font-size: 10px;">Centos</a> <a href="/tags/Docker/" style="font-size: 17.5px;">Docker</a> <a href="/tags/Druid/" style="font-size: 10px;">Druid</a> <a href="/tags/Eureka/" style="font-size: 10.83px;">Eureka</a> <a href="/tags/FastDFS/" style="font-size: 10.83px;">FastDFS</a> <a href="/tags/Feign/" style="font-size: 13.33px;">Feign</a> <a href="/tags/File/" style="font-size: 10px;">File</a> <a href="/tags/HTTP/" style="font-size: 10px;">HTTP</a> <a href="/tags/Hexo/" style="font-size: 10.83px;">Hexo</a> <a href="/tags/HikariCP/" style="font-size: 10px;">HikariCP</a> <a href="/tags/Hystrix/" style="font-size: 10.83px;">Hystrix</a> <a href="/tags/Hystrix-Dashboard/" style="font-size: 10px;">Hystrix Dashboard</a> <a href="/tags/IDEA/" style="font-size: 10px;">IDEA</a> <a href="/tags/JDK/" style="font-size: 10px;">JDK</a> <a href="/tags/JRebel/" style="font-size: 10px;">JRebel</a> <a href="/tags/Java/" style="font-size: 12.5px;">Java</a> <a href="/tags/Java-b2-spring注解/" style="font-size: 15.83px;">Java-b2-spring注解</a> <a href="/tags/Map/" style="font-size: 10px;">Map</a> <a href="/tags/Maven/" style="font-size: 12.5px;">Maven</a> <a href="/tags/Memcache/" style="font-size: 10px;">Memcache</a> <a href="/tags/MongoDB/" style="font-size: 10.83px;">MongoDB</a> <a href="/tags/MongoTemplate/" style="font-size: 10.83px;">MongoTemplate</a> <a href="/tags/MySQL/" style="font-size: 15px;">MySQL</a> <a href="/tags/MySQL8/" style="font-size: 10px;">MySQL8</a> <a href="/tags/Mysql/" style="font-size: 10px;">Mysql</a> <a href="/tags/Navicat/" style="font-size: 10px;">Navicat</a> <a href="/tags/Nexus3-x/" style="font-size: 10.83px;">Nexus3.x</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/PowerShell/" style="font-size: 10px;">PowerShell</a> <a href="/tags/Quartz/" style="font-size: 10px;">Quartz</a> <a href="/tags/RabbitMQ/" style="font-size: 10px;">RabbitMQ</a> <a href="/tags/Redis/" style="font-size: 12.5px;">Redis</a> <a href="/tags/Ribbon/" style="font-size: 10.83px;">Ribbon</a> <a href="/tags/RocketMQ/" style="font-size: 18.33px;">RocketMQ</a> <a href="/tags/Sharding-JDBC/" style="font-size: 14.17px;">Sharding-JDBC</a> <a href="/tags/SonarQube/" style="font-size: 10px;">SonarQube</a> <a href="/tags/Spring/" style="font-size: 16.67px;">Spring</a> <a href="/tags/Spring-Boot/" style="font-size: 11.67px;">Spring Boot</a> <a href="/tags/Spring-Cloud/" style="font-size: 16.67px;">Spring Cloud</a> <a href="/tags/Spring-Cloud-Gateway/" style="font-size: 10.83px;">Spring Cloud Gateway</a> <a href="/tags/Spring-Cloud-Sleuth/" style="font-size: 10px;">Spring Cloud Sleuth</a> <a href="/tags/SpringBoot/" style="font-size: 20px;">SpringBoot</a> <a href="/tags/SpringCloud/" style="font-size: 10px;">SpringCloud</a> <a href="/tags/SpringCloud-Alibaba/" style="font-size: 10px;">SpringCloud Alibaba</a> <a href="/tags/SpringCloud-Stream/" style="font-size: 10px;">SpringCloud Stream</a> <a href="/tags/SpringSession/" style="font-size: 10px;">SpringSession</a> <a href="/tags/Tomcat/" style="font-size: 10px;">Tomcat</a> <a href="/tags/Transaction/" style="font-size: 10px;">Transaction</a> <a href="/tags/Turbine/" style="font-size: 10px;">Turbine</a> <a href="/tags/Web应用/" style="font-size: 10px;">Web应用</a> <a href="/tags/Windows/" style="font-size: 10px;">Windows</a> <a href="/tags/Windows-11/" style="font-size: 10px;">Windows 11</a> <a href="/tags/Zipkin/" style="font-size: 10px;">Zipkin</a> <a href="/tags/Zookeeper/" style="font-size: 10px;">Zookeeper</a> <a href="/tags/Zuul/" style="font-size: 10px;">Zuul</a> <a href="/tags/assessToken/" style="font-size: 10px;">assessToken</a> <a href="/tags/httpclient/" style="font-size: 10px;">httpclient</a> <a href="/tags/logback/" style="font-size: 10px;">logback</a> <a href="/tags/session共享/" style="font-size: 10px;">session共享</a> <a href="/tags/theme/" style="font-size: 10px;">theme</a> <a href="/tags/互联网产品/" style="font-size: 10px;">互联网产品</a> <a href="/tags/其他/" style="font-size: 10px;">其他</a> <a href="/tags/分布式/" style="font-size: 10.83px;">分布式</a> <a href="/tags/加密/" style="font-size: 10px;">加密</a> <a href="/tags/原理/" style="font-size: 10px;">原理</a> <a href="/tags/发布/" style="font-size: 10px;">发布</a> <a href="/tags/图片水印/" style="font-size: 10px;">图片水印</a> <a href="/tags/工具/" style="font-size: 10px;">工具</a> <a href="/tags/并发编程/" style="font-size: 10px;">并发编程</a> <a href="/tags/循环依赖/" style="font-size: 10px;">循环依赖</a> <a href="/tags/微服务/" style="font-size: 19.17px;">微服务</a> <a href="/tags/时间工具类/" style="font-size: 10px;">时间工具类</a> <a href="/tags/注解/" style="font-size: 10.83px;">注解</a> <a href="/tags/消息订阅/" style="font-size: 10px;">消息订阅</a> <a href="/tags/索引/" style="font-size: 14.17px;">索引</a> <a href="/tags/红黑树/" style="font-size: 10px;">红黑树</a>
+            </canvas>
+        
+    </div>
+  </div>
+
+
+        
+        
+    <div class="widget">
+        <h3 class="title">归档</h3>
+        <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/"><i class="fa" aria-hidden="true">2022年09月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/05/"><i class="fa" aria-hidden="true">2022年05月</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/"><i class="fa" aria-hidden="true">2021年07月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/"><i class="fa" aria-hidden="true">2021年06月</i></a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/"><i class="fa" aria-hidden="true">2021年03月</i></a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/"><i class="fa" aria-hidden="true">2021年02月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/"><i class="fa" aria-hidden="true">2020年11月</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/"><i class="fa" aria-hidden="true">2020年09月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/"><i class="fa" aria-hidden="true">2020年08月</i></a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/"><i class="fa" aria-hidden="true">2020年07月</i></a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/"><i class="fa" aria-hidden="true">2020年06月</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/"><i class="fa" aria-hidden="true">2020年04月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/"><i class="fa" aria-hidden="true">2020年03月</i></a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/"><i class="fa" aria-hidden="true">2020年02月</i></a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/"><i class="fa" aria-hidden="true">2020年01月</i></a><span class="archive-list-count">23</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/"><i class="fa" aria-hidden="true">2019年12月</i></a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/"><i class="fa" aria-hidden="true">2019年11月</i></a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/"><i class="fa" aria-hidden="true">2019年10月</i></a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/"><i class="fa" aria-hidden="true">2019年09月</i></a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/"><i class="fa" aria-hidden="true">2019年08月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/"><i class="fa" aria-hidden="true">2019年05月</i></a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/"><i class="fa" aria-hidden="true">2019年04月</i></a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/"><i class="fa" aria-hidden="true">2019年03月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/"><i class="fa" aria-hidden="true">2019年02月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/"><i class="fa" aria-hidden="true">2019年01月</i></a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/"><i class="fa" aria-hidden="true">2018年12月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/"><i class="fa" aria-hidden="true">2018年10月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/"><i class="fa" aria-hidden="true">2018年09月</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/"><i class="fa" aria-hidden="true">2018年08月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/"><i class="fa" aria-hidden="true">2018年06月</i></a><span class="archive-list-count">2</span></li></ul>
+    </div>
+
+
+        
+        
+    <div class="widget">
+      <h3 class="title">社交</h3> 
+        <div class="content social">
+            
+	            <a href="//github.com/zhaokejin" rel="external nofollow" title="GitHub" target="_blank">
+			    	<i class="github fa fa-github"></i>
+			    </a>
+            
+	            <a href="//gitee.com/zhaokejin" rel="external nofollow" title="Gitee" target="_blank">
+			    	<i class="git fa fa-git"></i>
+			    </a>
+            
+	            <a href="mailto:210006540qq.com" rel="external nofollow" title="邮箱" target="_blank">
+			    	<i class="envelope-o fa fa-envelope-o"></i>
+			    </a>
+            
+	            <a href="//wpa.qq.com/msgrd?v=3&uin=210006540&site=qq&menu=yes" rel="external nofollow" title="QQ" target="_blank">
+			    	<i class="qq fa fa-qq"></i>
+			    </a>
+            
+	            <a href="//shang.qq.com/wpa/qunwpa?idkey=7b19717710dcc2c78996f316db3ab3365bde39bc3c60de7a6c59fe07231e231a" rel="external nofollow" title="QQ群" target="_blank">
+			    	<i class="group fa fa-group"></i>
+			    </a>
+            
+	            <a href="/atom.xml" rel="external nofollow" title="RSS" target="_blank">
+			    	<i class="feed fa fa-feed"></i>
+			    </a>
+            
+        </div>
+    </div>
+
+
+        
+        
+
+        
+    </aside>
+
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+
+<a id="back-to-top" class="icon-btn hide">
+	<i class="fa fa-chevron-up"></i>
+</a>
+
+
+
+
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+        访问量:
+        <strong id="busuanzi_value_site_pv">
+            <i class="fa fa-spinner fa-spin"></i>
+        </strong>
+        &nbsp; | &nbsp;
+        访客数:
+        <strong id="busuanzi_value_site_uv">
+            <i class="fa fa-spinner fa-spin"></i>
+        </strong>
+<!--        &nbsp; <strong>Since 2018-12-26</strong>-->
+    
+</div>
+
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy; 2018 - 2023
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    <a href="//www.beian.miit.gov.cn/" class="copyright-links" target="_blank" rel="nofollow">鲁ICP备18033870号</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/js/jquery.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/bootstrap-hover-dropdown.min.js"></script>
+
+
+	<script src="/js/search.js?rev=@@hash"></script>
+
+
+
+    <script src="/assets/tagcanvas.min.js?rev=2.9"></script>
+    <script>
+        var tagOption = {
+            textColour: '#29afec', // 字体颜色
+            outlineMethod: 'block', // 选中模式
+            outlineColour: '#FFDAB9', // 选中模式的颜色
+            interval: 30 || 30, // 动画帧之间的时间间隔，值越大，转动幅度越大
+            textHeight: 13,
+            outlineRadius: 3,
+            freezeActive: true || '', // 选中的标签是否继续滚动
+            frontSelect: true || '', // 不选标签云后部的标签
+            initial: [0.1, -0.1],
+            depth: 0.5,
+            decel: 0.95,
+            maxSpeed: 0.03,
+            reverse: true || '', // 是否反向触发
+            fadeIn: 500, // 进入动画时间
+            wheelZoom: false || '' // 是否启用鼠标滚轮
+        }
+        TagCanvas.Start('tag-cloud-3d','',tagOption);
+    </script>
+
+
+
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<script src="/js/app.js?rev=@@hash"></script>
+<script src="/jquery.fancybox.js?v=2.1.5"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('.fancybox').fancybox();
+    });
+    // 给图片添加链接
+    $(document).ready(function() {
+        $("p img").each(function() {
+            var strA = "<a id='yourid' class='fancybox' data-fancybox-group='gallery'  href='" + this.src + "'></a>";
+            $(this).wrapAll(strA);
+        });
+    });
+    // fancybox
+    $("#yourid").fancybox({
+        openEffect    : 'elastic',
+        closeEffect   : 'elastic',
+    });
+</script>
+
+</body>
+</html>

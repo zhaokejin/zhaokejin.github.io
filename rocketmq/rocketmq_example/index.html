@@ -1,0 +1,784 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="小小冒险家的博客">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.2.3">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="https://www.cicoding.cn">
+    <!--SEO-->
+
+    <meta name="keywords" content="RocketMQ">
+
+
+    <meta name="description" content="1. 样例
+1.1 基本样例在基本样例中我们提供如下的功能场景：
+
+使用RocketMQ发送三种类型的消息：同步消息、异步消息和单向消息。其中前两种消息是可靠的，因为会有发送是否成功的应答。
+使用RocketMQ来消费接收到的消息。
+
+1.1.1 加入依赖：12345678maven:&lt;...">
+
+
+
+<meta name="robots" content="all">
+<meta name="google" content="all">
+<meta name="googlebot" content="all">
+<meta name="verify" content="all">
+    <!--Title-->
+
+
+<title>RocketMQ--样例 | 小小冒险家的博客</title>
+
+
+    <link rel="alternate" href="/atom.xml" title="小小冒险家的博客" type="application/atom+xml">
+
+
+    <link rel="icon" href="/favicon.png">
+
+    
+
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7">
+<link rel="stylesheet" href="/jquery.fancybox.css?v=2.1.5">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.5.0">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash">
+
+
+
+
+    
+
+
+
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?601ebec7733383ef248ca61fc0a0db95";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+
+
+    
+
+</head>
+
+</html>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+
+<body>
+    
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row clearfix">
+            <div class="col-md-12 column">
+                <nav class="navbar navbar-default" style="background-color:#fff;border:0;margin-bottom:0"
+                     role="navigation">
+                    <div class="navbar-header">
+<!--                        <button type="button" class="navbar-toggle" data-toggle="collapse"-->
+<!--                                data-target="#navbar-collapse-1">-->
+<!--                            <span class="sr-only">切</span>-->
+<!--                            <span class="icon-bar"></span>-->
+<!--                            <span class="icon-bar"></span>-->
+<!--                            <span class="icon-bar"></span>-->
+<!--                        </button>-->
+                        <a class="logo" href="/">
+                            <img src="/favicon.png"/>小小冒险家的博客
+                        </a>
+                    </div>
+
+                    <div class="collapse navbar-collapse" style="border:0;" id="navbar-collapse-1">
+                        <ul class="nav navbar-nav">
+                            
+                                
+                                    <li>
+                                        <a href="/" >
+                                            <i class="fa fa-home"></i>
+                                            首页
+                                        </a>
+                                    </li>
+                                
+                            
+                                
+                                    <li>
+                                        <a href="/archives" >
+                                            <i class="fa fa-sort"></i>
+                                            归档
+                                        </a>
+                                    </li>
+                                
+                            
+                                
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                                           data-hover="dropdown">
+                                            <i class="fa fa-fire"></i>
+                                            系列教程
+                                            <strong class="caret"></strong>
+                                        </a>
+                                        <ul class="dropdown-menu">
+                                            
+                                                <li>
+                                                    <a href="/docker/00-docker-lession-index" target="_blank">
+                                                        <i class="fa "></i>
+                                                        Docker系列教程
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="/micro-service/microservice/" target="_blank">
+                                                        <i class="fa "></i>
+                                                        SpringCloud微服务架构
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="/micro-service/microservice-alibaba/" target="_blank">
+                                                        <i class="fa "></i>
+                                                        SpringCloud Alibaba微服务架构
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="/sharding-jdbc/sharding-jdbc000/" target="_blank">
+                                                        <i class="fa "></i>
+                                                        Sharding-JDBC教程
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="/springboot/springboot-source-code/" target="_blank">
+                                                        <i class="fa "></i>
+                                                        SpringBoot源码系列
+                                                    </a>
+                                                </li>
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+                                
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                                           data-hover="dropdown">
+                                            <i class="fa fa-book"></i>
+                                            在线文档
+                                            <strong class="caret"></strong>
+                                        </a>
+                                        <ul class="dropdown-menu">
+                                            
+                                                <li>
+                                                    <a href="https://spring.io/docs/" target="_blank">
+                                                        <i class="fa "></i>
+                                                        Spring Reference
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="https://spring.io/projects/spring-boot/" target="_blank">
+                                                        <i class="fa "></i>
+                                                        SpringBoot Reference
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="https://spring.io/projects/spring-cloud/" target="_blank">
+                                                        <i class="fa "></i>
+                                                        SpringCloud Reference
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="https://docs.spring.io/spring-security/site/docs/current/reference/htmlsingle/" target="_blank">
+                                                        <i class="fa "></i>
+                                                        Spring Security Reference
+                                                    </a>
+                                                </li>
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+                                
+                                    <li>
+                                        <a href="/other/jrebel-activation" >
+                                            <i class="fa fa-fire"></i>
+                                            JRebel激活
+                                        </a>
+                                    </li>
+                                
+                            
+                                
+                                    <li>
+                                        <a href="/about" >
+                                            <i class="fa fa-user"></i>
+                                            关于我
+                                        </a>
+                                    </li>
+                                
+                            
+                        </ul>
+                        
+                            <form id="search-form" class="navbar-form navbar-right">
+                                <div class="form-group input-group">
+                                    <input type="text" id="local-search-input" class="form-control"
+                                           placeholder="搜我..."/>
+                                    <span class="input-group-btn">
+                                        <a class="btn btn-default">
+                                            <i class="fa fa-search"></i>
+                                        </a>
+                                    </span>
+                                </div>
+                                <div id="local-search-result" class="local-search-result-cls"></div>
+                            </form>
+                        
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </div>
+</nav>
+
+    <a href="http://github.com/zhaokejin" target="_blank">
+        <img style="position: absolute; width:100px; top: 0; left: 0; border: 0;"
+             src="/img/fork-me.png"
+             alt="Fork me on GitHub">
+    </a>
+
+
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    
+    
+        <div class="ad">
+            <div class="row">
+                
+                    <div class="col-md-12">
+                        <a href="https://promotion.aliyun.com/ntms/act/qwbk.html?userCode=qhtujh03" rel="nofollow" target="_blank">
+                            <img class="img-responsive center-block"
+                                 src="/icons/810x100.png"
+                                 title="阿里全民云计算"
+                            >
+                        </a>
+                    </div>
+                
+            </div>
+        </div>
+    
+
+
+<p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="RocketMQ--样例">
+            
+                RocketMQ--样例
+            
+        </h1>
+        <div class="post-meta">
+    
+
+    
+        <span class="categories-meta fa-wrap">
+            <i class="fa fa-folder-open-o"></i>
+            <a class="category-link" href="/categories/RocketMQ/">RocketMQ</a>
+        </span>
+    
+
+    
+        <span class="fa-wrap">
+            <i class="fa fa-tags"></i>
+            <span class="tags-meta">
+                
+                    <a class="tag-link" href="/tags/RocketMQ/">RocketMQ</a>
+                
+            </span>
+        </span>
+    
+
+    
+        
+        <span class="fa-wrap">
+            <i class="fa fa-clock-o"></i>
+            <span class="date-meta">2019/09/28</span>
+        </span>
+        
+            <span class="fa-wrap">
+                <i class="fa fa-eye"></i>
+                <span id="busuanzi_value_page_pv"></span>
+            </span>
+        
+    
+</div>
+        
+        
+    </div>
+    
+    <div class="post-body post-content" id="container">
+        
+    <div class="toc-article">
+        <strong>
+            目录
+        </strong>
+        <div class="toc-content">
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-样例"><span class="toc-text">1. 样例</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-1-基本样例"><span class="toc-text">1.1 基本样例</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-1-加入依赖："><span class="toc-text">1.1.1 加入依赖：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-2-消息发送"><span class="toc-text">1.1.2 消息发送</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1、Producer端发送同步消息"><span class="toc-text">1、Producer端发送同步消息</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2、发送异步消息"><span class="toc-text">2、发送异步消息</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3、单向发送消息"><span class="toc-text">3、单向发送消息</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-3-消费消息"><span class="toc-text">1.1.3 消费消息</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-2-顺序消息样例"><span class="toc-text">1.2 顺序消息样例</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-1-顺序消息生产"><span class="toc-text">1.2.1 顺序消息生产</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-2-顺序消费消息"><span class="toc-text">1.2.2 顺序消费消息</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-3-延时消息样例"><span class="toc-text">1.3 延时消息样例</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-1-启动消费者等待传入订阅消息"><span class="toc-text">1.3.1 启动消费者等待传入订阅消息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-2-发送延时消息"><span class="toc-text">1.3.2 发送延时消息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-3-验证"><span class="toc-text">1.3.3 验证</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-4-延时消息的使用场景"><span class="toc-text">1.3.4 延时消息的使用场景</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-5-延时消息的使用限制"><span class="toc-text">1.3.5 延时消息的使用限制</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-4-批量消息样例"><span class="toc-text">1.4 批量消息样例</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-4-1-发送批量消息"><span class="toc-text">1.4.1 发送批量消息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-4-2-消息列表分割"><span class="toc-text">1.4.2 消息列表分割</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-5-过滤消息样例"><span class="toc-text">1.5 过滤消息样例</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-5-1-基本语法"><span class="toc-text">1.5.1 基本语法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-5-2-使用样例"><span class="toc-text">1.5.2 使用样例</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1、生产者样例"><span class="toc-text">1、生产者样例</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2、消费者样例"><span class="toc-text">2、消费者样例</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-6-消息事务样例"><span class="toc-text">1.6 消息事务样例</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-6-1-发送事务消息样例"><span class="toc-text">1.6.1 发送事务消息样例</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1、创建事务性生产者"><span class="toc-text">1、创建事务性生产者</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2、实现事务的监听接口"><span class="toc-text">2、实现事务的监听接口</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-6-2-事务消息使用上的限制"><span class="toc-text">1.6.2 事务消息使用上的限制</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-7-Logappender样例"><span class="toc-text">1.7 Logappender样例</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-7-1-log4j样例"><span class="toc-text">1.7.1 log4j样例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-7-2-log4j2样例"><span class="toc-text">1.7.2 log4j2样例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-7-3-logback样例"><span class="toc-text">1.7.3 logback样例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-8-OpenMessaging样例"><span class="toc-text">1.8 OpenMessaging样例</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-8-1-OMSProducer样例"><span class="toc-text">1.8.1 OMSProducer样例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-8-2-OMSPullConsumer"><span class="toc-text">1.8.2 OMSPullConsumer</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-8-3-OMSPushConsumer"><span class="toc-text">1.8.3 OMSPushConsumer</span></a></li></ol></li></ol></li></ol>
+        </div>
+    </div>
+
+
+        <h1 id="1-样例"><a href="#1-样例" class="headerlink" title="1. 样例"></a>1. 样例</h1><hr>
+<h2 id="1-1-基本样例"><a href="#1-1-基本样例" class="headerlink" title="1.1 基本样例"></a>1.1 基本样例</h2><p>在基本样例中我们提供如下的功能场景：</p>
+<ul>
+<li>使用RocketMQ发送三种类型的消息：同步消息、异步消息和单向消息。其中前两种消息是可靠的，因为会有发送是否成功的应答。</li>
+<li>使用RocketMQ来消费接收到的消息。</li>
+</ul>
+<h3 id="1-1-1-加入依赖："><a href="#1-1-1-加入依赖：" class="headerlink" title="1.1.1 加入依赖："></a>1.1.1 加入依赖：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">maven:</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.apache.rocketmq&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;rocketmq-client&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;4.3.0&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">gradle</span><br><span class="line">compile &apos;org.apache.rocketmq:rocketmq-client:4.3.0&apos;</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-1-2-消息发送"><a href="#1-1-2-消息发送" class="headerlink" title="1.1.2 消息发送"></a>1.1.2 消息发送</h3><h4 id="1、Producer端发送同步消息"><a href="#1、Producer端发送同步消息" class="headerlink" title="1、Producer端发送同步消息"></a>1、Producer端发送同步消息</h4><p>这种可靠性同步地发送方式使用的比较广泛，比如：重要的消息通知，短信通知。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SyncProducer</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        <span class="comment">// 实例化消息生产者Producer</span></span><br><span class="line">        DefaultMQProducer producer = <span class="keyword">new</span> DefaultMQProducer(<span class="string">"please_rename_unique_group_name"</span>);</span><br><span class="line">        <span class="comment">// 设置NameServer的地址</span></span><br><span class="line">        producer.setNamesrvAddr(<span class="string">"localhost:9876"</span>);</span><br><span class="line">        <span class="comment">// 启动Producer实例</span></span><br><span class="line">        producer.start();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">100</span>; i++) &#123;</span><br><span class="line">            <span class="comment">// 创建消息，并指定Topic，Tag和消息体</span></span><br><span class="line">            Message msg = <span class="keyword">new</span> Message(<span class="string">"TopicTest"</span> <span class="comment">/* Topic */</span>,</span><br><span class="line">            <span class="string">"TagA"</span> <span class="comment">/* Tag */</span>,</span><br><span class="line">            (<span class="string">"Hello RocketMQ "</span> + i).getBytes(RemotingHelper.DEFAULT_CHARSET) <span class="comment">/* Message body */</span></span><br><span class="line">            );</span><br><span class="line">            <span class="comment">// 发送消息到一个Broker</span></span><br><span class="line">            SendResult sendResult = producer.send(msg);</span><br><span class="line">            <span class="comment">// 通过sendResult返回消息是否成功送达</span></span><br><span class="line">            System.out.printf(<span class="string">"%s%n"</span>, sendResult);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 如果不再发送消息，关闭Producer实例。</span></span><br><span class="line">        producer.shutdown();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="2、发送异步消息"><a href="#2、发送异步消息" class="headerlink" title="2、发送异步消息"></a>2、发送异步消息</h4><p>异步消息通常用在对响应时间敏感的业务场景，即发送端不能容忍长时间地等待Broker的响应。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AsyncProducer</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        <span class="comment">// 实例化消息生产者Producer</span></span><br><span class="line">        DefaultMQProducer producer = <span class="keyword">new</span> DefaultMQProducer(<span class="string">"please_rename_unique_group_name"</span>);</span><br><span class="line">        <span class="comment">// 设置NameServer的地址</span></span><br><span class="line">        producer.setNamesrvAddr(<span class="string">"localhost:9876"</span>);</span><br><span class="line">        <span class="comment">// 启动Producer实例</span></span><br><span class="line">        producer.start();</span><br><span class="line">        producer.setRetryTimesWhenSendAsyncFailed(<span class="number">0</span>);</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">100</span>; i++) &#123;</span><br><span class="line">                <span class="keyword">final</span> <span class="keyword">int</span> index = i;</span><br><span class="line">                <span class="comment">// 创建消息，并指定Topic，Tag和消息体</span></span><br><span class="line">                Message msg = <span class="keyword">new</span> Message(<span class="string">"TopicTest"</span>,</span><br><span class="line">                    <span class="string">"TagA"</span>,</span><br><span class="line">                    <span class="string">"OrderID188"</span>,</span><br><span class="line">                    <span class="string">"Hello world"</span>.getBytes(RemotingHelper.DEFAULT_CHARSET));</span><br><span class="line">                <span class="comment">// SendCallback接收异步返回结果的回调</span></span><br><span class="line">                producer.send(msg, <span class="keyword">new</span> SendCallback() &#123;</span><br><span class="line">                    <span class="meta">@Override</span></span><br><span class="line">                    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onSuccess</span><span class="params">(SendResult sendResult)</span> </span>&#123;</span><br><span class="line">                        System.out.printf(<span class="string">"%-10d OK %s %n"</span>, index,</span><br><span class="line">                            sendResult.getMsgId());</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="meta">@Override</span></span><br><span class="line">                    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onException</span><span class="params">(Throwable e)</span> </span>&#123;</span><br><span class="line">                        System.out.printf(<span class="string">"%-10d Exception %s %n"</span>, index, e);</span><br><span class="line">                        e.printStackTrace();</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 如果不再发送消息，关闭Producer实例。</span></span><br><span class="line">        producer.shutdown();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="3、单向发送消息"><a href="#3、单向发送消息" class="headerlink" title="3、单向发送消息"></a>3、单向发送消息</h4><p>这种方式主要用在不特别关心发送结果的场景，例如日志发送。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">OnewayProducer</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception</span>&#123;</span><br><span class="line">        <span class="comment">// 实例化消息生产者Producer</span></span><br><span class="line">        DefaultMQProducer producer = <span class="keyword">new</span> DefaultMQProducer(<span class="string">"please_rename_unique_group_name"</span>);</span><br><span class="line">        <span class="comment">// 设置NameServer的地址</span></span><br><span class="line">        producer.setNamesrvAddr(<span class="string">"localhost:9876"</span>);</span><br><span class="line">        <span class="comment">// 启动Producer实例</span></span><br><span class="line">        producer.start();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">100</span>; i++) &#123;</span><br><span class="line">            <span class="comment">// 创建消息，并指定Topic，Tag和消息体</span></span><br><span class="line">            Message msg = <span class="keyword">new</span> Message(<span class="string">"TopicTest"</span> <span class="comment">/* Topic */</span>,</span><br><span class="line">                <span class="string">"TagA"</span> <span class="comment">/* Tag */</span>,</span><br><span class="line">                (<span class="string">"Hello RocketMQ "</span> + i).getBytes(RemotingHelper.DEFAULT_CHARSET) <span class="comment">/* Message body */</span></span><br><span class="line">            );</span><br><span class="line">            <span class="comment">// 发送单向消息，没有任何返回结果</span></span><br><span class="line">            producer.sendOneway(msg);</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 如果不再发送消息，关闭Producer实例。</span></span><br><span class="line">        producer.shutdown();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-1-3-消费消息"><a href="#1-1-3-消费消息" class="headerlink" title="1.1.3 消费消息"></a>1.1.3 消费消息</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Consumer</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> InterruptedException, MQClientException </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 实例化消费者</span></span><br><span class="line">        DefaultMQPushConsumer consumer = <span class="keyword">new</span> DefaultMQPushConsumer(<span class="string">"please_rename_unique_group_name"</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 设置NameServer的地址</span></span><br><span class="line">        consumer.setNamesrvAddr(<span class="string">"localhost:9876"</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 订阅一个或者多个Topic，以及Tag来过滤需要消费的消息</span></span><br><span class="line">        consumer.subscribe(<span class="string">"TopicTest"</span>, <span class="string">"*"</span>);</span><br><span class="line">        <span class="comment">// 注册回调实现类来处理从broker拉取回来的消息</span></span><br><span class="line">        consumer.registerMessageListener(<span class="keyword">new</span> MessageListenerConcurrently() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> ConsumeConcurrentlyStatus <span class="title">consumeMessage</span><span class="params">(List&lt;MessageExt&gt; msgs, ConsumeConcurrentlyContext context)</span> </span>&#123;</span><br><span class="line">                System.out.printf(<span class="string">"%s Receive New Messages: %s %n"</span>, Thread.currentThread().getName(), msgs);</span><br><span class="line">                <span class="comment">// 标记该消息已经被成功消费</span></span><br><span class="line">                <span class="keyword">return</span> ConsumeConcurrentlyStatus.CONSUME_SUCCESS;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        <span class="comment">// 启动消费者实例</span></span><br><span class="line">        consumer.start();</span><br><span class="line">        System.out.printf(<span class="string">"Consumer Started.%n"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="1-2-顺序消息样例"><a href="#1-2-顺序消息样例" class="headerlink" title="1.2 顺序消息样例"></a>1.2 顺序消息样例</h2><p>消息有序指的是可以按照消息的发送顺序来消费(FIFO)。RocketMQ可以严格的保证消息有序，可以分为分区有序或者全局有序。</p>
+<p>顺序消费的原理解析，在默认的情况下消息发送会采取Round Robin轮询方式把消息发送到不同的queue(分区队列)；而消费消息的时候从多个queue上拉取消息，这种情况发送和消费是不能保证顺序。但是如果控制发送的顺序消息只依次发送到同一个queue中，消费的时候只从这个queue上依次拉取，则就保证了顺序。当发送和消费参与的queue只有一个，则是全局有序；如果多个queue参与，则为分区有序，即相对每个queue，消息都是有序的。</p>
+<p>下面用订单进行分区有序的示例。一个订单的顺序流程是：创建、付款、推送、完成。订单号相同的消息会被先后发送到同一个队列中，消费时，同一个OrderId获取到的肯定是同一个队列。</p>
+<h3 id="1-2-1-顺序消息生产"><a href="#1-2-1-顺序消息生产" class="headerlink" title="1.2.1 顺序消息生产"></a>1.2.1 顺序消息生产</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> org.apache.rocketmq.example.order2;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.apache.rocketmq.client.producer.DefaultMQProducer;</span><br><span class="line"><span class="keyword">import</span> org.apache.rocketmq.client.producer.MessageQueueSelector;</span><br><span class="line"><span class="keyword">import</span> org.apache.rocketmq.client.producer.SendResult;</span><br><span class="line"><span class="keyword">import</span> org.apache.rocketmq.common.message.Message;</span><br><span class="line"><span class="keyword">import</span> org.apache.rocketmq.common.message.MessageQueue;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.text.SimpleDateFormat;</span><br><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.Date;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* Producer，发送顺序消息</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Producer</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">       DefaultMQProducer producer = <span class="keyword">new</span> DefaultMQProducer(<span class="string">"please_rename_unique_group_name"</span>);</span><br><span class="line"></span><br><span class="line">       producer.setNamesrvAddr(<span class="string">"127.0.0.1:9876"</span>);</span><br><span class="line"></span><br><span class="line">       producer.start();</span><br><span class="line"></span><br><span class="line">       String[] tags = <span class="keyword">new</span> String[]&#123;<span class="string">"TagA"</span>, <span class="string">"TagC"</span>, <span class="string">"TagD"</span>&#125;;</span><br><span class="line"></span><br><span class="line">       <span class="comment">// 订单列表</span></span><br><span class="line">       List&lt;OrderStep&gt; orderList = <span class="keyword">new</span> Producer().buildOrders();</span><br><span class="line"></span><br><span class="line">       Date date = <span class="keyword">new</span> Date();</span><br><span class="line">       SimpleDateFormat sdf = <span class="keyword">new</span> SimpleDateFormat(<span class="string">"yyyy-MM-dd HH:mm:ss"</span>);</span><br><span class="line">       String dateStr = sdf.format(date);</span><br><span class="line">       <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><br><span class="line">           <span class="comment">// 加个时间前缀</span></span><br><span class="line">           String body = dateStr + <span class="string">" Hello RocketMQ "</span> + orderList.get(i);</span><br><span class="line">           Message msg = <span class="keyword">new</span> Message(<span class="string">"TopicTest"</span>, tags[i % tags.length], <span class="string">"KEY"</span> + i, body.getBytes());</span><br><span class="line"></span><br><span class="line">           SendResult sendResult = producer.send(msg, <span class="keyword">new</span> MessageQueueSelector() &#123;</span><br><span class="line">               <span class="meta">@Override</span></span><br><span class="line">               <span class="function"><span class="keyword">public</span> MessageQueue <span class="title">select</span><span class="params">(List&lt;MessageQueue&gt; mqs, Message msg, Object arg)</span> </span>&#123;</span><br><span class="line">                   Long id = (Long) arg;  <span class="comment">//根据订单id选择发送queue</span></span><br><span class="line">                   <span class="keyword">long</span> index = id % mqs.size();</span><br><span class="line">                   <span class="keyword">return</span> mqs.get((<span class="keyword">int</span>) index);</span><br><span class="line">               &#125;</span><br><span class="line">           &#125;, orderList.get(i).getOrderId());<span class="comment">//订单id</span></span><br><span class="line"></span><br><span class="line">           System.out.println(String.format(<span class="string">"SendResult status:%s, queueId:%d, body:%s"</span>,</span><br><span class="line">               sendResult.getSendStatus(),</span><br><span class="line">               sendResult.getMessageQueue().getQueueId(),</span><br><span class="line">               body));</span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">       producer.shutdown();</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * 订单的步骤</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">OrderStep</span> </span>&#123;</span><br><span class="line">       <span class="keyword">private</span> <span class="keyword">long</span> orderId;</span><br><span class="line">       <span class="keyword">private</span> String desc;</span><br><span class="line"></span><br><span class="line">       <span class="function"><span class="keyword">public</span> <span class="keyword">long</span> <span class="title">getOrderId</span><span class="params">()</span> </span>&#123;</span><br><span class="line">           <span class="keyword">return</span> orderId;</span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">       <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setOrderId</span><span class="params">(<span class="keyword">long</span> orderId)</span> </span>&#123;</span><br><span class="line">           <span class="keyword">this</span>.orderId = orderId;</span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">       <span class="function"><span class="keyword">public</span> String <span class="title">getDesc</span><span class="params">()</span> </span>&#123;</span><br><span class="line">           <span class="keyword">return</span> desc;</span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">       <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setDesc</span><span class="params">(String desc)</span> </span>&#123;</span><br><span class="line">           <span class="keyword">this</span>.desc = desc;</span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">       <span class="meta">@Override</span></span><br><span class="line">       <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">           <span class="keyword">return</span> <span class="string">"OrderStep&#123;"</span> +</span><br><span class="line">               <span class="string">"orderId="</span> + orderId +</span><br><span class="line">               <span class="string">", desc='"</span> + desc + <span class="string">'\''</span> +</span><br><span class="line">               <span class="string">'&#125;'</span>;</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * 生成模拟订单数据</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">   <span class="function"><span class="keyword">private</span> List&lt;OrderStep&gt; <span class="title">buildOrders</span><span class="params">()</span> </span>&#123;</span><br><span class="line">       List&lt;OrderStep&gt; orderList = <span class="keyword">new</span> ArrayList&lt;OrderStep&gt;();</span><br><span class="line"></span><br><span class="line">       OrderStep orderDemo = <span class="keyword">new</span> OrderStep();</span><br><span class="line">       orderDemo.setOrderId(<span class="number">15103111039L</span>);</span><br><span class="line">       orderDemo.setDesc(<span class="string">"创建"</span>);</span><br><span class="line">       orderList.add(orderDemo);</span><br><span class="line"></span><br><span class="line">       orderDemo = <span class="keyword">new</span> OrderStep();</span><br><span class="line">       orderDemo.setOrderId(<span class="number">15103111065L</span>);</span><br><span class="line">       orderDemo.setDesc(<span class="string">"创建"</span>);</span><br><span class="line">       orderList.add(orderDemo);</span><br><span class="line"></span><br><span class="line">       orderDemo = <span class="keyword">new</span> OrderStep();</span><br><span class="line">       orderDemo.setOrderId(<span class="number">15103111039L</span>);</span><br><span class="line">       orderDemo.setDesc(<span class="string">"付款"</span>);</span><br><span class="line">       orderList.add(orderDemo);</span><br><span class="line"></span><br><span class="line">       orderDemo = <span class="keyword">new</span> OrderStep();</span><br><span class="line">       orderDemo.setOrderId(<span class="number">15103117235L</span>);</span><br><span class="line">       orderDemo.setDesc(<span class="string">"创建"</span>);</span><br><span class="line">       orderList.add(orderDemo);</span><br><span class="line"></span><br><span class="line">       orderDemo = <span class="keyword">new</span> OrderStep();</span><br><span class="line">       orderDemo.setOrderId(<span class="number">15103111065L</span>);</span><br><span class="line">       orderDemo.setDesc(<span class="string">"付款"</span>);</span><br><span class="line">       orderList.add(orderDemo);</span><br><span class="line"></span><br><span class="line">       orderDemo = <span class="keyword">new</span> OrderStep();</span><br><span class="line">       orderDemo.setOrderId(<span class="number">15103117235L</span>);</span><br><span class="line">       orderDemo.setDesc(<span class="string">"付款"</span>);</span><br><span class="line">       orderList.add(orderDemo);</span><br><span class="line"></span><br><span class="line">       orderDemo = <span class="keyword">new</span> OrderStep();</span><br><span class="line">       orderDemo.setOrderId(<span class="number">15103111065L</span>);</span><br><span class="line">       orderDemo.setDesc(<span class="string">"完成"</span>);</span><br><span class="line">       orderList.add(orderDemo);</span><br><span class="line"></span><br><span class="line">       orderDemo = <span class="keyword">new</span> OrderStep();</span><br><span class="line">       orderDemo.setOrderId(<span class="number">15103111039L</span>);</span><br><span class="line">       orderDemo.setDesc(<span class="string">"推送"</span>);</span><br><span class="line">       orderList.add(orderDemo);</span><br><span class="line"></span><br><span class="line">       orderDemo = <span class="keyword">new</span> OrderStep();</span><br><span class="line">       orderDemo.setOrderId(<span class="number">15103117235L</span>);</span><br><span class="line">       orderDemo.setDesc(<span class="string">"完成"</span>);</span><br><span class="line">       orderList.add(orderDemo);</span><br><span class="line"></span><br><span class="line">       orderDemo = <span class="keyword">new</span> OrderStep();</span><br><span class="line">       orderDemo.setOrderId(<span class="number">15103111039L</span>);</span><br><span class="line">       orderDemo.setDesc(<span class="string">"完成"</span>);</span><br><span class="line">       orderList.add(orderDemo);</span><br><span class="line"></span><br><span class="line">       <span class="keyword">return</span> orderList;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-2-2-顺序消费消息"><a href="#1-2-2-顺序消费消息" class="headerlink" title="1.2.2 顺序消费消息"></a>1.2.2 顺序消费消息</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.apache.rocketmq.client.consumer.DefaultMQPushConsumer;</span><br><span class="line"><span class="keyword">import</span> org.apache.rocketmq.client.consumer.listener.ConsumeConcurrentlyContext;</span><br><span class="line"><span class="keyword">import</span> org.apache.rocketmq.client.consumer.listener.ConsumeConcurrentlyStatus;</span><br><span class="line"><span class="keyword">import</span> org.apache.rocketmq.client.consumer.listener.MessageListenerConcurrently;</span><br><span class="line"><span class="keyword">import</span> org.apache.rocketmq.common.message.MessageExt;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="keyword">package</span> org.apache.rocketmq.example.order2;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.apache.rocketmq.client.consumer.DefaultMQPushConsumer;</span><br><span class="line"><span class="keyword">import</span> org.apache.rocketmq.client.consumer.listener.ConsumeOrderlyContext;</span><br><span class="line"><span class="keyword">import</span> org.apache.rocketmq.client.consumer.listener.ConsumeOrderlyStatus;</span><br><span class="line"><span class="keyword">import</span> org.apache.rocketmq.client.consumer.listener.MessageListenerOrderly;</span><br><span class="line"><span class="keyword">import</span> org.apache.rocketmq.common.consumer.ConsumeFromWhere;</span><br><span class="line"><span class="keyword">import</span> org.apache.rocketmq.common.message.MessageExt;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"><span class="keyword">import</span> java.util.Random;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.TimeUnit;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* 顺序消息消费，带事务方式（应用可控制Offset什么时候提交）</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConsumerInOrder</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">       DefaultMQPushConsumer consumer = <span class="keyword">new</span> DefaultMQPushConsumer(<span class="string">"please_rename_unique_group_name_3"</span>);</span><br><span class="line">       consumer.setNamesrvAddr(<span class="string">"127.0.0.1:9876"</span>);</span><br><span class="line">       <span class="comment">/**</span></span><br><span class="line"><span class="comment">        * 设置Consumer第一次启动是从队列头部开始消费还是队列尾部开始消费&lt;br&gt;</span></span><br><span class="line"><span class="comment">        * 如果非第一次启动，那么按照上次消费的位置继续消费</span></span><br><span class="line"><span class="comment">        */</span></span><br><span class="line">       consumer.setConsumeFromWhere(ConsumeFromWhere.CONSUME_FROM_FIRST_OFFSET);</span><br><span class="line"></span><br><span class="line">       consumer.subscribe(<span class="string">"TopicTest"</span>, <span class="string">"TagA || TagC || TagD"</span>);</span><br><span class="line"></span><br><span class="line">       consumer.registerMessageListener(<span class="keyword">new</span> MessageListenerOrderly() &#123;</span><br><span class="line"></span><br><span class="line">           Random random = <span class="keyword">new</span> Random();</span><br><span class="line"></span><br><span class="line">           <span class="meta">@Override</span></span><br><span class="line">           <span class="function"><span class="keyword">public</span> ConsumeOrderlyStatus <span class="title">consumeMessage</span><span class="params">(List&lt;MessageExt&gt; msgs, ConsumeOrderlyContext context)</span> </span>&#123;</span><br><span class="line">               context.setAutoCommit(<span class="keyword">true</span>);</span><br><span class="line">               <span class="keyword">for</span> (MessageExt msg : msgs) &#123;</span><br><span class="line">                   <span class="comment">// 可以看到每个queue有唯一的consume线程来消费, 订单对每个queue(分区)有序</span></span><br><span class="line">                   System.out.println(<span class="string">"consumeThread="</span> + Thread.currentThread().getName() + <span class="string">"queueId="</span> + msg.getQueueId() + <span class="string">", content:"</span> + <span class="keyword">new</span> String(msg.getBody()));</span><br><span class="line">               &#125;</span><br><span class="line"></span><br><span class="line">               <span class="keyword">try</span> &#123;</span><br><span class="line">                   <span class="comment">//模拟业务逻辑处理中...</span></span><br><span class="line">                   TimeUnit.SECONDS.sleep(random.nextInt(<span class="number">10</span>));</span><br><span class="line">               &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">                   e.printStackTrace();</span><br><span class="line">               &#125;</span><br><span class="line">               <span class="keyword">return</span> ConsumeOrderlyStatus.SUCCESS;</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;);</span><br><span class="line"></span><br><span class="line">       consumer.start();</span><br><span class="line"></span><br><span class="line">       System.out.println(<span class="string">"Consumer Started."</span>);</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="1-3-延时消息样例"><a href="#1-3-延时消息样例" class="headerlink" title="1.3 延时消息样例"></a>1.3 延时消息样例</h2><h3 id="1-3-1-启动消费者等待传入订阅消息"><a href="#1-3-1-启动消费者等待传入订阅消息" class="headerlink" title="1.3.1 启动消费者等待传入订阅消息"></a>1.3.1 启动消费者等待传入订阅消息</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.apache.rocketmq.client.consumer.DefaultMQPushConsumer;</span><br><span class="line"><span class="keyword">import</span> org.apache.rocketmq.client.consumer.listener.ConsumeConcurrentlyContext;</span><br><span class="line"><span class="keyword">import</span> org.apache.rocketmq.client.consumer.listener.ConsumeConcurrentlyStatus;</span><br><span class="line"><span class="keyword">import</span> org.apache.rocketmq.client.consumer.listener.MessageListenerConcurrently;</span><br><span class="line"><span class="keyword">import</span> org.apache.rocketmq.common.message.MessageExt;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ScheduledMessageConsumer</span> </span>&#123;</span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">      <span class="comment">// 实例化消费者</span></span><br><span class="line">      DefaultMQPushConsumer consumer = <span class="keyword">new</span> DefaultMQPushConsumer(<span class="string">"ExampleConsumer"</span>);</span><br><span class="line">      <span class="comment">// 订阅Topics</span></span><br><span class="line">      consumer.subscribe(<span class="string">"TestTopic"</span>, <span class="string">"*"</span>);</span><br><span class="line">      <span class="comment">// 注册消息监听者</span></span><br><span class="line">      consumer.registerMessageListener(<span class="keyword">new</span> MessageListenerConcurrently() &#123;</span><br><span class="line">          <span class="meta">@Override</span></span><br><span class="line">          <span class="function"><span class="keyword">public</span> ConsumeConcurrentlyStatus <span class="title">consumeMessage</span><span class="params">(List&lt;MessageExt&gt; messages, ConsumeConcurrentlyContext context)</span> </span>&#123;</span><br><span class="line">              <span class="keyword">for</span> (MessageExt message : messages) &#123;</span><br><span class="line">                  <span class="comment">// Print approximate delay time period</span></span><br><span class="line">                  System.out.println(<span class="string">"Receive message[msgId="</span> + message.getMsgId() + <span class="string">"] "</span> + (System.currentTimeMillis() - message.getStoreTimestamp()) + <span class="string">"ms later"</span>);</span><br><span class="line">              &#125;</span><br><span class="line">              <span class="keyword">return</span> ConsumeConcurrentlyStatus.CONSUME_SUCCESS;</span><br><span class="line">          &#125;</span><br><span class="line">      &#125;);</span><br><span class="line">      <span class="comment">// 启动消费者</span></span><br><span class="line">      consumer.start();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-3-2-发送延时消息"><a href="#1-3-2-发送延时消息" class="headerlink" title="1.3.2 发送延时消息"></a>1.3.2 发送延时消息</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.apache.rocketmq.client.producer.DefaultMQProducer;</span><br><span class="line"><span class="keyword">import</span> org.apache.rocketmq.common.message.Message;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ScheduledMessageProducer</span> </span>&#123;</span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">      <span class="comment">// 实例化一个生产者来产生延时消息</span></span><br><span class="line">      DefaultMQProducer producer = <span class="keyword">new</span> DefaultMQProducer(<span class="string">"ExampleProducerGroup"</span>);</span><br><span class="line">      <span class="comment">// 启动生产者</span></span><br><span class="line">      producer.start();</span><br><span class="line">      <span class="keyword">int</span> totalMessagesToSend = <span class="number">100</span>;</span><br><span class="line">      <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; totalMessagesToSend; i++) &#123;</span><br><span class="line">          Message message = <span class="keyword">new</span> Message(<span class="string">"TestTopic"</span>, (<span class="string">"Hello scheduled message "</span> + i).getBytes());</span><br><span class="line">          <span class="comment">// 设置延时等级3,这个消息将在10s之后发送(现在只支持固定的几个时间,详看delayTimeLevel)</span></span><br><span class="line">          message.setDelayTimeLevel(<span class="number">3</span>);</span><br><span class="line">          <span class="comment">// 发送消息</span></span><br><span class="line">          producer.send(message);</span><br><span class="line">      &#125;</span><br><span class="line">       <span class="comment">// 关闭生产者</span></span><br><span class="line">      producer.shutdown();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-3-3-验证"><a href="#1-3-3-验证" class="headerlink" title="1.3.3 验证"></a>1.3.3 验证</h3><p>您将会看到消息的消费比存储时间晚10秒。</p>
+<h3 id="1-3-4-延时消息的使用场景"><a href="#1-3-4-延时消息的使用场景" class="headerlink" title="1.3.4 延时消息的使用场景"></a>1.3.4 延时消息的使用场景</h3><p>比如电商里，提交了一个订单就可以发送一个延时消息，1h后去检查这个订单的状态，如果还是未付款就取消订单释放库存。</p>
+<h3 id="1-3-5-延时消息的使用限制"><a href="#1-3-5-延时消息的使用限制" class="headerlink" title="1.3.5 延时消息的使用限制"></a>1.3.5 延时消息的使用限制</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// org/apache/rocketmq/store/config/MessageStoreConfig.java</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> String messageDelayLevel = <span class="string">"1s 5s 10s 30s 1m 2m 3m 4m 5m 6m 7m 8m 9m 10m 20m 30m 1h 2h"</span>;</span><br></pre></td></tr></table></figure>
+
+<p>现在RocketMq并不支持任意时间的延时，需要设置几个固定的延时等级，从1s到2h分别对应着等级1到18 消息消费失败会进入延时消息队列，消息发送时间与设置的延时等级和重试次数有关，详见代码<code>SendMessageProcessor.java</code></p>
+<h2 id="1-4-批量消息样例"><a href="#1-4-批量消息样例" class="headerlink" title="1.4 批量消息样例"></a>1.4 批量消息样例</h2><p>批量发送消息能显著提高传递小消息的性能。限制是这些批量消息应该有相同的topic，相同的waitStoreMsgOK，而且不能是延时消息。此外，这一批消息的总大小不应超过4MB。</p>
+<h3 id="1-4-1-发送批量消息"><a href="#1-4-1-发送批量消息" class="headerlink" title="1.4.1 发送批量消息"></a>1.4.1 发送批量消息</h3><p>如果您每次只发送不超过4MB的消息，则很容易使用批处理，样例如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">String topic = <span class="string">"BatchTest"</span>;</span><br><span class="line">List&lt;Message&gt; messages = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">messages.add(<span class="keyword">new</span> Message(topic, <span class="string">"TagA"</span>, <span class="string">"OrderID001"</span>, <span class="string">"Hello world 0"</span>.getBytes()));</span><br><span class="line">messages.add(<span class="keyword">new</span> Message(topic, <span class="string">"TagA"</span>, <span class="string">"OrderID002"</span>, <span class="string">"Hello world 1"</span>.getBytes()));</span><br><span class="line">messages.add(<span class="keyword">new</span> Message(topic, <span class="string">"TagA"</span>, <span class="string">"OrderID003"</span>, <span class="string">"Hello world 2"</span>.getBytes()));</span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">   producer.send(messages);</span><br><span class="line">&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">   e.printStackTrace();</span><br><span class="line">   <span class="comment">//处理error</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-4-2-消息列表分割"><a href="#1-4-2-消息列表分割" class="headerlink" title="1.4.2 消息列表分割"></a>1.4.2 消息列表分割</h3><p>复杂度只有当你发送大批量时才会增长，你可能不确定它是否超过了大小限制（4MB）。这时候你最好把你的消息列表分割一下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ListSplitter</span> <span class="keyword">implements</span> <span class="title">Iterator</span>&lt;<span class="title">List</span>&lt;<span class="title">Message</span>&gt;&gt; </span>&#123;</span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> SIZE_LIMIT = <span class="number">1024</span> * <span class="number">1024</span> * <span class="number">4</span>;</span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">final</span> List&lt;Message&gt; messages;</span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">int</span> currIndex;</span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="title">ListSplitter</span><span class="params">(List&lt;Message&gt; messages)</span> </span>&#123;</span><br><span class="line">           <span class="keyword">this</span>.messages = messages;</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">hasNext</span><span class="params">()</span> </span>&#123;</span><br><span class="line">       <span class="keyword">return</span> currIndex &lt; messages.size();</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> List&lt;Message&gt; <span class="title">next</span><span class="params">()</span> </span>&#123;</span><br><span class="line">       <span class="keyword">int</span> nextIndex = currIndex;</span><br><span class="line">       <span class="keyword">int</span> totalSize = <span class="number">0</span>;</span><br><span class="line">       <span class="keyword">for</span> (; nextIndex &lt; messages.size(); nextIndex++) &#123;</span><br><span class="line">           Message message = messages.get(nextIndex);</span><br><span class="line">           <span class="keyword">int</span> tmpSize = message.getTopic().length() + message.getBody().length;</span><br><span class="line">           Map&lt;String, String&gt; properties = message.getProperties();</span><br><span class="line">           <span class="keyword">for</span> (Map.Entry&lt;String, String&gt; entry : properties.entrySet()) &#123;</span><br><span class="line">               tmpSize += entry.getKey().length() + entry.getValue().length();</span><br><span class="line">           &#125;</span><br><span class="line">           tmpSize = tmpSize + <span class="number">20</span>; <span class="comment">// 增加日志的开销20字节</span></span><br><span class="line">           <span class="keyword">if</span> (tmpSize &gt; SIZE_LIMIT) &#123;</span><br><span class="line">               <span class="comment">//单个消息超过了最大的限制</span></span><br><span class="line">               <span class="comment">//忽略,否则会阻塞分裂的进程</span></span><br><span class="line">               <span class="keyword">if</span> (nextIndex - currIndex == <span class="number">0</span>) &#123;</span><br><span class="line">                  <span class="comment">//假如下一个子列表没有元素,则添加这个子列表然后退出循环,否则只是退出循环</span></span><br><span class="line">                  nextIndex++;</span><br><span class="line">               &#125;</span><br><span class="line">               <span class="keyword">break</span>;</span><br><span class="line">           &#125;</span><br><span class="line">           <span class="keyword">if</span> (tmpSize + totalSize &gt; SIZE_LIMIT) &#123;</span><br><span class="line">               <span class="keyword">break</span>;</span><br><span class="line">           &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">               totalSize += tmpSize;</span><br><span class="line">           &#125;</span><br><span class="line"></span><br><span class="line">       &#125;</span><br><span class="line">       List&lt;Message&gt; subList = messages.subList(currIndex, nextIndex);</span><br><span class="line">       currIndex = nextIndex;</span><br><span class="line">       <span class="keyword">return</span> subList;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//把大的消息分裂成若干个小的消息</span></span><br><span class="line">ListSplitter splitter = <span class="keyword">new</span> ListSplitter(messages);</span><br><span class="line"><span class="keyword">while</span> (splitter.hasNext()) &#123;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">      List&lt;Message&gt;  listItem = splitter.next();</span><br><span class="line">      producer.send(listItem);</span><br><span class="line">  &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">      e.printStackTrace();</span><br><span class="line">      <span class="comment">//处理error</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="1-5-过滤消息样例"><a href="#1-5-过滤消息样例" class="headerlink" title="1.5 过滤消息样例"></a>1.5 过滤消息样例</h2><p>在大多数情况下，TAG是一个简单而有用的设计，其可以来选择您想要的消息。例如：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">DefaultMQPushConsumer consumer = <span class="keyword">new</span> DefaultMQPushConsumer(<span class="string">"CID_EXAMPLE"</span>);</span><br><span class="line">consumer.subscribe(<span class="string">"TOPIC"</span>, <span class="string">"TAGA || TAGB || TAGC"</span>);</span><br></pre></td></tr></table></figure>
+
+<p>消费者将接收包含TAGA或TAGB或TAGC的消息。但是限制是一个消息只能有一个标签，这对于复杂的场景可能不起作用。在这种情况下，可以使用SQL表达式筛选消息。SQL特性可以通过发送消息时的属性来进行计算。在RocketMQ定义的语法下，可以实现一些简单的逻辑。下面是一个例子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">------------</span><br><span class="line">| message  |</span><br><span class="line">|----------|  a &gt; 5 AND b = &apos;abc&apos;</span><br><span class="line">| a = 10   |  --------------------&gt; Gotten</span><br><span class="line">| b = &apos;abc&apos;|</span><br><span class="line">| c = true |</span><br><span class="line">------------</span><br><span class="line">------------</span><br><span class="line">| message  |</span><br><span class="line">|----------|   a &gt; 5 AND b = &apos;abc&apos;</span><br><span class="line">| a = 1    |  --------------------&gt; Missed</span><br><span class="line">| b = &apos;abc&apos;|</span><br><span class="line">| c = true |</span><br><span class="line">------------</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-5-1-基本语法"><a href="#1-5-1-基本语法" class="headerlink" title="1.5.1 基本语法"></a>1.5.1 基本语法</h3><p>RocketMQ只定义了一些基本语法来支持这个特性。你也可以很容易地扩展它。</p>
+<ul>
+<li>数值比较，比如：<strong>&gt;，&gt;=，&lt;，&lt;=，BETWEEN，=；</strong></li>
+<li>字符比较，比如：<strong>=，&lt;&gt;，IN；</strong></li>
+<li><strong>IS NULL</strong> 或者 <strong>IS NOT NULL；</strong></li>
+<li>逻辑符号 <strong>AND，OR，NOT；</strong></li>
+</ul>
+<p>常量支持类型为：</p>
+<ul>
+<li>数值，比如：<strong>123，3.1415；</strong></li>
+<li>字符，比如：<strong>‘abc’，必须用单引号包裹起来；</strong></li>
+<li><strong>NULL</strong>，特殊的常量</li>
+<li>布尔值，<strong>TRUE</strong> 或 <strong>FALSE</strong></li>
+</ul>
+<p>只有使用push模式的消费者才能用使用SQL92标准的sql语句，接口如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public void subscribe(finalString topic, final MessageSelector messageSelector)</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-5-2-使用样例"><a href="#1-5-2-使用样例" class="headerlink" title="1.5.2 使用样例"></a>1.5.2 使用样例</h3><h4 id="1、生产者样例"><a href="#1、生产者样例" class="headerlink" title="1、生产者样例"></a>1、生产者样例</h4><p>发送消息时，你能通过<code>putUserProperty</code>来设置消息的属性</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">DefaultMQProducer producer = <span class="keyword">new</span> DefaultMQProducer(<span class="string">"please_rename_unique_group_name"</span>);</span><br><span class="line">producer.start();</span><br><span class="line">Message msg = <span class="keyword">new</span> Message(<span class="string">"TopicTest"</span>,</span><br><span class="line">   tag,</span><br><span class="line">   (<span class="string">"Hello RocketMQ "</span> + i).getBytes(RemotingHelper.DEFAULT_CHARSET)</span><br><span class="line">);</span><br><span class="line"><span class="comment">// 设置一些属性</span></span><br><span class="line">msg.putUserProperty(<span class="string">"a"</span>, String.valueOf(i));</span><br><span class="line">SendResult sendResult = producer.send(msg);</span><br><span class="line"></span><br><span class="line">producer.shutdown();</span><br></pre></td></tr></table></figure>
+
+<h4 id="2、消费者样例"><a href="#2、消费者样例" class="headerlink" title="2、消费者样例"></a>2、消费者样例</h4><p>用MessageSelector.bySql来使用sql筛选消息</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">DefaultMQPushConsumer consumer = <span class="keyword">new</span> DefaultMQPushConsumer(<span class="string">"please_rename_unique_group_name_4"</span>);</span><br><span class="line"><span class="comment">// 只有订阅的消息有这个属性a, a &gt;=0 and a &lt;= 3</span></span><br><span class="line">consumer.subscribe(<span class="string">"TopicTest"</span>, MessageSelector.bySql(<span class="string">"a between 0 and 3"</span>);</span><br><span class="line">consumer.registerMessageListener(<span class="keyword">new</span> MessageListenerConcurrently() &#123;</span><br><span class="line">   <span class="meta">@Override</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> ConsumeConcurrentlyStatus <span class="title">consumeMessage</span><span class="params">(List&lt;MessageExt&gt; msgs, ConsumeConcurrentlyContext context)</span> </span>&#123;</span><br><span class="line">       <span class="keyword">return</span> ConsumeConcurrentlyStatus.CONSUME_SUCCESS;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;);</span><br><span class="line">consumer.start();</span><br></pre></td></tr></table></figure>
+
+<h2 id="1-6-消息事务样例"><a href="#1-6-消息事务样例" class="headerlink" title="1.6 消息事务样例"></a>1.6 消息事务样例</h2><p>事务消息共有三种状态，提交状态、回滚状态、中间状态：</p>
+<ul>
+<li>TransactionStatus.CommitTransaction: 提交事务，它允许消费者消费此消息。</li>
+<li>TransactionStatus.RollbackTransaction: 回滚事务，它代表该消息将被删除，不允许被消费。</li>
+<li>TransactionStatus.Unknown: 中间状态，它代表需要检查消息队列来确定状态。</li>
+</ul>
+<h3 id="1-6-1-发送事务消息样例"><a href="#1-6-1-发送事务消息样例" class="headerlink" title="1.6.1 发送事务消息样例"></a>1.6.1 发送事务消息样例</h3><h4 id="1、创建事务性生产者"><a href="#1、创建事务性生产者" class="headerlink" title="1、创建事务性生产者"></a>1、创建事务性生产者</h4><p>使用 <code>TransactionMQProducer</code>类创建生产者，并指定唯一的 <code>ProducerGroup</code>，就可以设置自定义线程池来处理这些检查请求。执行本地事务后、需要根据执行结果对消息队列进行回复。回传的事务状态在请参考前一节。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.apache.rocketmq.client.consumer.DefaultMQPushConsumer;</span><br><span class="line"><span class="keyword">import</span> org.apache.rocketmq.client.consumer.listener.ConsumeConcurrentlyContext;</span><br><span class="line"><span class="keyword">import</span> org.apache.rocketmq.client.consumer.listener.ConsumeConcurrentlyStatus;</span><br><span class="line"><span class="keyword">import</span> org.apache.rocketmq.client.consumer.listener.MessageListenerConcurrently;</span><br><span class="line"><span class="keyword">import</span> org.apache.rocketmq.common.message.MessageExt;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TransactionProducer</span> </span>&#123;</span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> MQClientException, InterruptedException </span>&#123;</span><br><span class="line">       TransactionListener transactionListener = <span class="keyword">new</span> TransactionListenerImpl();</span><br><span class="line">       TransactionMQProducer producer = <span class="keyword">new</span> TransactionMQProducer(<span class="string">"please_rename_unique_group_name"</span>);</span><br><span class="line">       ExecutorService executorService = <span class="keyword">new</span> ThreadPoolExecutor(<span class="number">2</span>, <span class="number">5</span>, <span class="number">100</span>, TimeUnit.SECONDS, <span class="keyword">new</span> ArrayBlockingQueue&lt;Runnable&gt;(<span class="number">2000</span>), <span class="keyword">new</span> ThreadFactory() &#123;</span><br><span class="line">           <span class="meta">@Override</span></span><br><span class="line">           <span class="function"><span class="keyword">public</span> Thread <span class="title">newThread</span><span class="params">(Runnable r)</span> </span>&#123;</span><br><span class="line">               Thread thread = <span class="keyword">new</span> Thread(r);</span><br><span class="line">               thread.setName(<span class="string">"client-transaction-msg-check-thread"</span>);</span><br><span class="line">               <span class="keyword">return</span> thread;</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;);</span><br><span class="line">       producer.setExecutorService(executorService);</span><br><span class="line">       producer.setTransactionListener(transactionListener);</span><br><span class="line">       producer.start();</span><br><span class="line">       String[] tags = <span class="keyword">new</span> String[] &#123;<span class="string">"TagA"</span>, <span class="string">"TagB"</span>, <span class="string">"TagC"</span>, <span class="string">"TagD"</span>, <span class="string">"TagE"</span>&#125;;</span><br><span class="line">       <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><br><span class="line">           <span class="keyword">try</span> &#123;</span><br><span class="line">               Message msg =</span><br><span class="line">                   <span class="keyword">new</span> Message(<span class="string">"TopicTest1234"</span>, tags[i % tags.length], <span class="string">"KEY"</span> + i,</span><br><span class="line">                       (<span class="string">"Hello RocketMQ "</span> + i).getBytes(RemotingHelper.DEFAULT_CHARSET));</span><br><span class="line">               SendResult sendResult = producer.sendMessageInTransaction(msg, <span class="keyword">null</span>);</span><br><span class="line">               System.out.printf(<span class="string">"%s%n"</span>, sendResult);</span><br><span class="line">               Thread.sleep(<span class="number">10</span>);</span><br><span class="line">           &#125; <span class="keyword">catch</span> (MQClientException | UnsupportedEncodingException e) &#123;</span><br><span class="line">               e.printStackTrace();</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">100000</span>; i++) &#123;</span><br><span class="line">           Thread.sleep(<span class="number">1000</span>);</span><br><span class="line">       &#125;</span><br><span class="line">       producer.shutdown();</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="2、实现事务的监听接口"><a href="#2、实现事务的监听接口" class="headerlink" title="2、实现事务的监听接口"></a>2、实现事务的监听接口</h4><p>当发送半消息成功时，我们使用 <code>executeLocalTransaction</code> 方法来执行本地事务。它返回前一节中提到的三个事务状态之一。<code>checkLocalTranscation</code> 方法用于检查本地事务状态，并回应消息队列的检查请求。它也是返回前一节中提到的三个事务状态之一。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TransactionListenerImpl</span> <span class="keyword">implements</span> <span class="title">TransactionListener</span> </span>&#123;</span><br><span class="line">  <span class="keyword">private</span> AtomicInteger transactionIndex = <span class="keyword">new</span> AtomicInteger(<span class="number">0</span>);</span><br><span class="line">  <span class="keyword">private</span> ConcurrentHashMap&lt;String, Integer&gt; localTrans = <span class="keyword">new</span> ConcurrentHashMap&lt;&gt;();</span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> LocalTransactionState <span class="title">executeLocalTransaction</span><span class="params">(Message msg, Object arg)</span> </span>&#123;</span><br><span class="line">      <span class="keyword">int</span> value = transactionIndex.getAndIncrement();</span><br><span class="line">      <span class="keyword">int</span> status = value % <span class="number">3</span>;</span><br><span class="line">      localTrans.put(msg.getTransactionId(), status);</span><br><span class="line">      <span class="keyword">return</span> LocalTransactionState.UNKNOW;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> LocalTransactionState <span class="title">checkLocalTransaction</span><span class="params">(MessageExt msg)</span> </span>&#123;</span><br><span class="line">      Integer status = localTrans.get(msg.getTransactionId());</span><br><span class="line">      <span class="keyword">if</span> (<span class="keyword">null</span> != status) &#123;</span><br><span class="line">          <span class="keyword">switch</span> (status) &#123;</span><br><span class="line">              <span class="keyword">case</span> <span class="number">0</span>:</span><br><span class="line">                  <span class="keyword">return</span> LocalTransactionState.UNKNOW;</span><br><span class="line">              <span class="keyword">case</span> <span class="number">1</span>:</span><br><span class="line">                  <span class="keyword">return</span> LocalTransactionState.COMMIT_MESSAGE;</span><br><span class="line">              <span class="keyword">case</span> <span class="number">2</span>:</span><br><span class="line">                  <span class="keyword">return</span> LocalTransactionState.ROLLBACK_MESSAGE;</span><br><span class="line">          &#125;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">return</span> LocalTransactionState.COMMIT_MESSAGE;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-6-2-事务消息使用上的限制"><a href="#1-6-2-事务消息使用上的限制" class="headerlink" title="1.6.2 事务消息使用上的限制"></a>1.6.2 事务消息使用上的限制</h3><ol>
+<li>事务消息不支持延时消息和批量消息。</li>
+<li>为了避免单个消息被检查太多次而导致半队列消息累积，我们默认将单个消息的检查次数限制为 15 次，但是用户可以通过 Broker 配置文件的 <code>transactionCheckMax</code>参数来修改此限制。如果已经检查某条消息超过 N 次的话（ N = <code>transactionCheckMax</code> ） 则 Broker 将丢弃此消息，并在默认情况下同时打印错误日志。用户可以通过重写 <code>AbstractTransactionCheckListener</code> 类来修改这个行为。</li>
+<li>事务消息将在 Broker 配置文件中的参数 transactionMsgTimeout 这样的特定时间长度之后被检查。当发送事务消息时，用户还可以通过设置用户属性 CHECK_IMMUNITY_TIME_IN_SECONDS 来改变这个限制，该参数优先于 <code>transactionMsgTimeout</code> 参数。</li>
+<li>事务性消息可能不止一次被检查或消费。</li>
+<li>提交给用户的目标主题消息可能会失败，目前这依日志的记录而定。它的高可用性通过 RocketMQ 本身的高可用性机制来保证，如果希望确保事务消息不丢失、并且事务完整性得到保证，建议使用同步的双重写入机制。</li>
+<li>事务消息的生产者 ID 不能与其他类型消息的生产者 ID 共享。与其他类型的消息不同，事务消息允许反向查询、MQ服务器能通过它们的生产者 ID 查询到消费者。</li>
+</ol>
+<h2 id="1-7-Logappender样例"><a href="#1-7-Logappender样例" class="headerlink" title="1.7 Logappender样例"></a>1.7 Logappender样例</h2><p>RocketMQ日志提供log4j、log4j2和logback日志框架作为业务应用，下面是配置样例</p>
+<h3 id="1-7-1-log4j样例"><a href="#1-7-1-log4j样例" class="headerlink" title="1.7.1 log4j样例"></a>1.7.1 log4j样例</h3><p>按下面样例使用log4j属性配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">log4j.appender.mq=org.apache.rocketmq.logappender.log4j.RocketmqLog4jAppender</span><br><span class="line">log4j.appender.mq.Tag=yourTag</span><br><span class="line">log4j.appender.mq.Topic=yourLogTopic</span><br><span class="line">log4j.appender.mq.ProducerGroup=yourLogGroup</span><br><span class="line">log4j.appender.mq.NameServerAddress=yourRocketmqNameserverAddress</span><br><span class="line">log4j.appender.mq.layout=org.apache.log4j.PatternLayout</span><br><span class="line">log4j.appender.mq.layout.ConversionPattern=%d&#123;yyyy-MM-dd HH:mm:ss&#125; %-4r [%t] (%F:%L) %-5p - %m%n</span><br></pre></td></tr></table></figure>
+
+<p>按下面样例使用log4j xml配置来使用异步添加日志</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;appender name=&quot;mqAppender1&quot;class=&quot;org.apache.rocketmq.logappender.log4j.RocketmqLog4jAppender&quot;&gt;</span><br><span class="line">  &lt;param name=&quot;Tag&quot; value=&quot;yourTag&quot; /&gt;</span><br><span class="line">  &lt;param name=&quot;Topic&quot; value=&quot;yourLogTopic&quot; /&gt;</span><br><span class="line">  &lt;param name=&quot;ProducerGroup&quot; value=&quot;yourLogGroup&quot; /&gt;</span><br><span class="line">  &lt;param name=&quot;NameServerAddress&quot; value=&quot;yourRocketmqNameserverAddress&quot;/&gt;</span><br><span class="line">  &lt;layout class=&quot;org.apache.log4j.PatternLayout&quot;&gt;</span><br><span class="line">      &lt;param name=&quot;ConversionPattern&quot; value=&quot;%d&#123;yyyy-MM-dd HH:mm:ss&#125;-%p %t %c - %m%n&quot; /&gt;</span><br><span class="line">  &lt;/layout&gt;</span><br><span class="line">&lt;/appender&gt;</span><br><span class="line">&lt;appender name=&quot;mqAsyncAppender1&quot;class=&quot;org.apache.log4j.AsyncAppender&quot;&gt;</span><br><span class="line">  &lt;param name=&quot;BufferSize&quot; value=&quot;1024&quot; /&gt;</span><br><span class="line">  &lt;param name=&quot;Blocking&quot; value=&quot;false&quot; /&gt;</span><br><span class="line">  &lt;appender-ref ref=&quot;mqAppender1&quot;/&gt;</span><br><span class="line">&lt;/appender&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-7-2-log4j2样例"><a href="#1-7-2-log4j2样例" class="headerlink" title="1.7.2 log4j2样例"></a>1.7.2 log4j2样例</h3><p>用log4j2时，配置如下，如果想要非阻塞，只需要使用异步添加引用即可</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;RocketMQ name=&quot;rocketmqAppender&quot; producerGroup=&quot;yourLogGroup&quot; nameServerAddress=&quot;yourRocketmqNameserverAddress&quot;</span><br><span class="line">   topic=&quot;yourLogTopic&quot; tag=&quot;yourTag&quot;&gt;</span><br><span class="line">  &lt;PatternLayout pattern=&quot;%d [%p] hahahah %c %m%n&quot;/&gt;</span><br><span class="line">&lt;/RocketMQ&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-7-3-logback样例"><a href="#1-7-3-logback样例" class="headerlink" title="1.7.3 logback样例"></a>1.7.3 logback样例</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;appender name=&quot;mqAppender1&quot;class=&quot;org.apache.rocketmq.logappender.logback.RocketmqLogbackAppender&quot;&gt;</span><br><span class="line">  &lt;tag&gt;yourTag&lt;/tag&gt;</span><br><span class="line">  &lt;topic&gt;yourLogTopic&lt;/topic&gt;</span><br><span class="line">  &lt;producerGroup&gt;yourLogGroup&lt;/producerGroup&gt;</span><br><span class="line">  &lt;nameServerAddress&gt;yourRocketmqNameserverAddress&lt;/nameServerAddress&gt;</span><br><span class="line">  &lt;layout&gt;</span><br><span class="line">      &lt;pattern&gt;%date %p %t - %m%n&lt;/pattern&gt;</span><br><span class="line">  &lt;/layout&gt;</span><br><span class="line">&lt;/appender&gt;</span><br><span class="line">&lt;appender name=&quot;mqAsyncAppender1&quot;class=&quot;ch.qos.logback.classic.AsyncAppender&quot;&gt;</span><br><span class="line">  &lt;queueSize&gt;1024&lt;/queueSize&gt;</span><br><span class="line">  &lt;discardingThreshold&gt;80&lt;/discardingThreshold&gt;</span><br><span class="line">  &lt;maxFlushTime&gt;2000&lt;/maxFlushTime&gt;</span><br><span class="line">  &lt;neverBlock&gt;true&lt;/neverBlock&gt;</span><br><span class="line">  &lt;appender-ref ref=&quot;mqAppender1&quot;/&gt;</span><br><span class="line">&lt;/appender&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="1-8-OpenMessaging样例"><a href="#1-8-OpenMessaging样例" class="headerlink" title="1.8 OpenMessaging样例"></a>1.8 OpenMessaging样例</h2><p><a href="https://www.google.com/url?q=http://openmessaging.cloud/&sa=D&ust=1546524111089000" target="_blank" rel="noopener">OpenMessaging</a>旨在建立消息和流处理规范，以为金融、电子商务、物联网和大数据领域提供通用框架及工业级指导方案。在分布式异构环境中，设计原则是面向云、简单、灵活和独立于语言。符合这些规范将帮助企业方便的开发跨平台和操作系统的异构消息传递应用程序。提供了openmessaging-api 0.3.0-alpha的部分实现，下面的示例演示如何基于OpenMessaging访问RocketMQ。</p>
+<h3 id="1-8-1-OMSProducer样例"><a href="#1-8-1-OMSProducer样例" class="headerlink" title="1.8.1 OMSProducer样例"></a>1.8.1 OMSProducer样例</h3><p>下面的示例演示如何在同步、异步或单向传输中向RocketMQ代理发送消息。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> io.openmessaging.Future;</span><br><span class="line"><span class="keyword">import</span> io.openmessaging.FutureListener;</span><br><span class="line"><span class="keyword">import</span> io.openmessaging.Message;</span><br><span class="line"><span class="keyword">import</span> io.openmessaging.MessagingAccessPoint;</span><br><span class="line"><span class="keyword">import</span> io.openmessaging.OMS;</span><br><span class="line"><span class="keyword">import</span> io.openmessaging.producer.Producer;</span><br><span class="line"><span class="keyword">import</span> io.openmessaging.producer.SendResult;</span><br><span class="line"><span class="keyword">import</span> java.nio.charset.Charset;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.CountDownLatch;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SimpleProducer</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">       <span class="keyword">final</span> MessagingAccessPoint messagingAccessPoint =</span><br><span class="line">           OMS.getMessagingAccessPoint(<span class="string">"oms:rocketmq://localhost:9876/default:default"</span>);</span><br><span class="line">       <span class="keyword">final</span> Producer producer = messagingAccessPoint.createProducer();</span><br><span class="line">       messagingAccessPoint.startup();</span><br><span class="line">       System.out.printf(<span class="string">"MessagingAccessPoint startup OK%n"</span>);</span><br><span class="line">       producer.startup();</span><br><span class="line">       System.out.printf(<span class="string">"Producer startup OK%n"</span>);</span><br><span class="line">       &#123;</span><br><span class="line">           Message message = producer.createBytesMessage(<span class="string">"OMS_HELLO_TOPIC"</span>, <span class="string">"OMS_HELLO_BODY"</span>.getBytes(Charset.forName(<span class="string">"UTF-8"</span>)));</span><br><span class="line">           SendResult sendResult = producer.send(message);</span><br><span class="line">           <span class="comment">//final Void aVoid = result.get(3000L);</span></span><br><span class="line">           System.out.printf(<span class="string">"Send async message OK, msgId: %s%n"</span>, sendResult.messageId());</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="keyword">final</span> CountDownLatch countDownLatch = <span class="keyword">new</span> CountDownLatch(<span class="number">1</span>);</span><br><span class="line">       &#123;</span><br><span class="line">           <span class="keyword">final</span> Future&lt;SendResult&gt; result = producer.sendAsync(producer.createBytesMessage(<span class="string">"OMS_HELLO_TOPIC"</span>, <span class="string">"OMS_HELLO_BODY"</span>.getBytes(Charset.forName(<span class="string">"UTF-8"</span>))));</span><br><span class="line">           result.addListener(<span class="keyword">new</span> FutureListener&lt;SendResult&gt;() &#123;</span><br><span class="line">               <span class="meta">@Override</span></span><br><span class="line">               <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">operationComplete</span><span class="params">(Future&lt;SendResult&gt; future)</span> </span>&#123;</span><br><span class="line">                   <span class="keyword">if</span> (future.getThrowable() != <span class="keyword">null</span>) &#123;</span><br><span class="line">                       System.out.printf(<span class="string">"Send async message Failed, error: %s%n"</span>, future.getThrowable().getMessage());</span><br><span class="line">                   &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                       System.out.printf(<span class="string">"Send async message OK, msgId: %s%n"</span>, future.get().messageId());</span><br><span class="line">                   &#125;</span><br><span class="line">                   countDownLatch.countDown();</span><br><span class="line">               &#125;</span><br><span class="line">           &#125;);</span><br><span class="line">       &#125;</span><br><span class="line">       &#123;</span><br><span class="line">           producer.sendOneway(producer.createBytesMessage(<span class="string">"OMS_HELLO_TOPIC"</span>, <span class="string">"OMS_HELLO_BODY"</span>.getBytes(Charset.forName(<span class="string">"UTF-8"</span>))));</span><br><span class="line">           System.out.printf(<span class="string">"Send oneway message OK%n"</span>);</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="keyword">try</span> &#123;</span><br><span class="line">           countDownLatch.await();</span><br><span class="line">           Thread.sleep(<span class="number">500</span>); <span class="comment">// 等一些时间来发送消息</span></span><br><span class="line">       &#125; <span class="keyword">catch</span> (InterruptedException ignore) &#123;</span><br><span class="line">       &#125;</span><br><span class="line">       producer.shutdown();</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-8-2-OMSPullConsumer"><a href="#1-8-2-OMSPullConsumer" class="headerlink" title="1.8.2 OMSPullConsumer"></a>1.8.2 OMSPullConsumer</h3><p>用OMS PullConsumer 来从指定的队列中拉取消息</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> io.openmessaging.Message;</span><br><span class="line"><span class="keyword">import</span> io.openmessaging.MessagingAccessPoint;</span><br><span class="line"><span class="keyword">import</span> io.openmessaging.OMS;</span><br><span class="line"><span class="keyword">import</span> io.openmessaging.OMSBuiltinKeys;</span><br><span class="line"><span class="keyword">import</span> io.openmessaging.consumer.PullConsumer;</span><br><span class="line"><span class="keyword">import</span> io.openmessaging.producer.Producer;</span><br><span class="line"><span class="keyword">import</span> io.openmessaging.producer.SendResult;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SimplePullConsumer</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">       <span class="keyword">final</span> MessagingAccessPoint messagingAccessPoint =</span><br><span class="line">           OMS.getMessagingAccessPoint(<span class="string">"oms:rocketmq://localhost:9876/default:default"</span>);</span><br><span class="line">       messagingAccessPoint.startup();</span><br><span class="line">       <span class="keyword">final</span> Producer producer = messagingAccessPoint.createProducer();</span><br><span class="line">       <span class="keyword">final</span> PullConsumer consumer = messagingAccessPoint.createPullConsumer(</span><br><span class="line">           OMS.newKeyValue().put(OMSBuiltinKeys.CONSUMER_ID, <span class="string">"OMS_CONSUMER"</span>));</span><br><span class="line">       messagingAccessPoint.startup();</span><br><span class="line">       System.out.printf(<span class="string">"MessagingAccessPoint startup OK%n"</span>);</span><br><span class="line">       <span class="keyword">final</span> String queueName = <span class="string">"TopicTest"</span>;</span><br><span class="line">       producer.startup();</span><br><span class="line">       Message msg = producer.createBytesMessage(queueName, <span class="string">"Hello Open Messaging"</span>.getBytes());</span><br><span class="line">       SendResult sendResult = producer.send(msg);</span><br><span class="line">       System.out.printf(<span class="string">"Send Message OK. MsgId: %s%n"</span>, sendResult.messageId());</span><br><span class="line">       producer.shutdown();</span><br><span class="line">       consumer.attachQueue(queueName);</span><br><span class="line">       consumer.startup();</span><br><span class="line">       System.out.printf(<span class="string">"Consumer startup OK%n"</span>);</span><br><span class="line">       <span class="comment">// 运行直到发现一个消息被发送了</span></span><br><span class="line">       <span class="keyword">boolean</span> stop = <span class="keyword">false</span>;</span><br><span class="line">       <span class="keyword">while</span> (!stop) &#123;</span><br><span class="line">           Message message = consumer.receive();</span><br><span class="line">           <span class="keyword">if</span> (message != <span class="keyword">null</span>) &#123;</span><br><span class="line">               String msgId = message.sysHeaders().getString(Message.BuiltinKeys.MESSAGE_ID);</span><br><span class="line">               System.out.printf(<span class="string">"Received one message: %s%n"</span>, msgId);</span><br><span class="line">               consumer.ack(msgId);</span><br><span class="line">               <span class="keyword">if</span> (!stop) &#123;</span><br><span class="line">                   stop = msgId.equalsIgnoreCase(sendResult.messageId());</span><br><span class="line">               &#125;</span><br><span class="line">           &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">               System.out.printf(<span class="string">"Return without any message%n"</span>);</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br><span class="line">       consumer.shutdown();</span><br><span class="line">       messagingAccessPoint.shutdown();</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-8-3-OMSPushConsumer"><a href="#1-8-3-OMSPushConsumer" class="headerlink" title="1.8.3 OMSPushConsumer"></a>1.8.3 OMSPushConsumer</h3><p>以下示范如何将 OMS PushConsumer 添加到指定的队列，并通过 MessageListener 消费这些消息。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> io.openmessaging.Message;</span><br><span class="line"><span class="keyword">import</span> io.openmessaging.MessagingAccessPoint;</span><br><span class="line"><span class="keyword">import</span> io.openmessaging.OMS;</span><br><span class="line"><span class="keyword">import</span> io.openmessaging.OMSBuiltinKeys;</span><br><span class="line"><span class="keyword">import</span> io.openmessaging.consumer.MessageListener;</span><br><span class="line"><span class="keyword">import</span> io.openmessaging.consumer.PushConsumer;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SimplePushConsumer</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">       <span class="keyword">final</span> MessagingAccessPoint messagingAccessPoint = OMS</span><br><span class="line">           .getMessagingAccessPoint(<span class="string">"oms:rocketmq://localhost:9876/default:default"</span>);</span><br><span class="line">       <span class="keyword">final</span> PushConsumer consumer = messagingAccessPoint.</span><br><span class="line">           createPushConsumer(OMS.newKeyValue().put(OMSBuiltinKeys.CONSUMER_ID, <span class="string">"OMS_CONSUMER"</span>));</span><br><span class="line">       messagingAccessPoint.startup();</span><br><span class="line">       System.out.printf(<span class="string">"MessagingAccessPoint startup OK%n"</span>);</span><br><span class="line">       Runtime.getRuntime().addShutdownHook(<span class="keyword">new</span> Thread(<span class="keyword">new</span> Runnable() &#123;</span><br><span class="line">           <span class="meta">@Override</span></span><br><span class="line">           <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">               consumer.shutdown();</span><br><span class="line">               messagingAccessPoint.shutdown();</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;));</span><br><span class="line">       consumer.attachQueue(<span class="string">"OMS_HELLO_TOPIC"</span>, <span class="keyword">new</span> MessageListener() &#123;</span><br><span class="line">           <span class="meta">@Override</span></span><br><span class="line">           <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onReceived</span><span class="params">(Message message, Context context)</span> </span>&#123;</span><br><span class="line">               System.out.printf(<span class="string">"Received one message: %s%n"</span>, message.sysHeaders().getString(Message.BuiltinKeys.MESSAGE_ID));</span><br><span class="line">               context.ack();</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;);</span><br><span class="line">       consumer.startup();</span><br><span class="line">       System.out.printf(<span class="string">"Consumer startup OK%n"</span>);</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+        <h2>相关文章</h2><ul><li><a href="/rocketmq/rocketmq-message-dedup/">RocketMQ--消息幂等（去重）通用解决方案</a></li><li><a href="/rocketmq/rocketmq-clean-commitlog/">RocketMQ--消息文件过期原理</a></li><li><a href="/rocketmq/rocketmq-consume-offset-management/">RocketMQ--消息ACK机制及消费进度管理</a></li><li><a href="/rocketmq/rocketmq-rebalance/">RocketMQ--水平扩展及负载均衡详解</a></li><li><a href="/rocketmq/rocketmq-acl-user-guide/">RocketMQ--权限控制</a></li></ul>
+    </div>
+    
+        <div class="reward" ontouchstart>
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+            
+                <span class="reward-type">
+                    <img class="wechat" src="/images/weixin.png"><b>微信打赏</b>
+                </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">赞赏是不耍流氓的鼓励</p>
+</div>
+
+
+    
+
+
+    
+        <div class="post-footer">
+            <div class="col-sm-10">
+                <div>
+                    <b>本文链接</b>：<a href="/rocketmq/rocketmq_example/" target="_blank">RocketMQ--样例</a>
+                </div>
+                <div>
+                    
+                        转载声明：本博客由小小冒险家创作，采用 <a href="https://creativecommons.org/licenses/by-nc-nd/3.0/" target="_blank"> CC BY 3.0 CN </a> 许可协议。可自由转载、引用，但需署名作者且注明文章出处。如转载至微信公众号，请在文末添加作者公众号二维码。
+                    
+                </div>
+                <div>
+                    
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <img src="/icons/wx.jpg" width=100%/>
+            </div>
+        </div>
+    
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+        <a target="_blank" href="/docker/05-docker-lession-index/" class="pre-post btn btn-default"
+           title='在windows系统中安装Docker'>
+            <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+            <span class="hidden-xs">在windows系统中安装Docker</span>
+        </a>
+    
+    
+        <a target="_blank" href="/docker/04-docker-lession-index/" class="next-post btn btn-default"
+           title='在Centos系统中安装Docker'>
+            <span class="hidden-lg">下一篇</span>
+            <span class="hidden-xs">在Centos系统中安装Docker</span><i class="fa fa-angle-right fa-fw"></i>
+        </a>
+    
+</div>
+
+
+
+
+
+
+
+                </main>
+                
+    <aside class="col-md-4 sidebar">
+        
+        <div class="widget about-me">
+    <div class="row">
+        <div class="col-md-5">
+            <img src="/icons/wx.jpg" alt="公众号" class="img-responsive center-block">
+        </div>
+        <div class="col-md-7">
+            <a class="series-a" href="javascript:void(0)">公众号</a>
+            <ul>
+                <li>• 技术干货推送</li>
+                <li>• 日常好文分享</li>
+                <li><b>• 扫码领取更多惊喜</b></li>
+            </ul>
+        </div>
+    </div>
+    
+<!--        <div class="row">-->
+<!--            <div class="col-md-5">-->
+<!--                <img src="/icons/xcx.jpg" alt="小程序" class="img-responsive">-->
+<!--            </div>-->
+<!--            <div class="col-md-7">-->
+<!--                <a class="series-a" href="javascript:void(0)">小程序</a>-->
+<!--                <ul>-->
+<!--                    <li>• 原创笔记</li>-->
+<!--                    <li>• 独家心法</li>-->
+<!--                    <li><b>• 扫码领取</b></li>-->
+<!--                </ul>-->
+<!--            </div>-->
+<!--        </div>-->
+    
+</div>
+
+
+
+
+        
+        
+    <div class="widget">
+        <h3 class="title">网站公告</h3>
+        <div class="notification">
+            <p>
+  <b>QQ群</b>：415777345<br/>
+</p>
+
+<p>
+<b>联系博主QQ</b>：210006540<br/>
+</p>
+        </div>
+    </div>
+
+        
+        
+    
+        <div class="ad">
+            <div class="row">
+                <div class="col-md-12">
+                    <a href="https://promotion.aliyun.com/ntms/act/qwbk.html?userCode=qhtujh03" rel="nofollow" target="_blank">
+                        <img class="img-responsive center-block"
+                             title="阿里全民云计算"
+                             src="/icons/380-120.png"
+                        >
+                    </a>
+                </div>
+            </div>
+        </div>
+    
+
+
+
+
+        
+        
+    <div class="widget">
+        <h3 class="title">分类</h3>
+        <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Ajax/"><i class="fa" aria-hidden="true">Ajax</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/"><i class="fa" aria-hidden="true">Docker</i></a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Druid/"><i class="fa" aria-hidden="true">Druid</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Feign/"><i class="fa" aria-hidden="true">Feign</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/HTTP/"><i class="fa" aria-hidden="true">HTTP</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/"><i class="fa" aria-hidden="true">Hexo</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JRebel/"><i class="fa" aria-hidden="true">JRebel</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/"><i class="fa" aria-hidden="true">Java</i></a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Maven/"><i class="fa" aria-hidden="true">Maven</i></a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MongoDB/"><i class="fa" aria-hidden="true">MongoDB</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MySQL/"><i class="fa" aria-hidden="true">MySQL</i></a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Nexus3-x/"><i class="fa" aria-hidden="true">Nexus3.x</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/PowerShell/"><i class="fa" aria-hidden="true">PowerShell</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Quartz/"><i class="fa" aria-hidden="true">Quartz</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/"><i class="fa" aria-hidden="true">Redis</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link current" href="/categories/RocketMQ/"><i class="fa" aria-hidden="true">RocketMQ</i></a><span class="category-list-count">12</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Sharding-JDBC/"><i class="fa" aria-hidden="true">Sharding-JDBC</i></a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/"><i class="fa" aria-hidden="true">Spring</i></a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring-Cloud/"><i class="fa" aria-hidden="true">Spring Cloud</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringBoot/"><i class="fa" aria-hidden="true">SpringBoot</i></a><span class="category-list-count">15</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringCloud-Alibaba/"><i class="fa" aria-hidden="true">SpringCloud Alibaba</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringSession/"><i class="fa" aria-hidden="true">SpringSession</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/主键/"><i class="fa" aria-hidden="true">主键</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/其他/"><i class="fa" aria-hidden="true">其他</i></a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/安装教程/"><i class="fa" aria-hidden="true">安装教程</i></a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/工具/"><i class="fa" aria-hidden="true">工具</i></a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/微服务/"><i class="fa" aria-hidden="true">微服务</i></a><span class="category-list-count">17</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据库/"><i class="fa" aria-hidden="true">数据库</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/面试/"><i class="fa" aria-hidden="true">面试</i></a><span class="category-list-count">1</span></li></ul>
+    </div>
+
+
+        
+        
+  <div class="widget">
+    <h3 class="title">标签云</h3>
+    <div class="content tag-cloud">
+        
+            <canvas width="300" height="300" id="tag-cloud-3d">
+                <a href="/tags/Ajax/" style="font-size: 10px;">Ajax</a> <a href="/tags/Alibaba/" style="font-size: 10px;">Alibaba</a> <a href="/tags/Banner/" style="font-size: 10px;">Banner</a> <a href="/tags/Centos/" style="font-size: 10px;">Centos</a> <a href="/tags/Docker/" style="font-size: 17.5px;">Docker</a> <a href="/tags/Druid/" style="font-size: 10px;">Druid</a> <a href="/tags/Eureka/" style="font-size: 10.83px;">Eureka</a> <a href="/tags/FastDFS/" style="font-size: 10.83px;">FastDFS</a> <a href="/tags/Feign/" style="font-size: 13.33px;">Feign</a> <a href="/tags/File/" style="font-size: 10px;">File</a> <a href="/tags/HTTP/" style="font-size: 10px;">HTTP</a> <a href="/tags/Hexo/" style="font-size: 10.83px;">Hexo</a> <a href="/tags/HikariCP/" style="font-size: 10px;">HikariCP</a> <a href="/tags/Hystrix/" style="font-size: 10.83px;">Hystrix</a> <a href="/tags/Hystrix-Dashboard/" style="font-size: 10px;">Hystrix Dashboard</a> <a href="/tags/IDEA/" style="font-size: 10px;">IDEA</a> <a href="/tags/JDK/" style="font-size: 10px;">JDK</a> <a href="/tags/JRebel/" style="font-size: 10px;">JRebel</a> <a href="/tags/Java/" style="font-size: 12.5px;">Java</a> <a href="/tags/Java-b2-spring注解/" style="font-size: 15.83px;">Java-b2-spring注解</a> <a href="/tags/Map/" style="font-size: 10px;">Map</a> <a href="/tags/Maven/" style="font-size: 12.5px;">Maven</a> <a href="/tags/Memcache/" style="font-size: 10px;">Memcache</a> <a href="/tags/MongoDB/" style="font-size: 10.83px;">MongoDB</a> <a href="/tags/MongoTemplate/" style="font-size: 10.83px;">MongoTemplate</a> <a href="/tags/MySQL/" style="font-size: 15px;">MySQL</a> <a href="/tags/MySQL8/" style="font-size: 10px;">MySQL8</a> <a href="/tags/Mysql/" style="font-size: 10px;">Mysql</a> <a href="/tags/Navicat/" style="font-size: 10px;">Navicat</a> <a href="/tags/Nexus3-x/" style="font-size: 10.83px;">Nexus3.x</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/PowerShell/" style="font-size: 10px;">PowerShell</a> <a href="/tags/Quartz/" style="font-size: 10px;">Quartz</a> <a href="/tags/RabbitMQ/" style="font-size: 10px;">RabbitMQ</a> <a href="/tags/Redis/" style="font-size: 12.5px;">Redis</a> <a href="/tags/Ribbon/" style="font-size: 10.83px;">Ribbon</a> <a href="/tags/RocketMQ/" style="font-size: 18.33px;">RocketMQ</a> <a href="/tags/Sharding-JDBC/" style="font-size: 14.17px;">Sharding-JDBC</a> <a href="/tags/SonarQube/" style="font-size: 10px;">SonarQube</a> <a href="/tags/Spring/" style="font-size: 16.67px;">Spring</a> <a href="/tags/Spring-Boot/" style="font-size: 11.67px;">Spring Boot</a> <a href="/tags/Spring-Cloud/" style="font-size: 16.67px;">Spring Cloud</a> <a href="/tags/Spring-Cloud-Gateway/" style="font-size: 10.83px;">Spring Cloud Gateway</a> <a href="/tags/Spring-Cloud-Sleuth/" style="font-size: 10px;">Spring Cloud Sleuth</a> <a href="/tags/SpringBoot/" style="font-size: 20px;">SpringBoot</a> <a href="/tags/SpringCloud/" style="font-size: 10px;">SpringCloud</a> <a href="/tags/SpringCloud-Alibaba/" style="font-size: 10px;">SpringCloud Alibaba</a> <a href="/tags/SpringCloud-Stream/" style="font-size: 10px;">SpringCloud Stream</a> <a href="/tags/SpringSession/" style="font-size: 10px;">SpringSession</a> <a href="/tags/Tomcat/" style="font-size: 10px;">Tomcat</a> <a href="/tags/Transaction/" style="font-size: 10px;">Transaction</a> <a href="/tags/Turbine/" style="font-size: 10px;">Turbine</a> <a href="/tags/Web应用/" style="font-size: 10px;">Web应用</a> <a href="/tags/Windows/" style="font-size: 10px;">Windows</a> <a href="/tags/Windows-11/" style="font-size: 10px;">Windows 11</a> <a href="/tags/Zipkin/" style="font-size: 10px;">Zipkin</a> <a href="/tags/Zookeeper/" style="font-size: 10px;">Zookeeper</a> <a href="/tags/Zuul/" style="font-size: 10px;">Zuul</a> <a href="/tags/assessToken/" style="font-size: 10px;">assessToken</a> <a href="/tags/httpclient/" style="font-size: 10px;">httpclient</a> <a href="/tags/logback/" style="font-size: 10px;">logback</a> <a href="/tags/session共享/" style="font-size: 10px;">session共享</a> <a href="/tags/theme/" style="font-size: 10px;">theme</a> <a href="/tags/互联网产品/" style="font-size: 10px;">互联网产品</a> <a href="/tags/其他/" style="font-size: 10px;">其他</a> <a href="/tags/分布式/" style="font-size: 10.83px;">分布式</a> <a href="/tags/加密/" style="font-size: 10px;">加密</a> <a href="/tags/原理/" style="font-size: 10px;">原理</a> <a href="/tags/发布/" style="font-size: 10px;">发布</a> <a href="/tags/图片水印/" style="font-size: 10px;">图片水印</a> <a href="/tags/工具/" style="font-size: 10px;">工具</a> <a href="/tags/并发编程/" style="font-size: 10px;">并发编程</a> <a href="/tags/循环依赖/" style="font-size: 10px;">循环依赖</a> <a href="/tags/微服务/" style="font-size: 19.17px;">微服务</a> <a href="/tags/时间工具类/" style="font-size: 10px;">时间工具类</a> <a href="/tags/注解/" style="font-size: 10.83px;">注解</a> <a href="/tags/消息订阅/" style="font-size: 10px;">消息订阅</a> <a href="/tags/索引/" style="font-size: 14.17px;">索引</a> <a href="/tags/红黑树/" style="font-size: 10px;">红黑树</a>
+            </canvas>
+        
+    </div>
+  </div>
+
+
+        
+        
+    <div class="widget">
+        <h3 class="title">归档</h3>
+        <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/"><i class="fa" aria-hidden="true">2022年09月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/05/"><i class="fa" aria-hidden="true">2022年05月</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/"><i class="fa" aria-hidden="true">2021年07月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/"><i class="fa" aria-hidden="true">2021年06月</i></a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/"><i class="fa" aria-hidden="true">2021年03月</i></a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/"><i class="fa" aria-hidden="true">2021年02月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/"><i class="fa" aria-hidden="true">2020年11月</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/"><i class="fa" aria-hidden="true">2020年09月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/"><i class="fa" aria-hidden="true">2020年08月</i></a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/"><i class="fa" aria-hidden="true">2020年07月</i></a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/"><i class="fa" aria-hidden="true">2020年06月</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/"><i class="fa" aria-hidden="true">2020年04月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/"><i class="fa" aria-hidden="true">2020年03月</i></a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/"><i class="fa" aria-hidden="true">2020年02月</i></a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/"><i class="fa" aria-hidden="true">2020年01月</i></a><span class="archive-list-count">23</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/"><i class="fa" aria-hidden="true">2019年12月</i></a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/"><i class="fa" aria-hidden="true">2019年11月</i></a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/"><i class="fa" aria-hidden="true">2019年10月</i></a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/"><i class="fa" aria-hidden="true">2019年09月</i></a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/"><i class="fa" aria-hidden="true">2019年08月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/"><i class="fa" aria-hidden="true">2019年05月</i></a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/"><i class="fa" aria-hidden="true">2019年04月</i></a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/"><i class="fa" aria-hidden="true">2019年03月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/"><i class="fa" aria-hidden="true">2019年02月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/"><i class="fa" aria-hidden="true">2019年01月</i></a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/"><i class="fa" aria-hidden="true">2018年12月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/"><i class="fa" aria-hidden="true">2018年10月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/"><i class="fa" aria-hidden="true">2018年09月</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/"><i class="fa" aria-hidden="true">2018年08月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/"><i class="fa" aria-hidden="true">2018年06月</i></a><span class="archive-list-count">2</span></li></ul>
+    </div>
+
+
+        
+        
+    <div class="widget">
+      <h3 class="title">社交</h3> 
+        <div class="content social">
+            
+	            <a href="//github.com/zhaokejin" rel="external nofollow" title="GitHub" target="_blank">
+			    	<i class="github fa fa-github"></i>
+			    </a>
+            
+	            <a href="//gitee.com/zhaokejin" rel="external nofollow" title="Gitee" target="_blank">
+			    	<i class="git fa fa-git"></i>
+			    </a>
+            
+	            <a href="mailto:210006540qq.com" rel="external nofollow" title="邮箱" target="_blank">
+			    	<i class="envelope-o fa fa-envelope-o"></i>
+			    </a>
+            
+	            <a href="//wpa.qq.com/msgrd?v=3&uin=210006540&site=qq&menu=yes" rel="external nofollow" title="QQ" target="_blank">
+			    	<i class="qq fa fa-qq"></i>
+			    </a>
+            
+	            <a href="//shang.qq.com/wpa/qunwpa?idkey=7b19717710dcc2c78996f316db3ab3365bde39bc3c60de7a6c59fe07231e231a" rel="external nofollow" title="QQ群" target="_blank">
+			    	<i class="group fa fa-group"></i>
+			    </a>
+            
+	            <a href="/atom.xml" rel="external nofollow" title="RSS" target="_blank">
+			    	<i class="feed fa fa-feed"></i>
+			    </a>
+            
+        </div>
+    </div>
+
+
+        
+        
+
+        
+    </aside>
+
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+
+<a id="back-to-top" class="icon-btn hide">
+	<i class="fa fa-chevron-up"></i>
+</a>
+
+
+
+
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+        访问量:
+        <strong id="busuanzi_value_site_pv">
+            <i class="fa fa-spinner fa-spin"></i>
+        </strong>
+        &nbsp; | &nbsp;
+        访客数:
+        <strong id="busuanzi_value_site_uv">
+            <i class="fa fa-spinner fa-spin"></i>
+        </strong>
+<!--        &nbsp; <strong>Since 2018-12-26</strong>-->
+    
+</div>
+
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy; 2018 - 2023
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    <a href="//www.beian.miit.gov.cn/" class="copyright-links" target="_blank" rel="nofollow">鲁ICP备18033870号</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/js/jquery.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/bootstrap-hover-dropdown.min.js"></script>
+
+
+	<script src="/js/search.js?rev=@@hash"></script>
+
+
+
+    <script src="/assets/tagcanvas.min.js?rev=2.9"></script>
+    <script>
+        var tagOption = {
+            textColour: '#29afec', // 字体颜色
+            outlineMethod: 'block', // 选中模式
+            outlineColour: '#FFDAB9', // 选中模式的颜色
+            interval: 30 || 30, // 动画帧之间的时间间隔，值越大，转动幅度越大
+            textHeight: 13,
+            outlineRadius: 3,
+            freezeActive: true || '', // 选中的标签是否继续滚动
+            frontSelect: true || '', // 不选标签云后部的标签
+            initial: [0.1, -0.1],
+            depth: 0.5,
+            decel: 0.95,
+            maxSpeed: 0.03,
+            reverse: true || '', // 是否反向触发
+            fadeIn: 500, // 进入动画时间
+            wheelZoom: false || '' // 是否启用鼠标滚轮
+        }
+        TagCanvas.Start('tag-cloud-3d','',tagOption);
+    </script>
+
+
+
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<script src="/js/app.js?rev=@@hash"></script>
+<script src="/jquery.fancybox.js?v=2.1.5"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('.fancybox').fancybox();
+    });
+    // 给图片添加链接
+    $(document).ready(function() {
+        $("p img").each(function() {
+            var strA = "<a id='yourid' class='fancybox' data-fancybox-group='gallery'  href='" + this.src + "'></a>";
+            $(this).wrapAll(strA);
+        });
+    });
+    // fancybox
+    $("#yourid").fancybox({
+        openEffect    : 'elastic',
+        closeEffect   : 'elastic',
+    });
+</script>
+
+</body>
+</html>

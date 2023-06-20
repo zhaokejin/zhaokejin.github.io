@@ -1,0 +1,710 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="小小冒险家的博客">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.2.3">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="https://www.cicoding.cn">
+    <!--SEO-->
+
+    <meta name="keywords" content="Spring,Java-b2-spring注解">
+
+
+    <meta name="description" content="一、@Autowired和@Resource都可以用来装配bean，都可以写在字段上，或者方法上。
+二、@Autowired属于Spring的；@Resource为JSR-250标准的注释，属于J2EE的。
+三、@Autowired默认按类型装配，默认情况下必须要求依赖对象必须存在，如果要允许...">
+
+
+
+<meta name="robots" content="all">
+<meta name="google" content="all">
+<meta name="googlebot" content="all">
+<meta name="verify" content="all">
+    <!--Title-->
+
+
+<title>Spring 注释 @Autowired 和@Resource 的区别 | 小小冒险家的博客</title>
+
+
+    <link rel="alternate" href="/atom.xml" title="小小冒险家的博客" type="application/atom+xml">
+
+
+    <link rel="icon" href="/favicon.png">
+
+    
+
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7">
+<link rel="stylesheet" href="/jquery.fancybox.css?v=2.1.5">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.5.0">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash">
+
+
+
+
+    
+
+
+
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?601ebec7733383ef248ca61fc0a0db95";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+
+
+    
+
+</head>
+
+</html>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+
+<body>
+    
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row clearfix">
+            <div class="col-md-12 column">
+                <nav class="navbar navbar-default" style="background-color:#fff;border:0;margin-bottom:0"
+                     role="navigation">
+                    <div class="navbar-header">
+<!--                        <button type="button" class="navbar-toggle" data-toggle="collapse"-->
+<!--                                data-target="#navbar-collapse-1">-->
+<!--                            <span class="sr-only">切</span>-->
+<!--                            <span class="icon-bar"></span>-->
+<!--                            <span class="icon-bar"></span>-->
+<!--                            <span class="icon-bar"></span>-->
+<!--                        </button>-->
+                        <a class="logo" href="/">
+                            <img src="/favicon.png"/>小小冒险家的博客
+                        </a>
+                    </div>
+
+                    <div class="collapse navbar-collapse" style="border:0;" id="navbar-collapse-1">
+                        <ul class="nav navbar-nav">
+                            
+                                
+                                    <li>
+                                        <a href="/" >
+                                            <i class="fa fa-home"></i>
+                                            首页
+                                        </a>
+                                    </li>
+                                
+                            
+                                
+                                    <li>
+                                        <a href="/archives" >
+                                            <i class="fa fa-sort"></i>
+                                            归档
+                                        </a>
+                                    </li>
+                                
+                            
+                                
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                                           data-hover="dropdown">
+                                            <i class="fa fa-fire"></i>
+                                            系列教程
+                                            <strong class="caret"></strong>
+                                        </a>
+                                        <ul class="dropdown-menu">
+                                            
+                                                <li>
+                                                    <a href="/docker/00-docker-lession-index" target="_blank">
+                                                        <i class="fa "></i>
+                                                        Docker系列教程
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="/micro-service/microservice/" target="_blank">
+                                                        <i class="fa "></i>
+                                                        SpringCloud微服务架构
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="/micro-service/microservice-alibaba/" target="_blank">
+                                                        <i class="fa "></i>
+                                                        SpringCloud Alibaba微服务架构
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="/sharding-jdbc/sharding-jdbc000/" target="_blank">
+                                                        <i class="fa "></i>
+                                                        Sharding-JDBC教程
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="/springboot/springboot-source-code/" target="_blank">
+                                                        <i class="fa "></i>
+                                                        SpringBoot源码系列
+                                                    </a>
+                                                </li>
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+                                
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                                           data-hover="dropdown">
+                                            <i class="fa fa-book"></i>
+                                            在线文档
+                                            <strong class="caret"></strong>
+                                        </a>
+                                        <ul class="dropdown-menu">
+                                            
+                                                <li>
+                                                    <a href="https://spring.io/docs/" target="_blank">
+                                                        <i class="fa "></i>
+                                                        Spring Reference
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="https://spring.io/projects/spring-boot/" target="_blank">
+                                                        <i class="fa "></i>
+                                                        SpringBoot Reference
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="https://spring.io/projects/spring-cloud/" target="_blank">
+                                                        <i class="fa "></i>
+                                                        SpringCloud Reference
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="https://docs.spring.io/spring-security/site/docs/current/reference/htmlsingle/" target="_blank">
+                                                        <i class="fa "></i>
+                                                        Spring Security Reference
+                                                    </a>
+                                                </li>
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+                                
+                                    <li>
+                                        <a href="/other/jrebel-activation" >
+                                            <i class="fa fa-fire"></i>
+                                            JRebel激活
+                                        </a>
+                                    </li>
+                                
+                            
+                                
+                                    <li>
+                                        <a href="/about" >
+                                            <i class="fa fa-user"></i>
+                                            关于我
+                                        </a>
+                                    </li>
+                                
+                            
+                        </ul>
+                        
+                            <form id="search-form" class="navbar-form navbar-right">
+                                <div class="form-group input-group">
+                                    <input type="text" id="local-search-input" class="form-control"
+                                           placeholder="搜我..."/>
+                                    <span class="input-group-btn">
+                                        <a class="btn btn-default">
+                                            <i class="fa fa-search"></i>
+                                        </a>
+                                    </span>
+                                </div>
+                                <div id="local-search-result" class="local-search-result-cls"></div>
+                            </form>
+                        
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </div>
+</nav>
+
+    <a href="http://github.com/zhaokejin" target="_blank">
+        <img style="position: absolute; width:100px; top: 0; left: 0; border: 0;"
+             src="/img/fork-me.png"
+             alt="Fork me on GitHub">
+    </a>
+
+
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    
+    
+        <div class="ad">
+            <div class="row">
+                
+                    <div class="col-md-12">
+                        <a href="https://promotion.aliyun.com/ntms/act/qwbk.html?userCode=qhtujh03" rel="nofollow" target="_blank">
+                            <img class="img-responsive center-block"
+                                 src="/icons/810x100.png"
+                                 title="阿里全民云计算"
+                            >
+                        </a>
+                    </div>
+                
+            </div>
+        </div>
+    
+
+
+<p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="Spring 注释 @Autowired 和@Resource 的区别">
+            
+                Spring 注释 @Autowired 和@Resource 的区别
+            
+        </h1>
+        <div class="post-meta">
+    
+
+    
+        <span class="categories-meta fa-wrap">
+            <i class="fa fa-folder-open-o"></i>
+            <a class="category-link" href="/categories/Spring/">Spring</a>
+        </span>
+    
+
+    
+        <span class="fa-wrap">
+            <i class="fa fa-tags"></i>
+            <span class="tags-meta">
+                
+                    <a class="tag-link" href="/tags/Java-b2-spring注解/">Java-b2-spring注解</a> <a class="tag-link" href="/tags/Spring/">Spring</a>
+                
+            </span>
+        </span>
+    
+
+    
+        
+        <span class="fa-wrap">
+            <i class="fa fa-clock-o"></i>
+            <span class="date-meta">2020/01/29</span>
+        </span>
+        
+            <span class="fa-wrap">
+                <i class="fa fa-eye"></i>
+                <span id="busuanzi_value_page_pv"></span>
+            </span>
+        
+    
+</div>
+        
+        
+    </div>
+    
+    <div class="post-body post-content" id="container">
+        
+
+        <p>一、@Autowired和@Resource都可以用来装配bean，都可以写在字段上，或者方法上。</p>
+<p>二、@Autowired属于Spring的；@Resource为JSR-250标准的注释，属于J2EE的。</p>
+<p>三、@Autowired默认按类型装配，默认情况下必须要求依赖对象必须存在，如果要允许null值，可以设置它的required属性为false，例如：@Autowired(required=false) ，如果我们想使用名称装配可以结合@Qualifier注解进行使用，如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">@Autowired() @Qualifier(&quot;baseDao&quot;)</span><br><span class="line">private BaseDao baseDao;</span><br></pre></td></tr></table></figure>
+
+<p>四、@Resource，默认安装名称进行装配，名称可以通过name属性进行指定，如果没有指定name属性，当注解写在字段上时，默认取字段名进行安装名称查找，如果注解写在setter方法上默认取属性名进行装配。当找不到与名称匹配的bean时才按照类型进行装配。但是需要注意的是，如果name属性一旦指定，就只会按照名称进行装配。</p>
+<p> 例如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">@Resource(name=&quot;baseDao&quot;)</span><br><span class="line">private BaseDao baseDao;</span><br></pre></td></tr></table></figure>
+
+<p>五、推荐使用：@Resource注解在字段上，这样就不用写setter方法了，并且这个注解是属于J2EE的，减少了与spring的耦合。这样代码看起就比较优雅。</p>
+<p>1、@Resource后面没有任何内容，默认通过name属性去匹配bean，找不到再按type去匹配</p>
+<p>2、指定了name或者type则根据指定的类型去匹配bean</p>
+<p>3、指定了name和type则根据指定的name和type去匹配bean，任何一个不匹配都将报错</p>
+<p>然后，区分一下@Autowired和@Resource两个注解的区别：</p>
+<p>1、@Autowired默认按照byType方式进行bean匹配，@Resource默认按照byName方式进行bean匹配</p>
+<p>2、@Autowired是Spring的注解，@Resource是J2EE的注解，这个看一下导入注解的时候这两个注解的包名就一清二楚了</p>
+<p>Spring属于第三方的，J2EE是Java自己的东西，因此，建议使用@Resource注解，以减少代码和Spring之间的耦合。</p>
+<p>个人见解：</p>
+<p>1、@Autowired和@Resource都是基于@service、@controller、@repository以及xml配置中<bean></bean></p>
+<p>2、@Autowired和@Resource匹配的内容取决于@service()括号内的内容或 spring的xml配置里 <bean id="benz" class="com.xrq.annotation.Benz"> 的id（xml配置优先）</bean></p>
+<p>3、如果使用@Resource，请最好这么写@Resource（name=”BWM”）,因为他是默认按name匹配的，不填写就按type匹配</p>
+<p>4、如果使用@Autowired，请最好不要加@Qualifier(“BWM”)，因为他是默认按type匹配的，填写就按name匹配</p>
+<p>5、其实@Autowired + @Qualifier(“BWM”) == @Resource（name=”BWM”），@Autowired ==@Resource（）或@Resource，用哪个都可以，</p>
+<p>6、最好不要这么写 @Resource（）+ @Qualifier(“BWM”) ，虽然也可以，但是感觉不伦不类，前者属于j2EE,后者属于spring</p>
+<p>7、当 一个接口有两个以上实现类的时候才会用到@Autowired + @Qualifier(“BWM”) 或 @Resource（name=”BWM”），这时，</p>
+<p>如果使用的是xml，则不用担心，因为你一定会写id；</p>
+<p>如果使用的是@Service(),请注意：最好在括号内写上name，和@Autowired +@Qualifier(“BWM”)或Resource（name=”BWM”）成对出现，增强可读性，避免出错，</p>
+<p>因为有一种特殊情况会使你出错，spring@Service生成bean的命名规则：<strong>当类的名字是以两个或以上连续的大写字母开头的话，bean的名字会与类名保持一致，首字母不小写</strong></p>
+<p>8、当一个接口只有一个实现类，@Autowired和@Resource没有区别，但是最好用@Autowired，原因请看下文</p>
+<p>9、@Resource默认按name匹配，，当有一个接口有多个实现类的时候，引用都是一个接口，不好区分，才使用name区分，这种情况使用@Resource和@Autowired都可以，推荐使用@Resource，且都是按name匹配，一般不用type匹配，引用的是同一个接口，同一个type</p>
+<p>还有一种方式：使用byType类型时，使用@Service+@Primary组合，一个接口当有多个实现类，，@Primary强制指定一个实现类</p>
+<p>10、@Autowired默认按type匹配，，当有一个接口只有有一个实现类的时候，引用是一个接口，只有一个实现类，没必要使用name区分，这种情况使用@Resource和@Autowired都可以，推荐使用@Autowired，一般都是按type匹配，也可以按name匹配，比较麻烦不推荐</p>
+<p>（比如：一个与世隔绝的村子，只有一个姓李的人，大家叫他“老李”，都知道他是谁，就没必要叫名字。但是这个村要是有2-100姓李的，你叫“老李”，大家就不知道是叫谁了，这时候就要加名字。type=姓   name=名；如果有个姓李的，十分厉害，十分有名，那可能叫“老李”，就特指他一个人，优先级最高 ，等价于@Primary）</p>
+<p>总结：</p>
+<p>当一个接口只有一个实现类，推荐使用@Autowired，默认byType注入，不一定 真的byType，可以修改为byName，@Resource同理；</p>
+<p>当一个接口有多个实现类，推荐使用@Resource，默认byName注入；</p>
+<p>具体情况具体分析 ： 比如当一个接口有多个实现类，用@Primary 告诉spring 在犹豫的时候（byName是不会犹豫的，会确定一个唯一实现类，@Primary没有意义）优先选择哪一个具体的实现。spring优先注入@Primary修饰的那个；或者使用@Qualifier来标注需要注入的类。</p>
+<p>@Service是注入，生成bean实例，既有type也有name. @Service标注名称，如@Service（“Benz”），则bean的名称就是Benz，如果不标注，@Service（），spring会默认注入一个beanName，要注意特殊情况，看上文</p>
+<p>@Autowired和@Resource只是查找匹配，然后给属性赋值。private Car car；</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">@Service</span><br><span class="line">public class CarFactory &#123;</span><br><span class="line">    @Resource(name=&quot;benz&quot;)//byName匹配，此时beanName=benz;如果将（name=&quot;benz&quot;）去掉，beanName=car,即属性名；只要byName匹配不到，就会使用byType匹配</span><br><span class="line">    private Car car;</span><br><span class="line">    </span><br><span class="line">    public String toString()&#123;</span><br><span class="line">        </span><br><span class="line">        return car.carName();</span><br><span class="line">    &#125; </span><br><span class="line">    </span><br><span class="line">    public void Test()&#123;</span><br><span class="line">        System.out.println(&quot;it is ok!&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果@Resource(name=”benz”)换成@Autowired+@Qualifier（“benz”）,此时也是按照byName,此时beanName=benz,如果再去掉@Qualifier（“benz”），就是byType匹配，beanType=XXX.Car.class</p>
+<p>注意 ：@Autowired和@Resource只是匹配beanName,决定注入beanName的是@service()括号内的name（没有的话spring会自动生成一个，有一个特殊情况请看上文）或 spring的xml配置里 <bean id="benz" class="com.xrq.annotation.Benz"> 的id=name（xml配置优先）</bean></p>
+<p> 参考链接：</p>
+<p><a href="https://www.cnblogs.com/StarkMorgan/p/10408255.html" target="_blank" rel="noopener">https://www.cnblogs.com/StarkMorgan/p/10408255.html</a></p>
+<p><a href="https://www.cnblogs.com/leiOOlei/p/3713779.html" target="_blank" rel="noopener">https://www.cnblogs.com/leiOOlei/p/3713779.html</a></p>
+
+        <h2>相关文章</h2><ul><li><a href="/spring/why-spring-does-not-recommend-field-injection/">为什么Spring不建议使用field方式注入</a></li><li><a href="/spring/spring-profile-aop/">Spring:@Profile，AOP</a></li><li><a href="/spring/spring-characteristics/">Spring:生命周期，属性赋值，自动装配</a></li><li><a href="/spring/spring-component/">Spring注解：@Lazy，@Conditional，@import，FactoryBean接口</a></li><li><a href="/spring/spring-componentscan/">注解：@ComponentScan 注解</a></li></ul>
+    </div>
+    
+        <div class="reward" ontouchstart>
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+            
+                <span class="reward-type">
+                    <img class="wechat" src="/images/weixin.png"><b>微信打赏</b>
+                </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">赞赏是不耍流氓的鼓励</p>
+</div>
+
+
+    
+
+
+    
+        <div class="post-footer">
+            <div class="col-sm-10">
+                <div>
+                    <b>本文链接</b>：<a href="/spring/spring-autowired-resource/" target="_blank">Spring 注释 @Autowired 和@Resource 的区别</a>
+                </div>
+                <div>
+                    
+                        转载声明：本博客由小小冒险家创作，采用 <a href="https://creativecommons.org/licenses/by-nc-nd/3.0/" target="_blank"> CC BY 3.0 CN </a> 许可协议。可自由转载、引用，但需署名作者且注明文章出处。如转载至微信公众号，请在文末添加作者公众号二维码。
+                    
+                </div>
+                <div>
+                    
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <img src="/icons/wx.jpg" width=100%/>
+            </div>
+        </div>
+    
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+        <a target="_blank" href="/spring/why-spring-does-not-recommend-field-injection/" class="pre-post btn btn-default"
+           title='为什么Spring不建议使用field方式注入'>
+            <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+            <span class="hidden-xs">为什么Spring不建议使用field方式注入</span>
+        </a>
+    
+    
+        <a target="_blank" href="/spring/spring-profile-aop/" class="next-post btn btn-default"
+           title='Spring:@Profile，AOP'>
+            <span class="hidden-lg">下一篇</span>
+            <span class="hidden-xs">Spring:@Profile，AOP</span><i class="fa fa-angle-right fa-fw"></i>
+        </a>
+    
+</div>
+
+
+    <div id="comments">
+        
+   <p>评论系统未开启，无法评论！</p>
+
+    </div>
+
+
+
+
+
+
+                </main>
+                
+    <aside class="col-md-4 sidebar">
+        
+        <div class="widget about-me">
+    <div class="row">
+        <div class="col-md-5">
+            <img src="/icons/wx.jpg" alt="公众号" class="img-responsive center-block">
+        </div>
+        <div class="col-md-7">
+            <a class="series-a" href="javascript:void(0)">公众号</a>
+            <ul>
+                <li>• 技术干货推送</li>
+                <li>• 日常好文分享</li>
+                <li><b>• 扫码领取更多惊喜</b></li>
+            </ul>
+        </div>
+    </div>
+    
+<!--        <div class="row">-->
+<!--            <div class="col-md-5">-->
+<!--                <img src="/icons/xcx.jpg" alt="小程序" class="img-responsive">-->
+<!--            </div>-->
+<!--            <div class="col-md-7">-->
+<!--                <a class="series-a" href="javascript:void(0)">小程序</a>-->
+<!--                <ul>-->
+<!--                    <li>• 原创笔记</li>-->
+<!--                    <li>• 独家心法</li>-->
+<!--                    <li><b>• 扫码领取</b></li>-->
+<!--                </ul>-->
+<!--            </div>-->
+<!--        </div>-->
+    
+</div>
+
+
+
+
+        
+        
+    <div class="widget">
+        <h3 class="title">网站公告</h3>
+        <div class="notification">
+            <p>
+  <b>QQ群</b>：415777345<br/>
+</p>
+
+<p>
+<b>联系博主QQ</b>：210006540<br/>
+</p>
+        </div>
+    </div>
+
+        
+        
+    
+        <div class="ad">
+            <div class="row">
+                <div class="col-md-12">
+                    <a href="https://promotion.aliyun.com/ntms/act/qwbk.html?userCode=qhtujh03" rel="nofollow" target="_blank">
+                        <img class="img-responsive center-block"
+                             title="阿里全民云计算"
+                             src="/icons/380-120.png"
+                        >
+                    </a>
+                </div>
+            </div>
+        </div>
+    
+
+
+
+
+        
+        
+    <div class="widget">
+        <h3 class="title">分类</h3>
+        <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Ajax/"><i class="fa" aria-hidden="true">Ajax</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/"><i class="fa" aria-hidden="true">Docker</i></a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Druid/"><i class="fa" aria-hidden="true">Druid</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Feign/"><i class="fa" aria-hidden="true">Feign</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/HTTP/"><i class="fa" aria-hidden="true">HTTP</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/"><i class="fa" aria-hidden="true">Hexo</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JRebel/"><i class="fa" aria-hidden="true">JRebel</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/"><i class="fa" aria-hidden="true">Java</i></a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Maven/"><i class="fa" aria-hidden="true">Maven</i></a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MongoDB/"><i class="fa" aria-hidden="true">MongoDB</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MySQL/"><i class="fa" aria-hidden="true">MySQL</i></a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Nexus3-x/"><i class="fa" aria-hidden="true">Nexus3.x</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/PowerShell/"><i class="fa" aria-hidden="true">PowerShell</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Quartz/"><i class="fa" aria-hidden="true">Quartz</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/"><i class="fa" aria-hidden="true">Redis</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/RocketMQ/"><i class="fa" aria-hidden="true">RocketMQ</i></a><span class="category-list-count">12</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Sharding-JDBC/"><i class="fa" aria-hidden="true">Sharding-JDBC</i></a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link current" href="/categories/Spring/"><i class="fa" aria-hidden="true">Spring</i></a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring-Cloud/"><i class="fa" aria-hidden="true">Spring Cloud</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringBoot/"><i class="fa" aria-hidden="true">SpringBoot</i></a><span class="category-list-count">15</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringCloud-Alibaba/"><i class="fa" aria-hidden="true">SpringCloud Alibaba</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringSession/"><i class="fa" aria-hidden="true">SpringSession</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/主键/"><i class="fa" aria-hidden="true">主键</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/其他/"><i class="fa" aria-hidden="true">其他</i></a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/安装教程/"><i class="fa" aria-hidden="true">安装教程</i></a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/工具/"><i class="fa" aria-hidden="true">工具</i></a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/微服务/"><i class="fa" aria-hidden="true">微服务</i></a><span class="category-list-count">17</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据库/"><i class="fa" aria-hidden="true">数据库</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/面试/"><i class="fa" aria-hidden="true">面试</i></a><span class="category-list-count">1</span></li></ul>
+    </div>
+
+
+        
+        
+  <div class="widget">
+    <h3 class="title">标签云</h3>
+    <div class="content tag-cloud">
+        
+            <canvas width="300" height="300" id="tag-cloud-3d">
+                <a href="/tags/Ajax/" style="font-size: 10px;">Ajax</a> <a href="/tags/Alibaba/" style="font-size: 10px;">Alibaba</a> <a href="/tags/Banner/" style="font-size: 10px;">Banner</a> <a href="/tags/Centos/" style="font-size: 10px;">Centos</a> <a href="/tags/Docker/" style="font-size: 17.5px;">Docker</a> <a href="/tags/Druid/" style="font-size: 10px;">Druid</a> <a href="/tags/Eureka/" style="font-size: 10.83px;">Eureka</a> <a href="/tags/FastDFS/" style="font-size: 10.83px;">FastDFS</a> <a href="/tags/Feign/" style="font-size: 13.33px;">Feign</a> <a href="/tags/File/" style="font-size: 10px;">File</a> <a href="/tags/HTTP/" style="font-size: 10px;">HTTP</a> <a href="/tags/Hexo/" style="font-size: 10.83px;">Hexo</a> <a href="/tags/HikariCP/" style="font-size: 10px;">HikariCP</a> <a href="/tags/Hystrix/" style="font-size: 10.83px;">Hystrix</a> <a href="/tags/Hystrix-Dashboard/" style="font-size: 10px;">Hystrix Dashboard</a> <a href="/tags/IDEA/" style="font-size: 10px;">IDEA</a> <a href="/tags/JDK/" style="font-size: 10px;">JDK</a> <a href="/tags/JRebel/" style="font-size: 10px;">JRebel</a> <a href="/tags/Java/" style="font-size: 12.5px;">Java</a> <a href="/tags/Java-b2-spring注解/" style="font-size: 15.83px;">Java-b2-spring注解</a> <a href="/tags/Map/" style="font-size: 10px;">Map</a> <a href="/tags/Maven/" style="font-size: 12.5px;">Maven</a> <a href="/tags/Memcache/" style="font-size: 10px;">Memcache</a> <a href="/tags/MongoDB/" style="font-size: 10.83px;">MongoDB</a> <a href="/tags/MongoTemplate/" style="font-size: 10.83px;">MongoTemplate</a> <a href="/tags/MySQL/" style="font-size: 15px;">MySQL</a> <a href="/tags/MySQL8/" style="font-size: 10px;">MySQL8</a> <a href="/tags/Mysql/" style="font-size: 10px;">Mysql</a> <a href="/tags/Navicat/" style="font-size: 10px;">Navicat</a> <a href="/tags/Nexus3-x/" style="font-size: 10.83px;">Nexus3.x</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/PowerShell/" style="font-size: 10px;">PowerShell</a> <a href="/tags/Quartz/" style="font-size: 10px;">Quartz</a> <a href="/tags/RabbitMQ/" style="font-size: 10px;">RabbitMQ</a> <a href="/tags/Redis/" style="font-size: 12.5px;">Redis</a> <a href="/tags/Ribbon/" style="font-size: 10.83px;">Ribbon</a> <a href="/tags/RocketMQ/" style="font-size: 18.33px;">RocketMQ</a> <a href="/tags/Sharding-JDBC/" style="font-size: 14.17px;">Sharding-JDBC</a> <a href="/tags/SonarQube/" style="font-size: 10px;">SonarQube</a> <a href="/tags/Spring/" style="font-size: 16.67px;">Spring</a> <a href="/tags/Spring-Boot/" style="font-size: 11.67px;">Spring Boot</a> <a href="/tags/Spring-Cloud/" style="font-size: 16.67px;">Spring Cloud</a> <a href="/tags/Spring-Cloud-Gateway/" style="font-size: 10.83px;">Spring Cloud Gateway</a> <a href="/tags/Spring-Cloud-Sleuth/" style="font-size: 10px;">Spring Cloud Sleuth</a> <a href="/tags/SpringBoot/" style="font-size: 20px;">SpringBoot</a> <a href="/tags/SpringCloud/" style="font-size: 10px;">SpringCloud</a> <a href="/tags/SpringCloud-Alibaba/" style="font-size: 10px;">SpringCloud Alibaba</a> <a href="/tags/SpringCloud-Stream/" style="font-size: 10px;">SpringCloud Stream</a> <a href="/tags/SpringSession/" style="font-size: 10px;">SpringSession</a> <a href="/tags/Tomcat/" style="font-size: 10px;">Tomcat</a> <a href="/tags/Transaction/" style="font-size: 10px;">Transaction</a> <a href="/tags/Turbine/" style="font-size: 10px;">Turbine</a> <a href="/tags/Web应用/" style="font-size: 10px;">Web应用</a> <a href="/tags/Windows/" style="font-size: 10px;">Windows</a> <a href="/tags/Windows-11/" style="font-size: 10px;">Windows 11</a> <a href="/tags/Zipkin/" style="font-size: 10px;">Zipkin</a> <a href="/tags/Zookeeper/" style="font-size: 10px;">Zookeeper</a> <a href="/tags/Zuul/" style="font-size: 10px;">Zuul</a> <a href="/tags/assessToken/" style="font-size: 10px;">assessToken</a> <a href="/tags/httpclient/" style="font-size: 10px;">httpclient</a> <a href="/tags/logback/" style="font-size: 10px;">logback</a> <a href="/tags/session共享/" style="font-size: 10px;">session共享</a> <a href="/tags/theme/" style="font-size: 10px;">theme</a> <a href="/tags/互联网产品/" style="font-size: 10px;">互联网产品</a> <a href="/tags/其他/" style="font-size: 10px;">其他</a> <a href="/tags/分布式/" style="font-size: 10.83px;">分布式</a> <a href="/tags/加密/" style="font-size: 10px;">加密</a> <a href="/tags/原理/" style="font-size: 10px;">原理</a> <a href="/tags/发布/" style="font-size: 10px;">发布</a> <a href="/tags/图片水印/" style="font-size: 10px;">图片水印</a> <a href="/tags/工具/" style="font-size: 10px;">工具</a> <a href="/tags/并发编程/" style="font-size: 10px;">并发编程</a> <a href="/tags/循环依赖/" style="font-size: 10px;">循环依赖</a> <a href="/tags/微服务/" style="font-size: 19.17px;">微服务</a> <a href="/tags/时间工具类/" style="font-size: 10px;">时间工具类</a> <a href="/tags/注解/" style="font-size: 10.83px;">注解</a> <a href="/tags/消息订阅/" style="font-size: 10px;">消息订阅</a> <a href="/tags/索引/" style="font-size: 14.17px;">索引</a> <a href="/tags/红黑树/" style="font-size: 10px;">红黑树</a>
+            </canvas>
+        
+    </div>
+  </div>
+
+
+        
+        
+    <div class="widget">
+        <h3 class="title">归档</h3>
+        <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/"><i class="fa" aria-hidden="true">2022年09月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/05/"><i class="fa" aria-hidden="true">2022年05月</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/"><i class="fa" aria-hidden="true">2021年07月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/"><i class="fa" aria-hidden="true">2021年06月</i></a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/"><i class="fa" aria-hidden="true">2021年03月</i></a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/"><i class="fa" aria-hidden="true">2021年02月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/"><i class="fa" aria-hidden="true">2020年11月</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/"><i class="fa" aria-hidden="true">2020年09月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/"><i class="fa" aria-hidden="true">2020年08月</i></a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/"><i class="fa" aria-hidden="true">2020年07月</i></a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/"><i class="fa" aria-hidden="true">2020年06月</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/"><i class="fa" aria-hidden="true">2020年04月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/"><i class="fa" aria-hidden="true">2020年03月</i></a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/"><i class="fa" aria-hidden="true">2020年02月</i></a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/"><i class="fa" aria-hidden="true">2020年01月</i></a><span class="archive-list-count">23</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/"><i class="fa" aria-hidden="true">2019年12月</i></a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/"><i class="fa" aria-hidden="true">2019年11月</i></a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/"><i class="fa" aria-hidden="true">2019年10月</i></a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/"><i class="fa" aria-hidden="true">2019年09月</i></a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/"><i class="fa" aria-hidden="true">2019年08月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/"><i class="fa" aria-hidden="true">2019年05月</i></a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/"><i class="fa" aria-hidden="true">2019年04月</i></a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/"><i class="fa" aria-hidden="true">2019年03月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/"><i class="fa" aria-hidden="true">2019年02月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/"><i class="fa" aria-hidden="true">2019年01月</i></a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/"><i class="fa" aria-hidden="true">2018年12月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/"><i class="fa" aria-hidden="true">2018年10月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/"><i class="fa" aria-hidden="true">2018年09月</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/"><i class="fa" aria-hidden="true">2018年08月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/"><i class="fa" aria-hidden="true">2018年06月</i></a><span class="archive-list-count">2</span></li></ul>
+    </div>
+
+
+        
+        
+    <div class="widget">
+      <h3 class="title">社交</h3> 
+        <div class="content social">
+            
+	            <a href="//github.com/zhaokejin" rel="external nofollow" title="GitHub" target="_blank">
+			    	<i class="github fa fa-github"></i>
+			    </a>
+            
+	            <a href="//gitee.com/zhaokejin" rel="external nofollow" title="Gitee" target="_blank">
+			    	<i class="git fa fa-git"></i>
+			    </a>
+            
+	            <a href="mailto:210006540qq.com" rel="external nofollow" title="邮箱" target="_blank">
+			    	<i class="envelope-o fa fa-envelope-o"></i>
+			    </a>
+            
+	            <a href="//wpa.qq.com/msgrd?v=3&uin=210006540&site=qq&menu=yes" rel="external nofollow" title="QQ" target="_blank">
+			    	<i class="qq fa fa-qq"></i>
+			    </a>
+            
+	            <a href="//shang.qq.com/wpa/qunwpa?idkey=7b19717710dcc2c78996f316db3ab3365bde39bc3c60de7a6c59fe07231e231a" rel="external nofollow" title="QQ群" target="_blank">
+			    	<i class="group fa fa-group"></i>
+			    </a>
+            
+	            <a href="/atom.xml" rel="external nofollow" title="RSS" target="_blank">
+			    	<i class="feed fa fa-feed"></i>
+			    </a>
+            
+        </div>
+    </div>
+
+
+        
+        
+
+        
+    </aside>
+
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+
+<a id="back-to-top" class="icon-btn hide">
+	<i class="fa fa-chevron-up"></i>
+</a>
+
+
+
+
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+        访问量:
+        <strong id="busuanzi_value_site_pv">
+            <i class="fa fa-spinner fa-spin"></i>
+        </strong>
+        &nbsp; | &nbsp;
+        访客数:
+        <strong id="busuanzi_value_site_uv">
+            <i class="fa fa-spinner fa-spin"></i>
+        </strong>
+<!--        &nbsp; <strong>Since 2018-12-26</strong>-->
+    
+</div>
+
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy; 2018 - 2023
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    <a href="//www.beian.miit.gov.cn/" class="copyright-links" target="_blank" rel="nofollow">鲁ICP备18033870号</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/js/jquery.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/bootstrap-hover-dropdown.min.js"></script>
+
+
+	<script src="/js/search.js?rev=@@hash"></script>
+
+
+
+    <script src="/assets/tagcanvas.min.js?rev=2.9"></script>
+    <script>
+        var tagOption = {
+            textColour: '#29afec', // 字体颜色
+            outlineMethod: 'block', // 选中模式
+            outlineColour: '#FFDAB9', // 选中模式的颜色
+            interval: 30 || 30, // 动画帧之间的时间间隔，值越大，转动幅度越大
+            textHeight: 13,
+            outlineRadius: 3,
+            freezeActive: true || '', // 选中的标签是否继续滚动
+            frontSelect: true || '', // 不选标签云后部的标签
+            initial: [0.1, -0.1],
+            depth: 0.5,
+            decel: 0.95,
+            maxSpeed: 0.03,
+            reverse: true || '', // 是否反向触发
+            fadeIn: 500, // 进入动画时间
+            wheelZoom: false || '' // 是否启用鼠标滚轮
+        }
+        TagCanvas.Start('tag-cloud-3d','',tagOption);
+    </script>
+
+
+
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<script src="/js/app.js?rev=@@hash"></script>
+<script src="/jquery.fancybox.js?v=2.1.5"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('.fancybox').fancybox();
+    });
+    // 给图片添加链接
+    $(document).ready(function() {
+        $("p img").each(function() {
+            var strA = "<a id='yourid' class='fancybox' data-fancybox-group='gallery'  href='" + this.src + "'></a>";
+            $(this).wrapAll(strA);
+        });
+    });
+    // fancybox
+    $("#yourid").fancybox({
+        openEffect    : 'elastic',
+        closeEffect   : 'elastic',
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,746 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="小小冒险家的博客">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.2.3">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="https://www.cicoding.cn">
+    <!--SEO-->
+
+    <meta name="keywords" content="Spring Boot,MongoDB,MongoTemplate">
+
+
+    <meta name="description" content="​        在本教程中，我们将构建一个Spring Boot应用程序，该应用程序演示如何使用MongoTemplate API访问MongoDB数据库中的数据。 
+​        对于MongoDB，我们将使用mLab，它提供了MongoDB数据库即服务平台，因此您甚至不必在计算机上安...">
+
+
+
+<meta name="robots" content="all">
+<meta name="google" content="all">
+<meta name="googlebot" content="all">
+<meta name="verify" content="all">
+    <!--Title-->
+
+
+<title>使用MongoDB的Spring Boot和MongoTemplate教程 | 小小冒险家的博客</title>
+
+
+    <link rel="alternate" href="/atom.xml" title="小小冒险家的博客" type="application/atom+xml">
+
+
+    <link rel="icon" href="/favicon.png">
+
+    
+
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7">
+<link rel="stylesheet" href="/jquery.fancybox.css?v=2.1.5">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.5.0">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash">
+
+
+
+
+    
+
+
+
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?601ebec7733383ef248ca61fc0a0db95";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+
+
+    
+
+</head>
+
+</html>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+
+<body>
+    
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row clearfix">
+            <div class="col-md-12 column">
+                <nav class="navbar navbar-default" style="background-color:#fff;border:0;margin-bottom:0"
+                     role="navigation">
+                    <div class="navbar-header">
+<!--                        <button type="button" class="navbar-toggle" data-toggle="collapse"-->
+<!--                                data-target="#navbar-collapse-1">-->
+<!--                            <span class="sr-only">切</span>-->
+<!--                            <span class="icon-bar"></span>-->
+<!--                            <span class="icon-bar"></span>-->
+<!--                            <span class="icon-bar"></span>-->
+<!--                        </button>-->
+                        <a class="logo" href="/">
+                            <img src="/favicon.png"/>小小冒险家的博客
+                        </a>
+                    </div>
+
+                    <div class="collapse navbar-collapse" style="border:0;" id="navbar-collapse-1">
+                        <ul class="nav navbar-nav">
+                            
+                                
+                                    <li>
+                                        <a href="/" >
+                                            <i class="fa fa-home"></i>
+                                            首页
+                                        </a>
+                                    </li>
+                                
+                            
+                                
+                                    <li>
+                                        <a href="/archives" >
+                                            <i class="fa fa-sort"></i>
+                                            归档
+                                        </a>
+                                    </li>
+                                
+                            
+                                
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                                           data-hover="dropdown">
+                                            <i class="fa fa-fire"></i>
+                                            系列教程
+                                            <strong class="caret"></strong>
+                                        </a>
+                                        <ul class="dropdown-menu">
+                                            
+                                                <li>
+                                                    <a href="/docker/00-docker-lession-index" target="_blank">
+                                                        <i class="fa "></i>
+                                                        Docker系列教程
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="/micro-service/microservice/" target="_blank">
+                                                        <i class="fa "></i>
+                                                        SpringCloud微服务架构
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="/micro-service/microservice-alibaba/" target="_blank">
+                                                        <i class="fa "></i>
+                                                        SpringCloud Alibaba微服务架构
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="/sharding-jdbc/sharding-jdbc000/" target="_blank">
+                                                        <i class="fa "></i>
+                                                        Sharding-JDBC教程
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="/springboot/springboot-source-code/" target="_blank">
+                                                        <i class="fa "></i>
+                                                        SpringBoot源码系列
+                                                    </a>
+                                                </li>
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+                                
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                                           data-hover="dropdown">
+                                            <i class="fa fa-book"></i>
+                                            在线文档
+                                            <strong class="caret"></strong>
+                                        </a>
+                                        <ul class="dropdown-menu">
+                                            
+                                                <li>
+                                                    <a href="https://spring.io/docs/" target="_blank">
+                                                        <i class="fa "></i>
+                                                        Spring Reference
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="https://spring.io/projects/spring-boot/" target="_blank">
+                                                        <i class="fa "></i>
+                                                        SpringBoot Reference
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="https://spring.io/projects/spring-cloud/" target="_blank">
+                                                        <i class="fa "></i>
+                                                        SpringCloud Reference
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="https://docs.spring.io/spring-security/site/docs/current/reference/htmlsingle/" target="_blank">
+                                                        <i class="fa "></i>
+                                                        Spring Security Reference
+                                                    </a>
+                                                </li>
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+                                
+                                    <li>
+                                        <a href="/other/jrebel-activation" >
+                                            <i class="fa fa-fire"></i>
+                                            JRebel激活
+                                        </a>
+                                    </li>
+                                
+                            
+                                
+                                    <li>
+                                        <a href="/about" >
+                                            <i class="fa fa-user"></i>
+                                            关于我
+                                        </a>
+                                    </li>
+                                
+                            
+                        </ul>
+                        
+                            <form id="search-form" class="navbar-form navbar-right">
+                                <div class="form-group input-group">
+                                    <input type="text" id="local-search-input" class="form-control"
+                                           placeholder="搜我..."/>
+                                    <span class="input-group-btn">
+                                        <a class="btn btn-default">
+                                            <i class="fa fa-search"></i>
+                                        </a>
+                                    </span>
+                                </div>
+                                <div id="local-search-result" class="local-search-result-cls"></div>
+                            </form>
+                        
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </div>
+</nav>
+
+    <a href="http://github.com/zhaokejin" target="_blank">
+        <img style="position: absolute; width:100px; top: 0; left: 0; border: 0;"
+             src="/img/fork-me.png"
+             alt="Fork me on GitHub">
+    </a>
+
+
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    
+    
+        <div class="ad">
+            <div class="row">
+                
+                    <div class="col-md-12">
+                        <a href="https://promotion.aliyun.com/ntms/act/qwbk.html?userCode=qhtujh03" rel="nofollow" target="_blank">
+                            <img class="img-responsive center-block"
+                                 src="/icons/810x100.png"
+                                 title="阿里全民云计算"
+                            >
+                        </a>
+                    </div>
+                
+            </div>
+        </div>
+    
+
+
+<p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="使用MongoDB的Spring Boot和MongoTemplate教程">
+            
+                使用MongoDB的Spring Boot和MongoTemplate教程
+            
+        </h1>
+        <div class="post-meta">
+    
+
+    
+        <span class="categories-meta fa-wrap">
+            <i class="fa fa-folder-open-o"></i>
+            <a class="category-link" href="/categories/MongoDB/">MongoDB</a>
+        </span>
+    
+
+    
+        <span class="fa-wrap">
+            <i class="fa fa-tags"></i>
+            <span class="tags-meta">
+                
+                    <a class="tag-link" href="/tags/MongoDB/">MongoDB</a> <a class="tag-link" href="/tags/MongoTemplate/">MongoTemplate</a> <a class="tag-link" href="/tags/Spring-Boot/">Spring Boot</a>
+                
+            </span>
+        </span>
+    
+
+    
+        
+        <span class="fa-wrap">
+            <i class="fa fa-clock-o"></i>
+            <span class="date-meta">2019/11/26</span>
+        </span>
+        
+            <span class="fa-wrap">
+                <i class="fa fa-eye"></i>
+                <span id="busuanzi_value_page_pv"></span>
+            </span>
+        
+    
+</div>
+        
+        
+    </div>
+    
+    <div class="post-body post-content" id="container">
+        
+    <div class="toc-article">
+        <strong>
+            目录
+        </strong>
+        <div class="toc-content">
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#配置"><span class="toc-text">配置</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Maven-Dependencies"><span class="toc-text">Maven Dependencies</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#项目结构"><span class="toc-text">项目结构</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#创建数据库"><span class="toc-text">创建数据库</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#应用配置"><span class="toc-text">应用配置</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#建立模型"><span class="toc-text">建立模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#定义数据访问层接口"><span class="toc-text">定义数据访问层接口</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实施数据访问层"><span class="toc-text">实施数据访问层</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用分页查询"><span class="toc-text">使用分页查询</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#通过精确值获取对象"><span class="toc-text">通过精确值获取对象</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#按范围和数据列表查找"><span class="toc-text">按范围和数据列表查找</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#更新对象"><span class="toc-text">更新对象</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#删除对象"><span class="toc-text">删除对象</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#制作命令行运行器"><span class="toc-text">制作命令行运行器</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#结论"><span class="toc-text">结论</span></a></li></ol>
+        </div>
+    </div>
+
+
+        <p>​        在本教程中，我们将构建一个Spring Boot应用程序，该应用程序演示如何使用MongoTemplate API访问MongoDB数据库中的数据。 </p>
+<p>​        对于MongoDB，我们将使用<a href="https://mlab.com/" target="_blank" rel="noopener">mLab</a>，它提供了MongoDB数据库即服务平台，因此您甚至不必在计算机上安装MongoDB数据库。 </p>
+<h1 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h1><p>​        为了快速设置我们的项目，我们将使用一个称为<a href="https://start.spring.io/" target="_blank" rel="noopener">Spring Initializr</a>的工具。使用此工具，我们可以快速提供所需的依赖项列表并下载引导程序： </p>
+<p><img src="/images/springboot/1573551525046.png" alt="使用MongoDB的Spring Boot和MongoTemplate教程"></p>
+<p> 使用Spring Initializr创建新的Spring Boot项目时，仅选择两个依赖项： </p>
+<ul>
+<li><strong>Web</strong> (Spring Boot Starter Web)</li>
+<li><strong>MongoDB</strong> (MongoDB Starter)</li>
+</ul>
+<h1 id="Maven-Dependencies"><a href="#Maven-Dependencies" class="headerlink" title="Maven Dependencies"></a>Maven Dependencies</h1><p> 当下载使用Spring Initializr生成的项目并打开其pom.xml文件时，您应该看到添加了以下依赖项： </p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-data-mongodb<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-web<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-test<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">scope</span>&gt;</span>test<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">build</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">plugins</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">build</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="项目结构"><a href="#项目结构" class="headerlink" title="项目结构"></a>项目结构</h1><p> 在继续进行并开始处理该项目的代码之前，让我们介绍一下完成所有代码添加到项目后将拥有的项目结构： </p>
+<p><img src="/images/springboot/1573551751374.png" alt="使用MongoDB的Spring Boot和MongoTemplate教程"></p>
+<p> 该代码以多个程序包进行组织，因此遵循关注点分离的原则，并且代码保持模块化。 </p>
+<h1 id="创建数据库"><a href="#创建数据库" class="headerlink" title="创建数据库"></a>创建数据库</h1><p>​        对于MongoDB，我们将使用<a href="https://mlab.com/" target="_blank" rel="noopener">mLab</a>。您可以使用mLab创建一个免费帐户，并在云中使用MongoDB，而无需在计算机上下载和安装它。 </p>
+<p>登录到mLab后，您将看到一个类似的仪表板： </p>
+<p> <img src="/images/springboot/mlab-dashboard-768x315.png" alt="使用MongoDB的Spring Boot和MongoTemplate教程"> </p>
+<p> 要创建一个新的MongoDB数据库，请单击创建新按钮： </p>
+<p><img src="/images/springboot/mlab-create-db-2-1024x562.png" alt="使用MongoDB的Spring Boot和MongoTemplate教程"></p>
+<p> 输入所有详细信息后，我们可以确认： </p>
+<p><img src="/images/springboot/mlab-create-db-confirmation-1024x562.png" alt="使用MongoDB的Spring Boot和MongoTemplate教程"></p>
+<p> 完成此操作后，我们将看到一个连接字符串，如下图所示： </p>
+<p><img src="/images/springboot/mlab-connection-string-1024x562.png" alt="使用MongoDB的Spring Boot和MongoTemplate教程"></p>
+<p> 在开始使用此数据库之前，我们还需要创建一个用户。让我们在上图所示的“用户”标签上执行此操作： </p>
+<p><img src="/images/springboot/mlab-db-user-1024x562.png" alt="使用MongoDB的Spring Boot和MongoTemplate教程"></p>
+<p> 现在，我们已经准备好继续写些Java代码，因为我们的mLab数据库已经完全准备就绪。 </p>
+<h1 id="应用配置"><a href="#应用配置" class="headerlink" title="应用配置"></a>应用配置</h1><p> 使用Spring Boot，仅使用MongoDB连接String的单个必需属性即可轻松配置我们的应用程序： </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># application properties</span><br><span class="line">server.port=8090</span><br><span class="line"></span><br><span class="line"># MongoDB properties</span><br><span class="line">spring.data.mongodb.uri=mongodb://cicoding.cn:password@ds915721.mlab.com:29670/cicoding_db</span><br></pre></td></tr></table></figure>
+
+<p> 我们只是提供了一个MongoDB连接字符串，该字符串将由Spring Boot读取，并且将使用内部API建立连接。 </p>
+<h2 id="建立模型"><a href="#建立模型" class="headerlink" title="建立模型"></a>建立模型</h2><p> 我们将创建一个简单的Person实体，其中包含一些字段，我们将使用它们来演示简单的MongoDB查询： </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.cicoding.mongotemplatedemo.model;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.data.annotation.Id;</span><br><span class="line"><span class="keyword">import</span> org.springframework.data.mongodb.core.mapping.Document;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Calendar;</span><br><span class="line"><span class="keyword">import</span> java.util.Date;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"><span class="keyword">import</span> java.util.Locale;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> java.util.Calendar.DATE;</span><br><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> java.util.Calendar.MONTH;</span><br><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> java.util.Calendar.YEAR;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Document</span>(collection = <span class="string">"person"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Person</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">   <span class="meta">@Id</span></span><br><span class="line">   <span class="keyword">private</span> String personId;</span><br><span class="line">   <span class="keyword">private</span> String name;</span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">long</span> age;</span><br><span class="line">   <span class="keyword">private</span> List&lt;String&gt; favoriteBooks;</span><br><span class="line">   <span class="keyword">private</span> Date dateOfBirth;</span><br><span class="line"></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="title">Person</span><span class="params">()</span> </span>&#123;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="title">Person</span><span class="params">(String name, List&lt;String&gt; childrenName, Date dateOfBirth)</span> </span>&#123;</span><br><span class="line">       <span class="keyword">this</span>.name = name;</span><br><span class="line">       <span class="keyword">this</span>.favoriteBooks = childrenName;</span><br><span class="line">       <span class="keyword">this</span>.dateOfBirth = dateOfBirth;</span><br><span class="line">       <span class="keyword">this</span>.age = getDiffYears(dateOfBirth, <span class="keyword">new</span> Date());</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="comment">// standard getters and setters</span></span><br><span class="line"></span><br><span class="line">   <span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">getDiffYears</span><span class="params">(Date first, Date last)</span> </span>&#123;</span><br><span class="line">       Calendar a = getCalendar(first);</span><br><span class="line">       Calendar b = getCalendar(last);</span><br><span class="line">       <span class="keyword">int</span> diff = b.get(YEAR) - a.get(YEAR);</span><br><span class="line">       <span class="keyword">if</span> (a.get(MONTH) &gt; b.get(MONTH) ||</span><br><span class="line">               (a.get(MONTH) == b.get(MONTH) &amp;&amp; a.get(DATE) &gt; b.get(DATE))) &#123;</span><br><span class="line">           diff--;</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="keyword">return</span> diff;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="function"><span class="keyword">private</span> Calendar <span class="title">getCalendar</span><span class="params">(Date date)</span> </span>&#123;</span><br><span class="line">       Calendar cal = Calendar.getInstance(Locale.US);</span><br><span class="line">       cal.setTime(date);</span><br><span class="line">       <span class="keyword">return</span> cal;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="meta">@Override</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">       <span class="keyword">return</span> String.format(<span class="string">"Person&#123;personId='%s', name='%s', age=%d, dateOfBirth=%s&#125;\n"</span>,</span><br><span class="line">               personId, name, age, dateOfBirth);</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p> 除了简单的字段外，我们还添加了一些帮助程序功能，可以在保存用户的出生日期时计算该用户的年龄。这使我们不必计算用户的年龄。 </p>
+<h2 id="定义数据访问层接口"><a href="#定义数据访问层接口" class="headerlink" title="定义数据访问层接口"></a>定义数据访问层接口</h2><p> 让我们定义一个数据层接口，该接口将通知我们在应用程序中将演示多少操作。这是界面： </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">public interface PersonDAL &#123;</span><br><span class="line">   Person savePerson(Person person);</span><br><span class="line">   List&lt;Person&gt; getAllPerson();</span><br><span class="line">   List&lt;Person&gt; getAllPersonPaginated(</span><br><span class="line">      int pageNumber, int pageSize);</span><br><span class="line">   Person findOneByName(String name);</span><br><span class="line">   List&lt;Person&gt; findByName(String name);</span><br><span class="line">   List&lt;Person&gt; findByBirthDateAfter(Date date);</span><br><span class="line">   List&lt;Person&gt; findByAgeRange(int lowerBound, int upperBound);</span><br><span class="line">   List&lt;Person&gt; findByFavoriteBooks(String favoriteBook);</span><br><span class="line">   void updateMultiplePersonAge();</span><br><span class="line">   Person updateOnePerson(Person person);</span><br><span class="line">   void deletePerson(Person person);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p> 这些是相当多的操作。真正的乐趣是当我们执行这些操作时，接下来将要做的事情。 </p>
+<h2 id="实施数据访问层"><a href="#实施数据访问层" class="headerlink" title="实施数据访问层"></a>实施数据访问层</h2><p> 我们将使用MongoTemplate bean，它是由Spring Boot使用上面在application.properties中定义的属性初始化的。让我们看看如何定义所需的bean： </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">@Repository</span><br><span class="line">public class PersonDALImpl implements PersonDAL &#123;</span><br><span class="line"></span><br><span class="line">    private final MongoTemplate mongoTemplate;</span><br><span class="line"></span><br><span class="line">    @Autowired</span><br><span class="line">    public PersonDALImpl(MongoTemplate mongoTemplate) &#123;</span><br><span class="line">        this.mongoTemplate = mongoTemplate;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p> 我们将开始使用简单的方法来理解查询，首先是要保存并从数据库中获取所有人员： </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">public Person savePerson(Person person) &#123;</span><br><span class="line">   mongoTemplate.save(person);</span><br><span class="line">   return person;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@Override</span><br><span class="line">public List&lt;Person&gt; getAllPerson() &#123;</span><br><span class="line">   return mongoTemplate.findAll(Person.class);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p> MongoTemplate为我们提供了一些抽象方法，通过这些方法我们可以将对象保存到数据库中，也可以从数据库中获取所有数据。 </p>
+<h2 id="使用分页查询"><a href="#使用分页查询" class="headerlink" title="使用分页查询"></a>使用分页查询</h2><p> 上述从数据库中获取所有人的方法的问题在于，数据库中可能有数千个对象。  我们应该始终在查询中实现分页，以便可以确保仅从数据库中提取有限的数据： </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">public List&lt;Person&gt; getAllPersonPaginated(int pageNumber, int pageSize) &#123;</span><br><span class="line">   Query query = new Query();</span><br><span class="line">   query.skip(pageNumber * pageSize);</span><br><span class="line">   query.limit(pageSize);</span><br><span class="line"></span><br><span class="line">   return mongoTemplate.find(query, Person.class);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p> 这样，一次将仅从数据库中获取pageSize个对象。 </p>
+<h2 id="通过精确值获取对象"><a href="#通过精确值获取对象" class="headerlink" title="通过精确值获取对象"></a>通过精确值获取对象</h2><p> 我们也可以通过匹配数据库中的精确值来提取对象： </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">public Person findOneByName(String name) &#123;</span><br><span class="line">   Query query = new Query();</span><br><span class="line">   query.addCriteria(Criteria.where(&quot;name&quot;).is(name));</span><br><span class="line"></span><br><span class="line">   return mongoTemplate.findOne(query, Person.class);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@Override</span><br><span class="line">public List&lt;Person&gt; findByName(String name) &#123;</span><br><span class="line">   Query query = new Query();</span><br><span class="line">   query.addCriteria(Criteria.where(&quot;name&quot;).is(name));</span><br><span class="line"></span><br><span class="line">   return mongoTemplate.find(query, Person.class);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p> 我们展示了两种方法。第一种方法是从数据库中获取单个对象，而第二种方法是从数据库中获取具有匹配条件的所有对象。 </p>
+<h2 id="按范围和数据列表查找"><a href="#按范围和数据列表查找" class="headerlink" title="按范围和数据列表查找"></a>按范围和数据列表查找</h2><p> 我们还可以找到具有指定范围内的字段值的对象。或具有特定日期之后的日期数据的对象。让我们看看如何做到这一点，以及如何构造相同的查询： </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">public List&lt;Person&gt; findByBirthDateAfter(Date date) &#123;</span><br><span class="line">   Query query = new Query();</span><br><span class="line">   query.addCriteria(Criteria.where(&quot;dateOfBirth&quot;).gt(date));</span><br><span class="line"></span><br><span class="line">   return mongoTemplate.find(query, Person.class);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@Override</span><br><span class="line">public List&lt;Person&gt; findByAgeRange(int lowerBound, int upperBound) &#123;</span><br><span class="line">   Query query = new Query();</span><br><span class="line">   query.addCriteria(Criteria.where(&quot;age&quot;).gt(lowerBound)</span><br><span class="line">           .andOperator(Criteria.where(&quot;age&quot;).lt(upperBound)));</span><br><span class="line"></span><br><span class="line">   return mongoTemplate.find(query, Person.class);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@Override</span><br><span class="line">public List&lt;Person&gt; findByFavoriteBooks(String favoriteBook) &#123;</span><br><span class="line">   Query query = new Query();</span><br><span class="line">   query.addCriteria(Criteria.where(&quot;favoriteBooks&quot;).in(favoriteBook));</span><br><span class="line">   return mongoTemplate.find(query, Person.class);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="更新对象"><a href="#更新对象" class="headerlink" title="更新对象"></a>更新对象</h2><p> 我们可以使用Update查询更新MongoDB中的数据。我们可以找到一个对象，然后自己更新提供的字段： </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">public void updateMultiplePersonAge() &#123;</span><br><span class="line"></span><br><span class="line">   Query query = new Query();</span><br><span class="line">   Update update = new Update().inc(&quot;age&quot;, 1);</span><br><span class="line">   mongoTemplate.findAndModify(query, update, Person.class);;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@Override</span><br><span class="line">public Person updateOnePerson(Person person) &#123;</span><br><span class="line">   mongoTemplate.save(person);</span><br><span class="line">   return person;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p> 在第一个查询中，由于没有向查询添加任何条件，因此我们收到了所有对象。接下来，我们提供了一个Update子句，其中所有用户的年龄都增加了一个。</p>
+<h2 id="删除对象"><a href="#删除对象" class="headerlink" title="删除对象"></a>删除对象</h2><p> 删除对象也与单个方法调用有关： </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">public void deletePerson(Person person) &#123;</span><br><span class="line">   mongoTemplate.remove(person);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p> 我们也可以简单地传递Query对象以及要删除的人的ID。 </p>
+<h2 id="制作命令行运行器"><a href="#制作命令行运行器" class="headerlink" title="制作命令行运行器"></a>制作命令行运行器</h2><p> 我们将在适当的位置使用命令行运行程序来运行我们的应用程序，该命令行运行程序将提供我们在上面的数据访问层实现中定义的一些功能。这是命令行运行器： </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line">package com.cicoding.mongotemplatedemo;</span><br><span class="line"></span><br><span class="line">import com.cicoding.mongotemplatedemo.dal.PersonDAL;</span><br><span class="line">import com.cicoding.mongotemplatedemo.model.Person;</span><br><span class="line">import org.slf4j.Logger;</span><br><span class="line">import org.slf4j.LoggerFactory;</span><br><span class="line">import org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line">import org.springframework.boot.CommandLineRunner;</span><br><span class="line">import org.springframework.boot.SpringApplication;</span><br><span class="line">import org.springframework.boot.autoconfigure.SpringBootApplication;</span><br><span class="line"></span><br><span class="line">import java.util.Arrays;</span><br><span class="line">import java.util.Date;</span><br><span class="line"></span><br><span class="line">@SpringBootApplication</span><br><span class="line">public class MongoTemplateApp implements CommandLineRunner &#123;</span><br><span class="line"></span><br><span class="line">  private static final Logger LOG = LoggerFactory.getLogger(&quot;cicoding&quot;);</span><br><span class="line"></span><br><span class="line">  private final PersonDAL personDAL;</span><br><span class="line"></span><br><span class="line">  @Autowired</span><br><span class="line">  public MongoTemplateApp(PersonDAL personDAL) &#123;</span><br><span class="line">     this.personDAL = personDAL;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  public static void main(String[] args) &#123;</span><br><span class="line">     SpringApplication.run(MongoTemplateApp.class, args);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  @Override</span><br><span class="line">  public void run(String... args) &#123;</span><br><span class="line"></span><br><span class="line">     personDAL.savePerson(new Person(</span><br><span class="line">           &quot;Shubham&quot;, Arrays.asList(&quot;Harry potter&quot;, &quot;Waking Up&quot;), new Date(769372200000L)));</span><br><span class="line">     personDAL.savePerson(new Person(</span><br><span class="line">           &quot;Sergey&quot;, Arrays.asList(&quot;Startup Guides&quot;, &quot;Java&quot;), new Date(664309800000L)));</span><br><span class="line">     personDAL.savePerson(new Person(</span><br><span class="line">           &quot;David&quot;, Arrays.asList(&quot;Harry potter&quot;, &quot;Success&quot;), new Date(695845800000L)));</span><br><span class="line">     personDAL.savePerson(new Person(</span><br><span class="line">           &quot;Ivan&quot;, Arrays.asList(&quot;Secrets of Butene&quot;, &quot;Meeting Success&quot;), new Date(569615400000L)));</span><br><span class="line">     personDAL.savePerson(new Person(</span><br><span class="line">           &quot;Sergey&quot;, Arrays.asList(&quot;Harry potter&quot;, &quot;Startup Guides&quot;), new Date(348777000000L)));</span><br><span class="line"></span><br><span class="line">     LOG.info(&quot;Getting all data from MongoDB: \n&#123;&#125;&quot;,</span><br><span class="line">           personDAL.getAllPerson());</span><br><span class="line"></span><br><span class="line">     LOG.info(&quot;Getting paginated data from MongoDB: \n&#123;&#125;&quot;,</span><br><span class="line">           personDAL.getAllPersonPaginated(0, 2));</span><br><span class="line"></span><br><span class="line">     LOG.info(&quot;Getting person By name &apos;Sergey&apos;: &#123;&#125;&quot;,</span><br><span class="line">           personDAL.findByName(&quot;Sergey&quot;));</span><br><span class="line"></span><br><span class="line">     LOG.info(&quot;Getting all person By name &apos;Sergey&apos;: &#123;&#125;&quot;,</span><br><span class="line">           personDAL.findOneByName(&quot;Sergey&quot;));</span><br><span class="line"></span><br><span class="line">     LOG.info(&quot;Getting people between age 22 &amp; 26: &#123;&#125;&quot;,</span><br><span class="line">           personDAL.findByAgeRange(22, 26));</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p> 我们可以使用一个简单的命令来运行我们的应用程序： </p>
+<p> mvn spring-boot:run </p>
+<p> 运行应用程序后，我们将能够在终端中看到一个简单的输出： </p>
+<p><img src="/images/springboot/image-20191125111951785.png" alt="使用MongoDB的Spring Boot和MongoTemplate教程"></p>
+<h1 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h1><p> 如果我们将MongoTemplate与简单的Spring Data JPA进行比较，它看起来可能很复杂，但是它也使我们对如何构造查询有更多的控制。 </p>
+<p> Spring Data JPA过多地提取了有关构造什么查询，将哪些条件传递给查询等的详细信息。  使用MongoTemplate，我们可以对查询组成进行更细粒度的控制，Spring Boot为我们提供了易于开发的应用程序。 </p>
+
+        <h2>相关文章</h2><ul><li><a href="/springboot/springboot-and-mongotemplate-transactional/">SpringBoot2.1.X整合MongoDB（支持事务）</a></li><li><a href="/docker/12-docker-lession-index/">Docker部署Spring Boot项目</a></li></ul>
+    </div>
+    
+        <div class="reward" ontouchstart>
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+            
+                <span class="reward-type">
+                    <img class="wechat" src="/images/weixin.png"><b>微信打赏</b>
+                </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">赞赏是不耍流氓的鼓励</p>
+</div>
+
+
+    
+
+
+    
+        <div class="post-footer">
+            <div class="col-sm-10">
+                <div>
+                    <b>本文链接</b>：<a href="/springboot/springboot-and-mongotemplate-tutorials/" target="_blank">使用MongoDB的Spring Boot和MongoTemplate教程</a>
+                </div>
+                <div>
+                    
+                        转载声明：本博客由小小冒险家创作，采用 <a href="https://creativecommons.org/licenses/by-nc-nd/3.0/" target="_blank"> CC BY 3.0 CN </a> 许可协议。可自由转载、引用，但需署名作者且注明文章出处。如转载至微信公众号，请在文末添加作者公众号二维码。
+                    
+                </div>
+                <div>
+                    
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <img src="/icons/wx.jpg" width=100%/>
+            </div>
+        </div>
+    
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+        <a target="_blank" href="/redis/redis-and-memcache/" class="pre-post btn btn-default"
+           title='对Redis的理解，Redis是什么，Redis和Memcache谁快？'>
+            <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+            <span class="hidden-xs">对Redis的理解，Redis是什么，Redis和Memcache谁快？</span>
+        </a>
+    
+    
+        <a target="_blank" href="/redis/redis-pub-push-utils/" class="next-post btn btn-default"
+           title='Redis的消息订阅/发布 Utils工具类'>
+            <span class="hidden-lg">下一篇</span>
+            <span class="hidden-xs">Redis的消息订阅/发布 Utils工具类</span><i class="fa fa-angle-right fa-fw"></i>
+        </a>
+    
+</div>
+
+
+    <div id="comments">
+        
+   <p>评论系统未开启，无法评论！</p>
+
+    </div>
+
+
+
+
+
+
+                </main>
+                
+    <aside class="col-md-4 sidebar">
+        
+        <div class="widget about-me">
+    <div class="row">
+        <div class="col-md-5">
+            <img src="/icons/wx.jpg" alt="公众号" class="img-responsive center-block">
+        </div>
+        <div class="col-md-7">
+            <a class="series-a" href="javascript:void(0)">公众号</a>
+            <ul>
+                <li>• 技术干货推送</li>
+                <li>• 日常好文分享</li>
+                <li><b>• 扫码领取更多惊喜</b></li>
+            </ul>
+        </div>
+    </div>
+    
+<!--        <div class="row">-->
+<!--            <div class="col-md-5">-->
+<!--                <img src="/icons/xcx.jpg" alt="小程序" class="img-responsive">-->
+<!--            </div>-->
+<!--            <div class="col-md-7">-->
+<!--                <a class="series-a" href="javascript:void(0)">小程序</a>-->
+<!--                <ul>-->
+<!--                    <li>• 原创笔记</li>-->
+<!--                    <li>• 独家心法</li>-->
+<!--                    <li><b>• 扫码领取</b></li>-->
+<!--                </ul>-->
+<!--            </div>-->
+<!--        </div>-->
+    
+</div>
+
+
+
+
+        
+        
+    <div class="widget">
+        <h3 class="title">网站公告</h3>
+        <div class="notification">
+            <p>
+  <b>QQ群</b>：415777345<br/>
+</p>
+
+<p>
+<b>联系博主QQ</b>：210006540<br/>
+</p>
+        </div>
+    </div>
+
+        
+        
+    
+        <div class="ad">
+            <div class="row">
+                <div class="col-md-12">
+                    <a href="https://promotion.aliyun.com/ntms/act/qwbk.html?userCode=qhtujh03" rel="nofollow" target="_blank">
+                        <img class="img-responsive center-block"
+                             title="阿里全民云计算"
+                             src="/icons/380-120.png"
+                        >
+                    </a>
+                </div>
+            </div>
+        </div>
+    
+
+
+
+
+        
+        
+    <div class="widget">
+        <h3 class="title">分类</h3>
+        <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Ajax/"><i class="fa" aria-hidden="true">Ajax</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/"><i class="fa" aria-hidden="true">Docker</i></a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Druid/"><i class="fa" aria-hidden="true">Druid</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Feign/"><i class="fa" aria-hidden="true">Feign</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/HTTP/"><i class="fa" aria-hidden="true">HTTP</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/"><i class="fa" aria-hidden="true">Hexo</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JRebel/"><i class="fa" aria-hidden="true">JRebel</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/"><i class="fa" aria-hidden="true">Java</i></a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Maven/"><i class="fa" aria-hidden="true">Maven</i></a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link current" href="/categories/MongoDB/"><i class="fa" aria-hidden="true">MongoDB</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MySQL/"><i class="fa" aria-hidden="true">MySQL</i></a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Nexus3-x/"><i class="fa" aria-hidden="true">Nexus3.x</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/PowerShell/"><i class="fa" aria-hidden="true">PowerShell</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Quartz/"><i class="fa" aria-hidden="true">Quartz</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/"><i class="fa" aria-hidden="true">Redis</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/RocketMQ/"><i class="fa" aria-hidden="true">RocketMQ</i></a><span class="category-list-count">12</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Sharding-JDBC/"><i class="fa" aria-hidden="true">Sharding-JDBC</i></a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/"><i class="fa" aria-hidden="true">Spring</i></a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring-Cloud/"><i class="fa" aria-hidden="true">Spring Cloud</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringBoot/"><i class="fa" aria-hidden="true">SpringBoot</i></a><span class="category-list-count">15</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringCloud-Alibaba/"><i class="fa" aria-hidden="true">SpringCloud Alibaba</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringSession/"><i class="fa" aria-hidden="true">SpringSession</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/主键/"><i class="fa" aria-hidden="true">主键</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/其他/"><i class="fa" aria-hidden="true">其他</i></a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/安装教程/"><i class="fa" aria-hidden="true">安装教程</i></a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/工具/"><i class="fa" aria-hidden="true">工具</i></a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/微服务/"><i class="fa" aria-hidden="true">微服务</i></a><span class="category-list-count">17</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据库/"><i class="fa" aria-hidden="true">数据库</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/面试/"><i class="fa" aria-hidden="true">面试</i></a><span class="category-list-count">1</span></li></ul>
+    </div>
+
+
+        
+        
+  <div class="widget">
+    <h3 class="title">标签云</h3>
+    <div class="content tag-cloud">
+        
+            <canvas width="300" height="300" id="tag-cloud-3d">
+                <a href="/tags/Ajax/" style="font-size: 10px;">Ajax</a> <a href="/tags/Alibaba/" style="font-size: 10px;">Alibaba</a> <a href="/tags/Banner/" style="font-size: 10px;">Banner</a> <a href="/tags/Centos/" style="font-size: 10px;">Centos</a> <a href="/tags/Docker/" style="font-size: 17.5px;">Docker</a> <a href="/tags/Druid/" style="font-size: 10px;">Druid</a> <a href="/tags/Eureka/" style="font-size: 10.83px;">Eureka</a> <a href="/tags/FastDFS/" style="font-size: 10.83px;">FastDFS</a> <a href="/tags/Feign/" style="font-size: 13.33px;">Feign</a> <a href="/tags/File/" style="font-size: 10px;">File</a> <a href="/tags/HTTP/" style="font-size: 10px;">HTTP</a> <a href="/tags/Hexo/" style="font-size: 10.83px;">Hexo</a> <a href="/tags/HikariCP/" style="font-size: 10px;">HikariCP</a> <a href="/tags/Hystrix/" style="font-size: 10.83px;">Hystrix</a> <a href="/tags/Hystrix-Dashboard/" style="font-size: 10px;">Hystrix Dashboard</a> <a href="/tags/IDEA/" style="font-size: 10px;">IDEA</a> <a href="/tags/JDK/" style="font-size: 10px;">JDK</a> <a href="/tags/JRebel/" style="font-size: 10px;">JRebel</a> <a href="/tags/Java/" style="font-size: 12.5px;">Java</a> <a href="/tags/Java-b2-spring注解/" style="font-size: 15.83px;">Java-b2-spring注解</a> <a href="/tags/Map/" style="font-size: 10px;">Map</a> <a href="/tags/Maven/" style="font-size: 12.5px;">Maven</a> <a href="/tags/Memcache/" style="font-size: 10px;">Memcache</a> <a href="/tags/MongoDB/" style="font-size: 10.83px;">MongoDB</a> <a href="/tags/MongoTemplate/" style="font-size: 10.83px;">MongoTemplate</a> <a href="/tags/MySQL/" style="font-size: 15px;">MySQL</a> <a href="/tags/MySQL8/" style="font-size: 10px;">MySQL8</a> <a href="/tags/Mysql/" style="font-size: 10px;">Mysql</a> <a href="/tags/Navicat/" style="font-size: 10px;">Navicat</a> <a href="/tags/Nexus3-x/" style="font-size: 10.83px;">Nexus3.x</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/PowerShell/" style="font-size: 10px;">PowerShell</a> <a href="/tags/Quartz/" style="font-size: 10px;">Quartz</a> <a href="/tags/RabbitMQ/" style="font-size: 10px;">RabbitMQ</a> <a href="/tags/Redis/" style="font-size: 12.5px;">Redis</a> <a href="/tags/Ribbon/" style="font-size: 10.83px;">Ribbon</a> <a href="/tags/RocketMQ/" style="font-size: 18.33px;">RocketMQ</a> <a href="/tags/Sharding-JDBC/" style="font-size: 14.17px;">Sharding-JDBC</a> <a href="/tags/SonarQube/" style="font-size: 10px;">SonarQube</a> <a href="/tags/Spring/" style="font-size: 16.67px;">Spring</a> <a href="/tags/Spring-Boot/" style="font-size: 11.67px;">Spring Boot</a> <a href="/tags/Spring-Cloud/" style="font-size: 16.67px;">Spring Cloud</a> <a href="/tags/Spring-Cloud-Gateway/" style="font-size: 10.83px;">Spring Cloud Gateway</a> <a href="/tags/Spring-Cloud-Sleuth/" style="font-size: 10px;">Spring Cloud Sleuth</a> <a href="/tags/SpringBoot/" style="font-size: 20px;">SpringBoot</a> <a href="/tags/SpringCloud/" style="font-size: 10px;">SpringCloud</a> <a href="/tags/SpringCloud-Alibaba/" style="font-size: 10px;">SpringCloud Alibaba</a> <a href="/tags/SpringCloud-Stream/" style="font-size: 10px;">SpringCloud Stream</a> <a href="/tags/SpringSession/" style="font-size: 10px;">SpringSession</a> <a href="/tags/Tomcat/" style="font-size: 10px;">Tomcat</a> <a href="/tags/Transaction/" style="font-size: 10px;">Transaction</a> <a href="/tags/Turbine/" style="font-size: 10px;">Turbine</a> <a href="/tags/Web应用/" style="font-size: 10px;">Web应用</a> <a href="/tags/Windows/" style="font-size: 10px;">Windows</a> <a href="/tags/Windows-11/" style="font-size: 10px;">Windows 11</a> <a href="/tags/Zipkin/" style="font-size: 10px;">Zipkin</a> <a href="/tags/Zookeeper/" style="font-size: 10px;">Zookeeper</a> <a href="/tags/Zuul/" style="font-size: 10px;">Zuul</a> <a href="/tags/assessToken/" style="font-size: 10px;">assessToken</a> <a href="/tags/httpclient/" style="font-size: 10px;">httpclient</a> <a href="/tags/logback/" style="font-size: 10px;">logback</a> <a href="/tags/session共享/" style="font-size: 10px;">session共享</a> <a href="/tags/theme/" style="font-size: 10px;">theme</a> <a href="/tags/互联网产品/" style="font-size: 10px;">互联网产品</a> <a href="/tags/其他/" style="font-size: 10px;">其他</a> <a href="/tags/分布式/" style="font-size: 10.83px;">分布式</a> <a href="/tags/加密/" style="font-size: 10px;">加密</a> <a href="/tags/原理/" style="font-size: 10px;">原理</a> <a href="/tags/发布/" style="font-size: 10px;">发布</a> <a href="/tags/图片水印/" style="font-size: 10px;">图片水印</a> <a href="/tags/工具/" style="font-size: 10px;">工具</a> <a href="/tags/并发编程/" style="font-size: 10px;">并发编程</a> <a href="/tags/循环依赖/" style="font-size: 10px;">循环依赖</a> <a href="/tags/微服务/" style="font-size: 19.17px;">微服务</a> <a href="/tags/时间工具类/" style="font-size: 10px;">时间工具类</a> <a href="/tags/注解/" style="font-size: 10.83px;">注解</a> <a href="/tags/消息订阅/" style="font-size: 10px;">消息订阅</a> <a href="/tags/索引/" style="font-size: 14.17px;">索引</a> <a href="/tags/红黑树/" style="font-size: 10px;">红黑树</a>
+            </canvas>
+        
+    </div>
+  </div>
+
+
+        
+        
+    <div class="widget">
+        <h3 class="title">归档</h3>
+        <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/"><i class="fa" aria-hidden="true">2022年09月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/05/"><i class="fa" aria-hidden="true">2022年05月</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/"><i class="fa" aria-hidden="true">2021年07月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/"><i class="fa" aria-hidden="true">2021年06月</i></a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/"><i class="fa" aria-hidden="true">2021年03月</i></a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/"><i class="fa" aria-hidden="true">2021年02月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/"><i class="fa" aria-hidden="true">2020年11月</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/"><i class="fa" aria-hidden="true">2020年09月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/"><i class="fa" aria-hidden="true">2020年08月</i></a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/"><i class="fa" aria-hidden="true">2020年07月</i></a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/"><i class="fa" aria-hidden="true">2020年06月</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/"><i class="fa" aria-hidden="true">2020年04月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/"><i class="fa" aria-hidden="true">2020年03月</i></a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/"><i class="fa" aria-hidden="true">2020年02月</i></a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/"><i class="fa" aria-hidden="true">2020年01月</i></a><span class="archive-list-count">23</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/"><i class="fa" aria-hidden="true">2019年12月</i></a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/"><i class="fa" aria-hidden="true">2019年11月</i></a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/"><i class="fa" aria-hidden="true">2019年10月</i></a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/"><i class="fa" aria-hidden="true">2019年09月</i></a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/"><i class="fa" aria-hidden="true">2019年08月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/"><i class="fa" aria-hidden="true">2019年05月</i></a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/"><i class="fa" aria-hidden="true">2019年04月</i></a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/"><i class="fa" aria-hidden="true">2019年03月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/"><i class="fa" aria-hidden="true">2019年02月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/"><i class="fa" aria-hidden="true">2019年01月</i></a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/"><i class="fa" aria-hidden="true">2018年12月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/"><i class="fa" aria-hidden="true">2018年10月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/"><i class="fa" aria-hidden="true">2018年09月</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/"><i class="fa" aria-hidden="true">2018年08月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/"><i class="fa" aria-hidden="true">2018年06月</i></a><span class="archive-list-count">2</span></li></ul>
+    </div>
+
+
+        
+        
+    <div class="widget">
+      <h3 class="title">社交</h3> 
+        <div class="content social">
+            
+	            <a href="//github.com/zhaokejin" rel="external nofollow" title="GitHub" target="_blank">
+			    	<i class="github fa fa-github"></i>
+			    </a>
+            
+	            <a href="//gitee.com/zhaokejin" rel="external nofollow" title="Gitee" target="_blank">
+			    	<i class="git fa fa-git"></i>
+			    </a>
+            
+	            <a href="mailto:210006540qq.com" rel="external nofollow" title="邮箱" target="_blank">
+			    	<i class="envelope-o fa fa-envelope-o"></i>
+			    </a>
+            
+	            <a href="//wpa.qq.com/msgrd?v=3&uin=210006540&site=qq&menu=yes" rel="external nofollow" title="QQ" target="_blank">
+			    	<i class="qq fa fa-qq"></i>
+			    </a>
+            
+	            <a href="//shang.qq.com/wpa/qunwpa?idkey=7b19717710dcc2c78996f316db3ab3365bde39bc3c60de7a6c59fe07231e231a" rel="external nofollow" title="QQ群" target="_blank">
+			    	<i class="group fa fa-group"></i>
+			    </a>
+            
+	            <a href="/atom.xml" rel="external nofollow" title="RSS" target="_blank">
+			    	<i class="feed fa fa-feed"></i>
+			    </a>
+            
+        </div>
+    </div>
+
+
+        
+        
+
+        
+    </aside>
+
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+
+<a id="back-to-top" class="icon-btn hide">
+	<i class="fa fa-chevron-up"></i>
+</a>
+
+
+
+
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+        访问量:
+        <strong id="busuanzi_value_site_pv">
+            <i class="fa fa-spinner fa-spin"></i>
+        </strong>
+        &nbsp; | &nbsp;
+        访客数:
+        <strong id="busuanzi_value_site_uv">
+            <i class="fa fa-spinner fa-spin"></i>
+        </strong>
+<!--        &nbsp; <strong>Since 2018-12-26</strong>-->
+    
+</div>
+
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy; 2018 - 2023
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    <a href="//www.beian.miit.gov.cn/" class="copyright-links" target="_blank" rel="nofollow">鲁ICP备18033870号</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/js/jquery.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/bootstrap-hover-dropdown.min.js"></script>
+
+
+	<script src="/js/search.js?rev=@@hash"></script>
+
+
+
+    <script src="/assets/tagcanvas.min.js?rev=2.9"></script>
+    <script>
+        var tagOption = {
+            textColour: '#29afec', // 字体颜色
+            outlineMethod: 'block', // 选中模式
+            outlineColour: '#FFDAB9', // 选中模式的颜色
+            interval: 30 || 30, // 动画帧之间的时间间隔，值越大，转动幅度越大
+            textHeight: 13,
+            outlineRadius: 3,
+            freezeActive: true || '', // 选中的标签是否继续滚动
+            frontSelect: true || '', // 不选标签云后部的标签
+            initial: [0.1, -0.1],
+            depth: 0.5,
+            decel: 0.95,
+            maxSpeed: 0.03,
+            reverse: true || '', // 是否反向触发
+            fadeIn: 500, // 进入动画时间
+            wheelZoom: false || '' // 是否启用鼠标滚轮
+        }
+        TagCanvas.Start('tag-cloud-3d','',tagOption);
+    </script>
+
+
+
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<script src="/js/app.js?rev=@@hash"></script>
+<script src="/jquery.fancybox.js?v=2.1.5"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('.fancybox').fancybox();
+    });
+    // 给图片添加链接
+    $(document).ready(function() {
+        $("p img").each(function() {
+            var strA = "<a id='yourid' class='fancybox' data-fancybox-group='gallery'  href='" + this.src + "'></a>";
+            $(this).wrapAll(strA);
+        });
+    });
+    // fancybox
+    $("#yourid").fancybox({
+        openEffect    : 'elastic',
+        closeEffect   : 'elastic',
+    });
+</script>
+
+</body>
+</html>

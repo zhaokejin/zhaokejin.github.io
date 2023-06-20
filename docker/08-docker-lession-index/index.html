@@ -1,0 +1,1006 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="小小冒险家的博客">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.2.3">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="https://www.cicoding.cn">
+    <!--SEO-->
+
+    <meta name="keywords" content="Docker,Mysql">
+
+
+    <meta name="description" content="
+前言
+此篇幅内容较多，讲解的很详细，也有很多知识点。能耐心认真的读完，就很不错了~
+
+
+如果你觉得此文章不错的话，或者是根据此文档进行安装mysql的话，抽空在文档最下方留个言吧让我看到你的支持
+
+Docker 中国官方镜像加速
+如果觉得国外下载速度太慢，可以配置一个“Docker 中国官方...">
+
+
+
+<meta name="robots" content="all">
+<meta name="google" content="all">
+<meta name="googlebot" content="all">
+<meta name="verify" content="all">
+    <!--Title-->
+
+
+<title>在Docker中安装Mysql | 小小冒险家的博客</title>
+
+
+    <link rel="alternate" href="/atom.xml" title="小小冒险家的博客" type="application/atom+xml">
+
+
+    <link rel="icon" href="/favicon.png">
+
+    
+
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7">
+<link rel="stylesheet" href="/jquery.fancybox.css?v=2.1.5">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.5.0">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash">
+
+
+
+
+    
+
+
+
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?601ebec7733383ef248ca61fc0a0db95";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+
+
+    
+
+</head>
+
+</html>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+
+<body>
+    
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row clearfix">
+            <div class="col-md-12 column">
+                <nav class="navbar navbar-default" style="background-color:#fff;border:0;margin-bottom:0"
+                     role="navigation">
+                    <div class="navbar-header">
+<!--                        <button type="button" class="navbar-toggle" data-toggle="collapse"-->
+<!--                                data-target="#navbar-collapse-1">-->
+<!--                            <span class="sr-only">切</span>-->
+<!--                            <span class="icon-bar"></span>-->
+<!--                            <span class="icon-bar"></span>-->
+<!--                            <span class="icon-bar"></span>-->
+<!--                        </button>-->
+                        <a class="logo" href="/">
+                            <img src="/favicon.png"/>小小冒险家的博客
+                        </a>
+                    </div>
+
+                    <div class="collapse navbar-collapse" style="border:0;" id="navbar-collapse-1">
+                        <ul class="nav navbar-nav">
+                            
+                                
+                                    <li>
+                                        <a href="/" >
+                                            <i class="fa fa-home"></i>
+                                            首页
+                                        </a>
+                                    </li>
+                                
+                            
+                                
+                                    <li>
+                                        <a href="/archives" >
+                                            <i class="fa fa-sort"></i>
+                                            归档
+                                        </a>
+                                    </li>
+                                
+                            
+                                
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                                           data-hover="dropdown">
+                                            <i class="fa fa-fire"></i>
+                                            系列教程
+                                            <strong class="caret"></strong>
+                                        </a>
+                                        <ul class="dropdown-menu">
+                                            
+                                                <li>
+                                                    <a href="/docker/00-docker-lession-index" target="_blank">
+                                                        <i class="fa "></i>
+                                                        Docker系列教程
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="/micro-service/microservice/" target="_blank">
+                                                        <i class="fa "></i>
+                                                        SpringCloud微服务架构
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="/micro-service/microservice-alibaba/" target="_blank">
+                                                        <i class="fa "></i>
+                                                        SpringCloud Alibaba微服务架构
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="/sharding-jdbc/sharding-jdbc000/" target="_blank">
+                                                        <i class="fa "></i>
+                                                        Sharding-JDBC教程
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="/springboot/springboot-source-code/" target="_blank">
+                                                        <i class="fa "></i>
+                                                        SpringBoot源码系列
+                                                    </a>
+                                                </li>
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+                                
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                                           data-hover="dropdown">
+                                            <i class="fa fa-book"></i>
+                                            在线文档
+                                            <strong class="caret"></strong>
+                                        </a>
+                                        <ul class="dropdown-menu">
+                                            
+                                                <li>
+                                                    <a href="https://spring.io/docs/" target="_blank">
+                                                        <i class="fa "></i>
+                                                        Spring Reference
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="https://spring.io/projects/spring-boot/" target="_blank">
+                                                        <i class="fa "></i>
+                                                        SpringBoot Reference
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="https://spring.io/projects/spring-cloud/" target="_blank">
+                                                        <i class="fa "></i>
+                                                        SpringCloud Reference
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="https://docs.spring.io/spring-security/site/docs/current/reference/htmlsingle/" target="_blank">
+                                                        <i class="fa "></i>
+                                                        Spring Security Reference
+                                                    </a>
+                                                </li>
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+                                
+                                    <li>
+                                        <a href="/other/jrebel-activation" >
+                                            <i class="fa fa-fire"></i>
+                                            JRebel激活
+                                        </a>
+                                    </li>
+                                
+                            
+                                
+                                    <li>
+                                        <a href="/about" >
+                                            <i class="fa fa-user"></i>
+                                            关于我
+                                        </a>
+                                    </li>
+                                
+                            
+                        </ul>
+                        
+                            <form id="search-form" class="navbar-form navbar-right">
+                                <div class="form-group input-group">
+                                    <input type="text" id="local-search-input" class="form-control"
+                                           placeholder="搜我..."/>
+                                    <span class="input-group-btn">
+                                        <a class="btn btn-default">
+                                            <i class="fa fa-search"></i>
+                                        </a>
+                                    </span>
+                                </div>
+                                <div id="local-search-result" class="local-search-result-cls"></div>
+                            </form>
+                        
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </div>
+</nav>
+
+    <a href="http://github.com/zhaokejin" target="_blank">
+        <img style="position: absolute; width:100px; top: 0; left: 0; border: 0;"
+             src="/img/fork-me.png"
+             alt="Fork me on GitHub">
+    </a>
+
+
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    
+    
+        <div class="ad">
+            <div class="row">
+                
+                    <div class="col-md-12">
+                        <a href="https://promotion.aliyun.com/ntms/act/qwbk.html?userCode=qhtujh03" rel="nofollow" target="_blank">
+                            <img class="img-responsive center-block"
+                                 src="/icons/810x100.png"
+                                 title="阿里全民云计算"
+                            >
+                        </a>
+                    </div>
+                
+            </div>
+        </div>
+    
+
+
+<p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="在Docker中安装Mysql">
+            
+                在Docker中安装Mysql
+            
+        </h1>
+        <div class="post-meta">
+    
+
+    
+        <span class="categories-meta fa-wrap">
+            <i class="fa fa-folder-open-o"></i>
+            <a class="category-link" href="/categories/Docker/">Docker</a>
+        </span>
+    
+
+    
+        <span class="fa-wrap">
+            <i class="fa fa-tags"></i>
+            <span class="tags-meta">
+                
+                    <a class="tag-link" href="/tags/Docker/">Docker</a> <a class="tag-link" href="/tags/Mysql/">Mysql</a>
+                
+            </span>
+        </span>
+    
+
+    
+        
+        <span class="fa-wrap">
+            <i class="fa fa-clock-o"></i>
+            <span class="date-meta">2019/10/15</span>
+        </span>
+        
+            <span class="fa-wrap">
+                <i class="fa fa-eye"></i>
+                <span id="busuanzi_value_page_pv"></span>
+            </span>
+        
+    
+</div>
+        
+        
+    </div>
+    
+    <div class="post-body post-content" id="container">
+        
+    <div class="toc-article">
+        <strong>
+            目录
+        </strong>
+        <div class="toc-content">
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Docker-中国官方镜像加速"><span class="toc-text">Docker 中国官方镜像加速</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#下载mysql镜像"><span class="toc-text">下载mysql镜像</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#启动mysql容器"><span class="toc-text">启动mysql容器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#查看运行的mysql容器"><span class="toc-text">查看运行的mysql容器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#进入mysql容器"><span class="toc-text">进入mysql容器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#连接mysql数据库"><span class="toc-text">连接mysql数据库</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#查看当前所有的数据库"><span class="toc-text">查看当前所有的数据库</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#创建数据库、表、新增测试数据"><span class="toc-text">创建数据库、表、新增测试数据</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#客户端连接mysql数据库"><span class="toc-text">客户端连接mysql数据库</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#mysql容器中解决表数据中文乱码"><span class="toc-text">mysql容器中解决表数据中文乱码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#停止并重启mysql容器，再次查看效果"><span class="toc-text">停止并重启mysql容器，再次查看效果</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#通过commit命令提交新的镜像"><span class="toc-text">通过commit命令提交新的镜像</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#启动新创建的mysql镜像"><span class="toc-text">启动新创建的mysql镜像</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#进入新创建的mysql容器"><span class="toc-text">进入新创建的mysql容器</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#查看mysql数据库信息"><span class="toc-text">查看mysql数据库信息</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#查看my-cnf配置文件内容"><span class="toc-text">查看my.cnf配置文件内容</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数据挂载"><span class="toc-text">数据挂载</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#使用-v-实现数据挂载（数据卷）"><span class="toc-text">使用 -v 实现数据挂载（数据卷）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#登录新的mysql-v容器，查看数据库信息"><span class="toc-text">登录新的mysql-v容器，查看数据库信息</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#上面我们解决了容器挂载数据卷的问题，但是细心的朋友，可能还有一个疑问："><span class="toc-text">上面我们解决了容器挂载数据卷的问题，但是细心的朋友，可能还有一个疑问：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数据卷容器"><span class="toc-text">数据卷容器</span></a></li></ol></li></ol>
+        </div>
+    </div>
+
+
+        <blockquote>
+<p>前言</p>
+<p>此篇幅内容较多，讲解的很详细，也有很多知识点。能耐心认真的读完，就很不错了~</p>
+</blockquote>
+<blockquote>
+<p>如果你觉得此文章不错的话，或者是根据此文档进行安装mysql的话，抽空在文档最下方留个言吧<del>让我看到你的支持</del></p>
+</blockquote>
+<h2 id="Docker-中国官方镜像加速"><a href="#Docker-中国官方镜像加速" class="headerlink" title="Docker 中国官方镜像加速"></a>Docker 中国官方镜像加速</h2><blockquote>
+<p>如果觉得国外下载速度太慢，可以配置一个“Docker 中国官方镜像加速”，来提高镜像下载的速度。</p>
+<p>详情配置请查看 <a href="http://www.docker-cn.com/registry-mirror" target="_blank" rel="noopener">http://www.docker-cn.com/registry-mirror</a></p>
+</blockquote>
+<blockquote>
+<p>一般情况下，都会永久性的配置镜像加速，在Linux中修改 /etc/docker/daemon.json 文件，填入以下内容：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt; &#123;</span><br><span class="line">&gt;   &quot;registry-mirrors&quot;: [&quot;https://registry.docker-cn.com&quot;]</span><br><span class="line">&gt; &#125;</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<p>如果daemon.json不存在的话，需要自己创建一下。</p>
+<p>文件修改保存成功之后，记得重启一下Docker服务，以便让这个镜像加速生效。</p>
+<p><strong>重启Docker服务</strong></p>
+<p>我们在【在centos系统中安装Docker】一节中讲过Docker随着服务器重启自动启动的内容，正好可以通过命令service docker restart来实现Docker服务的重启。</p>
+<p>具体详情请查看 <a href="https://yuque.com/zhoubang/docker/rqspmt#cuygcr" target="_blank" rel="noopener">https://yuque.com/zhoubang/docker/rqspmt#cuygcr</a></p>
+</blockquote>
+<blockquote>
+<p>然后我们在Linux中执行命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; service docker restart</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<p>出现下图所示结果，表明Docker服务已经重新启动了！这样就可以永久性的使用Docker加速服务了。</p>
+</blockquote>
+<blockquote>
+<p>如果不做特别的配置的话，之前处于运行状态的容器，随着Docker服务的重启也会停止运行。</p>
+</blockquote>
+<h2 id="下载mysql镜像"><a href="#下载mysql镜像" class="headerlink" title="下载mysql镜像"></a>下载mysql镜像</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull mysql</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>如果配置了镜像加速，那么在下载mysql镜像或者其他比较大的文件的时候，会发现下载速度变得非常快！</p>
+</blockquote>
+<h2 id="启动mysql容器"><a href="#启动mysql容器" class="headerlink" title="启动mysql容器"></a>启动mysql容器</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d -p 3306:3306 -e MYSQL_ROOT_PASSWORD=123456 --name=mysql mysql</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>其中 -e 的作用是用于设置环境变量，mysql默认用户名为root，则MYSQL_ROOT_PASSWORD即为root设置密码，即123456</p>
+</blockquote>
+<h2 id="查看运行的mysql容器"><a href="#查看运行的mysql容器" class="headerlink" title="查看运行的mysql容器"></a>查看运行的mysql容器</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker ps</span><br></pre></td></tr></table></figure>
+
+<p>如下图：</p>
+<p><img src="/images/docker/1527526836293-2e4d3281-6899-4152-9d43-90779c839812.png" alt="在Docker中安装Mysql"></p>
+<blockquote>
+<p>mysql容器已经正常启动了！</p>
+</blockquote>
+<h2 id="进入mysql容器"><a href="#进入mysql容器" class="headerlink" title="进入mysql容器"></a>进入mysql容器</h2><blockquote>
+<p>既然mysql服务启动了，如果我们想对mysql进行操作（比如进入命令行操作、客户端连接等操作），该怎么办？</p>
+</blockquote>
+<p><strong>通过 docker exec 命令进入mysql容器：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker exec -it c9 /bin/bash</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>其中的“c9”指的当前mysql容器ID的前面部分值（在上图就可以看出来mysql容器的ID是 c94faeed480a）。</p>
+</blockquote>
+<p>回车运行效果如下图：</p>
+<p><img src="/images/docker/1527526967580-238a65ec-9f53-41fe-b9ef-b3b966c132fb.png" alt="在Docker中安装Mysql"></p>
+<blockquote>
+<p>其实这个时候，命令行控制台可以输入mysql相关的命令了。</p>
+</blockquote>
+<h2 id="连接mysql数据库"><a href="#连接mysql数据库" class="headerlink" title="连接mysql数据库"></a>连接mysql数据库</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql -u root -p123456</span><br></pre></td></tr></table></figure>
+
+<p>如下图：</p>
+<p><img src="/images/docker/1527527263102-cce7533d-a941-41e9-994c-18365f1031f0.png" alt="在Docker中安装Mysql"></p>
+<p>这个就是我们非常熟悉的mysql命令行界面了！</p>
+<p>我们可以在这里创建数据库、表等操作。再次印证了Docker的强大和方便！<img src="/images/docker/1527527324223-e0be6ce6-e27b-4ba9-9eb0-821cb8f0509e.jpeg" alt="图片描述"></p>
+<h2 id="查看当前所有的数据库"><a href="#查看当前所有的数据库" class="headerlink" title="查看当前所有的数据库"></a>查看当前所有的数据库</h2><p>在mysql命令行中执行命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">show databases;</span><br></pre></td></tr></table></figure>
+
+<p>如下图所示：</p>
+<p><img src="/images/docker/1527527456368-1f8820d5-c683-4524-9a0b-587b80904bd3.png" alt="在Docker中安装Mysql"></p>
+<blockquote>
+<p>完全就是和平常使用mysql一样。</p>
+</blockquote>
+<h2 id="创建数据库、表、新增测试数据"><a href="#创建数据库、表、新增测试数据" class="headerlink" title="创建数据库、表、新增测试数据"></a>创建数据库、表、新增测试数据</h2><ul>
+<li><strong>创建数据库</strong></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create database docker_test;</span><br></pre></td></tr></table></figure>
+
+<p>效果如下图：</p>
+<p><img src="/images/docker/1527527630068-b5963a1f-6e4b-4afb-90fa-6aff56bb5f2d.png" alt="在Docker中安装Mysql"></p>
+<blockquote>
+<p>这里我就创建了一个数据库docker_test</p>
+</blockquote>
+<ul>
+<li><strong>选择数据库</strong></li>
+</ul>
+<blockquote>
+<p>首先需要<strong>选择具体的数据库</strong>，执行命令选择刚刚创建的数据库：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; use docker_test</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+</blockquote>
+<ul>
+<li><strong>创建表</strong>：</li>
+</ul>
+<blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; create table test(name varchar(20),age int(11));</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<p>创建了test表，有2个字段：name、age</p>
+</blockquote>
+<blockquote>
+</blockquote>
+<ul>
+<li><strong>添加测试数据</strong>：</li>
+</ul>
+<blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; insert into test values(&quot;Kitty&quot;,26),(&quot;Tom&quot;,18),(&quot;Jack&quot;,36);</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<p>这里就简单添加3条测试数据。</p>
+</blockquote>
+<blockquote>
+<p>我们查询一下数据是否存在于数据库中：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; select * from test;</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<p><img src="/images/docker/1527528167233-6f90706b-e238-4a4f-8fd8-af625fbcee85.png" alt="在Docker中安装Mysql"></p>
+</blockquote>
+<blockquote>
+<p>一切OK！</p>
+</blockquote>
+<h2 id="客户端连接mysql数据库"><a href="#客户端连接mysql数据库" class="headerlink" title="客户端连接mysql数据库"></a>客户端连接mysql数据库</h2><blockquote>
+<p>既然mysql成功启动并运行，除了能在命令行中操作mysql数据库之外，肯定也是必须要能在客户端上连接和操作数据库才行。</p>
+</blockquote>
+<blockquote>
+<p>下面我就在我本地电脑上通过数据库客户端软件连接一下这个mysql数据库， 看看能不能正常连接和操作。</p>
+</blockquote>
+<blockquote>
+<p>我使用的是DataGrip客户端软件，如果你们需要的话，可以下载使用 <a href="https://pan.baidu.com/s/1NkzEG_rjwFBylUSMxfIUzw" target="_blank" rel="noopener">https://pan.baidu.com/s/1NkzEG_rjwFBylUSMxfIUzw</a></p>
+<p>如果版本低的话，可以到官方下载最新版本 <a href="https://www.jetbrains.com/datagrip/" target="_blank" rel="noopener">https://www.jetbrains.com/datagrip/</a></p>
+</blockquote>
+<p><strong>打开本地DataGrip客户端，新建连接mysql数据库</strong></p>
+<p><img src="/images/docker/1527528495532-b4f5af7a-8094-4bfa-a22c-f0a97be1529d.png" alt="在Docker中安装Mysql"></p>
+<p><strong>输入正确的mysql相关信息，连接数据库：</strong></p>
+<p><img src="/images/docker/1527528735459-411b5fbb-6f1d-4ccb-8f04-4e2098a853cc.png" alt="在Docker中安装Mysql"></p>
+<blockquote>
+<p>输入完成之后，可以点击下方的 Test Connection 按钮，来测试连接是否正常。</p>
+</blockquote>
+<p><strong>查看创建的**</strong>数据库和表：**</p>
+<p><img src="/images/docker/1527528859607-0993eb10-0919-413f-90a0-5913fd4ef031.png" alt="在Docker中安装Mysql"></p>
+<blockquote>
+<p>到此，mysql的相关服务已经正常访问和操作了。这和我们传统的使用mysql没有什么不同。</p>
+</blockquote>
+<p><strong>客户端中操作表数据</strong></p>
+<blockquote>
+<p>我们通过DataGrip客户端，在test表中手动再添加一条数据，然后我们在docker中看看是否能查看到新增的数据：</p>
+</blockquote>
+<blockquote>
+<p><img src="/images/docker/1527529149115-b76ddbb0-d5d6-47c2-994a-5e6b7c86b9aa.png" alt="在Docker中安装Mysql"></p>
+</blockquote>
+<blockquote>
+<p>【注意】：我这里添加了一条带有中文的数据。</p>
+</blockquote>
+<p><strong>进入mysql容器中查询表数据</strong></p>
+<blockquote>
+<p><img src="/images/docker/1527529312296-ce33f0fb-2226-4cab-9a18-456d9938b58f.png" alt="在Docker中安装Mysql"></p>
+</blockquote>
+<blockquote>
+<p>呀！是不是发现问题了~ 没错，中文乱码！怎么解决呢？</p>
+</blockquote>
+<h2 id="mysql容器中解决表数据中文乱码"><a href="#mysql容器中解决表数据中文乱码" class="headerlink" title="mysql容器中解决表数据中文乱码"></a><strong>mysql容器中解决表数据中文乱码</strong></h2><p><strong>查看mysql容器的ID</strong>：</p>
+<p><img src="/images/docker/1527529722916-b668aa57-db51-4822-a342-00316b09bf5d.png" alt="在Docker中安装Mysql"></p>
+<p><strong>进入mysql的docker容器</strong>：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker exec -it c9 /bin/bash</span><br></pre></td></tr></table></figure>
+
+<p><strong>编辑mysql配置文件</strong>：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/mysql/my.cnf</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>如果提示 vim: command not found 的错误信息，需要安装相关依赖包，执行下面两个命令即可：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; apt-get update</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; apt-get install vim</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<p><strong>在my.cnf文件中加入以下配置</strong>：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[mysqld]</span><br><span class="line">character-set-server=utf8 </span><br><span class="line">[client]</span><br><span class="line">default-character-set=utf8 </span><br><span class="line">[mysql]</span><br><span class="line">default-character-set=utf8</span><br></pre></td></tr></table></figure>
+
+<p>最终修改结果为：</p>
+<p><img src="/images/docker/1527530651772-65e37c7b-f8bd-4600-82d3-bbc899c75588.png" alt="在Docker中安装Mysql"></p>
+<p><strong>重新进入mysql容器，查询表数据</strong>，显示结果为：</p>
+<p><img src="/images/docker/1527530803010-56bd8f5a-b406-43e8-b8d2-21f5eea67add.png" alt="在Docker中安装Mysql"></p>
+<blockquote>
+<p>可以看到，已经正常显示中文了！</p>
+</blockquote>
+<h2 id="停止并重启mysql容器，再次查看效果"><a href="#停止并重启mysql容器，再次查看效果" class="headerlink" title="停止并重启mysql容器，再次查看效果"></a>停止并重启mysql容器，再次查看效果</h2><p><img src="/images/docker/1527531064156-dd3d8b97-58ea-45e1-a0a3-c197f1bf4053.png" alt="在Docker中安装Mysql"></p>
+<p><strong>客户端DataGrip重新连接mysql：</strong></p>
+<p><img src="/images/docker/1527531133633-c2fa79b6-d15b-4339-b062-ef0514e77940.png" alt="在Docker中安装Mysql"></p>
+<blockquote>
+<p>客户端连接正常！</p>
+</blockquote>
+<p><strong>进入mysql容器，查看表数据：</strong></p>
+<p><img src="/images/docker/1527531255245-7550ddea-a30d-4795-880b-d17ddecd3345.png" alt="在Docker中安装Mysql"></p>
+<blockquote>
+<p>mysql容器重启之后，查询数据正常显示中文！一切没什么问题了~</p>
+</blockquote>
+<h2 id="通过commit命令提交新的镜像"><a href="#通过commit命令提交新的镜像" class="headerlink" title="通过commit命令提交新的镜像"></a>通过commit命令提交新的镜像</h2><blockquote>
+<p>根据在mysql容器中所做的更改，创建新的mysql镜像。</p>
+<p>回想一下，我们在mysql容器中做了什么更改？</p>
+<p>创建数据库、表、新增数据、修改my.cnf配置文件，就是这些吧~</p>
+</blockquote>
+<p><strong>使用commit命令**</strong>提交新镜像**</p>
+<p>通过在Linux命令行中执行命令，提交新的镜像：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker commit c9 mysql-new</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>其中，“c9”就是指的容器ID，新的镜像名称为“mysql-new”。</p>
+</blockquote>
+<p>如下图：</p>
+<p><img src="/images/docker/1527531803451-9e5877e4-43d7-4661-a577-961c2332fe2d.png" alt="在Docker中安装Mysql"></p>
+<p>查看所有镜像列表：</p>
+<p><img src="/images/docker/1527532053082-2e7691e6-6219-455b-906d-f4534476b913.png" alt="在Docker中安装Mysql"></p>
+<blockquote>
+<p>是不是发现了我们创建的新的镜像mysql-new了。</p>
+</blockquote>
+<h3 id="启动新创建的mysql镜像"><a href="#启动新创建的mysql镜像" class="headerlink" title="启动新创建的mysql镜像"></a><strong>启动新创建的mysql镜像</strong></h3><p><img src="/images/docker/1527532239704-6e772c1c-551f-42f6-9b45-39137f38bea5.png" alt="在Docker中安装Mysql"></p>
+<blockquote>
+<p>由于上面我们已经运行了一个mysql的容器了，端口是3306，所以我们新运行一个mysql容器的时候，端口号就不能是3306了，这里我指定为3307，且容器的别名是mysql-new，方便区分查看。</p>
+</blockquote>
+<h3 id="进入新创建的mysql容器"><a href="#进入新创建的mysql容器" class="headerlink" title="进入新创建的mysql容器"></a><strong>进入新创建的mysql容器</strong></h3><ul>
+<li><h4 id="查看mysql数据库信息"><a href="#查看mysql数据库信息" class="headerlink" title="查看mysql数据库信息"></a><strong>查看mysql数据库信息</strong></h4></li>
+</ul>
+<p><img src="/images/docker/1527532534611-7677fed8-a17e-463c-93bb-62a1f7dfbb21.png" alt="在Docker中安装Mysql"></p>
+<ul>
+<li><h4 id="查看my-cnf配置文件内容"><a href="#查看my-cnf配置文件内容" class="headerlink" title="查看my.cnf配置文件内容"></a>查看my.cnf配置文件内容</h4></li>
+</ul>
+<p><img src="/images/docker/1527532760600-5a1830ab-633e-4d00-a15a-23b6c2e0d677.png" alt="在Docker中安装Mysql"></p>
+<p>从上面2张图中，可以明显的看到，我们之前创建的数据库docker_test、表test，都没有了！但是修改的my.cnf配置文件的内容还是保留着的。</p>
+<p>why？？？ 为什么会这样呢？</p>
+<blockquote>
+<p>官方文档在commit命令的介绍中，有这样一段话：</p>
+<p><strong>The commit operation will not include any data contained in volumes mounted inside the container.</strong></p>
+</blockquote>
+<blockquote>
+<p>意思是commit操作并不会包含容器内挂载数据卷中的数据。</p>
+</blockquote>
+<blockquote>
+<p><strong>如果对于“数据卷”不了解的话，确实看不懂是什么意思。</strong></p>
+</blockquote>
+<blockquote>
+<p><strong>数据卷与数据卷容器</strong></p>
+</blockquote>
+<blockquote>
+<p>生产环境中使用Docker的过程中，往往需要对数据进行持久化，或者需要在多个容器之间进行数据共享，这必然涉及容器的数据管理操作。</p>
+<p>容器中管理数据主要有两种方式：</p>
+<p>数据卷（Data Volumes）：数据卷是一个可供容器使用的特殊目录，它将主机操作系统目录直接映射进容器。</p>
+<p>数据卷容器（Data Volume Containers）：数据卷容器也是一个容器，但是它的目的是专门用来提供数据卷，供其他容器挂载使用的。</p>
+</blockquote>
+<p>根据官方文档对于commit的介绍中，可以猜测到为何之前创建的数据库、表都不见了，原因是因为mysql容器的挂载数据卷引起的。</p>
+<p>我们可以通过命令查看到别名是“mysql”的容器挂载数据卷的目录。</p>
+<p>看一下我们的“mysql”容器的ID信息，方便查看。</p>
+<blockquote>
+<p><img src="/images/docker/1527546716034-2e7873e1-883c-4d60-bdd6-bd75962b403a.png" alt="在Docker中安装Mysql"></p>
+</blockquote>
+<p>通过命令docker inspect查看mysql这个容器的数据卷挂载信息：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker inspect c9</span><br></pre></td></tr></table></figure>
+
+<p>执行命令之后，由于显示的内容比较多，这里我们就贴一下重要的信息：</p>
+<blockquote>
+<p><img src="/images/docker/1527546766842-6a1ebb25-6a86-4a67-b202-05382a3ca083.png" alt="在Docker中安装Mysql"></p>
+</blockquote>
+<p>通过图中可以看到，mysql容器将容器内的/var/lib/mysql路径作为volume挂载。真正的数据库相关数据文件所在的目录就是“Source”对应的目录，即：/var/lib/docker/volumes/1b0b17f6a4f78d357a187116d75991db8ee784213e67cc9b9988c8ef647fe563/_data</p>
+<p>我们可以进入mysql容器查看/var/lib/mysql目录下的内容：</p>
+<p><img src="/images/docker/1527546887058-112f86c9-f2ae-4cae-9540-6da58fe3e8aa.png" alt="在Docker中安装Mysql"></p>
+<blockquote>
+<p>发现的确是mysql数据库的数据文件（红色区域）。</p>
+</blockquote>
+<p>这时候，我们切换到Linux命令行，进入到mysql容器的数据挂载目录，看看该目录下有什么内容：</p>
+<p>/var/lib/docker/volumes/1b0b17f6a4f78d357a187116d75991db8ee784213e67cc9b9988c8ef647fe563/_data</p>
+<p>如下图所示：</p>
+<p><img src="/images/docker/1527546977803-7124018a-3f0e-447b-88d8-80b442be4539.png" alt="在Docker中安装Mysql"></p>
+<p>咦~ 是不是发现了什么！把黄色区域的内容与上图中红色区域内容进行对比，是不是内容一模一样！</p>
+<p>这也就印证了，当初我们在mysql容器中创建的数据库、表等，真正的数据库文件存放的位置就是在宿主机下面，而不是存放在容器中。</p>
+<p>到此，我们终于知道了为何mysql-new容器中的数据库、表都不见了，原来数据库文件是存放在宿主机上的。</p>
+<p>那该如何解决这个问题呢？怎样才能让mysql-new容器启动之后可以正常加载我们之前创建的数据库、表等数据呢？这就引入了下面的正题 —— 数据挂载。</p>
+<h2 id="数据挂载"><a href="#数据挂载" class="headerlink" title="数据挂载"></a>数据挂载</h2><p>docker的数据挂载分为三种，volume、bind mount和tmpfs，关于三种的具体说明，有兴趣了解的可以看一下官网的文档 <a href="https://docs.docker.com/storage/" target="_blank" rel="noopener">https://docs.docker.com/storage/</a></p>
+<p>参考文档 《基于docker部署mysql的数据持久化问题》 <a href="https://www.jianshu.com/p/530d00f97cbf" target="_blank" rel="noopener">https://www.jianshu.com/p/530d00f97cbf</a></p>
+<blockquote>
+<p>上面的文章里面，把问题描述的非常详细清楚。我这里就不多做说明了。</p>
+</blockquote>
+<h3 id="使用-v-实现数据挂载（数据卷）"><a href="#使用-v-实现数据挂载（数据卷）" class="headerlink" title="使用 -v 实现数据挂载（数据卷）"></a>使用 <strong>-v 实现数据挂载（数据卷）</strong></h3><p>如果我们想在 run 一个新的mysql容器的时候，可以正常访问我们之前在mysql容器中创建的数据库、表数据，则在docker run命令启动容器的时候，就需要指定挂载目录。</p>
+<p><strong>注意：要想让新的mysql容器能正常挂载名称是“mysql”容器，前提是需要先停止名称是“mysql”的容器</strong>，不然的话，即使run命令配置正确，容器启动的时候会一直报错：</p>
+<p><img src="/images/docker/1527547243072-cf5029a8-3d60-434f-aeba-f314633d6b0b.png" alt="在Docker中安装Mysql"></p>
+<p>上图就是因为没有事先停止mysql容器导致的。</p>
+<p><strong>下面开始具体操作：</strong></p>
+<ul>
+<li>先停止mysql容器</li>
+</ul>
+<p><img src="/images/docker/1527547465870-974cfc00-44b0-4a09-87a9-b6035b4adbf5.png" alt="在Docker中安装Mysql"></p>
+<ul>
+<li>重新启动一个新的mysql容器，命令如下：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d -p 3308:3306 -e MYSQL_ROOT_PASSWORD=123456 --name mysql-v -v /var/lib/docker/volumes/1b0b17f6a4f78d357a187116d75991db8ee784213e67cc9b9988c8ef647fe563/_data:/var/lib/mysql mysql</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>最重要的一个参数 -v ：挂载数据卷。-v 后面的值中间有“：”号，前半部分指的是宿主机的目录（也就是我们上面的mysql容器的数据库存储的目录），后半部分指的是容器的目录。</p>
+<p>实现的效果就是说：新启动的容器，挂载宿主机的目录，实现数据共享。</p>
+</blockquote>
+<p>运行结果：</p>
+<p><img src="/images/docker/1527547916774-cd6487ee-4afc-42a6-b6bb-f2ce6cf71523.png" alt="在Docker中安装Mysql"></p>
+<h4 id="登录新的mysql-v容器，查看数据库信息"><a href="#登录新的mysql-v容器，查看数据库信息" class="headerlink" title="登录新的mysql-v容器，查看数据库信息"></a><strong>登录新的mysql-v容器，查看数据库信息</strong></h4><p>直接看下图的命令操作吧：</p>
+<p><img src="/images/docker/1527548344772-a86dd217-1ad4-4a19-b443-d51d2d45a80a.png" alt="在Docker中安装Mysql"></p>
+<p>看到效果了吧！在这个mysql-v的新容器里面，已经可以看到我们一开始在“mysql”容器中创建的数据库和表了。</p>
+<p>也就实现了容器之间的数据共享。</p>
+<p>核心的实现就是在run命令里面加入了 -v 参数。如果不太明白-v的含义的，可以自行网上查询资料了解学习，加深印象。</p>
+<h4 id="上面我们解决了容器挂载数据卷的问题，但是细心的朋友，可能还有一个疑问："><a href="#上面我们解决了容器挂载数据卷的问题，但是细心的朋友，可能还有一个疑问：" class="headerlink" title="上面我们解决了容器挂载数据卷的问题，但是细心的朋友，可能还有一个疑问："></a><strong>上面我们解决了容器挂载数据卷的问题，但是细心的朋友，可能还有一个疑问：</strong></h4><p>为什么修改了my.cnf配置文件、以及运行mysql镜像时指定的MYSQL_ROOT_PASSWORD=123456，却依然可以在新容器mysql-new中使用呢，为什么这俩样数据不会消失呢？</p>
+<blockquote>
+<p>官方文档对于commit命令还有这样一段描述：</p>
+<p>It can be useful to commit a container’s file changes or settings into a new image. </p>
+</blockquote>
+<p>谷歌翻译过来的意思就是：将容器的文件更改或设置提交到新映像可能很有用。</p>
+<p>还记得我们当初运行第一个mysql容器的时候，docker run 命令是怎样的，这里贴一下当时启动容器的命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d -p 3306:3306 -e MYSQL_ROOT_PASSWORD=123456 --name=mysql mysql</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>其中，里面使用到了 -e 参数，设置了root用户的密码为123456。</p>
+<p>所以，结合官方文档对commit的介绍（It can be useful to commit a container’s file changes or settings into a new image. ），就可以知道，通过 -e 设置的信息，在使用commit提交新镜像的时候，这些设置被容器保留了下来，commit命令使用这些设置构建了新的镜像，在新容器里面使用的是相同的设置。</p>
+</blockquote>
+<blockquote>
+<p>这也印证了，我们在mysql-new容器中登录数据库的时候，登录密码写的是123456。因为在第一次启动mysql服务的时候，用户root密码是通过 -e 指定的，所以在commit提交新的镜像的时候，是被一同提交到了新镜像mysql-new中。</p>
+</blockquote>
+<h3 id="数据卷容器"><a href="#数据卷容器" class="headerlink" title="数据卷容器"></a>数据卷容器</h3><blockquote>
+<p>通过数据卷容器也可以实现多个容器间的数据共享。</p>
+</blockquote>
+<blockquote>
+<p>如果要授权一个容器访问另一个容器的数据卷，我们可以使用-volumes-from参数来执行docker run。</p>
+</blockquote>
+<p>（这里就不多做说明了，有兴趣的可以网上自行查阅资料研究）</p>
+
+        <h2>相关文章</h2><ul><li><a href="/spring/docker-of-springboot-and-publish-to-remote-server/">SpringBoot应用docker化并发布到远程服务器</a></li><li><a href="/docker/12-docker-lession-index/">Docker部署Spring Boot项目</a></li><li><a href="/docker/11-docker-lession-index/">在Docker中安装Redis以及主从环境搭建</a></li><li><a href="/docker/10-docker-lession-index/">在Docker中安装Zookeeper以及集群环境搭建</a></li><li><a href="/docker/09-docker-lession-index/">在Docker中安装Nginx</a></li></ul>
+    </div>
+    
+        <div class="reward" ontouchstart>
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+            
+                <span class="reward-type">
+                    <img class="wechat" src="/images/weixin.png"><b>微信打赏</b>
+                </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">赞赏是不耍流氓的鼓励</p>
+</div>
+
+
+    
+
+
+    
+        <div class="post-footer">
+            <div class="col-sm-10">
+                <div>
+                    <b>本文链接</b>：<a href="/docker/08-docker-lession-index/" target="_blank">在Docker中安装Mysql</a>
+                </div>
+                <div>
+                    
+                        转载声明：本博客由小小冒险家创作，采用 <a href="https://creativecommons.org/licenses/by-nc-nd/3.0/" target="_blank"> CC BY 3.0 CN </a> 许可协议。可自由转载、引用，但需署名作者且注明文章出处。如转载至微信公众号，请在文末添加作者公众号二维码。
+                    
+                </div>
+                <div>
+                    
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <img src="/icons/wx.jpg" width=100%/>
+            </div>
+        </div>
+    
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+        <a target="_blank" href="/micro-service/microservice02/" class="pre-post btn btn-default"
+           title='服务发现 - Eureka'>
+            <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+            <span class="hidden-xs">服务发现 - Eureka</span>
+        </a>
+    
+    
+        <a target="_blank" href="/http/httpclient-utils/" class="next-post btn btn-default"
+           title='HttpClient工具类'>
+            <span class="hidden-lg">下一篇</span>
+            <span class="hidden-xs">HttpClient工具类</span><i class="fa fa-angle-right fa-fw"></i>
+        </a>
+    
+</div>
+
+
+
+
+
+
+
+                </main>
+                
+    <aside class="col-md-4 sidebar">
+        
+        <div class="widget about-me">
+    <div class="row">
+        <div class="col-md-5">
+            <img src="/icons/wx.jpg" alt="公众号" class="img-responsive center-block">
+        </div>
+        <div class="col-md-7">
+            <a class="series-a" href="javascript:void(0)">公众号</a>
+            <ul>
+                <li>• 技术干货推送</li>
+                <li>• 日常好文分享</li>
+                <li><b>• 扫码领取更多惊喜</b></li>
+            </ul>
+        </div>
+    </div>
+    
+<!--        <div class="row">-->
+<!--            <div class="col-md-5">-->
+<!--                <img src="/icons/xcx.jpg" alt="小程序" class="img-responsive">-->
+<!--            </div>-->
+<!--            <div class="col-md-7">-->
+<!--                <a class="series-a" href="javascript:void(0)">小程序</a>-->
+<!--                <ul>-->
+<!--                    <li>• 原创笔记</li>-->
+<!--                    <li>• 独家心法</li>-->
+<!--                    <li><b>• 扫码领取</b></li>-->
+<!--                </ul>-->
+<!--            </div>-->
+<!--        </div>-->
+    
+</div>
+
+
+
+
+        
+        
+    <div class="widget">
+        <h3 class="title">网站公告</h3>
+        <div class="notification">
+            <p>
+  <b>QQ群</b>：415777345<br/>
+</p>
+
+<p>
+<b>联系博主QQ</b>：210006540<br/>
+</p>
+        </div>
+    </div>
+
+        
+        
+    
+        <div class="ad">
+            <div class="row">
+                <div class="col-md-12">
+                    <a href="https://promotion.aliyun.com/ntms/act/qwbk.html?userCode=qhtujh03" rel="nofollow" target="_blank">
+                        <img class="img-responsive center-block"
+                             title="阿里全民云计算"
+                             src="/icons/380-120.png"
+                        >
+                    </a>
+                </div>
+            </div>
+        </div>
+    
+
+
+
+
+        
+        
+    <div class="widget">
+        <h3 class="title">分类</h3>
+        <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Ajax/"><i class="fa" aria-hidden="true">Ajax</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link current" href="/categories/Docker/"><i class="fa" aria-hidden="true">Docker</i></a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Druid/"><i class="fa" aria-hidden="true">Druid</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Feign/"><i class="fa" aria-hidden="true">Feign</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/HTTP/"><i class="fa" aria-hidden="true">HTTP</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/"><i class="fa" aria-hidden="true">Hexo</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JRebel/"><i class="fa" aria-hidden="true">JRebel</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/"><i class="fa" aria-hidden="true">Java</i></a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Maven/"><i class="fa" aria-hidden="true">Maven</i></a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MongoDB/"><i class="fa" aria-hidden="true">MongoDB</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MySQL/"><i class="fa" aria-hidden="true">MySQL</i></a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Nexus3-x/"><i class="fa" aria-hidden="true">Nexus3.x</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/PowerShell/"><i class="fa" aria-hidden="true">PowerShell</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Quartz/"><i class="fa" aria-hidden="true">Quartz</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/"><i class="fa" aria-hidden="true">Redis</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/RocketMQ/"><i class="fa" aria-hidden="true">RocketMQ</i></a><span class="category-list-count">12</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Sharding-JDBC/"><i class="fa" aria-hidden="true">Sharding-JDBC</i></a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/"><i class="fa" aria-hidden="true">Spring</i></a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring-Cloud/"><i class="fa" aria-hidden="true">Spring Cloud</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringBoot/"><i class="fa" aria-hidden="true">SpringBoot</i></a><span class="category-list-count">15</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringCloud-Alibaba/"><i class="fa" aria-hidden="true">SpringCloud Alibaba</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringSession/"><i class="fa" aria-hidden="true">SpringSession</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/主键/"><i class="fa" aria-hidden="true">主键</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/其他/"><i class="fa" aria-hidden="true">其他</i></a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/安装教程/"><i class="fa" aria-hidden="true">安装教程</i></a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/工具/"><i class="fa" aria-hidden="true">工具</i></a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/微服务/"><i class="fa" aria-hidden="true">微服务</i></a><span class="category-list-count">17</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据库/"><i class="fa" aria-hidden="true">数据库</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/面试/"><i class="fa" aria-hidden="true">面试</i></a><span class="category-list-count">1</span></li></ul>
+    </div>
+
+
+        
+        
+  <div class="widget">
+    <h3 class="title">标签云</h3>
+    <div class="content tag-cloud">
+        
+            <canvas width="300" height="300" id="tag-cloud-3d">
+                <a href="/tags/Ajax/" style="font-size: 10px;">Ajax</a> <a href="/tags/Alibaba/" style="font-size: 10px;">Alibaba</a> <a href="/tags/Banner/" style="font-size: 10px;">Banner</a> <a href="/tags/Centos/" style="font-size: 10px;">Centos</a> <a href="/tags/Docker/" style="font-size: 17.5px;">Docker</a> <a href="/tags/Druid/" style="font-size: 10px;">Druid</a> <a href="/tags/Eureka/" style="font-size: 10.83px;">Eureka</a> <a href="/tags/FastDFS/" style="font-size: 10.83px;">FastDFS</a> <a href="/tags/Feign/" style="font-size: 13.33px;">Feign</a> <a href="/tags/File/" style="font-size: 10px;">File</a> <a href="/tags/HTTP/" style="font-size: 10px;">HTTP</a> <a href="/tags/Hexo/" style="font-size: 10.83px;">Hexo</a> <a href="/tags/HikariCP/" style="font-size: 10px;">HikariCP</a> <a href="/tags/Hystrix/" style="font-size: 10.83px;">Hystrix</a> <a href="/tags/Hystrix-Dashboard/" style="font-size: 10px;">Hystrix Dashboard</a> <a href="/tags/IDEA/" style="font-size: 10px;">IDEA</a> <a href="/tags/JDK/" style="font-size: 10px;">JDK</a> <a href="/tags/JRebel/" style="font-size: 10px;">JRebel</a> <a href="/tags/Java/" style="font-size: 12.5px;">Java</a> <a href="/tags/Java-b2-spring注解/" style="font-size: 15.83px;">Java-b2-spring注解</a> <a href="/tags/Map/" style="font-size: 10px;">Map</a> <a href="/tags/Maven/" style="font-size: 12.5px;">Maven</a> <a href="/tags/Memcache/" style="font-size: 10px;">Memcache</a> <a href="/tags/MongoDB/" style="font-size: 10.83px;">MongoDB</a> <a href="/tags/MongoTemplate/" style="font-size: 10.83px;">MongoTemplate</a> <a href="/tags/MySQL/" style="font-size: 15px;">MySQL</a> <a href="/tags/MySQL8/" style="font-size: 10px;">MySQL8</a> <a href="/tags/Mysql/" style="font-size: 10px;">Mysql</a> <a href="/tags/Navicat/" style="font-size: 10px;">Navicat</a> <a href="/tags/Nexus3-x/" style="font-size: 10.83px;">Nexus3.x</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/PowerShell/" style="font-size: 10px;">PowerShell</a> <a href="/tags/Quartz/" style="font-size: 10px;">Quartz</a> <a href="/tags/RabbitMQ/" style="font-size: 10px;">RabbitMQ</a> <a href="/tags/Redis/" style="font-size: 12.5px;">Redis</a> <a href="/tags/Ribbon/" style="font-size: 10.83px;">Ribbon</a> <a href="/tags/RocketMQ/" style="font-size: 18.33px;">RocketMQ</a> <a href="/tags/Sharding-JDBC/" style="font-size: 14.17px;">Sharding-JDBC</a> <a href="/tags/SonarQube/" style="font-size: 10px;">SonarQube</a> <a href="/tags/Spring/" style="font-size: 16.67px;">Spring</a> <a href="/tags/Spring-Boot/" style="font-size: 11.67px;">Spring Boot</a> <a href="/tags/Spring-Cloud/" style="font-size: 16.67px;">Spring Cloud</a> <a href="/tags/Spring-Cloud-Gateway/" style="font-size: 10.83px;">Spring Cloud Gateway</a> <a href="/tags/Spring-Cloud-Sleuth/" style="font-size: 10px;">Spring Cloud Sleuth</a> <a href="/tags/SpringBoot/" style="font-size: 20px;">SpringBoot</a> <a href="/tags/SpringCloud/" style="font-size: 10px;">SpringCloud</a> <a href="/tags/SpringCloud-Alibaba/" style="font-size: 10px;">SpringCloud Alibaba</a> <a href="/tags/SpringCloud-Stream/" style="font-size: 10px;">SpringCloud Stream</a> <a href="/tags/SpringSession/" style="font-size: 10px;">SpringSession</a> <a href="/tags/Tomcat/" style="font-size: 10px;">Tomcat</a> <a href="/tags/Transaction/" style="font-size: 10px;">Transaction</a> <a href="/tags/Turbine/" style="font-size: 10px;">Turbine</a> <a href="/tags/Web应用/" style="font-size: 10px;">Web应用</a> <a href="/tags/Windows/" style="font-size: 10px;">Windows</a> <a href="/tags/Windows-11/" style="font-size: 10px;">Windows 11</a> <a href="/tags/Zipkin/" style="font-size: 10px;">Zipkin</a> <a href="/tags/Zookeeper/" style="font-size: 10px;">Zookeeper</a> <a href="/tags/Zuul/" style="font-size: 10px;">Zuul</a> <a href="/tags/assessToken/" style="font-size: 10px;">assessToken</a> <a href="/tags/httpclient/" style="font-size: 10px;">httpclient</a> <a href="/tags/logback/" style="font-size: 10px;">logback</a> <a href="/tags/session共享/" style="font-size: 10px;">session共享</a> <a href="/tags/theme/" style="font-size: 10px;">theme</a> <a href="/tags/互联网产品/" style="font-size: 10px;">互联网产品</a> <a href="/tags/其他/" style="font-size: 10px;">其他</a> <a href="/tags/分布式/" style="font-size: 10.83px;">分布式</a> <a href="/tags/加密/" style="font-size: 10px;">加密</a> <a href="/tags/原理/" style="font-size: 10px;">原理</a> <a href="/tags/发布/" style="font-size: 10px;">发布</a> <a href="/tags/图片水印/" style="font-size: 10px;">图片水印</a> <a href="/tags/工具/" style="font-size: 10px;">工具</a> <a href="/tags/并发编程/" style="font-size: 10px;">并发编程</a> <a href="/tags/循环依赖/" style="font-size: 10px;">循环依赖</a> <a href="/tags/微服务/" style="font-size: 19.17px;">微服务</a> <a href="/tags/时间工具类/" style="font-size: 10px;">时间工具类</a> <a href="/tags/注解/" style="font-size: 10.83px;">注解</a> <a href="/tags/消息订阅/" style="font-size: 10px;">消息订阅</a> <a href="/tags/索引/" style="font-size: 14.17px;">索引</a> <a href="/tags/红黑树/" style="font-size: 10px;">红黑树</a>
+            </canvas>
+        
+    </div>
+  </div>
+
+
+        
+        
+    <div class="widget">
+        <h3 class="title">归档</h3>
+        <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/"><i class="fa" aria-hidden="true">2022年09月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/05/"><i class="fa" aria-hidden="true">2022年05月</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/"><i class="fa" aria-hidden="true">2021年07月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/"><i class="fa" aria-hidden="true">2021年06月</i></a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/"><i class="fa" aria-hidden="true">2021年03月</i></a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/"><i class="fa" aria-hidden="true">2021年02月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/"><i class="fa" aria-hidden="true">2020年11月</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/"><i class="fa" aria-hidden="true">2020年09月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/"><i class="fa" aria-hidden="true">2020年08月</i></a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/"><i class="fa" aria-hidden="true">2020年07月</i></a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/"><i class="fa" aria-hidden="true">2020年06月</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/"><i class="fa" aria-hidden="true">2020年04月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/"><i class="fa" aria-hidden="true">2020年03月</i></a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/"><i class="fa" aria-hidden="true">2020年02月</i></a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/"><i class="fa" aria-hidden="true">2020年01月</i></a><span class="archive-list-count">23</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/"><i class="fa" aria-hidden="true">2019年12月</i></a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/"><i class="fa" aria-hidden="true">2019年11月</i></a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/"><i class="fa" aria-hidden="true">2019年10月</i></a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/"><i class="fa" aria-hidden="true">2019年09月</i></a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/"><i class="fa" aria-hidden="true">2019年08月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/"><i class="fa" aria-hidden="true">2019年05月</i></a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/"><i class="fa" aria-hidden="true">2019年04月</i></a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/"><i class="fa" aria-hidden="true">2019年03月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/"><i class="fa" aria-hidden="true">2019年02月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/"><i class="fa" aria-hidden="true">2019年01月</i></a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/"><i class="fa" aria-hidden="true">2018年12月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/"><i class="fa" aria-hidden="true">2018年10月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/"><i class="fa" aria-hidden="true">2018年09月</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/"><i class="fa" aria-hidden="true">2018年08月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/"><i class="fa" aria-hidden="true">2018年06月</i></a><span class="archive-list-count">2</span></li></ul>
+    </div>
+
+
+        
+        
+    <div class="widget">
+      <h3 class="title">社交</h3> 
+        <div class="content social">
+            
+	            <a href="//github.com/zhaokejin" rel="external nofollow" title="GitHub" target="_blank">
+			    	<i class="github fa fa-github"></i>
+			    </a>
+            
+	            <a href="//gitee.com/zhaokejin" rel="external nofollow" title="Gitee" target="_blank">
+			    	<i class="git fa fa-git"></i>
+			    </a>
+            
+	            <a href="mailto:210006540qq.com" rel="external nofollow" title="邮箱" target="_blank">
+			    	<i class="envelope-o fa fa-envelope-o"></i>
+			    </a>
+            
+	            <a href="//wpa.qq.com/msgrd?v=3&uin=210006540&site=qq&menu=yes" rel="external nofollow" title="QQ" target="_blank">
+			    	<i class="qq fa fa-qq"></i>
+			    </a>
+            
+	            <a href="//shang.qq.com/wpa/qunwpa?idkey=7b19717710dcc2c78996f316db3ab3365bde39bc3c60de7a6c59fe07231e231a" rel="external nofollow" title="QQ群" target="_blank">
+			    	<i class="group fa fa-group"></i>
+			    </a>
+            
+	            <a href="/atom.xml" rel="external nofollow" title="RSS" target="_blank">
+			    	<i class="feed fa fa-feed"></i>
+			    </a>
+            
+        </div>
+    </div>
+
+
+        
+        
+
+        
+    </aside>
+
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+
+<a id="back-to-top" class="icon-btn hide">
+	<i class="fa fa-chevron-up"></i>
+</a>
+
+
+
+
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+        访问量:
+        <strong id="busuanzi_value_site_pv">
+            <i class="fa fa-spinner fa-spin"></i>
+        </strong>
+        &nbsp; | &nbsp;
+        访客数:
+        <strong id="busuanzi_value_site_uv">
+            <i class="fa fa-spinner fa-spin"></i>
+        </strong>
+<!--        &nbsp; <strong>Since 2018-12-26</strong>-->
+    
+</div>
+
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy; 2018 - 2023
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    <a href="//www.beian.miit.gov.cn/" class="copyright-links" target="_blank" rel="nofollow">鲁ICP备18033870号</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/js/jquery.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/bootstrap-hover-dropdown.min.js"></script>
+
+
+	<script src="/js/search.js?rev=@@hash"></script>
+
+
+
+    <script src="/assets/tagcanvas.min.js?rev=2.9"></script>
+    <script>
+        var tagOption = {
+            textColour: '#29afec', // 字体颜色
+            outlineMethod: 'block', // 选中模式
+            outlineColour: '#FFDAB9', // 选中模式的颜色
+            interval: 30 || 30, // 动画帧之间的时间间隔，值越大，转动幅度越大
+            textHeight: 13,
+            outlineRadius: 3,
+            freezeActive: true || '', // 选中的标签是否继续滚动
+            frontSelect: true || '', // 不选标签云后部的标签
+            initial: [0.1, -0.1],
+            depth: 0.5,
+            decel: 0.95,
+            maxSpeed: 0.03,
+            reverse: true || '', // 是否反向触发
+            fadeIn: 500, // 进入动画时间
+            wheelZoom: false || '' // 是否启用鼠标滚轮
+        }
+        TagCanvas.Start('tag-cloud-3d','',tagOption);
+    </script>
+
+
+
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<script src="/js/app.js?rev=@@hash"></script>
+<script src="/jquery.fancybox.js?v=2.1.5"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('.fancybox').fancybox();
+    });
+    // 给图片添加链接
+    $(document).ready(function() {
+        $("p img").each(function() {
+            var strA = "<a id='yourid' class='fancybox' data-fancybox-group='gallery'  href='" + this.src + "'></a>";
+            $(this).wrapAll(strA);
+        });
+    });
+    // fancybox
+    $("#yourid").fancybox({
+        openEffect    : 'elastic',
+        closeEffect   : 'elastic',
+    });
+</script>
+
+</body>
+</html>

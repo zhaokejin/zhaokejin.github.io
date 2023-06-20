@@ -1,0 +1,792 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="小小冒险家的博客">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.2.3">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="https://www.cicoding.cn">
+    <!--SEO-->
+
+    <meta name="keywords" content="Java">
+
+
+    <meta name="description" content="Java 14 reached General Availability on 17 March 2020, download Java 14 here.
+Java 14 features.
+
+JEP 305: Pattern Matching for instanceof (Preview)...">
+
+
+
+<meta name="robots" content="all">
+<meta name="google" content="all">
+<meta name="googlebot" content="all">
+<meta name="verify" content="all">
+    <!--Title-->
+
+
+<title>Java 14的新增功能 | 小小冒险家的博客</title>
+
+
+    <link rel="alternate" href="/atom.xml" title="小小冒险家的博客" type="application/atom+xml">
+
+
+    <link rel="icon" href="/favicon.png">
+
+    
+
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7">
+<link rel="stylesheet" href="/jquery.fancybox.css?v=2.1.5">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.5.0">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash">
+
+
+
+
+    
+
+
+
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?601ebec7733383ef248ca61fc0a0db95";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+
+
+    
+
+</head>
+
+</html>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+
+<body>
+    
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row clearfix">
+            <div class="col-md-12 column">
+                <nav class="navbar navbar-default" style="background-color:#fff;border:0;margin-bottom:0"
+                     role="navigation">
+                    <div class="navbar-header">
+<!--                        <button type="button" class="navbar-toggle" data-toggle="collapse"-->
+<!--                                data-target="#navbar-collapse-1">-->
+<!--                            <span class="sr-only">切</span>-->
+<!--                            <span class="icon-bar"></span>-->
+<!--                            <span class="icon-bar"></span>-->
+<!--                            <span class="icon-bar"></span>-->
+<!--                        </button>-->
+                        <a class="logo" href="/">
+                            <img src="/favicon.png"/>小小冒险家的博客
+                        </a>
+                    </div>
+
+                    <div class="collapse navbar-collapse" style="border:0;" id="navbar-collapse-1">
+                        <ul class="nav navbar-nav">
+                            
+                                
+                                    <li>
+                                        <a href="/" >
+                                            <i class="fa fa-home"></i>
+                                            首页
+                                        </a>
+                                    </li>
+                                
+                            
+                                
+                                    <li>
+                                        <a href="/archives" >
+                                            <i class="fa fa-sort"></i>
+                                            归档
+                                        </a>
+                                    </li>
+                                
+                            
+                                
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                                           data-hover="dropdown">
+                                            <i class="fa fa-fire"></i>
+                                            系列教程
+                                            <strong class="caret"></strong>
+                                        </a>
+                                        <ul class="dropdown-menu">
+                                            
+                                                <li>
+                                                    <a href="/docker/00-docker-lession-index" target="_blank">
+                                                        <i class="fa "></i>
+                                                        Docker系列教程
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="/micro-service/microservice/" target="_blank">
+                                                        <i class="fa "></i>
+                                                        SpringCloud微服务架构
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="/micro-service/microservice-alibaba/" target="_blank">
+                                                        <i class="fa "></i>
+                                                        SpringCloud Alibaba微服务架构
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="/sharding-jdbc/sharding-jdbc000/" target="_blank">
+                                                        <i class="fa "></i>
+                                                        Sharding-JDBC教程
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="/springboot/springboot-source-code/" target="_blank">
+                                                        <i class="fa "></i>
+                                                        SpringBoot源码系列
+                                                    </a>
+                                                </li>
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+                                
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                                           data-hover="dropdown">
+                                            <i class="fa fa-book"></i>
+                                            在线文档
+                                            <strong class="caret"></strong>
+                                        </a>
+                                        <ul class="dropdown-menu">
+                                            
+                                                <li>
+                                                    <a href="https://spring.io/docs/" target="_blank">
+                                                        <i class="fa "></i>
+                                                        Spring Reference
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="https://spring.io/projects/spring-boot/" target="_blank">
+                                                        <i class="fa "></i>
+                                                        SpringBoot Reference
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="https://spring.io/projects/spring-cloud/" target="_blank">
+                                                        <i class="fa "></i>
+                                                        SpringCloud Reference
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="https://docs.spring.io/spring-security/site/docs/current/reference/htmlsingle/" target="_blank">
+                                                        <i class="fa "></i>
+                                                        Spring Security Reference
+                                                    </a>
+                                                </li>
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+                                
+                                    <li>
+                                        <a href="/other/jrebel-activation" >
+                                            <i class="fa fa-fire"></i>
+                                            JRebel激活
+                                        </a>
+                                    </li>
+                                
+                            
+                                
+                                    <li>
+                                        <a href="/about" >
+                                            <i class="fa fa-user"></i>
+                                            关于我
+                                        </a>
+                                    </li>
+                                
+                            
+                        </ul>
+                        
+                            <form id="search-form" class="navbar-form navbar-right">
+                                <div class="form-group input-group">
+                                    <input type="text" id="local-search-input" class="form-control"
+                                           placeholder="搜我..."/>
+                                    <span class="input-group-btn">
+                                        <a class="btn btn-default">
+                                            <i class="fa fa-search"></i>
+                                        </a>
+                                    </span>
+                                </div>
+                                <div id="local-search-result" class="local-search-result-cls"></div>
+                            </form>
+                        
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </div>
+</nav>
+
+    <a href="http://github.com/zhaokejin" target="_blank">
+        <img style="position: absolute; width:100px; top: 0; left: 0; border: 0;"
+             src="/img/fork-me.png"
+             alt="Fork me on GitHub">
+    </a>
+
+
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    
+    
+        <div class="ad">
+            <div class="row">
+                
+                    <div class="col-md-12">
+                        <a href="https://promotion.aliyun.com/ntms/act/qwbk.html?userCode=qhtujh03" rel="nofollow" target="_blank">
+                            <img class="img-responsive center-block"
+                                 src="/icons/810x100.png"
+                                 title="阿里全民云计算"
+                            >
+                        </a>
+                    </div>
+                
+            </div>
+        </div>
+    
+
+
+<p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="Java 14的新增功能">
+            
+                Java 14的新增功能
+            
+        </h1>
+        <div class="post-meta">
+    
+
+    
+        <span class="categories-meta fa-wrap">
+            <i class="fa fa-folder-open-o"></i>
+            <a class="category-link" href="/categories/Java/">Java</a>
+        </span>
+    
+
+    
+        <span class="fa-wrap">
+            <i class="fa fa-tags"></i>
+            <span class="tags-meta">
+                
+                    <a class="tag-link" href="/tags/Java/">Java</a>
+                
+            </span>
+        </span>
+    
+
+    
+        
+        <span class="fa-wrap">
+            <i class="fa fa-clock-o"></i>
+            <span class="date-meta">2020/08/20</span>
+        </span>
+        
+            <span class="fa-wrap">
+                <i class="fa fa-eye"></i>
+                <span id="busuanzi_value_page_pv"></span>
+            </span>
+        
+    
+</div>
+        
+        
+    </div>
+    
+    <div class="post-body post-content" id="container">
+        
+    <div class="toc-article">
+        <strong>
+            目录
+        </strong>
+        <div class="toc-content">
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#JEP-305-Pattern-Matching-for-instanceof-Preview"><span class="toc-text">JEP 305: Pattern Matching for instanceof (Preview)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JEP-343-Packaging-Tool-Incubator"><span class="toc-text">JEP 343: Packaging Tool (Incubator)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JEP-345-NUMA-Aware-Memory-Allocation-for-G1"><span class="toc-text">JEP 345: NUMA-Aware Memory Allocation for G1</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JEP-349-JFR-Event-Streaming"><span class="toc-text">JEP 349: JFR Event Streaming</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JEP-352-Non-Volatile-Mapped-Byte-Buffers"><span class="toc-text">JEP 352: Non-Volatile Mapped Byte Buffers</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JEP-358-Helpful-NullPointerExceptions"><span class="toc-text">JEP 358: Helpful NullPointerExceptions</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JEP-359-Records-Preview"><span class="toc-text">JEP 359: Records (Preview)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JEP-361-Switch-Expressions-Standard"><span class="toc-text">JEP 361: Switch Expressions (Standard)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JEP-362-Deprecate-the-Solaris-and-SPARC-Ports"><span class="toc-text">JEP 362: Deprecate the Solaris and SPARC Ports</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JEP-363-Remove-the-Concurrent-Mark-Sweep-CMS-Garbage-Collector"><span class="toc-text">JEP 363: Remove the Concurrent Mark Sweep (CMS) Garbage Collector</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JEP-364-ZGC-on-macOS-Experimental"><span class="toc-text">JEP 364: ZGC on macOS (Experimental)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JEP-365-ZGC-on-Windows-Experimental"><span class="toc-text">JEP 365: ZGC on Windows (Experimental)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JEP-366-Deprecate-the-ParallelScavenge-SerialOld-GC-Combination"><span class="toc-text">JEP 366: Deprecate the ParallelScavenge + SerialOld GC Combination</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JEP-367-Remove-the-Pack200-Tools-and-API"><span class="toc-text">JEP 367: Remove the Pack200 Tools and API</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JEP-368-Text-Blocks-Second-Preview"><span class="toc-text">JEP 368: Text Blocks (Second Preview)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JEP-370-Foreign-Memory-Access-API-Incubator"><span class="toc-text">JEP 370: Foreign-Memory Access API (Incubator)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#References"><span class="toc-text">References</span></a></li></ol>
+        </div>
+    </div>
+
+
+        <p><a href="https://openjdk.java.net/projects/jdk/14/" target="_blank" rel="noopener">Java 14</a> reached General Availability on 17 March 2020, <a href="https://jdk.java.net/14/" target="_blank" rel="noopener">download Java 14 here</a>.</p>
+<p>Java 14 features.</p>
+<ul>
+<li><a href="https://openjdk.java.net/jeps/305" target="_blank" rel="noopener">JEP 305: Pattern Matching for instanceof (Preview)</a> (developer feature)</li>
+<li><a href="https://openjdk.java.net/jeps/343" target="_blank" rel="noopener">JEP 343: Packaging Tool (Incubator)</a></li>
+<li><a href="https://openjdk.java.net/jeps/345" target="_blank" rel="noopener">JEP 345: NUMA-Aware Memory Allocation for G1</a></li>
+<li><a href="https://openjdk.java.net/jeps/349" target="_blank" rel="noopener">JEP 349: JFR Event Streaming</a></li>
+<li><a href="https://openjdk.java.net/jeps/352" target="_blank" rel="noopener">JEP 352: Non-Volatile Mapped Byte Buffers</a></li>
+<li><a href="https://openjdk.java.net/jeps/358" target="_blank" rel="noopener">JEP 358: Helpful NullPointerExceptions</a></li>
+<li><a href="https://openjdk.java.net/jeps/359" target="_blank" rel="noopener">JEP 359: Records (Preview)</a> (developer feature)</li>
+<li><a href="https://openjdk.java.net/jeps/361" target="_blank" rel="noopener">JEP 361: Switch Expressions (Standard)</a> (developer feature)</li>
+<li><a href="https://openjdk.java.net/jeps/362" target="_blank" rel="noopener">JEP 362: Deprecate the Solaris and SPARC Ports</a></li>
+<li><a href="https://openjdk.java.net/jeps/363" target="_blank" rel="noopener">JEP 363: Remove the Concurrent Mark Sweep (CMS) Garbage Collector</a></li>
+<li><a href="https://openjdk.java.net/jeps/364" target="_blank" rel="noopener">JEP 364: ZGC on macOS</a></li>
+<li><a href="https://openjdk.java.net/jeps/365" target="_blank" rel="noopener">JEP 365: ZGC on Windows</a></li>
+<li><a href="https://openjdk.java.net/jeps/366" target="_blank" rel="noopener">JEP 366: Deprecate the ParallelScavenge + SerialOld GC Combination</a></li>
+<li><a href="https://openjdk.java.net/jeps/367" target="_blank" rel="noopener">JEP 367: Remove the Pack200 Tools and API</a></li>
+<li><a href="https://openjdk.java.net/jeps/368" target="_blank" rel="noopener">JEP 368: Text Blocks (Second Preview)</a> (developer feature)</li>
+<li><a href="https://openjdk.java.net/jeps/370" target="_blank" rel="noopener">JEP 370: Foreign-Memory Access API (Incubator)</a> (developer feature)</li>
+</ul>
+<h2 id="JEP-305-Pattern-Matching-for-instanceof-Preview"><a href="#JEP-305-Pattern-Matching-for-instanceof-Preview" class="headerlink" title="JEP 305: Pattern Matching for instanceof (Preview)"></a><a href="https://openjdk.java.net/jeps/305" target="_blank" rel="noopener">JEP 305: Pattern Matching for instanceof (Preview)</a></h2><p>Before Java 14, we use <code>instanceof-and-cast</code> to check the object’s type and cast to a variable.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (obj <span class="keyword">instanceof</span> String) &#123;        <span class="comment">// instanceof</span></span><br><span class="line">  String s = (String) obj;          <span class="comment">// cast</span></span><br><span class="line">  <span class="keyword">if</span>(<span class="string">"jdk14"</span>.equalsIgnoreCase(s))&#123;</span><br><span class="line">      <span class="comment">//...</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;<span class="keyword">else</span> &#123;</span><br><span class="line">	   System.out.println(<span class="string">"not a string"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Now Java 14, we can refactor above code like this:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (obj <span class="keyword">instanceof</span> String s) &#123;      <span class="comment">// instanceof, cast and bind variable in one line.</span></span><br><span class="line">    <span class="keyword">if</span>(<span class="string">"jdk4"</span>.equalsIgnoreCase(s))&#123;</span><br><span class="line">        <span class="comment">//...</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;<span class="keyword">else</span> &#123;</span><br><span class="line">	   System.out.println(<span class="string">"not a string"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>if <code>obj</code> is an instance of <code>String</code>, then it is cast to <code>String</code> and assigned to the binding variable <code>s</code>.</p>
+<h2 id="JEP-343-Packaging-Tool-Incubator"><a href="#JEP-343-Packaging-Tool-Incubator" class="headerlink" title="JEP 343: Packaging Tool (Incubator)"></a><a href="https://openjdk.java.net/jeps/343" target="_blank" rel="noopener">JEP 343: Packaging Tool (Incubator)</a></h2><p>New <code>jpackage</code> tool to package a Java application into a platform-specific package.</p>
+<ul>
+<li>Linux: deb and rpm</li>
+<li>macOS: pkg and dmg</li>
+<li>Windows: msi and exe</li>
+</ul>
+<p>For example, package the <code>JAR</code> file into an <code>exe</code> file on Windows.</p>
+<p><em>P.S Update <code>jpackage</code> example here</em></p>
+<h2 id="JEP-345-NUMA-Aware-Memory-Allocation-for-G1"><a href="#JEP-345-NUMA-Aware-Memory-Allocation-for-G1" class="headerlink" title="JEP 345: NUMA-Aware Memory Allocation for G1"></a><a href="https://openjdk.java.net/jeps/345" target="_blank" rel="noopener">JEP 345: NUMA-Aware Memory Allocation for G1</a></h2><p>New <a href="https://en.wikipedia.org/wiki/Non-uniform_memory_access" target="_blank" rel="noopener">NUMA-aware memory</a> allocation mode, improves the G1 performance on large machines. Add <code>+XX:+UseNUMA</code> option to enable it.</p>
+<h2 id="JEP-349-JFR-Event-Streaming"><a href="#JEP-349-JFR-Event-Streaming" class="headerlink" title="JEP 349: JFR Event Streaming"></a><a href="https://openjdk.java.net/jeps/349" target="_blank" rel="noopener">JEP 349: JFR Event Streaming</a></h2><p>Improved the existing JFR to support event streaming, it means now we can stream the JFR events in real-time, without the need to dump the recorded events to disk and parse it manually.</p>
+<p>The JDK Flight Recorder (JFR) is a tool for collecting diagnostic and profiling data about a running Java application. Normally, we start a recording, stop it, dump the recorded events to disk for parsing, it works well for profiling, analysis, or debugging.</p>
+<p><em>Related</em> <a href="http://openjdk.java.net/jeps/328" target="_blank" rel="noopener">JEP 328: Flight Recorder</a></p>
+<p><em>P.S Update JFR Event Streaming example here</em>_</p>
+<h2 id="JEP-352-Non-Volatile-Mapped-Byte-Buffers"><a href="#JEP-352-Non-Volatile-Mapped-Byte-Buffers" class="headerlink" title="JEP 352: Non-Volatile Mapped Byte Buffers"></a><a href="https://openjdk.java.net/jeps/352" target="_blank" rel="noopener">JEP 352: Non-Volatile Mapped Byte Buffers</a></h2><p>Improved <code>FileChannel</code> API to create <code>MappedByteBuffer</code> that access to <a href="https://en.wikipedia.org/wiki/Non-volatile_memory" target="_blank" rel="noopener">non-volatile memory (NVM)</a> – a memory that can retrieve stored data even after having been power cycled. For example, this feature ensures that any changes which might still be in the cache are written back to memory.</p>
+<p><em>P.S Only Linux/x64 and Linux/AArch64 OS support this!</em></p>
+<h2 id="JEP-358-Helpful-NullPointerExceptions"><a href="#JEP-358-Helpful-NullPointerExceptions" class="headerlink" title="JEP 358: Helpful NullPointerExceptions"></a><a href="https://openjdk.java.net/jeps/358" target="_blank" rel="noopener">JEP 358: Helpful NullPointerExceptions</a></h2><p>Improved the description of <code>NullPointerExceptions</code> by telling which variable was null. Add <code>-XX:+ShowCodeDetailsInExceptionMessages</code> option to enable this feature.</p>
+<p>A simple Java file that throws an <code>NullPointerException</code>.</p>
+<p>Test.java</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.Locale;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        String input = <span class="keyword">null</span>;</span><br><span class="line">        String result = showUpperCase(input); <span class="comment">// NullPointerException</span></span><br><span class="line">        System.out.println(result);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">showUpperCase</span><span class="params">(String str)</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> str.toUpperCase(Locale.US);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Before Java 14.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ /usr/lib/jvm/jdk-14/bin/java Test</span><br><span class="line"></span><br><span class="line">Exception <span class="keyword">in</span> thread <span class="string">"main"</span> java.lang.NullPointerException</span><br><span class="line">	at Test.showUpperCase(Test.java:15)</span><br><span class="line">	at Test.main(Test.java:9)</span><br></pre></td></tr></table></figure>
+
+<p>Java 14 with <code>-XX:+ShowCodeDetailsInExceptionMessages</code> option.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ /usr/lib/jvm/jdk-14/bin/java -XX:+ShowCodeDetailsInExceptionMessages Test</span><br><span class="line"></span><br><span class="line">Exception <span class="keyword">in</span> thread <span class="string">"main"</span> java.lang.NullPointerException:</span><br><span class="line">  Cannot invoke <span class="string">"String.toUpperCase(java.util.Locale)"</span> because <span class="string">"&lt;parameter1&gt;"</span> is null</span><br><span class="line">	at Test.showUpperCase(Test.java:15)</span><br><span class="line">	at Test.main(Test.java:9)</span><br></pre></td></tr></table></figure>
+
+<p><em>P.S Please enable this feature by default 🙂</em></p>
+<h2 id="JEP-359-Records-Preview"><a href="#JEP-359-Records-Preview" class="headerlink" title="JEP 359: Records (Preview)"></a><a href="https://openjdk.java.net/jeps/359" target="_blank" rel="noopener">JEP 359: Records (Preview)</a></h2><p>A new class called <code>record</code> (aka data class), it is a final class, not abstract, and all of its fields are final as well. The <code>record</code> will automatically generate the tedious <code>constructors</code>, <code>public get</code>, <code>equals()</code>, <code>hashCode()</code>, <code>toString()</code> during compile time.</p>
+<p><em>P.S No setters, all fields are final.</em></p>
+<p>A <code>record</code> or data class, create the class name and variables, and we can start using it.</p>
+<p>Point.java</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">record <span class="title">Point</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span> </span>&#123; &#125;</span><br></pre></td></tr></table></figure>
+
+<p>Test.java</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        Point p1 = <span class="keyword">new</span> Point(<span class="number">10</span>, <span class="number">20</span>);</span><br><span class="line">        System.out.println(p1.x());         <span class="comment">// 10</span></span><br><span class="line">        System.out.println(p1.y());         <span class="comment">// 20</span></span><br><span class="line"></span><br><span class="line">        Point p2 = <span class="keyword">new</span> Point(<span class="number">11</span>, <span class="number">22</span>);</span><br><span class="line">        System.out.println(p2.x());         <span class="comment">// 11</span></span><br><span class="line">        System.out.println(p2.y());         <span class="comment">// 22</span></span><br><span class="line"></span><br><span class="line">	      Point p3 = <span class="keyword">new</span> Point(<span class="number">10</span>, <span class="number">20</span>);</span><br><span class="line">        System.out.println(p3.x());         <span class="comment">// 10</span></span><br><span class="line">        System.out.println(p3.y());         <span class="comment">// 20</span></span><br><span class="line"></span><br><span class="line">        System.out.println(p1.hashCode());  <span class="comment">// 330</span></span><br><span class="line">        System.out.println(p2.hashCode());  <span class="comment">// 363</span></span><br><span class="line">        System.out.println(p3.hashCode());  <span class="comment">// 330</span></span><br><span class="line"></span><br><span class="line">        System.out.println(p1.equals(p2));  <span class="comment">// false</span></span><br><span class="line">        System.out.println(p1.equals(p3));  <span class="comment">// true</span></span><br><span class="line">        System.out.println(p1.equals(p3));  <span class="comment">// true</span></span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Test it with <code>--enable-preview</code>.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ /usr/lib/jvm/jdk-14/bin/javac --<span class="built_in">enable</span>-preview --release 14 Point.java</span><br><span class="line">$ /usr/lib/jvm/jdk-14/bin/javac --<span class="built_in">enable</span>-preview --release 14 Test.java</span><br><span class="line"></span><br><span class="line">$ /usr/lib/jvm/jdk-14/bin/java --<span class="built_in">enable</span>-preview Test</span><br></pre></td></tr></table></figure>
+
+<p>Output</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">10</span><br><span class="line">20</span><br><span class="line">11</span><br><span class="line">22</span><br><span class="line">10</span><br><span class="line">20</span><br><span class="line">330</span><br><span class="line">363</span><br><span class="line">330</span><br><span class="line"><span class="literal">false</span></span><br><span class="line"><span class="literal">true</span></span><br><span class="line"><span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>Further eading</strong><br>For more <code>record</code> examples, please refer to this <a href="https://mkyong.com/java/java-14-record-data-class/" target="_blank" rel="noopener">Java 14 Record data class</a></p>
+<p><em>P.S Update record or data class example here</em></p>
+<h2 id="JEP-361-Switch-Expressions-Standard"><a href="#JEP-361-Switch-Expressions-Standard" class="headerlink" title="JEP 361: Switch Expressions (Standard)"></a><a href="https://openjdk.java.net/jeps/361" target="_blank" rel="noopener">JEP 361: Switch Expressions (Standard)</a></h2><p>The switch expression was a preview feature in Java 12 and Java 13; now it is officially JDK standard feature, it means from Java 14 and onward, we can return value via switch expressions without specifying the <code>--enable-preview</code> option.</p>
+<p>See a recap; we can use <code>yield</code> to return a value from a <code>switch</code>.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">getValueViaYield</span><span class="params">(String mode)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> result = <span class="keyword">switch</span> (mode) &#123;</span><br><span class="line">            <span class="keyword">case</span> <span class="string">"a"</span>, <span class="string">"b"</span>:</span><br><span class="line">                yield <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="string">"c"</span>:</span><br><span class="line">                yield <span class="number">2</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="string">"d"</span>, <span class="string">"e"</span>, <span class="string">"f"</span>:</span><br><span class="line">							<span class="comment">// do something here...</span></span><br><span class="line">						 	System.out.println(<span class="string">"Supports multi line block!"</span>);</span><br><span class="line">                yield <span class="number">3</span>;</span><br><span class="line">            <span class="keyword">default</span>:</span><br><span class="line">                yield -<span class="number">1</span>;</span><br><span class="line">        &#125;;</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>Or via a label rules or arrows.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">getValueViaArrow</span><span class="params">(String mode)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> result = <span class="keyword">switch</span> (mode) &#123;</span><br><span class="line">            <span class="keyword">case</span> <span class="string">"a"</span>, <span class="string">"b"</span> -&gt; <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="string">"c"</span> -&gt; <span class="number">2</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="string">"d"</span>, <span class="string">"e"</span>, <span class="string">"f"</span> -&gt; &#123;</span><br><span class="line">                <span class="comment">// do something here...</span></span><br><span class="line">                System.out.println(<span class="string">"Supports multi line block!"</span>);</span><br><span class="line">                yield <span class="number">3</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">default</span> -&gt; -<span class="number">1</span>;</span><br><span class="line">        &#125;;</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>Refer examples in this <a href="https://mkyong.com/java/java-13-switch-expressions/" target="_blank" rel="noopener">Java 13 Switch Expression</a>.</p>
+<h2 id="JEP-362-Deprecate-the-Solaris-and-SPARC-Ports"><a href="#JEP-362-Deprecate-the-Solaris-and-SPARC-Ports" class="headerlink" title="JEP 362: Deprecate the Solaris and SPARC Ports"></a><a href="https://openjdk.java.net/jeps/362" target="_blank" rel="noopener">JEP 362: Deprecate the Solaris and SPARC Ports</a></h2><p>Dropping support for Solaris/SPARC, Solaris/x64, and Linux/SPARC ports, fewer platforms support means faster delivery for new features.</p>
+<h2 id="JEP-363-Remove-the-Concurrent-Mark-Sweep-CMS-Garbage-Collector"><a href="#JEP-363-Remove-the-Concurrent-Mark-Sweep-CMS-Garbage-Collector" class="headerlink" title="JEP 363: Remove the Concurrent Mark Sweep (CMS) Garbage Collector"></a><a href="https://openjdk.java.net/jeps/363" target="_blank" rel="noopener">JEP 363: Remove the Concurrent Mark Sweep (CMS) Garbage Collector</a></h2><p><a href="https://openjdk.java.net/jeps/291" target="_blank" rel="noopener">Java 9 – JEP 291</a> deprecated this Concurrent Mark Sweep (CMS) Garbage Collector, and now it is officially removed.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">/usr/lib/jvm/jdk-14/bin/java -XX:+UseConcMarkSweepGC Test</span><br><span class="line"></span><br><span class="line">OpenJDK 64-Bit Server VM warning: Ignoring option UseConcMarkSweepGC; support was removed <span class="keyword">in</span> 14.0</span><br></pre></td></tr></table></figure>
+
+<h2 id="JEP-364-ZGC-on-macOS-Experimental"><a href="#JEP-364-ZGC-on-macOS-Experimental" class="headerlink" title="JEP 364: ZGC on macOS (Experimental)"></a><a href="https://openjdk.java.net/jeps/364" target="_blank" rel="noopener">JEP 364: ZGC on macOS (Experimental)</a></h2><p><a href="https://openjdk.java.net/jeps/333" target="_blank" rel="noopener">Java 11 – JEP 333</a> introduced the Z Garbage Collector (ZGC) on Linux, and now it ports to macOS.</p>
+<h2 id="JEP-365-ZGC-on-Windows-Experimental"><a href="#JEP-365-ZGC-on-Windows-Experimental" class="headerlink" title="JEP 365: ZGC on Windows (Experimental)"></a><a href="https://openjdk.java.net/jeps/365" target="_blank" rel="noopener">JEP 365: ZGC on Windows (Experimental)</a></h2><p><a href="https://openjdk.java.net/jeps/333" target="_blank" rel="noopener">Java 11 – JEP 333</a> introduced the Z Garbage Collector (ZGC) on Linux, and now it ports to Windows version &gt;= 1803.</p>
+<h2 id="JEP-366-Deprecate-the-ParallelScavenge-SerialOld-GC-Combination"><a href="#JEP-366-Deprecate-the-ParallelScavenge-SerialOld-GC-Combination" class="headerlink" title="JEP 366: Deprecate the ParallelScavenge + SerialOld GC Combination"></a><a href="https://openjdk.java.net/jeps/366" target="_blank" rel="noopener">JEP 366: Deprecate the ParallelScavenge + SerialOld GC Combination</a></h2><p>Due to less use and high maintenance effort, Java 14 deprecates the combination of the parallel young generation and serial old generation GC algorithms.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">/usr/lib/jvm/jdk-14/bin/java -XX:-UseParallelOldGC Test</span><br><span class="line"></span><br><span class="line">OpenJDK 64-Bit Server VM warning: Option UseParallelOldGC was deprecated <span class="keyword">in</span> version 14.0 and will likely be removed <span class="keyword">in</span> a future release.</span><br></pre></td></tr></table></figure>
+
+<h2 id="JEP-367-Remove-the-Pack200-Tools-and-API"><a href="#JEP-367-Remove-the-Pack200-Tools-and-API" class="headerlink" title="JEP 367: Remove the Pack200 Tools and API"></a><a href="https://openjdk.java.net/jeps/367" target="_blank" rel="noopener">JEP 367: Remove the Pack200 Tools and API</a></h2><p><a href="https://openjdk.java.net/jeps/336" target="_blank" rel="noopener">Java 11 – JEP 336</a> deprecated the <code>pack200</code> and <code>unpack200</code> tools, and the <code>Pack200</code> API in the <code>java.util.jar</code> package, and now it is officially removed.</p>
+<h2 id="JEP-368-Text-Blocks-Second-Preview"><a href="#JEP-368-Text-Blocks-Second-Preview" class="headerlink" title="JEP 368: Text Blocks (Second Preview)"></a><a href="https://openjdk.java.net/jeps/368" target="_blank" rel="noopener">JEP 368: Text Blocks (Second Preview)</a></h2><p>The first preview appeared in <a href="https://openjdk.java.net/jeps/354" target="_blank" rel="noopener">Java 13 – JEP 354</a>, now added two more new escape sequences:</p>
+<ul>
+<li><code>\&lt;end-of-line&gt;</code> suppresses the line termination.</li>
+<li><code>\s</code> is translated into a single space.</li>
+</ul>
+<p>Test.java</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        String html = <span class="string">"&lt;html&gt;\n"</span> +</span><br><span class="line">                      <span class="string">"   &lt;body&gt;\n"</span> +</span><br><span class="line">                      <span class="string">"      &lt;p&gt;Hello, World&lt;/p&gt;\n"</span> +</span><br><span class="line">                      <span class="string">"   &lt;/body&gt;\n"</span> +</span><br><span class="line">                      <span class="string">"&lt;/html&gt;\n"</span>;</span><br><span class="line"></span><br><span class="line">        String java13 = <span class="string">""</span><span class="string">"</span></span><br><span class="line"><span class="string">                        &lt;html&gt;</span></span><br><span class="line"><span class="string">                            &lt;body&gt;</span></span><br><span class="line"><span class="string">                                &lt;p&gt;Hello, World&lt;/p&gt;</span></span><br><span class="line"><span class="string">                            &lt;/body&gt;</span></span><br><span class="line"><span class="string">                        &lt;/html&gt;</span></span><br><span class="line"><span class="string">                        "</span><span class="string">""</span>;</span><br><span class="line"></span><br><span class="line">        String java14 = <span class="string">""</span><span class="string">"</span></span><br><span class="line"><span class="string">                        &lt;html&gt;</span></span><br><span class="line"><span class="string">                            &lt;body&gt;\</span></span><br><span class="line"><span class="string">                                &lt;p&gt;Hello, '\s' World&lt;/p&gt;\</span></span><br><span class="line"><span class="string">                            &lt;/body&gt;</span></span><br><span class="line"><span class="string">                        &lt;/html&gt;</span></span><br><span class="line"><span class="string">                        "</span><span class="string">""</span>;</span><br><span class="line"></span><br><span class="line">        System.out.println(html);</span><br><span class="line">        System.out.println(java13);</span><br><span class="line">        System.out.println(java14);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ /usr/lib/jvm/jdk-14/bin/javac --<span class="built_in">enable</span>-preview --release 14 Test.java</span><br><span class="line">$ /usr/lib/jvm/jdk-14/bin/java --<span class="built_in">enable</span>-preview Test</span><br></pre></td></tr></table></figure>
+
+<p>Output</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">html&gt;</span><br><span class="line">   &lt;body&gt;</span><br><span class="line">      &lt;p&gt;Hello, World&lt;/p&gt;</span><br><span class="line">   &lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br><span class="line"></span><br><span class="line">&lt;html&gt;</span><br><span class="line">    &lt;body&gt;</span><br><span class="line">        &lt;p&gt;Hello, World&lt;/p&gt;</span><br><span class="line">    &lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br><span class="line"></span><br><span class="line">&lt;html&gt;</span><br><span class="line">    &lt;body&gt;        &lt;p&gt;Hello, <span class="string">' '</span> World&lt;/p&gt;    &lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<p><strong>Further Reading</strong><br>For more Java text blocks examples, please refer to this <a href="https://mkyong.com/java/java-multi-line-string-text-blocks/" target="_blank" rel="noopener">Java multi-line string, text blocks</a></p>
+<h2 id="JEP-370-Foreign-Memory-Access-API-Incubator"><a href="#JEP-370-Foreign-Memory-Access-API-Incubator" class="headerlink" title="JEP 370: Foreign-Memory Access API (Incubator)"></a><a href="https://openjdk.java.net/jeps/370" target="_blank" rel="noopener">JEP 370: Foreign-Memory Access API (Incubator)</a></h2><p>An incubator module, allow Java API to access foreign memory outside of the Java heap.</p>
+<p>Test.java</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> jdk.incubator.foreign.*;</span><br><span class="line"><span class="keyword">import</span> java.lang.invoke.VarHandle;</span><br><span class="line"><span class="keyword">import</span> java.nio.ByteOrder;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	     VarHandle intHandle = MemoryHandles.varHandle(<span class="keyword">int</span>.class, ByteOrder.nativeOrder());</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span> (MemorySegment segment = MemorySegment.allocateNative(<span class="number">1024</span>)) &#123;</span><br><span class="line"></span><br><span class="line">            MemoryAddress base = segment.baseAddress();</span><br><span class="line"></span><br><span class="line">            System.out.println(base);                 <span class="comment">// print memory address</span></span><br><span class="line"></span><br><span class="line">	          intHandle.set(base, <span class="number">999</span>);                 <span class="comment">// set value 999 into the foreign memory</span></span><br><span class="line"></span><br><span class="line">            System.out.println(intHandle.get(base));  <span class="comment">// get the value from foreign memory</span></span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Compile and run with incubator module <code>jdk.incubator.foreign</code>.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ /usr/lib/jvm/jdk-14/bin/javac --add-modules jdk.incubator.foreign Test.java</span><br><span class="line"></span><br><span class="line">warning: using incubating module(s): jdk.incubator.foreign</span><br><span class="line">1 warning</span><br><span class="line"></span><br><span class="line">$ /usr/lib/jvm/jdk-14/bin/java --add-modules jdk.incubator.foreign Test</span><br><span class="line"></span><br><span class="line">WARNING: Using incubator modules: jdk.incubator.foreign</span><br><span class="line">MemoryAddress&#123; region: MemorySegment&#123; id=0x4aac6dca <span class="built_in">limit</span>: 1024 &#125; offset=0x0 &#125;</span><br><span class="line">999</span><br></pre></td></tr></table></figure>
+
+<p>Further Reading – <a href="https://download.java.net/java/GA/jdk14/docs/api/jdk.incubator.foreign/jdk/incubator/foreign/package-summary.html" target="_blank" rel="noopener">jdk.incubator.foreign Javadoc</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git clone https://github.com/mkyong/core-java</span><br><span class="line"></span><br><span class="line">$ cd java-14</span><br></pre></td></tr></table></figure>
+
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
+<li><a href="https://openjdk.java.net/projects/jdk/14/" target="_blank" rel="noopener">OpenJDK 14 Project</a></li>
+<li><a href="https://blogs.oracle.com/javamagazine/java-14-arrives-with-a-host-of-new-features" target="_blank" rel="noopener">Java 14 Arrives with a Host of New Features</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Java_version_history" target="_blank" rel="noopener">Java version history</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Non-volatile_memory" target="_blank" rel="noopener">Wikipedia – Non-volatile memory (NVM)</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Non-uniform_memory_access" target="_blank" rel="noopener">Wikipedia – Non-uniform memory access (NUMA)</a></li>
+<li><a href="https://cr.openjdk.java.net/~briangoetz/amber/datum.html" target="_blank" rel="noopener">Data Classes and Sealed Types for Java</a></li>
+<li><a href="https://download.java.net/java/GA/jdk14/docs/api/jdk.incubator.foreign/jdk/incubator/foreign/package-summary.html" target="_blank" rel="noopener">jdk.incubator.foreign</a></li>
+<li><a href="https://www.mkyong.com/java/java-13-switch-expressions/" target="_blank" rel="noopener">Java 13 Switch Expressions</a></li>
+<li><a href="https://blog.codefx.org/java/text-blocks/" target="_blank" rel="noopener">Java 13 Text blocks</a></li>
+</ul>
+
+        <h2>相关文章</h2><ul><li><a href="/springcloud/spring-cloud-gateway-zuul-Ribbon-eureka/">Springboot 框架 gateway 前后端分离 实现 zuul Ribbon 负载均衡 脱离Eureka实现</a></li><li><a href="/java/JVM-tuning/">JVM之调优</a></li><li><a href="/java/what-is-new-in-java-13/">Java 13的新增功能</a></li><li><a href="/java/CountDownLatch-CyclicBarrier-Semaphorepy/">Java并发编程：CountDownLatch、CyclicBarrier和 Semaphore</a></li></ul>
+    </div>
+    
+        <div class="reward" ontouchstart>
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+            
+                <span class="reward-type">
+                    <img class="wechat" src="/images/weixin.png"><b>微信打赏</b>
+                </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">赞赏是不耍流氓的鼓励</p>
+</div>
+
+
+    
+
+
+    
+        <div class="post-footer">
+            <div class="col-sm-10">
+                <div>
+                    <b>本文链接</b>：<a href="/java/what-is-new-in-java-14/" target="_blank">Java 14的新增功能</a>
+                </div>
+                <div>
+                    
+                        转载声明：本博客由小小冒险家创作，采用 <a href="https://creativecommons.org/licenses/by-nc-nd/3.0/" target="_blank"> CC BY 3.0 CN </a> 许可协议。可自由转载、引用，但需署名作者且注明文章出处。如转载至微信公众号，请在文末添加作者公众号二维码。
+                    
+                </div>
+                <div>
+                    
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <img src="/icons/wx.jpg" width=100%/>
+            </div>
+        </div>
+    
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+        <a target="_blank" href="/springcloud/spring-cloud-gateway-zuul-Ribbon-eureka/" class="pre-post btn btn-default"
+           title='Springboot 框架 gateway 前后端分离 实现 zuul Ribbon 负载均衡 脱离Eureka实现'>
+            <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+            <span class="hidden-xs">Springboot 框架 gateway 前后端分离 实现 zuul Ribbon 负载均衡 脱离Eureka实现</span>
+        </a>
+    
+    
+        <a target="_blank" href="/rocketmq/rocketmq-rebalance/" class="next-post btn btn-default"
+           title='RocketMQ--水平扩展及负载均衡详解'>
+            <span class="hidden-lg">下一篇</span>
+            <span class="hidden-xs">RocketMQ--水平扩展及负载均衡详解</span><i class="fa fa-angle-right fa-fw"></i>
+        </a>
+    
+</div>
+
+
+
+
+
+
+
+                </main>
+                
+    <aside class="col-md-4 sidebar">
+        
+        <div class="widget about-me">
+    <div class="row">
+        <div class="col-md-5">
+            <img src="/icons/wx.jpg" alt="公众号" class="img-responsive center-block">
+        </div>
+        <div class="col-md-7">
+            <a class="series-a" href="javascript:void(0)">公众号</a>
+            <ul>
+                <li>• 技术干货推送</li>
+                <li>• 日常好文分享</li>
+                <li><b>• 扫码领取更多惊喜</b></li>
+            </ul>
+        </div>
+    </div>
+    
+<!--        <div class="row">-->
+<!--            <div class="col-md-5">-->
+<!--                <img src="/icons/xcx.jpg" alt="小程序" class="img-responsive">-->
+<!--            </div>-->
+<!--            <div class="col-md-7">-->
+<!--                <a class="series-a" href="javascript:void(0)">小程序</a>-->
+<!--                <ul>-->
+<!--                    <li>• 原创笔记</li>-->
+<!--                    <li>• 独家心法</li>-->
+<!--                    <li><b>• 扫码领取</b></li>-->
+<!--                </ul>-->
+<!--            </div>-->
+<!--        </div>-->
+    
+</div>
+
+
+
+
+        
+        
+    <div class="widget">
+        <h3 class="title">网站公告</h3>
+        <div class="notification">
+            <p>
+  <b>QQ群</b>：415777345<br/>
+</p>
+
+<p>
+<b>联系博主QQ</b>：210006540<br/>
+</p>
+        </div>
+    </div>
+
+        
+        
+    
+        <div class="ad">
+            <div class="row">
+                <div class="col-md-12">
+                    <a href="https://promotion.aliyun.com/ntms/act/qwbk.html?userCode=qhtujh03" rel="nofollow" target="_blank">
+                        <img class="img-responsive center-block"
+                             title="阿里全民云计算"
+                             src="/icons/380-120.png"
+                        >
+                    </a>
+                </div>
+            </div>
+        </div>
+    
+
+
+
+
+        
+        
+    <div class="widget">
+        <h3 class="title">分类</h3>
+        <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Ajax/"><i class="fa" aria-hidden="true">Ajax</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/"><i class="fa" aria-hidden="true">Docker</i></a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Druid/"><i class="fa" aria-hidden="true">Druid</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Feign/"><i class="fa" aria-hidden="true">Feign</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/HTTP/"><i class="fa" aria-hidden="true">HTTP</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/"><i class="fa" aria-hidden="true">Hexo</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JRebel/"><i class="fa" aria-hidden="true">JRebel</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link current" href="/categories/Java/"><i class="fa" aria-hidden="true">Java</i></a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Maven/"><i class="fa" aria-hidden="true">Maven</i></a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MongoDB/"><i class="fa" aria-hidden="true">MongoDB</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MySQL/"><i class="fa" aria-hidden="true">MySQL</i></a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Nexus3-x/"><i class="fa" aria-hidden="true">Nexus3.x</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/PowerShell/"><i class="fa" aria-hidden="true">PowerShell</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Quartz/"><i class="fa" aria-hidden="true">Quartz</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/"><i class="fa" aria-hidden="true">Redis</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/RocketMQ/"><i class="fa" aria-hidden="true">RocketMQ</i></a><span class="category-list-count">12</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Sharding-JDBC/"><i class="fa" aria-hidden="true">Sharding-JDBC</i></a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/"><i class="fa" aria-hidden="true">Spring</i></a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring-Cloud/"><i class="fa" aria-hidden="true">Spring Cloud</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringBoot/"><i class="fa" aria-hidden="true">SpringBoot</i></a><span class="category-list-count">15</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringCloud-Alibaba/"><i class="fa" aria-hidden="true">SpringCloud Alibaba</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringSession/"><i class="fa" aria-hidden="true">SpringSession</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/主键/"><i class="fa" aria-hidden="true">主键</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/其他/"><i class="fa" aria-hidden="true">其他</i></a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/安装教程/"><i class="fa" aria-hidden="true">安装教程</i></a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/工具/"><i class="fa" aria-hidden="true">工具</i></a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/微服务/"><i class="fa" aria-hidden="true">微服务</i></a><span class="category-list-count">17</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据库/"><i class="fa" aria-hidden="true">数据库</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/面试/"><i class="fa" aria-hidden="true">面试</i></a><span class="category-list-count">1</span></li></ul>
+    </div>
+
+
+        
+        
+  <div class="widget">
+    <h3 class="title">标签云</h3>
+    <div class="content tag-cloud">
+        
+            <canvas width="300" height="300" id="tag-cloud-3d">
+                <a href="/tags/Ajax/" style="font-size: 10px;">Ajax</a> <a href="/tags/Alibaba/" style="font-size: 10px;">Alibaba</a> <a href="/tags/Banner/" style="font-size: 10px;">Banner</a> <a href="/tags/Centos/" style="font-size: 10px;">Centos</a> <a href="/tags/Docker/" style="font-size: 17.5px;">Docker</a> <a href="/tags/Druid/" style="font-size: 10px;">Druid</a> <a href="/tags/Eureka/" style="font-size: 10.83px;">Eureka</a> <a href="/tags/FastDFS/" style="font-size: 10.83px;">FastDFS</a> <a href="/tags/Feign/" style="font-size: 13.33px;">Feign</a> <a href="/tags/File/" style="font-size: 10px;">File</a> <a href="/tags/HTTP/" style="font-size: 10px;">HTTP</a> <a href="/tags/Hexo/" style="font-size: 10.83px;">Hexo</a> <a href="/tags/HikariCP/" style="font-size: 10px;">HikariCP</a> <a href="/tags/Hystrix/" style="font-size: 10.83px;">Hystrix</a> <a href="/tags/Hystrix-Dashboard/" style="font-size: 10px;">Hystrix Dashboard</a> <a href="/tags/IDEA/" style="font-size: 10px;">IDEA</a> <a href="/tags/JDK/" style="font-size: 10px;">JDK</a> <a href="/tags/JRebel/" style="font-size: 10px;">JRebel</a> <a href="/tags/Java/" style="font-size: 12.5px;">Java</a> <a href="/tags/Java-b2-spring注解/" style="font-size: 15.83px;">Java-b2-spring注解</a> <a href="/tags/Map/" style="font-size: 10px;">Map</a> <a href="/tags/Maven/" style="font-size: 12.5px;">Maven</a> <a href="/tags/Memcache/" style="font-size: 10px;">Memcache</a> <a href="/tags/MongoDB/" style="font-size: 10.83px;">MongoDB</a> <a href="/tags/MongoTemplate/" style="font-size: 10.83px;">MongoTemplate</a> <a href="/tags/MySQL/" style="font-size: 15px;">MySQL</a> <a href="/tags/MySQL8/" style="font-size: 10px;">MySQL8</a> <a href="/tags/Mysql/" style="font-size: 10px;">Mysql</a> <a href="/tags/Navicat/" style="font-size: 10px;">Navicat</a> <a href="/tags/Nexus3-x/" style="font-size: 10.83px;">Nexus3.x</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/PowerShell/" style="font-size: 10px;">PowerShell</a> <a href="/tags/Quartz/" style="font-size: 10px;">Quartz</a> <a href="/tags/RabbitMQ/" style="font-size: 10px;">RabbitMQ</a> <a href="/tags/Redis/" style="font-size: 12.5px;">Redis</a> <a href="/tags/Ribbon/" style="font-size: 10.83px;">Ribbon</a> <a href="/tags/RocketMQ/" style="font-size: 18.33px;">RocketMQ</a> <a href="/tags/Sharding-JDBC/" style="font-size: 14.17px;">Sharding-JDBC</a> <a href="/tags/SonarQube/" style="font-size: 10px;">SonarQube</a> <a href="/tags/Spring/" style="font-size: 16.67px;">Spring</a> <a href="/tags/Spring-Boot/" style="font-size: 11.67px;">Spring Boot</a> <a href="/tags/Spring-Cloud/" style="font-size: 16.67px;">Spring Cloud</a> <a href="/tags/Spring-Cloud-Gateway/" style="font-size: 10.83px;">Spring Cloud Gateway</a> <a href="/tags/Spring-Cloud-Sleuth/" style="font-size: 10px;">Spring Cloud Sleuth</a> <a href="/tags/SpringBoot/" style="font-size: 20px;">SpringBoot</a> <a href="/tags/SpringCloud/" style="font-size: 10px;">SpringCloud</a> <a href="/tags/SpringCloud-Alibaba/" style="font-size: 10px;">SpringCloud Alibaba</a> <a href="/tags/SpringCloud-Stream/" style="font-size: 10px;">SpringCloud Stream</a> <a href="/tags/SpringSession/" style="font-size: 10px;">SpringSession</a> <a href="/tags/Tomcat/" style="font-size: 10px;">Tomcat</a> <a href="/tags/Transaction/" style="font-size: 10px;">Transaction</a> <a href="/tags/Turbine/" style="font-size: 10px;">Turbine</a> <a href="/tags/Web应用/" style="font-size: 10px;">Web应用</a> <a href="/tags/Windows/" style="font-size: 10px;">Windows</a> <a href="/tags/Windows-11/" style="font-size: 10px;">Windows 11</a> <a href="/tags/Zipkin/" style="font-size: 10px;">Zipkin</a> <a href="/tags/Zookeeper/" style="font-size: 10px;">Zookeeper</a> <a href="/tags/Zuul/" style="font-size: 10px;">Zuul</a> <a href="/tags/assessToken/" style="font-size: 10px;">assessToken</a> <a href="/tags/httpclient/" style="font-size: 10px;">httpclient</a> <a href="/tags/logback/" style="font-size: 10px;">logback</a> <a href="/tags/session共享/" style="font-size: 10px;">session共享</a> <a href="/tags/theme/" style="font-size: 10px;">theme</a> <a href="/tags/互联网产品/" style="font-size: 10px;">互联网产品</a> <a href="/tags/其他/" style="font-size: 10px;">其他</a> <a href="/tags/分布式/" style="font-size: 10.83px;">分布式</a> <a href="/tags/加密/" style="font-size: 10px;">加密</a> <a href="/tags/原理/" style="font-size: 10px;">原理</a> <a href="/tags/发布/" style="font-size: 10px;">发布</a> <a href="/tags/图片水印/" style="font-size: 10px;">图片水印</a> <a href="/tags/工具/" style="font-size: 10px;">工具</a> <a href="/tags/并发编程/" style="font-size: 10px;">并发编程</a> <a href="/tags/循环依赖/" style="font-size: 10px;">循环依赖</a> <a href="/tags/微服务/" style="font-size: 19.17px;">微服务</a> <a href="/tags/时间工具类/" style="font-size: 10px;">时间工具类</a> <a href="/tags/注解/" style="font-size: 10.83px;">注解</a> <a href="/tags/消息订阅/" style="font-size: 10px;">消息订阅</a> <a href="/tags/索引/" style="font-size: 14.17px;">索引</a> <a href="/tags/红黑树/" style="font-size: 10px;">红黑树</a>
+            </canvas>
+        
+    </div>
+  </div>
+
+
+        
+        
+    <div class="widget">
+        <h3 class="title">归档</h3>
+        <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/"><i class="fa" aria-hidden="true">2022年09月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/05/"><i class="fa" aria-hidden="true">2022年05月</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/"><i class="fa" aria-hidden="true">2021年07月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/"><i class="fa" aria-hidden="true">2021年06月</i></a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/"><i class="fa" aria-hidden="true">2021年03月</i></a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/"><i class="fa" aria-hidden="true">2021年02月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/"><i class="fa" aria-hidden="true">2020年11月</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/"><i class="fa" aria-hidden="true">2020年09月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/"><i class="fa" aria-hidden="true">2020年08月</i></a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/"><i class="fa" aria-hidden="true">2020年07月</i></a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/"><i class="fa" aria-hidden="true">2020年06月</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/"><i class="fa" aria-hidden="true">2020年04月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/"><i class="fa" aria-hidden="true">2020年03月</i></a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/"><i class="fa" aria-hidden="true">2020年02月</i></a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/"><i class="fa" aria-hidden="true">2020年01月</i></a><span class="archive-list-count">23</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/"><i class="fa" aria-hidden="true">2019年12月</i></a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/"><i class="fa" aria-hidden="true">2019年11月</i></a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/"><i class="fa" aria-hidden="true">2019年10月</i></a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/"><i class="fa" aria-hidden="true">2019年09月</i></a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/"><i class="fa" aria-hidden="true">2019年08月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/"><i class="fa" aria-hidden="true">2019年05月</i></a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/"><i class="fa" aria-hidden="true">2019年04月</i></a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/"><i class="fa" aria-hidden="true">2019年03月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/"><i class="fa" aria-hidden="true">2019年02月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/"><i class="fa" aria-hidden="true">2019年01月</i></a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/"><i class="fa" aria-hidden="true">2018年12月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/"><i class="fa" aria-hidden="true">2018年10月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/"><i class="fa" aria-hidden="true">2018年09月</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/"><i class="fa" aria-hidden="true">2018年08月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/"><i class="fa" aria-hidden="true">2018年06月</i></a><span class="archive-list-count">2</span></li></ul>
+    </div>
+
+
+        
+        
+    <div class="widget">
+      <h3 class="title">社交</h3> 
+        <div class="content social">
+            
+	            <a href="//github.com/zhaokejin" rel="external nofollow" title="GitHub" target="_blank">
+			    	<i class="github fa fa-github"></i>
+			    </a>
+            
+	            <a href="//gitee.com/zhaokejin" rel="external nofollow" title="Gitee" target="_blank">
+			    	<i class="git fa fa-git"></i>
+			    </a>
+            
+	            <a href="mailto:210006540qq.com" rel="external nofollow" title="邮箱" target="_blank">
+			    	<i class="envelope-o fa fa-envelope-o"></i>
+			    </a>
+            
+	            <a href="//wpa.qq.com/msgrd?v=3&uin=210006540&site=qq&menu=yes" rel="external nofollow" title="QQ" target="_blank">
+			    	<i class="qq fa fa-qq"></i>
+			    </a>
+            
+	            <a href="//shang.qq.com/wpa/qunwpa?idkey=7b19717710dcc2c78996f316db3ab3365bde39bc3c60de7a6c59fe07231e231a" rel="external nofollow" title="QQ群" target="_blank">
+			    	<i class="group fa fa-group"></i>
+			    </a>
+            
+	            <a href="/atom.xml" rel="external nofollow" title="RSS" target="_blank">
+			    	<i class="feed fa fa-feed"></i>
+			    </a>
+            
+        </div>
+    </div>
+
+
+        
+        
+
+        
+    </aside>
+
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+
+<a id="back-to-top" class="icon-btn hide">
+	<i class="fa fa-chevron-up"></i>
+</a>
+
+
+
+
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+        访问量:
+        <strong id="busuanzi_value_site_pv">
+            <i class="fa fa-spinner fa-spin"></i>
+        </strong>
+        &nbsp; | &nbsp;
+        访客数:
+        <strong id="busuanzi_value_site_uv">
+            <i class="fa fa-spinner fa-spin"></i>
+        </strong>
+<!--        &nbsp; <strong>Since 2018-12-26</strong>-->
+    
+</div>
+
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy; 2018 - 2023
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    <a href="//www.beian.miit.gov.cn/" class="copyright-links" target="_blank" rel="nofollow">鲁ICP备18033870号</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/js/jquery.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/bootstrap-hover-dropdown.min.js"></script>
+
+
+	<script src="/js/search.js?rev=@@hash"></script>
+
+
+
+    <script src="/assets/tagcanvas.min.js?rev=2.9"></script>
+    <script>
+        var tagOption = {
+            textColour: '#29afec', // 字体颜色
+            outlineMethod: 'block', // 选中模式
+            outlineColour: '#FFDAB9', // 选中模式的颜色
+            interval: 30 || 30, // 动画帧之间的时间间隔，值越大，转动幅度越大
+            textHeight: 13,
+            outlineRadius: 3,
+            freezeActive: true || '', // 选中的标签是否继续滚动
+            frontSelect: true || '', // 不选标签云后部的标签
+            initial: [0.1, -0.1],
+            depth: 0.5,
+            decel: 0.95,
+            maxSpeed: 0.03,
+            reverse: true || '', // 是否反向触发
+            fadeIn: 500, // 进入动画时间
+            wheelZoom: false || '' // 是否启用鼠标滚轮
+        }
+        TagCanvas.Start('tag-cloud-3d','',tagOption);
+    </script>
+
+
+
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<script src="/js/app.js?rev=@@hash"></script>
+<script src="/jquery.fancybox.js?v=2.1.5"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('.fancybox').fancybox();
+    });
+    // 给图片添加链接
+    $(document).ready(function() {
+        $("p img").each(function() {
+            var strA = "<a id='yourid' class='fancybox' data-fancybox-group='gallery'  href='" + this.src + "'></a>";
+            $(this).wrapAll(strA);
+        });
+    });
+    // fancybox
+    $("#yourid").fancybox({
+        openEffect    : 'elastic',
+        closeEffect   : 'elastic',
+    });
+</script>
+
+</body>
+</html>

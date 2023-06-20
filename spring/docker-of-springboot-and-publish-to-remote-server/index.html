@@ -1,0 +1,721 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="小小冒险家的博客">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.2.3">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="https://www.cicoding.cn">
+    <!--SEO-->
+
+    <meta name="keywords" content="Docker,SpringBoot">
+
+
+    <meta name="description" content="docker开启远程访问接口docker得环境搭建这里就不重复了，还不会得可以自行去百度，也就几个命令。
+想要将本地镜像推送到阿里云得docker容器上，需要开启远程访问权限
+首先编辑docker的宿主机文件/lib/systemd/system/docker.service
+1vi /lib...">
+
+
+
+<meta name="robots" content="all">
+<meta name="google" content="all">
+<meta name="googlebot" content="all">
+<meta name="verify" content="all">
+    <!--Title-->
+
+
+<title>SpringBoot应用docker化并发布到远程服务器 | 小小冒险家的博客</title>
+
+
+    <link rel="alternate" href="/atom.xml" title="小小冒险家的博客" type="application/atom+xml">
+
+
+    <link rel="icon" href="/favicon.png">
+
+    
+
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7">
+<link rel="stylesheet" href="/jquery.fancybox.css?v=2.1.5">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.5.0">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash">
+
+
+
+
+    
+
+
+
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?601ebec7733383ef248ca61fc0a0db95";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+
+
+    
+
+</head>
+
+</html>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+
+<body>
+    
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row clearfix">
+            <div class="col-md-12 column">
+                <nav class="navbar navbar-default" style="background-color:#fff;border:0;margin-bottom:0"
+                     role="navigation">
+                    <div class="navbar-header">
+<!--                        <button type="button" class="navbar-toggle" data-toggle="collapse"-->
+<!--                                data-target="#navbar-collapse-1">-->
+<!--                            <span class="sr-only">切</span>-->
+<!--                            <span class="icon-bar"></span>-->
+<!--                            <span class="icon-bar"></span>-->
+<!--                            <span class="icon-bar"></span>-->
+<!--                        </button>-->
+                        <a class="logo" href="/">
+                            <img src="/favicon.png"/>小小冒险家的博客
+                        </a>
+                    </div>
+
+                    <div class="collapse navbar-collapse" style="border:0;" id="navbar-collapse-1">
+                        <ul class="nav navbar-nav">
+                            
+                                
+                                    <li>
+                                        <a href="/" >
+                                            <i class="fa fa-home"></i>
+                                            首页
+                                        </a>
+                                    </li>
+                                
+                            
+                                
+                                    <li>
+                                        <a href="/archives" >
+                                            <i class="fa fa-sort"></i>
+                                            归档
+                                        </a>
+                                    </li>
+                                
+                            
+                                
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                                           data-hover="dropdown">
+                                            <i class="fa fa-fire"></i>
+                                            系列教程
+                                            <strong class="caret"></strong>
+                                        </a>
+                                        <ul class="dropdown-menu">
+                                            
+                                                <li>
+                                                    <a href="/docker/00-docker-lession-index" target="_blank">
+                                                        <i class="fa "></i>
+                                                        Docker系列教程
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="/micro-service/microservice/" target="_blank">
+                                                        <i class="fa "></i>
+                                                        SpringCloud微服务架构
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="/micro-service/microservice-alibaba/" target="_blank">
+                                                        <i class="fa "></i>
+                                                        SpringCloud Alibaba微服务架构
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="/sharding-jdbc/sharding-jdbc000/" target="_blank">
+                                                        <i class="fa "></i>
+                                                        Sharding-JDBC教程
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="/springboot/springboot-source-code/" target="_blank">
+                                                        <i class="fa "></i>
+                                                        SpringBoot源码系列
+                                                    </a>
+                                                </li>
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+                                
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                                           data-hover="dropdown">
+                                            <i class="fa fa-book"></i>
+                                            在线文档
+                                            <strong class="caret"></strong>
+                                        </a>
+                                        <ul class="dropdown-menu">
+                                            
+                                                <li>
+                                                    <a href="https://spring.io/docs/" target="_blank">
+                                                        <i class="fa "></i>
+                                                        Spring Reference
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="https://spring.io/projects/spring-boot/" target="_blank">
+                                                        <i class="fa "></i>
+                                                        SpringBoot Reference
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="https://spring.io/projects/spring-cloud/" target="_blank">
+                                                        <i class="fa "></i>
+                                                        SpringCloud Reference
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="https://docs.spring.io/spring-security/site/docs/current/reference/htmlsingle/" target="_blank">
+                                                        <i class="fa "></i>
+                                                        Spring Security Reference
+                                                    </a>
+                                                </li>
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+                                
+                                    <li>
+                                        <a href="/other/jrebel-activation" >
+                                            <i class="fa fa-fire"></i>
+                                            JRebel激活
+                                        </a>
+                                    </li>
+                                
+                            
+                                
+                                    <li>
+                                        <a href="/about" >
+                                            <i class="fa fa-user"></i>
+                                            关于我
+                                        </a>
+                                    </li>
+                                
+                            
+                        </ul>
+                        
+                            <form id="search-form" class="navbar-form navbar-right">
+                                <div class="form-group input-group">
+                                    <input type="text" id="local-search-input" class="form-control"
+                                           placeholder="搜我..."/>
+                                    <span class="input-group-btn">
+                                        <a class="btn btn-default">
+                                            <i class="fa fa-search"></i>
+                                        </a>
+                                    </span>
+                                </div>
+                                <div id="local-search-result" class="local-search-result-cls"></div>
+                            </form>
+                        
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </div>
+</nav>
+
+    <a href="http://github.com/zhaokejin" target="_blank">
+        <img style="position: absolute; width:100px; top: 0; left: 0; border: 0;"
+             src="/img/fork-me.png"
+             alt="Fork me on GitHub">
+    </a>
+
+
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    
+    
+        <div class="ad">
+            <div class="row">
+                
+                    <div class="col-md-12">
+                        <a href="https://promotion.aliyun.com/ntms/act/qwbk.html?userCode=qhtujh03" rel="nofollow" target="_blank">
+                            <img class="img-responsive center-block"
+                                 src="/icons/810x100.png"
+                                 title="阿里全民云计算"
+                            >
+                        </a>
+                    </div>
+                
+            </div>
+        </div>
+    
+
+
+<p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="SpringBoot应用docker化并发布到远程服务器">
+            
+                SpringBoot应用docker化并发布到远程服务器
+            
+        </h1>
+        <div class="post-meta">
+    
+
+    
+        <span class="categories-meta fa-wrap">
+            <i class="fa fa-folder-open-o"></i>
+            <a class="category-link" href="/categories/SpringBoot/">SpringBoot</a>
+        </span>
+    
+
+    
+        <span class="fa-wrap">
+            <i class="fa fa-tags"></i>
+            <span class="tags-meta">
+                
+                    <a class="tag-link" href="/tags/Docker/">Docker</a> <a class="tag-link" href="/tags/SpringBoot/">SpringBoot</a>
+                
+            </span>
+        </span>
+    
+
+    
+        
+        <span class="fa-wrap">
+            <i class="fa fa-clock-o"></i>
+            <span class="date-meta">2020/01/29</span>
+        </span>
+        
+            <span class="fa-wrap">
+                <i class="fa fa-eye"></i>
+                <span id="busuanzi_value_page_pv"></span>
+            </span>
+        
+    
+</div>
+        
+        
+    </div>
+    
+    <div class="post-body post-content" id="container">
+        
+    <div class="toc-article">
+        <strong>
+            目录
+        </strong>
+        <div class="toc-content">
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#docker开启远程访问接口"><span class="toc-text">docker开启远程访问接口</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#开启白名单，让客户端能够远程访问"><span class="toc-text">开启白名单，让客户端能够远程访问</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#本地docker项目发布镜像到远程服务器"><span class="toc-text">本地docker项目发布镜像到远程服务器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#传统部署方案"><span class="toc-text">传统部署方案</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#docker部署方案"><span class="toc-text">docker部署方案</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Dockerfile文件"><span class="toc-text">Dockerfile文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#maven依赖"><span class="toc-text">maven依赖</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用idea自带得docker插件进行构建镜像"><span class="toc-text">使用idea自带得docker插件进行构建镜像</span></a></li></ol></li></ol>
+        </div>
+    </div>
+
+
+        <h2 id="docker开启远程访问接口"><a href="#docker开启远程访问接口" class="headerlink" title="docker开启远程访问接口"></a>docker开启远程访问接口</h2><p>docker得环境搭建这里就不重复了，还不会得可以自行去百度，也就几个命令。</p>
+<p>想要将本地镜像推送到阿里云得docker容器上，需要开启远程访问权限</p>
+<p>首先编辑docker的宿主机文件/lib/systemd/system/docker.service</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi /lib/systemd/system/docker.service</span><br></pre></td></tr></table></figure>
+
+<p>修改以ExecStart开头的行,我这里是腾讯云服务器center os 7 ,修改后为：</p>
+<p><img src="/images/springboot/image-20200116160221280.png" alt="SpringBoot应用docker化并发布到远程服务器"></p>
+<p>修改后保存文件，然后通知和重启服务</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">systemctl daemon-reload</span><br><span class="line">service docker restart</span><br></pre></td></tr></table></figure>
+
+<p>可是执行 service docker restart 重启docker会报错查看：<a href="https://blog.csdn.net/hdu09075340/article/details/101060655" target="_blank" rel="noopener">https://blog.csdn.net/hdu09075340/article/details/101060655</a></p>
+<p>重启完成以后可以在本机验证，通过curl命令可以查看版本信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl http://localhost:2375/version</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/springboot/sj20200129205469123.jpg" alt="SpringBoot应用docker化并发布到远程服务器"></p>
+<h2 id="开启白名单，让客户端能够远程访问"><a href="#开启白名单，让客户端能够远程访问" class="headerlink" title="开启白名单，让客户端能够远程访问"></a>开启白名单，让客户端能够远程访问</h2><p>我们在远程机器开启了端口，但是一般得云服务器都需要设置端口白名单才可以访问，具体设置端口白名单这里就不介绍了，设置完成以后，可以通过外网ip在windows机器浏览器进行访问</p>
+<p><img src="/images/springboot/image-20200116151703445.png" alt="SpringBoot应用docker化并发布到远程服务器"></p>
+<h2 id="本地docker项目发布镜像到远程服务器"><a href="#本地docker项目发布镜像到远程服务器" class="headerlink" title="本地docker项目发布镜像到远程服务器"></a>本地docker项目发布镜像到远程服务器</h2><p>不以实战为目的得技术就是耍流氓，假设现在有个需求：作为码农得我开发了一个博客系统，现在开发完毕之后想部署到远程服务器上去。</p>
+<h3 id="传统部署方案"><a href="#传统部署方案" class="headerlink" title="传统部署方案"></a>传统部署方案</h3><p>服务器上装jdk,装tomcat等—&gt;项目打包-&gt;ftp上传-&gt;启动项目</p>
+<h3 id="docker部署方案"><a href="#docker部署方案" class="headerlink" title="docker部署方案"></a>docker部署方案</h3><p>docker部署方案：项目集成docker插件-&gt;本地打包-&gt;项目构建镜像到远程机器-&gt;远程服务器下载镜像并启动</p>
+<p>通过两套发布流程比较我们就能知道各自得优劣了，这里不再累赘，开始进行第二种方案实战！</p>
+<p>首先进行本地环境变量配置</p>
+<p><img src="/images/springboot/20200129205856456.jpg" alt="SpringBoot应用docker化并发布到远程服务器"></p>
+<p>如图，配置DOCKER_HOST得远程tcp连接。</p>
+<p>将项目导入到idea里面，我们看看主要得docker相关配置</p>
+<h4 id="Dockerfile文件"><a href="#Dockerfile文件" class="headerlink" title="Dockerfile文件"></a>Dockerfile文件</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">FROM openjdk:8-jdk-alpine</span><br><span class="line">VOLUME /tmp</span><br><span class="line">ADD demo-1.0.0-SNAPSHOT.jar app.jar</span><br><span class="line">ENTRYPOINT [&quot;java&quot;,&quot;-Djava.security.egd=file:/dev/./urandom&quot;,&quot;-jar&quot;,&quot;/app.jar&quot;]</span><br></pre></td></tr></table></figure>
+
+<h4 id="maven依赖"><a href="#maven依赖" class="headerlink" title="maven依赖"></a>maven依赖</h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.spotify<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>docker-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.0.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">imageName</span>&gt;</span>$&#123;docker.image.prefix&#125;/$&#123;project.artifactId&#125;<span class="tag">&lt;/<span class="name">imageName</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">dockerDirectory</span>&gt;</span>src/main/docker<span class="tag">&lt;/<span class="name">dockerDirectory</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">dockerHost</span>&gt;</span>http://10.254.193.119:2375<span class="tag">&lt;/<span class="name">dockerHost</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">resources</span>&gt;</span></span><br><span class="line">             <span class="tag">&lt;<span class="name">resource</span>&gt;</span></span><br><span class="line">                 <span class="tag">&lt;<span class="name">targetPath</span>&gt;</span>/<span class="tag">&lt;/<span class="name">targetPath</span>&gt;</span></span><br><span class="line">                 <span class="tag">&lt;<span class="name">directory</span>&gt;</span>$&#123;project.build.directory&#125;<span class="tag">&lt;/<span class="name">directory</span>&gt;</span></span><br><span class="line">                 <span class="tag">&lt;<span class="name">include</span>&gt;</span>$&#123;project.build.finalName&#125;.jar<span class="tag">&lt;/<span class="name">include</span>&gt;</span></span><br><span class="line">             <span class="tag">&lt;/<span class="name">resource</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;/<span class="name">resources</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="使用idea自带得docker插件进行构建镜像"><a href="#使用idea自带得docker插件进行构建镜像" class="headerlink" title="使用idea自带得docker插件进行构建镜像"></a>使用idea自带得docker插件进行构建镜像</h3><p>首先对项目进行打包</p>
+<p><img src="/images/springboot/image-20200116160413838.png" alt="SpringBoot应用docker化并发布到远程服务器"></p>
+<p><img src="/images/springboot/image-20200116160658312.png" alt="SpringBoot应用docker化并发布到远程服务器"></p>
+<p>打包完成以后，点击docker:build</p>
+<p><img src="/images/springboot/image-20200116160752026.png" alt="SpringBoot应用docker化并发布到远程服务器"></p>
+<p>构建成功后日志如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br></pre></td><td class="code"><pre><span class="line">D:\devsoft\Java\jdk1.8.0_121\bin\java.exe -Dmaven.multiModuleProjectDirectory=D:\Learning-materials\microservices\springcloud-greenwich-github\MicroservicesGreenwich\demo -Dmaven.home=D:\devsoft\apache-maven-3.5.0 -Dclassworlds.conf=D:\devsoft\apache-maven-3.5.0\bin\m2.conf &quot;-Dmaven.ext.class.path=D:\Program Files\JetBrains\IntelliJ IDEA 2019.2\plugins\maven\lib\maven-event-listener.jar&quot; &quot;-javaagent:D:\Program Files\JetBrains\IntelliJ IDEA 2019.2\lib\idea_rt.jar=53271:D:\Program Files\JetBrains\IntelliJ IDEA 2019.2\bin&quot; -Dfile.encoding=UTF-8 -classpath D:\devsoft\apache-maven-3.5.0\boot\plexus-classworlds-2.5.2.jar org.codehaus.classworlds.Launcher -Didea.version2019.2 -s D:\devsoft\apache-maven-3.5.0\conf\settings.xml com.spotify:docker-maven-plugin:1.0.0:build</span><br><span class="line">[INFO] Scanning for projects...</span><br><span class="line">[INFO] </span><br><span class="line">[INFO] ------------------------------------------------------------------------</span><br><span class="line">[INFO] Building demo 1.0.0-SNAPSHOT</span><br><span class="line">[INFO] ------------------------------------------------------------------------</span><br><span class="line">[INFO] </span><br><span class="line">[INFO] --- docker-maven-plugin:1.0.0:build (default-cli) @ demo ---</span><br><span class="line">[INFO] Using authentication suppliers: [ConfigFileRegistryAuthSupplier]</span><br><span class="line">[INFO] Copying D:\Learning-materials\microservices\springcloud-greenwich-github\MicroservicesGreenwich\demo\target\demo-1.0.0-SNAPSHOT.jar -&gt; D:\Learning-materials\microservices\springcloud-greenwich-github\MicroservicesGreenwich\demo\target\docker\demo-1.0.0-SNAPSHOT.jar</span><br><span class="line">[INFO] Copying src\main\docker\Dockerfile -&gt; D:\Learning-materials\microservices\springcloud-greenwich-github\MicroservicesGreenwich\demo\target\docker\Dockerfile</span><br><span class="line">[INFO] Building image demo-docker/demo</span><br><span class="line">Step 1/4 : FROM openjdk:8-jdk-alpine</span><br><span class="line"></span><br><span class="line">Pulling from library/openjdk</span><br><span class="line">e7c96db7181b: Already exists </span><br><span class="line">f910a506b6cb: Pulling fs layer </span><br><span class="line">c2274a1a0e27: Pulling fs layer </span><br><span class="line">f910a506b6cb: Downloading [==================================================&gt;]     238B/238B</span><br><span class="line">f910a506b6cb: Verifying Checksum </span><br><span class="line">f910a506b6cb: Download complete </span><br><span class="line">f910a506b6cb: Extracting [==================================================&gt;]     238B/238B</span><br><span class="line">f910a506b6cb: Extracting [==================================================&gt;]     238B/238B</span><br><span class="line">f910a506b6cb: Pull complete </span><br><span class="line">c2274a1a0e27: Downloading [&gt;                                                  ]  524.5kB/70.73MB</span><br><span class="line">c2274a1a0e27: Downloading [=&gt;                                                 ]    2.1MB/70.73MB</span><br><span class="line">c2274a1a0e27: Downloading [==&gt;                                                ]  3.675MB/70.73MB</span><br><span class="line">c2274a1a0e27: Downloading [===&gt;                                               ]  4.725MB/70.73MB</span><br><span class="line">c2274a1a0e27: Downloading [====&gt;                                              ]  6.825MB/70.73MB</span><br><span class="line">c2274a1a0e27: Downloading [=====&gt;                                             ]    8.4MB/70.73MB</span><br><span class="line">c2274a1a0e27: Downloading [=======&gt;                                           ]  9.975MB/70.73MB</span><br><span class="line">c2274a1a0e27: Downloading [========&gt;                                          ]  11.55MB/70.73MB</span><br><span class="line">c2274a1a0e27: Downloading [=========&gt;                                         ]  13.12MB/70.73MB</span><br><span class="line">c2274a1a0e27: Downloading [==========&gt;                                        ]   14.7MB/70.73MB</span><br><span class="line">c2274a1a0e27: Downloading [===========&gt;                                       ]  16.27MB/70.73MB</span><br><span class="line">c2274a1a0e27: Downloading [============&gt;                                      ]  17.85MB/70.73MB</span><br><span class="line">c2274a1a0e27: Downloading [=============&gt;                                     ]  19.42MB/70.73MB</span><br><span class="line">c2274a1a0e27: Downloading [==============&gt;                                    ]  20.47MB/70.73MB</span><br><span class="line">c2274a1a0e27: Downloading [===============&gt;                                   ]  22.05MB/70.73MB</span><br><span class="line">c2274a1a0e27: Downloading [================&gt;                                  ]  23.62MB/70.73MB</span><br><span class="line">c2274a1a0e27: Downloading [=================&gt;                                 ]   25.2MB/70.73MB</span><br><span class="line">c2274a1a0e27: Downloading [==================&gt;                                ]  26.77MB/70.73MB</span><br><span class="line">c2274a1a0e27: Downloading [====================&gt;                              ]  28.35MB/70.73MB</span><br><span class="line">c2274a1a0e27: Downloading [=====================&gt;                             ]  29.92MB/70.73MB</span><br><span class="line">c2274a1a0e27: Downloading [=====================&gt;                             ]  30.97MB/70.73MB</span><br><span class="line">c2274a1a0e27: Downloading [=======================&gt;                           ]  32.55MB/70.73MB</span><br><span class="line">c2274a1a0e27: Downloading [=======================&gt;                           ]   33.6MB/70.73MB</span><br><span class="line">c2274a1a0e27: Downloading [========================&gt;                          ]  34.12MB/70.73MB</span><br><span class="line">c2274a1a0e27: Downloading [========================&gt;                          ]  35.17MB/70.73MB</span><br><span class="line">c2274a1a0e27: Downloading [=========================&gt;                         ]   35.7MB/70.73MB</span><br><span class="line">c2274a1a0e27: Downloading [=========================&gt;                         ]  36.22MB/70.73MB</span><br><span class="line">c2274a1a0e27: Downloading [=========================&gt;                         ]  36.75MB/70.73MB</span><br><span class="line">c2274a1a0e27: Downloading [==========================&gt;                        ]  37.27MB/70.73MB</span><br><span class="line">c2274a1a0e27: Downloading [==========================&gt;                        ]   37.8MB/70.73MB</span><br><span class="line">c2274a1a0e27: Downloading [===========================&gt;                       ]  38.32MB/70.73MB</span><br><span class="line">c2274a1a0e27: Downloading [===========================&gt;                       ]  38.85MB/70.73MB</span><br><span class="line">c2274a1a0e27: Downloading [===========================&gt;                       ]  39.37MB/70.73MB</span><br><span class="line">c2274a1a0e27: Downloading [============================&gt;                      ]   39.9MB/70.73MB</span><br><span class="line">c2274a1a0e27: Downloading [============================&gt;                      ]  40.42MB/70.73MB</span><br><span class="line">c2274a1a0e27: Downloading [============================&gt;                      ]  40.95MB/70.73MB</span><br><span class="line">c2274a1a0e27: Downloading [=============================&gt;                     ]  41.47MB/70.73MB</span><br><span class="line">c2274a1a0e27: Downloading [=============================&gt;                     ]     42MB/70.73MB</span><br><span class="line">c2274a1a0e27: Downloading [==============================&gt;                    ]  42.52MB/70.73MB</span><br><span class="line">c2274a1a0e27: Downloading [==============================&gt;                    ]  43.05MB/70.73MB</span><br><span class="line">c2274a1a0e27: Downloading [==============================&gt;                    ]  43.57MB/70.73MB</span><br><span class="line">c2274a1a0e27: Downloading [===============================&gt;                   ]   44.1MB/70.73MB</span><br><span class="line">c2274a1a0e27: Downloading [===============================&gt;                   ]  44.62MB/70.73MB</span><br><span class="line">c2274a1a0e27: Downloading [===============================&gt;                   ]  45.15MB/70.73MB</span><br><span class="line">c2274a1a0e27: Downloading [================================&gt;                  ]  45.67MB/70.73MB</span><br><span class="line">c2274a1a0e27: Downloading [================================&gt;                  ]   46.2MB/70.73MB</span><br><span class="line">c2274a1a0e27: Downloading [=================================&gt;                 ]  46.72MB/70.73MB</span><br><span class="line">c2274a1a0e27: Downloading [=================================&gt;                 ]  47.25MB/70.73MB</span><br><span class="line">c2274a1a0e27: Downloading [=================================&gt;                 ]  47.77MB/70.73MB</span><br><span class="line">c2274a1a0e27: Downloading [==================================&gt;                ]   48.3MB/70.73MB</span><br><span class="line">c2274a1a0e27: Downloading [==================================&gt;                ]  48.82MB/70.73MB</span><br><span class="line">c2274a1a0e27: Downloading [==================================&gt;                ]  49.35MB/70.73MB</span><br><span class="line">c2274a1a0e27: Downloading [===================================&gt;               ]  49.87MB/70.73MB</span><br><span class="line">c2274a1a0e27: Downloading [===================================&gt;               ]   50.4MB/70.73MB</span><br><span class="line">c2274a1a0e27: Downloading [===================================&gt;               ]  50.92MB/70.73MB</span><br><span class="line">c2274a1a0e27: Downloading [====================================&gt;              ]  51.45MB/70.73MB</span><br><span class="line">c2274a1a0e27: Downloading [====================================&gt;              ]  51.97MB/70.73MB</span><br><span class="line">c2274a1a0e27: Downloading [=====================================&gt;             ]   52.5MB/70.73MB</span><br><span class="line">c2274a1a0e27: Downloading [=====================================&gt;             ]  53.02MB/70.73MB</span><br><span class="line">c2274a1a0e27: Downloading [=====================================&gt;             ]  53.55MB/70.73MB</span><br><span class="line">c2274a1a0e27: Downloading [======================================&gt;            ]  54.07MB/70.73MB</span><br><span class="line">c2274a1a0e27: Downloading [======================================&gt;            ]   54.6MB/70.73MB</span><br><span class="line">c2274a1a0e27: Downloading [======================================&gt;            ]  55.12MB/70.73MB</span><br><span class="line">c2274a1a0e27: Downloading [=======================================&gt;           ]  55.65MB/70.73MB</span><br><span class="line">c2274a1a0e27: Downloading [=======================================&gt;           ]  56.17MB/70.73MB</span><br><span class="line">c2274a1a0e27: Downloading [========================================&gt;          ]   56.7MB/70.73MB</span><br><span class="line">c2274a1a0e27: Downloading [========================================&gt;          ]  57.22MB/70.73MB</span><br><span class="line">c2274a1a0e27: Downloading [========================================&gt;          ]  57.75MB/70.73MB</span><br><span class="line">c2274a1a0e27: Downloading [=========================================&gt;         ]  58.27MB/70.73MB</span><br><span class="line">c2274a1a0e27: Downloading [=========================================&gt;         ]   58.8MB/70.73MB</span><br><span class="line">c2274a1a0e27: Downloading [=========================================&gt;         ]  59.32MB/70.73MB</span><br><span class="line">c2274a1a0e27: Downloading [==========================================&gt;        ]  59.85MB/70.73MB</span><br><span class="line">c2274a1a0e27: Downloading [==========================================&gt;        ]  60.37MB/70.73MB</span><br><span class="line">c2274a1a0e27: Downloading [===========================================&gt;       ]   60.9MB/70.73MB</span><br><span class="line">c2274a1a0e27: Downloading [===========================================&gt;       ]  61.42MB/70.73MB</span><br><span class="line">c2274a1a0e27: Downloading [===========================================&gt;       ]  61.95MB/70.73MB</span><br><span class="line">c2274a1a0e27: Downloading [============================================&gt;      ]  62.47MB/70.73MB</span><br><span class="line">c2274a1a0e27: Downloading [============================================&gt;      ]     63MB/70.73MB</span><br><span class="line">c2274a1a0e27: Downloading [============================================&gt;      ]  63.52MB/70.73MB</span><br><span class="line">c2274a1a0e27: Downloading [=============================================&gt;     ]  64.05MB/70.73MB</span><br><span class="line">c2274a1a0e27: Downloading [=============================================&gt;     ]  64.57MB/70.73MB</span><br><span class="line">c2274a1a0e27: Downloading [==============================================&gt;    ]   65.1MB/70.73MB</span><br><span class="line">c2274a1a0e27: Downloading [==============================================&gt;    ]  65.62MB/70.73MB</span><br><span class="line">c2274a1a0e27: Downloading [==============================================&gt;    ]  66.15MB/70.73MB</span><br><span class="line">c2274a1a0e27: Downloading [===============================================&gt;   ]  66.67MB/70.73MB</span><br><span class="line">c2274a1a0e27: Downloading [===============================================&gt;   ]   67.2MB/70.73MB</span><br><span class="line">c2274a1a0e27: Downloading [===============================================&gt;   ]  67.72MB/70.73MB</span><br><span class="line">c2274a1a0e27: Downloading [================================================&gt;  ]  68.25MB/70.73MB</span><br><span class="line">c2274a1a0e27: Downloading [================================================&gt;  ]  68.77MB/70.73MB</span><br><span class="line">c2274a1a0e27: Downloading [================================================&gt;  ]   69.3MB/70.73MB</span><br><span class="line">c2274a1a0e27: Downloading [=================================================&gt; ]  69.82MB/70.73MB</span><br><span class="line">c2274a1a0e27: Downloading [=================================================&gt; ]  70.35MB/70.73MB</span><br><span class="line">c2274a1a0e27: Verifying Checksum </span><br><span class="line">c2274a1a0e27: Download complete </span><br><span class="line">c2274a1a0e27: Extracting [&gt;                                                  ]  557.1kB/70.73MB</span><br><span class="line">c2274a1a0e27: Extracting [=&gt;                                                 ]  1.671MB/70.73MB</span><br><span class="line">c2274a1a0e27: Extracting [=&gt;                                                 ]  2.785MB/70.73MB</span><br><span class="line">c2274a1a0e27: Extracting [===&gt;                                               ]  4.456MB/70.73MB</span><br><span class="line">c2274a1a0e27: Extracting [====&gt;                                              ]  6.128MB/70.73MB</span><br><span class="line">c2274a1a0e27: Extracting [======&gt;                                            ]  8.913MB/70.73MB</span><br><span class="line">c2274a1a0e27: Extracting [=======&gt;                                           ]  11.14MB/70.73MB</span><br><span class="line">c2274a1a0e27: Extracting [=========&gt;                                         ]  13.93MB/70.73MB</span><br><span class="line">c2274a1a0e27: Extracting [===========&gt;                                       ]  16.15MB/70.73MB</span><br><span class="line">c2274a1a0e27: Extracting [=============&gt;                                     ]  18.94MB/70.73MB</span><br><span class="line">c2274a1a0e27: Extracting [===============&gt;                                   ]  21.73MB/70.73MB</span><br><span class="line">c2274a1a0e27: Extracting [================&gt;                                  ]  23.95MB/70.73MB</span><br><span class="line">c2274a1a0e27: Extracting [==================&gt;                                ]  26.18MB/70.73MB</span><br><span class="line">c2274a1a0e27: Extracting [====================&gt;                              ]  28.41MB/70.73MB</span><br><span class="line">c2274a1a0e27: Extracting [=====================&gt;                             ]  30.64MB/70.73MB</span><br><span class="line">c2274a1a0e27: Extracting [=======================&gt;                           ]  32.87MB/70.73MB</span><br><span class="line">c2274a1a0e27: Extracting [========================&gt;                          ]  35.09MB/70.73MB</span><br><span class="line">c2274a1a0e27: Extracting [==========================&gt;                        ]  37.32MB/70.73MB</span><br><span class="line">c2274a1a0e27: Extracting [===========================&gt;                       ]  39.55MB/70.73MB</span><br><span class="line">c2274a1a0e27: Extracting [=============================&gt;                     ]  42.34MB/70.73MB</span><br><span class="line">c2274a1a0e27: Extracting [===============================&gt;                   ]  45.12MB/70.73MB</span><br><span class="line">c2274a1a0e27: Extracting [=================================&gt;                 ]  47.91MB/70.73MB</span><br><span class="line">c2274a1a0e27: Extracting [===================================&gt;               ]  49.58MB/70.73MB</span><br><span class="line">c2274a1a0e27: Extracting [====================================&gt;              ]  51.81MB/70.73MB</span><br><span class="line">c2274a1a0e27: Extracting [======================================&gt;            ]  54.03MB/70.73MB</span><br><span class="line">c2274a1a0e27: Extracting [=======================================&gt;           ]  56.26MB/70.73MB</span><br><span class="line">c2274a1a0e27: Extracting [=========================================&gt;         ]  58.49MB/70.73MB</span><br><span class="line">c2274a1a0e27: Extracting [==========================================&gt;        ]  60.72MB/70.73MB</span><br><span class="line">c2274a1a0e27: Extracting [============================================&gt;      ]  62.95MB/70.73MB</span><br><span class="line">c2274a1a0e27: Extracting [=============================================&gt;     ]  64.62MB/70.73MB</span><br><span class="line">c2274a1a0e27: Extracting [==============================================&gt;    ]  65.73MB/70.73MB</span><br><span class="line">c2274a1a0e27: Extracting [===============================================&gt;   ]  66.85MB/70.73MB</span><br><span class="line">c2274a1a0e27: Extracting [================================================&gt;  ]  68.52MB/70.73MB</span><br><span class="line">c2274a1a0e27: Extracting [=================================================&gt; ]  70.19MB/70.73MB</span><br><span class="line">c2274a1a0e27: Extracting [==================================================&gt;]  70.73MB/70.73MB</span><br><span class="line">c2274a1a0e27: Pull complete </span><br><span class="line">Digest: sha256:94792824df2df33402f201713f932b58cb9de94a0cd524164a0f2283343547b3</span><br><span class="line">Status: Downloaded newer image for openjdk:8-jdk-alpine</span><br><span class="line"> ---&gt; a3562aa0b991</span><br><span class="line">Step 2/4 : VOLUME /tmp</span><br><span class="line"></span><br><span class="line"> ---&gt; Running in 9866501a71d4</span><br><span class="line">Removing intermediate container 9866501a71d4</span><br><span class="line"> ---&gt; f4247134db56</span><br><span class="line">Step 3/4 : ADD demo-1.0.0-SNAPSHOT.jar app.jar</span><br><span class="line"></span><br><span class="line"> ---&gt; 9fe41d8b6c79</span><br><span class="line">Step 4/4 : ENTRYPOINT [&quot;java&quot;,&quot;-Djava.security.egd=file:/dev/./urandom&quot;,&quot;-jar&quot;,&quot;/app.jar&quot;]</span><br><span class="line"></span><br><span class="line"> ---&gt; Running in 619d8b8027ef</span><br><span class="line">Removing intermediate container 619d8b8027ef</span><br><span class="line"> ---&gt; 5567045a3623</span><br><span class="line">ProgressMessage&#123;id=null, status=null, stream=null, error=null, progress=null, progressDetail=null&#125;</span><br><span class="line">Successfully built 5567045a3623</span><br><span class="line">Successfully tagged demo-docker/demo:latest</span><br><span class="line">[INFO] Built demo-docker/demo</span><br><span class="line">[INFO] ------------------------------------------------------------------------</span><br><span class="line">[INFO] BUILD SUCCESS</span><br><span class="line">[INFO] ------------------------------------------------------------------------</span><br><span class="line">[INFO] Total time: 58.843 s</span><br><span class="line">[INFO] Finished at: 2020-01-16T15:58:07+08:00</span><br><span class="line">[INFO] Final Memory: 27M/459M</span><br><span class="line">[INFO] ------------------------------------------------------------------------</span><br></pre></td></tr></table></figure>
+
+<p>此时我们登录远程机器，查看镜像是否发布上来。</p>
+<p><img src="/images/springboot/image-20200116160842539.png" alt="SpringBoot应用docker化并发布到远程服务器"></p>
+<p>可以看到已经构建成镜像并上传到镜像仓库了，并且image id 都一致。那么此时已经大功告成了！镜像都有了，直接一条命令构建容器并启动就可以了！激动人心得时刻即将到来！</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -p 8181:8080 --name demo -d 5567045a3623</span><br></pre></td></tr></table></figure>
+
+<p>正常启动，查看项目允许日志</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker logs -f demo</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/springboot/image-20200116160928006.png" alt="SpringBoot应用docker化并发布到远程服务器"></p>
+<p>至此大功告成！鼓掌！</p>
+
+        <h2>相关文章</h2><ul><li><a href="/docker/12-docker-lession-index/">Docker部署Spring Boot项目</a></li><li><a href="/docker/11-docker-lession-index/">在Docker中安装Redis以及主从环境搭建</a></li><li><a href="/docker/10-docker-lession-index/">在Docker中安装Zookeeper以及集群环境搭建</a></li><li><a href="/docker/09-docker-lession-index/">在Docker中安装Nginx</a></li><li><a href="/docker/08-docker-lession-index/">在Docker中安装Mysql</a></li></ul>
+    </div>
+    
+        <div class="reward" ontouchstart>
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+            
+                <span class="reward-type">
+                    <img class="wechat" src="/images/weixin.png"><b>微信打赏</b>
+                </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">赞赏是不耍流氓的鼓励</p>
+</div>
+
+
+    
+
+
+    
+        <div class="post-footer">
+            <div class="col-sm-10">
+                <div>
+                    <b>本文链接</b>：<a href="/spring/docker-of-springboot-and-publish-to-remote-server/" target="_blank">SpringBoot应用docker化并发布到远程服务器</a>
+                </div>
+                <div>
+                    
+                        转载声明：本博客由小小冒险家创作，采用 <a href="https://creativecommons.org/licenses/by-nc-nd/3.0/" target="_blank"> CC BY 3.0 CN </a> 许可协议。可自由转载、引用，但需署名作者且注明文章出处。如转载至微信公众号，请在文末添加作者公众号二维码。
+                    
+                </div>
+                <div>
+                    
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <img src="/icons/wx.jpg" width=100%/>
+            </div>
+        </div>
+    
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+        <a target="_blank" href="/install/windows-install-rabbitmq/" class="pre-post btn btn-default"
+           title='Windows安装RabbitMQ'>
+            <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+            <span class="hidden-xs">Windows安装RabbitMQ</span>
+        </a>
+    
+    
+        <a target="_blank" href="/spring/why-spring-does-not-recommend-field-injection/" class="next-post btn btn-default"
+           title='为什么Spring不建议使用field方式注入'>
+            <span class="hidden-lg">下一篇</span>
+            <span class="hidden-xs">为什么Spring不建议使用field方式注入</span><i class="fa fa-angle-right fa-fw"></i>
+        </a>
+    
+</div>
+
+
+    <div id="comments">
+        
+   <p>评论系统未开启，无法评论！</p>
+
+    </div>
+
+
+
+
+
+
+                </main>
+                
+    <aside class="col-md-4 sidebar">
+        
+        <div class="widget about-me">
+    <div class="row">
+        <div class="col-md-5">
+            <img src="/icons/wx.jpg" alt="公众号" class="img-responsive center-block">
+        </div>
+        <div class="col-md-7">
+            <a class="series-a" href="javascript:void(0)">公众号</a>
+            <ul>
+                <li>• 技术干货推送</li>
+                <li>• 日常好文分享</li>
+                <li><b>• 扫码领取更多惊喜</b></li>
+            </ul>
+        </div>
+    </div>
+    
+<!--        <div class="row">-->
+<!--            <div class="col-md-5">-->
+<!--                <img src="/icons/xcx.jpg" alt="小程序" class="img-responsive">-->
+<!--            </div>-->
+<!--            <div class="col-md-7">-->
+<!--                <a class="series-a" href="javascript:void(0)">小程序</a>-->
+<!--                <ul>-->
+<!--                    <li>• 原创笔记</li>-->
+<!--                    <li>• 独家心法</li>-->
+<!--                    <li><b>• 扫码领取</b></li>-->
+<!--                </ul>-->
+<!--            </div>-->
+<!--        </div>-->
+    
+</div>
+
+
+
+
+        
+        
+    <div class="widget">
+        <h3 class="title">网站公告</h3>
+        <div class="notification">
+            <p>
+  <b>QQ群</b>：415777345<br/>
+</p>
+
+<p>
+<b>联系博主QQ</b>：210006540<br/>
+</p>
+        </div>
+    </div>
+
+        
+        
+    
+        <div class="ad">
+            <div class="row">
+                <div class="col-md-12">
+                    <a href="https://promotion.aliyun.com/ntms/act/qwbk.html?userCode=qhtujh03" rel="nofollow" target="_blank">
+                        <img class="img-responsive center-block"
+                             title="阿里全民云计算"
+                             src="/icons/380-120.png"
+                        >
+                    </a>
+                </div>
+            </div>
+        </div>
+    
+
+
+
+
+        
+        
+    <div class="widget">
+        <h3 class="title">分类</h3>
+        <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Ajax/"><i class="fa" aria-hidden="true">Ajax</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/"><i class="fa" aria-hidden="true">Docker</i></a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Druid/"><i class="fa" aria-hidden="true">Druid</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Feign/"><i class="fa" aria-hidden="true">Feign</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/HTTP/"><i class="fa" aria-hidden="true">HTTP</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/"><i class="fa" aria-hidden="true">Hexo</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JRebel/"><i class="fa" aria-hidden="true">JRebel</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/"><i class="fa" aria-hidden="true">Java</i></a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Maven/"><i class="fa" aria-hidden="true">Maven</i></a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MongoDB/"><i class="fa" aria-hidden="true">MongoDB</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MySQL/"><i class="fa" aria-hidden="true">MySQL</i></a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Nexus3-x/"><i class="fa" aria-hidden="true">Nexus3.x</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/PowerShell/"><i class="fa" aria-hidden="true">PowerShell</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Quartz/"><i class="fa" aria-hidden="true">Quartz</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/"><i class="fa" aria-hidden="true">Redis</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/RocketMQ/"><i class="fa" aria-hidden="true">RocketMQ</i></a><span class="category-list-count">12</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Sharding-JDBC/"><i class="fa" aria-hidden="true">Sharding-JDBC</i></a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/"><i class="fa" aria-hidden="true">Spring</i></a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring-Cloud/"><i class="fa" aria-hidden="true">Spring Cloud</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link current" href="/categories/SpringBoot/"><i class="fa" aria-hidden="true">SpringBoot</i></a><span class="category-list-count">15</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringCloud-Alibaba/"><i class="fa" aria-hidden="true">SpringCloud Alibaba</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringSession/"><i class="fa" aria-hidden="true">SpringSession</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/主键/"><i class="fa" aria-hidden="true">主键</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/其他/"><i class="fa" aria-hidden="true">其他</i></a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/安装教程/"><i class="fa" aria-hidden="true">安装教程</i></a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/工具/"><i class="fa" aria-hidden="true">工具</i></a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/微服务/"><i class="fa" aria-hidden="true">微服务</i></a><span class="category-list-count">17</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据库/"><i class="fa" aria-hidden="true">数据库</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/面试/"><i class="fa" aria-hidden="true">面试</i></a><span class="category-list-count">1</span></li></ul>
+    </div>
+
+
+        
+        
+  <div class="widget">
+    <h3 class="title">标签云</h3>
+    <div class="content tag-cloud">
+        
+            <canvas width="300" height="300" id="tag-cloud-3d">
+                <a href="/tags/Ajax/" style="font-size: 10px;">Ajax</a> <a href="/tags/Alibaba/" style="font-size: 10px;">Alibaba</a> <a href="/tags/Banner/" style="font-size: 10px;">Banner</a> <a href="/tags/Centos/" style="font-size: 10px;">Centos</a> <a href="/tags/Docker/" style="font-size: 17.5px;">Docker</a> <a href="/tags/Druid/" style="font-size: 10px;">Druid</a> <a href="/tags/Eureka/" style="font-size: 10.83px;">Eureka</a> <a href="/tags/FastDFS/" style="font-size: 10.83px;">FastDFS</a> <a href="/tags/Feign/" style="font-size: 13.33px;">Feign</a> <a href="/tags/File/" style="font-size: 10px;">File</a> <a href="/tags/HTTP/" style="font-size: 10px;">HTTP</a> <a href="/tags/Hexo/" style="font-size: 10.83px;">Hexo</a> <a href="/tags/HikariCP/" style="font-size: 10px;">HikariCP</a> <a href="/tags/Hystrix/" style="font-size: 10.83px;">Hystrix</a> <a href="/tags/Hystrix-Dashboard/" style="font-size: 10px;">Hystrix Dashboard</a> <a href="/tags/IDEA/" style="font-size: 10px;">IDEA</a> <a href="/tags/JDK/" style="font-size: 10px;">JDK</a> <a href="/tags/JRebel/" style="font-size: 10px;">JRebel</a> <a href="/tags/Java/" style="font-size: 12.5px;">Java</a> <a href="/tags/Java-b2-spring注解/" style="font-size: 15.83px;">Java-b2-spring注解</a> <a href="/tags/Map/" style="font-size: 10px;">Map</a> <a href="/tags/Maven/" style="font-size: 12.5px;">Maven</a> <a href="/tags/Memcache/" style="font-size: 10px;">Memcache</a> <a href="/tags/MongoDB/" style="font-size: 10.83px;">MongoDB</a> <a href="/tags/MongoTemplate/" style="font-size: 10.83px;">MongoTemplate</a> <a href="/tags/MySQL/" style="font-size: 15px;">MySQL</a> <a href="/tags/MySQL8/" style="font-size: 10px;">MySQL8</a> <a href="/tags/Mysql/" style="font-size: 10px;">Mysql</a> <a href="/tags/Navicat/" style="font-size: 10px;">Navicat</a> <a href="/tags/Nexus3-x/" style="font-size: 10.83px;">Nexus3.x</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/PowerShell/" style="font-size: 10px;">PowerShell</a> <a href="/tags/Quartz/" style="font-size: 10px;">Quartz</a> <a href="/tags/RabbitMQ/" style="font-size: 10px;">RabbitMQ</a> <a href="/tags/Redis/" style="font-size: 12.5px;">Redis</a> <a href="/tags/Ribbon/" style="font-size: 10.83px;">Ribbon</a> <a href="/tags/RocketMQ/" style="font-size: 18.33px;">RocketMQ</a> <a href="/tags/Sharding-JDBC/" style="font-size: 14.17px;">Sharding-JDBC</a> <a href="/tags/SonarQube/" style="font-size: 10px;">SonarQube</a> <a href="/tags/Spring/" style="font-size: 16.67px;">Spring</a> <a href="/tags/Spring-Boot/" style="font-size: 11.67px;">Spring Boot</a> <a href="/tags/Spring-Cloud/" style="font-size: 16.67px;">Spring Cloud</a> <a href="/tags/Spring-Cloud-Gateway/" style="font-size: 10.83px;">Spring Cloud Gateway</a> <a href="/tags/Spring-Cloud-Sleuth/" style="font-size: 10px;">Spring Cloud Sleuth</a> <a href="/tags/SpringBoot/" style="font-size: 20px;">SpringBoot</a> <a href="/tags/SpringCloud/" style="font-size: 10px;">SpringCloud</a> <a href="/tags/SpringCloud-Alibaba/" style="font-size: 10px;">SpringCloud Alibaba</a> <a href="/tags/SpringCloud-Stream/" style="font-size: 10px;">SpringCloud Stream</a> <a href="/tags/SpringSession/" style="font-size: 10px;">SpringSession</a> <a href="/tags/Tomcat/" style="font-size: 10px;">Tomcat</a> <a href="/tags/Transaction/" style="font-size: 10px;">Transaction</a> <a href="/tags/Turbine/" style="font-size: 10px;">Turbine</a> <a href="/tags/Web应用/" style="font-size: 10px;">Web应用</a> <a href="/tags/Windows/" style="font-size: 10px;">Windows</a> <a href="/tags/Windows-11/" style="font-size: 10px;">Windows 11</a> <a href="/tags/Zipkin/" style="font-size: 10px;">Zipkin</a> <a href="/tags/Zookeeper/" style="font-size: 10px;">Zookeeper</a> <a href="/tags/Zuul/" style="font-size: 10px;">Zuul</a> <a href="/tags/assessToken/" style="font-size: 10px;">assessToken</a> <a href="/tags/httpclient/" style="font-size: 10px;">httpclient</a> <a href="/tags/logback/" style="font-size: 10px;">logback</a> <a href="/tags/session共享/" style="font-size: 10px;">session共享</a> <a href="/tags/theme/" style="font-size: 10px;">theme</a> <a href="/tags/互联网产品/" style="font-size: 10px;">互联网产品</a> <a href="/tags/其他/" style="font-size: 10px;">其他</a> <a href="/tags/分布式/" style="font-size: 10.83px;">分布式</a> <a href="/tags/加密/" style="font-size: 10px;">加密</a> <a href="/tags/原理/" style="font-size: 10px;">原理</a> <a href="/tags/发布/" style="font-size: 10px;">发布</a> <a href="/tags/图片水印/" style="font-size: 10px;">图片水印</a> <a href="/tags/工具/" style="font-size: 10px;">工具</a> <a href="/tags/并发编程/" style="font-size: 10px;">并发编程</a> <a href="/tags/循环依赖/" style="font-size: 10px;">循环依赖</a> <a href="/tags/微服务/" style="font-size: 19.17px;">微服务</a> <a href="/tags/时间工具类/" style="font-size: 10px;">时间工具类</a> <a href="/tags/注解/" style="font-size: 10.83px;">注解</a> <a href="/tags/消息订阅/" style="font-size: 10px;">消息订阅</a> <a href="/tags/索引/" style="font-size: 14.17px;">索引</a> <a href="/tags/红黑树/" style="font-size: 10px;">红黑树</a>
+            </canvas>
+        
+    </div>
+  </div>
+
+
+        
+        
+    <div class="widget">
+        <h3 class="title">归档</h3>
+        <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/"><i class="fa" aria-hidden="true">2022年09月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/05/"><i class="fa" aria-hidden="true">2022年05月</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/"><i class="fa" aria-hidden="true">2021年07月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/"><i class="fa" aria-hidden="true">2021年06月</i></a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/"><i class="fa" aria-hidden="true">2021年03月</i></a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/"><i class="fa" aria-hidden="true">2021年02月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/"><i class="fa" aria-hidden="true">2020年11月</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/"><i class="fa" aria-hidden="true">2020年09月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/"><i class="fa" aria-hidden="true">2020年08月</i></a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/"><i class="fa" aria-hidden="true">2020年07月</i></a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/"><i class="fa" aria-hidden="true">2020年06月</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/"><i class="fa" aria-hidden="true">2020年04月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/"><i class="fa" aria-hidden="true">2020年03月</i></a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/"><i class="fa" aria-hidden="true">2020年02月</i></a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/"><i class="fa" aria-hidden="true">2020年01月</i></a><span class="archive-list-count">23</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/"><i class="fa" aria-hidden="true">2019年12月</i></a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/"><i class="fa" aria-hidden="true">2019年11月</i></a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/"><i class="fa" aria-hidden="true">2019年10月</i></a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/"><i class="fa" aria-hidden="true">2019年09月</i></a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/"><i class="fa" aria-hidden="true">2019年08月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/"><i class="fa" aria-hidden="true">2019年05月</i></a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/"><i class="fa" aria-hidden="true">2019年04月</i></a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/"><i class="fa" aria-hidden="true">2019年03月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/"><i class="fa" aria-hidden="true">2019年02月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/"><i class="fa" aria-hidden="true">2019年01月</i></a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/"><i class="fa" aria-hidden="true">2018年12月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/"><i class="fa" aria-hidden="true">2018年10月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/"><i class="fa" aria-hidden="true">2018年09月</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/"><i class="fa" aria-hidden="true">2018年08月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/"><i class="fa" aria-hidden="true">2018年06月</i></a><span class="archive-list-count">2</span></li></ul>
+    </div>
+
+
+        
+        
+    <div class="widget">
+      <h3 class="title">社交</h3> 
+        <div class="content social">
+            
+	            <a href="//github.com/zhaokejin" rel="external nofollow" title="GitHub" target="_blank">
+			    	<i class="github fa fa-github"></i>
+			    </a>
+            
+	            <a href="//gitee.com/zhaokejin" rel="external nofollow" title="Gitee" target="_blank">
+			    	<i class="git fa fa-git"></i>
+			    </a>
+            
+	            <a href="mailto:210006540qq.com" rel="external nofollow" title="邮箱" target="_blank">
+			    	<i class="envelope-o fa fa-envelope-o"></i>
+			    </a>
+            
+	            <a href="//wpa.qq.com/msgrd?v=3&uin=210006540&site=qq&menu=yes" rel="external nofollow" title="QQ" target="_blank">
+			    	<i class="qq fa fa-qq"></i>
+			    </a>
+            
+	            <a href="//shang.qq.com/wpa/qunwpa?idkey=7b19717710dcc2c78996f316db3ab3365bde39bc3c60de7a6c59fe07231e231a" rel="external nofollow" title="QQ群" target="_blank">
+			    	<i class="group fa fa-group"></i>
+			    </a>
+            
+	            <a href="/atom.xml" rel="external nofollow" title="RSS" target="_blank">
+			    	<i class="feed fa fa-feed"></i>
+			    </a>
+            
+        </div>
+    </div>
+
+
+        
+        
+
+        
+    </aside>
+
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+
+<a id="back-to-top" class="icon-btn hide">
+	<i class="fa fa-chevron-up"></i>
+</a>
+
+
+
+
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+        访问量:
+        <strong id="busuanzi_value_site_pv">
+            <i class="fa fa-spinner fa-spin"></i>
+        </strong>
+        &nbsp; | &nbsp;
+        访客数:
+        <strong id="busuanzi_value_site_uv">
+            <i class="fa fa-spinner fa-spin"></i>
+        </strong>
+<!--        &nbsp; <strong>Since 2018-12-26</strong>-->
+    
+</div>
+
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy; 2018 - 2023
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    <a href="//www.beian.miit.gov.cn/" class="copyright-links" target="_blank" rel="nofollow">鲁ICP备18033870号</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/js/jquery.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/bootstrap-hover-dropdown.min.js"></script>
+
+
+	<script src="/js/search.js?rev=@@hash"></script>
+
+
+
+    <script src="/assets/tagcanvas.min.js?rev=2.9"></script>
+    <script>
+        var tagOption = {
+            textColour: '#29afec', // 字体颜色
+            outlineMethod: 'block', // 选中模式
+            outlineColour: '#FFDAB9', // 选中模式的颜色
+            interval: 30 || 30, // 动画帧之间的时间间隔，值越大，转动幅度越大
+            textHeight: 13,
+            outlineRadius: 3,
+            freezeActive: true || '', // 选中的标签是否继续滚动
+            frontSelect: true || '', // 不选标签云后部的标签
+            initial: [0.1, -0.1],
+            depth: 0.5,
+            decel: 0.95,
+            maxSpeed: 0.03,
+            reverse: true || '', // 是否反向触发
+            fadeIn: 500, // 进入动画时间
+            wheelZoom: false || '' // 是否启用鼠标滚轮
+        }
+        TagCanvas.Start('tag-cloud-3d','',tagOption);
+    </script>
+
+
+
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<script src="/js/app.js?rev=@@hash"></script>
+<script src="/jquery.fancybox.js?v=2.1.5"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('.fancybox').fancybox();
+    });
+    // 给图片添加链接
+    $(document).ready(function() {
+        $("p img").each(function() {
+            var strA = "<a id='yourid' class='fancybox' data-fancybox-group='gallery'  href='" + this.src + "'></a>";
+            $(this).wrapAll(strA);
+        });
+    });
+    // fancybox
+    $("#yourid").fancybox({
+        openEffect    : 'elastic',
+        closeEffect   : 'elastic',
+    });
+</script>
+
+</body>
+</html>

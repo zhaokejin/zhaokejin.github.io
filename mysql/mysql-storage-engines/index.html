@@ -1,0 +1,721 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="小小冒险家的博客">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.2.3">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="https://www.cicoding.cn">
+    <!--SEO-->
+
+    <meta name="keywords" content="MySQL,索引">
+
+
+    <meta name="description" content="MySQL中的数据用各种不同的技术存储在文件（或者内存）中。这些技术中的每一种技术都使用不同的存储机制、索引技巧、锁定水平并且最终提供广泛的不同的功能和能力。通过选择不同的技术，你能够获得额外的速度或者功能，从而改善你的应用的整体功能。这些不同的技术以及配套的相关功能在MySQL中被称作存储引...">
+
+
+
+<meta name="robots" content="all">
+<meta name="google" content="all">
+<meta name="googlebot" content="all">
+<meta name="verify" content="all">
+    <!--Title-->
+
+
+<title>MySQL各存储引擎 | 小小冒险家的博客</title>
+
+
+    <link rel="alternate" href="/atom.xml" title="小小冒险家的博客" type="application/atom+xml">
+
+
+    <link rel="icon" href="/favicon.png">
+
+    
+
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7">
+<link rel="stylesheet" href="/jquery.fancybox.css?v=2.1.5">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.5.0">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash">
+
+
+
+
+    
+
+
+
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?601ebec7733383ef248ca61fc0a0db95";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+
+
+    
+
+</head>
+
+</html>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+
+<body>
+    
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row clearfix">
+            <div class="col-md-12 column">
+                <nav class="navbar navbar-default" style="background-color:#fff;border:0;margin-bottom:0"
+                     role="navigation">
+                    <div class="navbar-header">
+<!--                        <button type="button" class="navbar-toggle" data-toggle="collapse"-->
+<!--                                data-target="#navbar-collapse-1">-->
+<!--                            <span class="sr-only">切</span>-->
+<!--                            <span class="icon-bar"></span>-->
+<!--                            <span class="icon-bar"></span>-->
+<!--                            <span class="icon-bar"></span>-->
+<!--                        </button>-->
+                        <a class="logo" href="/">
+                            <img src="/favicon.png"/>小小冒险家的博客
+                        </a>
+                    </div>
+
+                    <div class="collapse navbar-collapse" style="border:0;" id="navbar-collapse-1">
+                        <ul class="nav navbar-nav">
+                            
+                                
+                                    <li>
+                                        <a href="/" >
+                                            <i class="fa fa-home"></i>
+                                            首页
+                                        </a>
+                                    </li>
+                                
+                            
+                                
+                                    <li>
+                                        <a href="/archives" >
+                                            <i class="fa fa-sort"></i>
+                                            归档
+                                        </a>
+                                    </li>
+                                
+                            
+                                
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                                           data-hover="dropdown">
+                                            <i class="fa fa-fire"></i>
+                                            系列教程
+                                            <strong class="caret"></strong>
+                                        </a>
+                                        <ul class="dropdown-menu">
+                                            
+                                                <li>
+                                                    <a href="/docker/00-docker-lession-index" target="_blank">
+                                                        <i class="fa "></i>
+                                                        Docker系列教程
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="/micro-service/microservice/" target="_blank">
+                                                        <i class="fa "></i>
+                                                        SpringCloud微服务架构
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="/micro-service/microservice-alibaba/" target="_blank">
+                                                        <i class="fa "></i>
+                                                        SpringCloud Alibaba微服务架构
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="/sharding-jdbc/sharding-jdbc000/" target="_blank">
+                                                        <i class="fa "></i>
+                                                        Sharding-JDBC教程
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="/springboot/springboot-source-code/" target="_blank">
+                                                        <i class="fa "></i>
+                                                        SpringBoot源码系列
+                                                    </a>
+                                                </li>
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+                                
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                                           data-hover="dropdown">
+                                            <i class="fa fa-book"></i>
+                                            在线文档
+                                            <strong class="caret"></strong>
+                                        </a>
+                                        <ul class="dropdown-menu">
+                                            
+                                                <li>
+                                                    <a href="https://spring.io/docs/" target="_blank">
+                                                        <i class="fa "></i>
+                                                        Spring Reference
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="https://spring.io/projects/spring-boot/" target="_blank">
+                                                        <i class="fa "></i>
+                                                        SpringBoot Reference
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="https://spring.io/projects/spring-cloud/" target="_blank">
+                                                        <i class="fa "></i>
+                                                        SpringCloud Reference
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="https://docs.spring.io/spring-security/site/docs/current/reference/htmlsingle/" target="_blank">
+                                                        <i class="fa "></i>
+                                                        Spring Security Reference
+                                                    </a>
+                                                </li>
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+                                
+                                    <li>
+                                        <a href="/other/jrebel-activation" >
+                                            <i class="fa fa-fire"></i>
+                                            JRebel激活
+                                        </a>
+                                    </li>
+                                
+                            
+                                
+                                    <li>
+                                        <a href="/about" >
+                                            <i class="fa fa-user"></i>
+                                            关于我
+                                        </a>
+                                    </li>
+                                
+                            
+                        </ul>
+                        
+                            <form id="search-form" class="navbar-form navbar-right">
+                                <div class="form-group input-group">
+                                    <input type="text" id="local-search-input" class="form-control"
+                                           placeholder="搜我..."/>
+                                    <span class="input-group-btn">
+                                        <a class="btn btn-default">
+                                            <i class="fa fa-search"></i>
+                                        </a>
+                                    </span>
+                                </div>
+                                <div id="local-search-result" class="local-search-result-cls"></div>
+                            </form>
+                        
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </div>
+</nav>
+
+    <a href="http://github.com/zhaokejin" target="_blank">
+        <img style="position: absolute; width:100px; top: 0; left: 0; border: 0;"
+             src="/img/fork-me.png"
+             alt="Fork me on GitHub">
+    </a>
+
+
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    
+    
+        <div class="ad">
+            <div class="row">
+                
+                    <div class="col-md-12">
+                        <a href="https://promotion.aliyun.com/ntms/act/qwbk.html?userCode=qhtujh03" rel="nofollow" target="_blank">
+                            <img class="img-responsive center-block"
+                                 src="/icons/810x100.png"
+                                 title="阿里全民云计算"
+                            >
+                        </a>
+                    </div>
+                
+            </div>
+        </div>
+    
+
+
+<p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="MySQL各存储引擎">
+            
+                MySQL各存储引擎
+            
+        </h1>
+        <div class="post-meta">
+    
+
+    
+        <span class="categories-meta fa-wrap">
+            <i class="fa fa-folder-open-o"></i>
+            <a class="category-link" href="/categories/MySQL/">MySQL</a>
+        </span>
+    
+
+    
+        <span class="fa-wrap">
+            <i class="fa fa-tags"></i>
+            <span class="tags-meta">
+                
+                    <a class="tag-link" href="/tags/MySQL/">MySQL</a> <a class="tag-link" href="/tags/索引/">索引</a>
+                
+            </span>
+        </span>
+    
+
+    
+        
+        <span class="fa-wrap">
+            <i class="fa fa-clock-o"></i>
+            <span class="date-meta">2021/06/28</span>
+        </span>
+        
+            <span class="fa-wrap">
+                <i class="fa fa-eye"></i>
+                <span id="busuanzi_value_page_pv"></span>
+            </span>
+        
+    
+</div>
+        
+        
+    </div>
+    
+    <div class="post-body post-content" id="container">
+        
+    <div class="toc-article">
+        <strong>
+            目录
+        </strong>
+        <div class="toc-content">
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#一、InnoDB存储引擎"><span class="toc-text">一、InnoDB存储引擎</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#InnoDB的历史"><span class="toc-text">InnoDB的历史</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#InnoDB概览"><span class="toc-text">InnoDB概览</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MylSAM存储引擎"><span class="toc-text">MylSAM存储引擎</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#存储"><span class="toc-text">存储</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MylSAM特性"><span class="toc-text">MylSAM特性</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#加锁与并发"><span class="toc-text">加锁与并发</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#修复"><span class="toc-text">修复</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#索引特性"><span class="toc-text">索引特性</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#延迟更新索引键-Delayed-Key-Write"><span class="toc-text">延迟更新索引键(Delayed Key Write)</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MylSAM压缩表"><span class="toc-text">MylSAM压缩表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MylSAM性能"><span class="toc-text">MylSAM性能</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#MySQL内建的其他存储引擎"><span class="toc-text">MySQL内建的其他存储引擎</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Archive-引擎"><span class="toc-text">Archive 引擎</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Blackhole-引擎"><span class="toc-text">Blackhole 引擎</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CSV引擎"><span class="toc-text">CSV引擎</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Federated-引擎"><span class="toc-text">Federated 引擎</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Memory引擎"><span class="toc-text">Memory引擎</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Merge引擎"><span class="toc-text">Merge引擎</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#NDB集群引擎"><span class="toc-text">NDB集群引擎</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第三方存储引擎"><span class="toc-text">第三方存储引擎</span></a></li></ol>
+        </div>
+    </div>
+
+
+        <p>MySQL中的数据用各种不同的技术存储在文件（或者内存）中。这些技术中的每一种技术都使用不同的存储机制、索引技巧、锁定水平并且最终提供广泛的不同的功能和能力。通过选择不同的技术，你能够获得额外的速度或者功能，从而改善你的应用的整体功能。这些不同的技术以及配套的相关功能在MySQL中被称作存储引擎(也称作表类型)。MySQL默认配置了许多不同的存储引擎，可以预先设置或者在MySQL服务器中启用。你可以选择适用于服务器、数据库和表格的存储引擎，以便在选择如何存储你的信息、如何检索这些信息以及你需要你的数据结合什么性能和功能的时候为你提供最大的灵活性。<br>使用以下命令可以查看MySQL支持的引擎：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; show engines;</span><br></pre></td></tr></table></figure>
+
+<h2 id="一、InnoDB存储引擎"><a href="#一、InnoDB存储引擎" class="headerlink" title="一、InnoDB存储引擎"></a>一、InnoDB存储引擎</h2><p>InnoDB是MySQL的默认事务型引擎，也是最重要、使用最广泛的存储引擎。它被设计 用来处理大量的短期(short-lived)事务，短期事务大部分情况是正常提交的，很少会被回滚。InnoDB的性能和自动崩溃恢复特性，使得它在非事务型存储的需求中也很流 行。除非有非常特别的原因需要使用其他的存储引擎，否则应该优先考虑InnoDB引擎。 □D＞如果要学习存储引擎，InnoDB也是一个非常好的值得花最多的时间去深入学习的对象， 收益肯定比将时间平均花在每个存储引擎的学习上要高得多。</p>
+<h3 id="InnoDB的历史"><a href="#InnoDB的历史" class="headerlink" title="InnoDB的历史"></a>InnoDB的历史</h3><p>InnoDB有着复杂的发布历史，了解一下这段历史对于理解InnoDB很有帮助。2008年， 发布了所谓的InnoDB plugin,适用于MySQL 5.1版本，但这是Oracle创建的下一代 InnoDB引擎，其拥有者是InnoDB而不是MySQL。这基于很多原因，这些原因如果要一一道来，恐怕得喝掉好几桶啤酒。MySQL默认还是选择了集成旧的InnoDB引擎。当 然用户可以自行选择使用新的性能更好、扩展性更佳的InnoDB plugin来覆盖旧的版本。 直到最后，在Oracle收购了 Sun公司后发布的MySQL 5.5中才彻底使用InnoDB plugin 替代了旧版本的InnoDB (是的，这也意味着InnoDB plugin已经是原生编译了，而不是编译成一个插件，但名字已经约定俗成很难更改)。</p>
+<p>这个现代的InnoDB版本，也就是MySQL 5.1中所谓的InnoDB plugin,支持一些新特性， 诸如利用排序创建索引(building index by sorting)、删除或者增加索引时不需要复制全表数据、新的支持压缩的存储格式、新的大型列值如BLOB的存储方式，以及文件格式管 理等。很多用户在MySQL 5.1中没有使用InnoDB plugin,或许是因为他们没有注意到有这个区别。所以如果你使用的是MySQL 5.1, 一定要使用InnoDB plugin,真的比旧版本的InnoDB要好很多。</p>
+<p>InnoDB是一个很重要的存储引擎，很多个人和公司都对其贡献代码，而不仅仅是 Oracle公司的开发团队。一些重要的贡献者包括Google、Yasufumi Kinoshita、Percona,、Facebook等，他们的一些改进被直接移植到官方版本，也有一些由InnoDB团队重新实现。 在过去的几年间，InnoDB的改进速度大大加快，主要的改进集中在可测量性、可扩展性、 可配置化、性能、各种新特性和对Windows的支持等方面。MySQL 5.6实验室预览版 和里程碑版也包含了一系列重要的InnoDB新特性。</p>
+<p>为改善InnoDB的性能，Oracle投入了大量的资源，并做了很多卓有成效的工作(外部贡献者对此也提供了很大的帮助)。在本书的第二版中，我们注意到在超过四核CPU的系统中InnoDB表现不佳，而现在已经可以很好地扩展至24核的系统，甚至在某些场景， 32核或者更多核的系统中也表现良好。很多改进将在即将发布的MySQL 5.6中引入， 当然也还有机会做更进一步的改善。</p>
+<h3 id="InnoDB概览"><a href="#InnoDB概览" class="headerlink" title="InnoDB概览"></a>InnoDB概览</h3><p>InnoDB的数据存储在表空间(tablespace)中，表空间是由InnoDB管理的一个黑盒子， 由一系列的数据文件组成。在MySQL 4.1以后的版本中，InnoDB可以将每个表的数据 和索引存放在单独的文件中。InnoDB也可以使用裸设备作为表空间的存储介质，但现代的文件系统使得裸设备不再是必要的选择。</p>
+<p>InnoDB采用MVCC来支持高并发，并且实现了四个标准的隔离级别。其默认级别是 REPEATABLE READ (可重复读)，并且通过间隙锁(next-key locking)策略防止幻读的出现。 间隙锁使得InnoDB不仅仅锁定査询涉及的行，还会对索引中的间隙进行锁定，以防止幻影行的插入。    -</p>
+<p>InnoDB表是基于聚簇索引建立的，我们会在后面的章节详细讨论聚簇索引。IimoDB的 索引结构和MySQL的其他存储引擎有很大的不同，聚簇索引对主键査询有很髙的性能。 不过它的二级索引(secondary index,非主键索引)中必须包含主键列，所以如果主键 列很大的话，其他的所有索引都会很大。因此，若表上的索引较多的话，主键应当尽可 能的小。InnoDB的存储格式是平台独立的，也就是说可以将数据和索引文件从Intel平 台复制到PowerPC或者Sun SPARC平台。</p>
+<p>InnoDB内部做了很多优化，包括从磁盘读取数据时釆用的可预测性预读，能够自动在 内存中创建hash索引以加速读操作的自适应哈希索引(adaptive hash index),以及能够 加速插入操作的插入缓冲区(insert buffer)等。本书后面将更详细地讨论这些内容。</p>
+<p>InnoDB的行为是非常复杂的，不容易理解。如果使用了 InnoDB引擎，笔者强烈建议阅 读官方手册中的”InnoDB事务模型和锁” 一节。如果应用程序基于InnoDB构建，则事 先了解一下InnoDB的MVCC架构带来的一些微妙和细节之处是非常有必要的。存储引 擎要为所有用户甚至包括修改数据的用户维持一致性的视图，是非常复杂的工作。</p>
+<p>作为事务型的存储引擎，InnoDB通过一些机制和工具支持真正的热备份，Oracle提供 的MySQL Enterprise Backup. Percona提供的开源的XtraBackup都可以做到这一点。 MySQL的其他存储引擎不支持热备份，要获取一致性视图需要停止对所有表的写入， 而在读写混合场景中，停止写入可能也意味着停止读取。</p>
+<h2 id="MylSAM存储引擎"><a href="#MylSAM存储引擎" class="headerlink" title="MylSAM存储引擎"></a>MylSAM存储引擎</h2><p>在MySQL 5.1及之前的版本，MylSAM是默认的存储引擎。MylSAM提供了大量的特 性，包括全文索引、压缩、空间函数(GIS)等，但MylSAM不支持事务和行级锁，而且有一个毫无疑问的缺陷就是崩溃后无法安全恢复。正是由于MylSAM引擎的缘故，即 使MySQL支持事务已经很长时间了，在很多人的概念中MySQL还是非事务型的数据 库。尽管MylSAM引擎不支持事务、不支持崩溃后的安全恢复，但它绝不是一无是处的。对于只读的数据，或者表比较小、可以忍受修复（repair）操作，则依然可以继续使 用MylSAM （但请不要默认使用MylSAM,而是应当默认使用InnoDB）。</p>
+<h3 id="存储"><a href="#存储" class="headerlink" title="存储"></a>存储</h3><p>MylSAM会将表存储在两个文件中：数据文件和索引文件，分别以.MYD和.MYI为扩展名。MylSAM表可以包含动态或者静态（长度固定）行。MySQL会根据表的定义来 决定采用何种行格式。MylSAM表可以存储的行记录数，一般受限于可用的磁盘空间， 或者操作系统中单个文件的最大尺寸。</p>
+<p>在MySQL 5.0中，MylSAM表如果是变长行，则默认配置只能处理256TB的数据，因 .为指向数据记录的指针长度是6个字节。而在更早的版本中，指针长度默认是4字节，所以只能处理4GB的数据。而所有的MySQL版本都支持8字节的指针。要改变 MylSAM表指针的长度（调高或者调低），可以通过修改表的MAX_R0WS和AVG_R0W_ LENGTH选项的值来实现，两者相乘就是表可能达到的最大大小。修改这两个参数会导致 重建整个表和表的所有索引，这可能需要很长的时间才能完成。</p>
+<h3 id="MylSAM特性"><a href="#MylSAM特性" class="headerlink" title="MylSAM特性"></a>MylSAM特性</h3><p>作为MySQL最早的存储引擎之一，MylSAM有一些已经开发出来很多年的特性，可以 满足用户的实际需求。</p>
+<h4 id="加锁与并发"><a href="#加锁与并发" class="headerlink" title="加锁与并发"></a>加锁与并发</h4><p>MylSAM对整张表加锁，而不是针对行。读取时会对需要读到的所有表加共享锁， 写入时则对表加排他锁。但是在表有读取査询的同时，也可以往表中插入新的记录 （这被称为并发插入，CONCURRENT INSERT） o</p>
+<h4 id="修复"><a href="#修复" class="headerlink" title="修复"></a>修复</h4><p>对于MylSAM表，MySQL可以手工或者自动执行检査和修复操作，但这里说的修 复和事务.恢复以及崩溃恢复是不同的概念。执行表的修复可能导致一些数据丢失， 而且修复操作是非常慢的。可以通过CHECK TABLE mytable检査表的错误，如果有 错误可以通过执行REPAIR TABLE mytable进行修复。另外，如果MySQL服务器已 经关闭，也可以通过<strong>myisamchk</strong>命令行工具进行检査和修复操作。</p>
+<h4 id="索引特性"><a href="#索引特性" class="headerlink" title="索引特性"></a>索引特性</h4><p>对于MylSAM表，即使是BLOB和TEXT等长字段，也可以基于其前500个字符创建 </p>
+<p>索引。MylSAM也支持全文索引，这是一种基于分词创建的索引，可以支持复杂的 査询。</p>
+<h4 id="延迟更新索引键-Delayed-Key-Write"><a href="#延迟更新索引键-Delayed-Key-Write" class="headerlink" title="延迟更新索引键(Delayed Key Write)"></a>延迟更新索引键(Delayed Key Write)</h4><p>创建MylSAM表的时候，如果指定了 DELAY_KEY_WRITE选项，在每次修改执行完成 时，不会立刻将修改的索引数据写入磁盘，而是会写到内存中的键缓冲区(in.memory key buffer),只有在清理键缓冲区或者关闭表的时候才会将对应的索引块写入到磁 盘。这种方式可以极大地提升写入性能，但是在数据库或者主机崩溃时会造成索引 损坏，需要执行修复操作。延迟更新索引键的特性，可以在全局设置，也可以为单 个表设置。</p>
+<h3 id="MylSAM压缩表"><a href="#MylSAM压缩表" class="headerlink" title="MylSAM压缩表"></a>MylSAM压缩表</h3><p>如果表在创建并导入数据以后，不会再进行修改操作，那么这样的表或许适合釆用- MylSAM压缩表。</p>
+<p>可以使用<strong>myisampack</strong>对MylSAM表进行压缩(也叫打包pack)o压缩表是不能进行修 改的(除非先将表解除压缩，修改数据，然后再次压缩)。压缩表可以极大地减少磁盘 空间占用，因此也可以减少磁盘I/O,从而提升査询性能。压缩表也支持索引，但索引 也是只读的。</p>
+<p>以现在的硬件能力，对大多数应用场景，读取压缩表数据时的解压带来的开销影响并不 大，而减少I/O带来的好处则要大得多。压缩时表中的记录是独立压缩的，所以读取单 行的时候不需要去解压整个表(甚至也不解压行所在的整个页面)。</p>
+<h3 id="MylSAM性能"><a href="#MylSAM性能" class="headerlink" title="MylSAM性能"></a>MylSAM性能</h3><p>MylSAM引擎设计简单，数据以紧密格式存储，所以在某些场景下的性能很好。 MylSAM有一些服务器级别的性能扩展限制，比如对索引键缓冲区(key cache)的 Mutex锁，MariaDB基于段(segment)的索引键缓冲区机制来避免该问题。但MylSAM 最典型的性能问题还是表锁的问题，如果你发现所有的査询都长期处于“Locked”状态， 那么毫无疑问表锁就是罪魁祸首。</p>
+<h1 id="MySQL内建的其他存储引擎"><a href="#MySQL内建的其他存储引擎" class="headerlink" title="MySQL内建的其他存储引擎"></a>MySQL内建的其他存储引擎</h1><p>MySQL还有一些有特殊用途的存储引擎。在新版本中，有些可能因为一些原因已经不 再支持;另外还有些会继续支持，但是需要明确地启用后才能使用。</p>
+<h2 id="Archive-引擎"><a href="#Archive-引擎" class="headerlink" title="Archive 引擎"></a>Archive 引擎</h2><p>Archive存储引擎只支持INSERT和SELECT操作，在MySQL 5.1之前也不支持索引。</p>
+<p>Archive引擎会缓存所有的写并利用<strong>zlib</strong>对插入的行进行压缩，所以比MylSAM表的磁 盘I/O更少。但是每次SELECT査询都需要执行全表扫描。所以Archive表适合日志和 数据釆集类应用，这类应用做数据分析时往往需要全表扫描。或者在一些需要更快速的 INSERT操作的场合下也可以使用。</p>
+<p>Archive引擎支持行级锁和专用的缓冲区，所以可以实现高并发的插入。在一个査询开 始直到返回表中存在的所有行数之前，Archive引擎会阻止其他的SELECT执行，以实现 一致性读。另外，也实现了批量插入在完成之前对读操作是不可见的。这种机制模仿了 事务和MVCC的一些特性，但Archive引擎不是一个事务型的引擎，而是一个针对高速 插入和压缩做了优化的简单引擎。</p>
+<h2 id="Blackhole-引擎"><a href="#Blackhole-引擎" class="headerlink" title="Blackhole 引擎"></a>Blackhole 引擎</h2><p>Blackhole引擎没有实现任何的存储机制，它会丢弃所有插入的数据，不做任何保存。但 是服务器会记录Blackhole表的日志，所以可以用于复制数据到备库，或者只是简单地 记录到日志。这种特殊的存储引擎可以在一些特殊的复制架构和日志审核时发挥作用。 但这种应用方式我们碰到过很多问题，因此并不推荐。</p>
+<h2 id="CSV引擎"><a href="#CSV引擎" class="headerlink" title="CSV引擎"></a>CSV引擎</h2><p>CSV引擎可以将普通的CSV文件（逗号分割值的文件）作为MySQL的表来处理，但 这种表不支持索引。CSV引擎可以在数据库运行时拷入或者拷出文件。可以将Excel 等电子表格软件中的数据存储为CSV文件，然后复制到MySQL数据目录下，就能在 MySQL中打开使用。同样，如果将数据写入到一个CSV引擎表，其他的外部程序也能 立即从表的数据文件中读取csv格式的数据。因此CSV引擎可以作为一种数据交换的 机制，非常有用。</p>
+<h2 id="Federated-引擎"><a href="#Federated-引擎" class="headerlink" title="Federated 引擎"></a>Federated 引擎</h2><p>Federated引擎是访问其他MySQL服务器的一个代理，它会创建一个到远程MySQL服 务器的客户端连接，并将査询传输到远程服务器执行，然后提取或者发送需要的数据。 最初设计该存储引擎是为了和企业级数据库如Microsoft SQL Server和Oracle的类似特 性竞争的，可以说更多的是一种市场行为。尽管该引擎看起来提供了一种很好的跨服务 器的灵活性，但也经常带来问题，因此默认是禁用的。MariaDB使用了它的一个后续改 进版本，叫做FederatedXo</p>
+<h2 id="Memory引擎"><a href="#Memory引擎" class="headerlink" title="Memory引擎"></a>Memory引擎</h2><p>如果需要快速地访问数据，并且这些数据不会被修改，重启以后丢失也没有关系，那么 使用Memory表(以前也叫做HEAP表)是非常有用的。Memory表至少比MylSAM表 要快一个数量级，因为所有的数据都保存在内存中，不需要进行磁盘I/O。Memory表的 结构在重启以后还会保留，但数据会丢失。</p>
+<p>Memroy表在很多场景可以发挥好的作用：</p>
+<ul>
+<li><p>用于査找(lookup)或者映射(mapping)表，例如将邮编和州名映射的表。</p>
+</li>
+<li><p>用于缓存周期性聚合数据(periodically aggregated data)的结果。</p>
+</li>
+<li><p>用于保存数据分析中产生的中间数据。</p>
+</li>
+</ul>
+<p>Memory表支持Hash索引，因此査找操作非常快。虽然Memory表的速度非常快，但还 是无法取代传统的基于磁盘的表。Memroy表是表级锁，因此并发写入的性能较低。它 不支持BLOB或TEXT类型的列，并且每行的长度是固定的，所以即使指定了 VARCHAR列， 实际存储时也会转换成CHAR,这可能导致部分内存的浪费(其中一些限制在Percona版 本已经解决)。</p>
+<p>如果MySQL在执行査询的过程中需要使用临时表来保存中间结果，内部使用的临时表 就是Memory表。如果中间结果太大超出了 Memory表的限制，或者含有BLOB或TEXT 字段，则临时表会转换成MylSAM表。在后续的章节还会继续讨论该问题。</p>
+<p>人们经常混淆<strong>Memory</strong>表和临时表。临时表是指使用<strong>CREATE TEMPORARY TABLE</strong>语句 创建的表，它可以使用任何存储引擎，因此和<strong>Memory</strong>表不是一回事。临时表只在 单个连接中可见，当连接断开时，临时表也将不复存在。</p>
+<h2 id="Merge引擎"><a href="#Merge引擎" class="headerlink" title="Merge引擎"></a>Merge引擎</h2><p>Merge引擎是MylSAM引擎的一个变种。Merge表是由多个MylSAM表合并而来的虚 拟表。如果将MySQL用于日志或者数据仓库类应用，该引擎可以发挥作用。但是引入 分区功能后，该引擎已经被放弃(参考第7章)。</p>
+<h2 id="NDB集群引擎"><a href="#NDB集群引擎" class="headerlink" title="NDB集群引擎"></a>NDB集群引擎</h2><p>2003年，当时的MySQL AB公司从索尼爱立信公司收购了 NDB数据库，然后开发了 NDB集群存储引擎，作为SQL和NDB原生协议之间的接口。MySQL服务器、NDB集 群存储引擎，以及分布式的、share.nothing的、容灾的、高可用的NDB数据库的组合， 被称为MySQL集群(MySQL Cluster) </p>
+<h2 id="第三方存储引擎"><a href="#第三方存储引擎" class="headerlink" title="第三方存储引擎"></a>第三方存储引擎</h2><p>OLTP类引擎等不多介绍了。</p>
+
+        <h2>相关文章</h2><ul><li><a href="/mysql/index-principle-of-mysql/">MySQL之索引原理分析</a></li><li><a href="/mysql/under-what-circumstances-will-mysql-index-fail/">MySQL索引在什么情况下会失效</a></li><li><a href="/mysql/mysql-index-failure/">MySQL之索引失效分析及优化相关</a></li><li><a href="/mysql/mysql-index-type-distinction/">MySQL索引类型区分</a></li><li><a href="/mysql/navicat-mysql-index-type/">Navicat建表MySQL索引类型</a></li></ul>
+    </div>
+    
+        <div class="reward" ontouchstart>
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+            
+                <span class="reward-type">
+                    <img class="wechat" src="/images/weixin.png"><b>微信打赏</b>
+                </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">赞赏是不耍流氓的鼓励</p>
+</div>
+
+
+    
+
+
+    
+        <div class="post-footer">
+            <div class="col-sm-10">
+                <div>
+                    <b>本文链接</b>：<a href="/mysql/mysql-storage-engines/" target="_blank">MySQL各存储引擎</a>
+                </div>
+                <div>
+                    
+                        转载声明：本博客由小小冒险家创作，采用 <a href="https://creativecommons.org/licenses/by-nc-nd/3.0/" target="_blank"> CC BY 3.0 CN </a> 许可协议。可自由转载、引用，但需署名作者且注明文章出处。如转载至微信公众号，请在文末添加作者公众号二维码。
+                    
+                </div>
+                <div>
+                    
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <img src="/icons/wx.jpg" width=100%/>
+            </div>
+        </div>
+    
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+        <a target="_blank" href="/alibaba/nacos-installation-and-startup/" class="pre-post btn btn-default"
+           title='Nacos介绍与安装启动'>
+            <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+            <span class="hidden-xs">Nacos介绍与安装启动</span>
+        </a>
+    
+    
+        <a target="_blank" href="/mysql/index-principle-of-mysql/" class="next-post btn btn-default"
+           title='MySQL之索引原理分析'>
+            <span class="hidden-lg">下一篇</span>
+            <span class="hidden-xs">MySQL之索引原理分析</span><i class="fa fa-angle-right fa-fw"></i>
+        </a>
+    
+</div>
+
+
+    <div id="comments">
+        
+   <p>评论系统未开启，无法评论！</p>
+
+    </div>
+
+
+
+
+
+
+                </main>
+                
+    <aside class="col-md-4 sidebar">
+        
+        <div class="widget about-me">
+    <div class="row">
+        <div class="col-md-5">
+            <img src="/icons/wx.jpg" alt="公众号" class="img-responsive center-block">
+        </div>
+        <div class="col-md-7">
+            <a class="series-a" href="javascript:void(0)">公众号</a>
+            <ul>
+                <li>• 技术干货推送</li>
+                <li>• 日常好文分享</li>
+                <li><b>• 扫码领取更多惊喜</b></li>
+            </ul>
+        </div>
+    </div>
+    
+<!--        <div class="row">-->
+<!--            <div class="col-md-5">-->
+<!--                <img src="/icons/xcx.jpg" alt="小程序" class="img-responsive">-->
+<!--            </div>-->
+<!--            <div class="col-md-7">-->
+<!--                <a class="series-a" href="javascript:void(0)">小程序</a>-->
+<!--                <ul>-->
+<!--                    <li>• 原创笔记</li>-->
+<!--                    <li>• 独家心法</li>-->
+<!--                    <li><b>• 扫码领取</b></li>-->
+<!--                </ul>-->
+<!--            </div>-->
+<!--        </div>-->
+    
+</div>
+
+
+
+
+        
+        
+    <div class="widget">
+        <h3 class="title">网站公告</h3>
+        <div class="notification">
+            <p>
+  <b>QQ群</b>：415777345<br/>
+</p>
+
+<p>
+<b>联系博主QQ</b>：210006540<br/>
+</p>
+        </div>
+    </div>
+
+        
+        
+    
+        <div class="ad">
+            <div class="row">
+                <div class="col-md-12">
+                    <a href="https://promotion.aliyun.com/ntms/act/qwbk.html?userCode=qhtujh03" rel="nofollow" target="_blank">
+                        <img class="img-responsive center-block"
+                             title="阿里全民云计算"
+                             src="/icons/380-120.png"
+                        >
+                    </a>
+                </div>
+            </div>
+        </div>
+    
+
+
+
+
+        
+        
+    <div class="widget">
+        <h3 class="title">分类</h3>
+        <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Ajax/"><i class="fa" aria-hidden="true">Ajax</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/"><i class="fa" aria-hidden="true">Docker</i></a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Druid/"><i class="fa" aria-hidden="true">Druid</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Feign/"><i class="fa" aria-hidden="true">Feign</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/HTTP/"><i class="fa" aria-hidden="true">HTTP</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/"><i class="fa" aria-hidden="true">Hexo</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JRebel/"><i class="fa" aria-hidden="true">JRebel</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/"><i class="fa" aria-hidden="true">Java</i></a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Maven/"><i class="fa" aria-hidden="true">Maven</i></a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MongoDB/"><i class="fa" aria-hidden="true">MongoDB</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link current" href="/categories/MySQL/"><i class="fa" aria-hidden="true">MySQL</i></a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Nexus3-x/"><i class="fa" aria-hidden="true">Nexus3.x</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/PowerShell/"><i class="fa" aria-hidden="true">PowerShell</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Quartz/"><i class="fa" aria-hidden="true">Quartz</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/"><i class="fa" aria-hidden="true">Redis</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/RocketMQ/"><i class="fa" aria-hidden="true">RocketMQ</i></a><span class="category-list-count">12</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Sharding-JDBC/"><i class="fa" aria-hidden="true">Sharding-JDBC</i></a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/"><i class="fa" aria-hidden="true">Spring</i></a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring-Cloud/"><i class="fa" aria-hidden="true">Spring Cloud</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringBoot/"><i class="fa" aria-hidden="true">SpringBoot</i></a><span class="category-list-count">15</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringCloud-Alibaba/"><i class="fa" aria-hidden="true">SpringCloud Alibaba</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringSession/"><i class="fa" aria-hidden="true">SpringSession</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/主键/"><i class="fa" aria-hidden="true">主键</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/其他/"><i class="fa" aria-hidden="true">其他</i></a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/安装教程/"><i class="fa" aria-hidden="true">安装教程</i></a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/工具/"><i class="fa" aria-hidden="true">工具</i></a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/微服务/"><i class="fa" aria-hidden="true">微服务</i></a><span class="category-list-count">17</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据库/"><i class="fa" aria-hidden="true">数据库</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/面试/"><i class="fa" aria-hidden="true">面试</i></a><span class="category-list-count">1</span></li></ul>
+    </div>
+
+
+        
+        
+  <div class="widget">
+    <h3 class="title">标签云</h3>
+    <div class="content tag-cloud">
+        
+            <canvas width="300" height="300" id="tag-cloud-3d">
+                <a href="/tags/Ajax/" style="font-size: 10px;">Ajax</a> <a href="/tags/Alibaba/" style="font-size: 10px;">Alibaba</a> <a href="/tags/Banner/" style="font-size: 10px;">Banner</a> <a href="/tags/Centos/" style="font-size: 10px;">Centos</a> <a href="/tags/Docker/" style="font-size: 17.5px;">Docker</a> <a href="/tags/Druid/" style="font-size: 10px;">Druid</a> <a href="/tags/Eureka/" style="font-size: 10.83px;">Eureka</a> <a href="/tags/FastDFS/" style="font-size: 10.83px;">FastDFS</a> <a href="/tags/Feign/" style="font-size: 13.33px;">Feign</a> <a href="/tags/File/" style="font-size: 10px;">File</a> <a href="/tags/HTTP/" style="font-size: 10px;">HTTP</a> <a href="/tags/Hexo/" style="font-size: 10.83px;">Hexo</a> <a href="/tags/HikariCP/" style="font-size: 10px;">HikariCP</a> <a href="/tags/Hystrix/" style="font-size: 10.83px;">Hystrix</a> <a href="/tags/Hystrix-Dashboard/" style="font-size: 10px;">Hystrix Dashboard</a> <a href="/tags/IDEA/" style="font-size: 10px;">IDEA</a> <a href="/tags/JDK/" style="font-size: 10px;">JDK</a> <a href="/tags/JRebel/" style="font-size: 10px;">JRebel</a> <a href="/tags/Java/" style="font-size: 12.5px;">Java</a> <a href="/tags/Java-b2-spring注解/" style="font-size: 15.83px;">Java-b2-spring注解</a> <a href="/tags/Map/" style="font-size: 10px;">Map</a> <a href="/tags/Maven/" style="font-size: 12.5px;">Maven</a> <a href="/tags/Memcache/" style="font-size: 10px;">Memcache</a> <a href="/tags/MongoDB/" style="font-size: 10.83px;">MongoDB</a> <a href="/tags/MongoTemplate/" style="font-size: 10.83px;">MongoTemplate</a> <a href="/tags/MySQL/" style="font-size: 15px;">MySQL</a> <a href="/tags/MySQL8/" style="font-size: 10px;">MySQL8</a> <a href="/tags/Mysql/" style="font-size: 10px;">Mysql</a> <a href="/tags/Navicat/" style="font-size: 10px;">Navicat</a> <a href="/tags/Nexus3-x/" style="font-size: 10.83px;">Nexus3.x</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/PowerShell/" style="font-size: 10px;">PowerShell</a> <a href="/tags/Quartz/" style="font-size: 10px;">Quartz</a> <a href="/tags/RabbitMQ/" style="font-size: 10px;">RabbitMQ</a> <a href="/tags/Redis/" style="font-size: 12.5px;">Redis</a> <a href="/tags/Ribbon/" style="font-size: 10.83px;">Ribbon</a> <a href="/tags/RocketMQ/" style="font-size: 18.33px;">RocketMQ</a> <a href="/tags/Sharding-JDBC/" style="font-size: 14.17px;">Sharding-JDBC</a> <a href="/tags/SonarQube/" style="font-size: 10px;">SonarQube</a> <a href="/tags/Spring/" style="font-size: 16.67px;">Spring</a> <a href="/tags/Spring-Boot/" style="font-size: 11.67px;">Spring Boot</a> <a href="/tags/Spring-Cloud/" style="font-size: 16.67px;">Spring Cloud</a> <a href="/tags/Spring-Cloud-Gateway/" style="font-size: 10.83px;">Spring Cloud Gateway</a> <a href="/tags/Spring-Cloud-Sleuth/" style="font-size: 10px;">Spring Cloud Sleuth</a> <a href="/tags/SpringBoot/" style="font-size: 20px;">SpringBoot</a> <a href="/tags/SpringCloud/" style="font-size: 10px;">SpringCloud</a> <a href="/tags/SpringCloud-Alibaba/" style="font-size: 10px;">SpringCloud Alibaba</a> <a href="/tags/SpringCloud-Stream/" style="font-size: 10px;">SpringCloud Stream</a> <a href="/tags/SpringSession/" style="font-size: 10px;">SpringSession</a> <a href="/tags/Tomcat/" style="font-size: 10px;">Tomcat</a> <a href="/tags/Transaction/" style="font-size: 10px;">Transaction</a> <a href="/tags/Turbine/" style="font-size: 10px;">Turbine</a> <a href="/tags/Web应用/" style="font-size: 10px;">Web应用</a> <a href="/tags/Windows/" style="font-size: 10px;">Windows</a> <a href="/tags/Windows-11/" style="font-size: 10px;">Windows 11</a> <a href="/tags/Zipkin/" style="font-size: 10px;">Zipkin</a> <a href="/tags/Zookeeper/" style="font-size: 10px;">Zookeeper</a> <a href="/tags/Zuul/" style="font-size: 10px;">Zuul</a> <a href="/tags/assessToken/" style="font-size: 10px;">assessToken</a> <a href="/tags/httpclient/" style="font-size: 10px;">httpclient</a> <a href="/tags/logback/" style="font-size: 10px;">logback</a> <a href="/tags/session共享/" style="font-size: 10px;">session共享</a> <a href="/tags/theme/" style="font-size: 10px;">theme</a> <a href="/tags/互联网产品/" style="font-size: 10px;">互联网产品</a> <a href="/tags/其他/" style="font-size: 10px;">其他</a> <a href="/tags/分布式/" style="font-size: 10.83px;">分布式</a> <a href="/tags/加密/" style="font-size: 10px;">加密</a> <a href="/tags/原理/" style="font-size: 10px;">原理</a> <a href="/tags/发布/" style="font-size: 10px;">发布</a> <a href="/tags/图片水印/" style="font-size: 10px;">图片水印</a> <a href="/tags/工具/" style="font-size: 10px;">工具</a> <a href="/tags/并发编程/" style="font-size: 10px;">并发编程</a> <a href="/tags/循环依赖/" style="font-size: 10px;">循环依赖</a> <a href="/tags/微服务/" style="font-size: 19.17px;">微服务</a> <a href="/tags/时间工具类/" style="font-size: 10px;">时间工具类</a> <a href="/tags/注解/" style="font-size: 10.83px;">注解</a> <a href="/tags/消息订阅/" style="font-size: 10px;">消息订阅</a> <a href="/tags/索引/" style="font-size: 14.17px;">索引</a> <a href="/tags/红黑树/" style="font-size: 10px;">红黑树</a>
+            </canvas>
+        
+    </div>
+  </div>
+
+
+        
+        
+    <div class="widget">
+        <h3 class="title">归档</h3>
+        <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/"><i class="fa" aria-hidden="true">2022年09月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/05/"><i class="fa" aria-hidden="true">2022年05月</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/"><i class="fa" aria-hidden="true">2021年07月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/"><i class="fa" aria-hidden="true">2021年06月</i></a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/"><i class="fa" aria-hidden="true">2021年03月</i></a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/"><i class="fa" aria-hidden="true">2021年02月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/"><i class="fa" aria-hidden="true">2020年11月</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/"><i class="fa" aria-hidden="true">2020年09月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/"><i class="fa" aria-hidden="true">2020年08月</i></a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/"><i class="fa" aria-hidden="true">2020年07月</i></a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/"><i class="fa" aria-hidden="true">2020年06月</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/"><i class="fa" aria-hidden="true">2020年04月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/"><i class="fa" aria-hidden="true">2020年03月</i></a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/"><i class="fa" aria-hidden="true">2020年02月</i></a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/"><i class="fa" aria-hidden="true">2020年01月</i></a><span class="archive-list-count">23</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/"><i class="fa" aria-hidden="true">2019年12月</i></a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/"><i class="fa" aria-hidden="true">2019年11月</i></a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/"><i class="fa" aria-hidden="true">2019年10月</i></a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/"><i class="fa" aria-hidden="true">2019年09月</i></a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/"><i class="fa" aria-hidden="true">2019年08月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/"><i class="fa" aria-hidden="true">2019年05月</i></a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/"><i class="fa" aria-hidden="true">2019年04月</i></a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/"><i class="fa" aria-hidden="true">2019年03月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/"><i class="fa" aria-hidden="true">2019年02月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/"><i class="fa" aria-hidden="true">2019年01月</i></a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/"><i class="fa" aria-hidden="true">2018年12月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/"><i class="fa" aria-hidden="true">2018年10月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/"><i class="fa" aria-hidden="true">2018年09月</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/"><i class="fa" aria-hidden="true">2018年08月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/"><i class="fa" aria-hidden="true">2018年06月</i></a><span class="archive-list-count">2</span></li></ul>
+    </div>
+
+
+        
+        
+    <div class="widget">
+      <h3 class="title">社交</h3> 
+        <div class="content social">
+            
+	            <a href="//github.com/zhaokejin" rel="external nofollow" title="GitHub" target="_blank">
+			    	<i class="github fa fa-github"></i>
+			    </a>
+            
+	            <a href="//gitee.com/zhaokejin" rel="external nofollow" title="Gitee" target="_blank">
+			    	<i class="git fa fa-git"></i>
+			    </a>
+            
+	            <a href="mailto:210006540qq.com" rel="external nofollow" title="邮箱" target="_blank">
+			    	<i class="envelope-o fa fa-envelope-o"></i>
+			    </a>
+            
+	            <a href="//wpa.qq.com/msgrd?v=3&uin=210006540&site=qq&menu=yes" rel="external nofollow" title="QQ" target="_blank">
+			    	<i class="qq fa fa-qq"></i>
+			    </a>
+            
+	            <a href="//shang.qq.com/wpa/qunwpa?idkey=7b19717710dcc2c78996f316db3ab3365bde39bc3c60de7a6c59fe07231e231a" rel="external nofollow" title="QQ群" target="_blank">
+			    	<i class="group fa fa-group"></i>
+			    </a>
+            
+	            <a href="/atom.xml" rel="external nofollow" title="RSS" target="_blank">
+			    	<i class="feed fa fa-feed"></i>
+			    </a>
+            
+        </div>
+    </div>
+
+
+        
+        
+
+        
+    </aside>
+
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+
+<a id="back-to-top" class="icon-btn hide">
+	<i class="fa fa-chevron-up"></i>
+</a>
+
+
+
+
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+        访问量:
+        <strong id="busuanzi_value_site_pv">
+            <i class="fa fa-spinner fa-spin"></i>
+        </strong>
+        &nbsp; | &nbsp;
+        访客数:
+        <strong id="busuanzi_value_site_uv">
+            <i class="fa fa-spinner fa-spin"></i>
+        </strong>
+<!--        &nbsp; <strong>Since 2018-12-26</strong>-->
+    
+</div>
+
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy; 2018 - 2023
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    <a href="//www.beian.miit.gov.cn/" class="copyright-links" target="_blank" rel="nofollow">鲁ICP备18033870号</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/js/jquery.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/bootstrap-hover-dropdown.min.js"></script>
+
+
+	<script src="/js/search.js?rev=@@hash"></script>
+
+
+
+    <script src="/assets/tagcanvas.min.js?rev=2.9"></script>
+    <script>
+        var tagOption = {
+            textColour: '#29afec', // 字体颜色
+            outlineMethod: 'block', // 选中模式
+            outlineColour: '#FFDAB9', // 选中模式的颜色
+            interval: 30 || 30, // 动画帧之间的时间间隔，值越大，转动幅度越大
+            textHeight: 13,
+            outlineRadius: 3,
+            freezeActive: true || '', // 选中的标签是否继续滚动
+            frontSelect: true || '', // 不选标签云后部的标签
+            initial: [0.1, -0.1],
+            depth: 0.5,
+            decel: 0.95,
+            maxSpeed: 0.03,
+            reverse: true || '', // 是否反向触发
+            fadeIn: 500, // 进入动画时间
+            wheelZoom: false || '' // 是否启用鼠标滚轮
+        }
+        TagCanvas.Start('tag-cloud-3d','',tagOption);
+    </script>
+
+
+
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<script src="/js/app.js?rev=@@hash"></script>
+<script src="/jquery.fancybox.js?v=2.1.5"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('.fancybox').fancybox();
+    });
+    // 给图片添加链接
+    $(document).ready(function() {
+        $("p img").each(function() {
+            var strA = "<a id='yourid' class='fancybox' data-fancybox-group='gallery'  href='" + this.src + "'></a>";
+            $(this).wrapAll(strA);
+        });
+    });
+    // fancybox
+    $("#yourid").fancybox({
+        openEffect    : 'elastic',
+        closeEffect   : 'elastic',
+    });
+</script>
+
+</body>
+</html>

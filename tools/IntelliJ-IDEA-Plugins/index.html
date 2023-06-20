@@ -1,0 +1,899 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="小小冒险家的博客">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.2.3">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="https://www.cicoding.cn">
+    <!--SEO-->
+
+    <meta name="keywords" content="IDEA">
+
+
+    <meta name="description" content="GsonFormat插件作用：将JSON文本转换成Java类，并且支持Lombok
+下载数：651K
+插件主页：https://plugins.jetbrains.com/plugin/7654-gsonformat
+GitHub：https://github.com/zzz40500/Gso...">
+
+
+
+<meta name="robots" content="all">
+<meta name="google" content="all">
+<meta name="googlebot" content="all">
+<meta name="verify" content="all">
+    <!--Title-->
+
+
+<title>IntelliJ IDEA 快速高效 Plugins | 小小冒险家的博客</title>
+
+
+    <link rel="alternate" href="/atom.xml" title="小小冒险家的博客" type="application/atom+xml">
+
+
+    <link rel="icon" href="/favicon.png">
+
+    
+
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7">
+<link rel="stylesheet" href="/jquery.fancybox.css?v=2.1.5">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.5.0">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash">
+
+
+
+
+    
+
+
+
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?601ebec7733383ef248ca61fc0a0db95";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+
+
+    
+
+</head>
+
+</html>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+
+<body>
+    
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row clearfix">
+            <div class="col-md-12 column">
+                <nav class="navbar navbar-default" style="background-color:#fff;border:0;margin-bottom:0"
+                     role="navigation">
+                    <div class="navbar-header">
+<!--                        <button type="button" class="navbar-toggle" data-toggle="collapse"-->
+<!--                                data-target="#navbar-collapse-1">-->
+<!--                            <span class="sr-only">切</span>-->
+<!--                            <span class="icon-bar"></span>-->
+<!--                            <span class="icon-bar"></span>-->
+<!--                            <span class="icon-bar"></span>-->
+<!--                        </button>-->
+                        <a class="logo" href="/">
+                            <img src="/favicon.png"/>小小冒险家的博客
+                        </a>
+                    </div>
+
+                    <div class="collapse navbar-collapse" style="border:0;" id="navbar-collapse-1">
+                        <ul class="nav navbar-nav">
+                            
+                                
+                                    <li>
+                                        <a href="/" >
+                                            <i class="fa fa-home"></i>
+                                            首页
+                                        </a>
+                                    </li>
+                                
+                            
+                                
+                                    <li>
+                                        <a href="/archives" >
+                                            <i class="fa fa-sort"></i>
+                                            归档
+                                        </a>
+                                    </li>
+                                
+                            
+                                
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                                           data-hover="dropdown">
+                                            <i class="fa fa-fire"></i>
+                                            系列教程
+                                            <strong class="caret"></strong>
+                                        </a>
+                                        <ul class="dropdown-menu">
+                                            
+                                                <li>
+                                                    <a href="/docker/00-docker-lession-index" target="_blank">
+                                                        <i class="fa "></i>
+                                                        Docker系列教程
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="/micro-service/microservice/" target="_blank">
+                                                        <i class="fa "></i>
+                                                        SpringCloud微服务架构
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="/micro-service/microservice-alibaba/" target="_blank">
+                                                        <i class="fa "></i>
+                                                        SpringCloud Alibaba微服务架构
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="/sharding-jdbc/sharding-jdbc000/" target="_blank">
+                                                        <i class="fa "></i>
+                                                        Sharding-JDBC教程
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="/springboot/springboot-source-code/" target="_blank">
+                                                        <i class="fa "></i>
+                                                        SpringBoot源码系列
+                                                    </a>
+                                                </li>
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+                                
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                                           data-hover="dropdown">
+                                            <i class="fa fa-book"></i>
+                                            在线文档
+                                            <strong class="caret"></strong>
+                                        </a>
+                                        <ul class="dropdown-menu">
+                                            
+                                                <li>
+                                                    <a href="https://spring.io/docs/" target="_blank">
+                                                        <i class="fa "></i>
+                                                        Spring Reference
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="https://spring.io/projects/spring-boot/" target="_blank">
+                                                        <i class="fa "></i>
+                                                        SpringBoot Reference
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="https://spring.io/projects/spring-cloud/" target="_blank">
+                                                        <i class="fa "></i>
+                                                        SpringCloud Reference
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="https://docs.spring.io/spring-security/site/docs/current/reference/htmlsingle/" target="_blank">
+                                                        <i class="fa "></i>
+                                                        Spring Security Reference
+                                                    </a>
+                                                </li>
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+                                
+                                    <li>
+                                        <a href="/other/jrebel-activation" >
+                                            <i class="fa fa-fire"></i>
+                                            JRebel激活
+                                        </a>
+                                    </li>
+                                
+                            
+                                
+                                    <li>
+                                        <a href="/about" >
+                                            <i class="fa fa-user"></i>
+                                            关于我
+                                        </a>
+                                    </li>
+                                
+                            
+                        </ul>
+                        
+                            <form id="search-form" class="navbar-form navbar-right">
+                                <div class="form-group input-group">
+                                    <input type="text" id="local-search-input" class="form-control"
+                                           placeholder="搜我..."/>
+                                    <span class="input-group-btn">
+                                        <a class="btn btn-default">
+                                            <i class="fa fa-search"></i>
+                                        </a>
+                                    </span>
+                                </div>
+                                <div id="local-search-result" class="local-search-result-cls"></div>
+                            </form>
+                        
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </div>
+</nav>
+
+    <a href="http://github.com/zhaokejin" target="_blank">
+        <img style="position: absolute; width:100px; top: 0; left: 0; border: 0;"
+             src="/img/fork-me.png"
+             alt="Fork me on GitHub">
+    </a>
+
+
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    
+    
+        <div class="ad">
+            <div class="row">
+                
+                    <div class="col-md-12">
+                        <a href="https://promotion.aliyun.com/ntms/act/qwbk.html?userCode=qhtujh03" rel="nofollow" target="_blank">
+                            <img class="img-responsive center-block"
+                                 src="/icons/810x100.png"
+                                 title="阿里全民云计算"
+                            >
+                        </a>
+                    </div>
+                
+            </div>
+        </div>
+    
+
+
+<p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="IntelliJ IDEA 快速高效 Plugins">
+            
+                IntelliJ IDEA 快速高效 Plugins
+            
+        </h1>
+        <div class="post-meta">
+    
+
+    
+        <span class="categories-meta fa-wrap">
+            <i class="fa fa-folder-open-o"></i>
+            <a class="category-link" href="/categories/工具/">工具</a>
+        </span>
+    
+
+    
+        <span class="fa-wrap">
+            <i class="fa fa-tags"></i>
+            <span class="tags-meta">
+                
+                    <a class="tag-link" href="/tags/IDEA/">IDEA</a>
+                
+            </span>
+        </span>
+    
+
+    
+        
+        <span class="fa-wrap">
+            <i class="fa fa-clock-o"></i>
+            <span class="date-meta">2019/09/24</span>
+        </span>
+        
+            <span class="fa-wrap">
+                <i class="fa fa-eye"></i>
+                <span id="busuanzi_value_page_pv"></span>
+            </span>
+        
+    
+</div>
+        
+        
+    </div>
+    
+    <div class="post-body post-content" id="container">
+        
+    <div class="toc-article">
+        <strong>
+            目录
+        </strong>
+        <div class="toc-content">
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#GsonFormat插件"><span class="toc-text">GsonFormat插件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Free-Mybatis-plugin插件"><span class="toc-text">Free Mybatis plugin插件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Maven-Helper插件"><span class="toc-text">Maven Helper插件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JRebel-for-IntelliJ-热部署插件"><span class="toc-text">JRebel for IntelliJ 热部署插件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CodeGlance"><span class="toc-text">CodeGlance</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Lombok-Plugin"><span class="toc-text">Lombok Plugin</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Alibaba-Java-Coding-Guidelines"><span class="toc-text">Alibaba Java Coding Guidelines</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Stack-Overflow"><span class="toc-text">Stack Overflow</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Background-Image-Plus"><span class="toc-text">Background Image Plus</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Markdown-support"><span class="toc-text">Markdown support</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ignore"><span class="toc-text">.ignore</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CamelCase"><span class="toc-text">CamelCase</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#codehelper-generator"><span class="toc-text">codehelper.generator</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#GenAllSetter-特性"><span class="toc-text">GenAllSetter 特性</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#如何使用"><span class="toc-text">如何使用:</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#GenDaoCode-特性"><span class="toc-text">GenDaoCode 特性</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#GenDaoCode-使用方法"><span class="toc-text">GenDaoCode 使用方法</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#方法一：点击GenDaoCode，然后根据提示框输入Pojo名字，多个Pojo以-分隔。"><span class="toc-text">方法一：点击GenDaoCode，然后根据提示框输入Pojo名字，多个Pojo以 | 分隔。</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#方法二：在工程目录下添加文件名为codehelper-properties的文件。"><span class="toc-text">方法二：在工程目录下添加文件名为codehelper.properties的文件。</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#GenerateAllSetter"><span class="toc-text">GenerateAllSetter</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Material-Theme-UI"><span class="toc-text">Material Theme UI</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#active-power-mode"><span class="toc-text">active-power-mode</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Nyan-progress-bar"><span class="toc-text">Nyan progress bar</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Translation"><span class="toc-text">Translation</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RestfulToolkit"><span class="toc-text">RestfulToolkit</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#AceJump"><span class="toc-text">AceJump</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Statistic"><span class="toc-text">Statistic</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Kubernetes"><span class="toc-text">Kubernetes</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Docker-interation"><span class="toc-text">Docker interation</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Rainbow-Brackets"><span class="toc-text">Rainbow Brackets</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#String-Manipulation"><span class="toc-text">String Manipulation</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Mybatis-Log-Plugin"><span class="toc-text">Mybatis Log Plugin</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#LiveEdit"><span class="toc-text">LiveEdit</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Material-Theme-UI-1"><span class="toc-text">Material Theme UI</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Vue-js"><span class="toc-text">Vue.js</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#BashSupport"><span class="toc-text">BashSupport</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CodeGlance-1"><span class="toc-text">CodeGlance</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Grep-Console"><span class="toc-text">Grep Console</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Key-Promoter-X"><span class="toc-text">Key Promoter X</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ignore-1"><span class="toc-text">ignore</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IDE-Features-Trainer"><span class="toc-text">IDE Features Trainer</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Idea-类builder模式插件安装方法"><span class="toc-text">Idea 类builder模式插件安装方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#资源-amp-网站"><span class="toc-text">资源&amp;网站</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#教程"><span class="toc-text">教程</span></a></li></ol>
+        </div>
+    </div>
+
+
+        <h3 id="GsonFormat插件"><a href="#GsonFormat插件" class="headerlink" title="GsonFormat插件"></a>GsonFormat插件</h3><p>作用：将JSON文本转换成Java类，并且支持Lombok</p>
+<p>下载数：651K</p>
+<p>插件主页：<a href="https://plugins.jetbrains.com/plugin/7654-gsonformat" target="_blank" rel="noopener">https://plugins.jetbrains.com/plugin/7654-gsonformat</a></p>
+<p>GitHub：<a href="https://github.com/zzz40500/GsonFormat" target="_blank" rel="noopener">https://github.com/zzz40500/GsonFormat</a></p>
+<p><img src="/images/tools/1562656608474-751515e2-647a-43de-bb92-c3c5a93b736e.gif" alt="图片展示"></p>
+<p><img src="/images/tools/1543814728066-b45460d2-0168-4cb1-ae74-a0e74c88186e.png" alt="图片展示"></p>
+<p>主要用于使用Gson库将JSONObject格式的String 解析成实体，该插件可以加快开发进度，使用非常方便，效率高。</p>
+<p>插件地址：<a href="https://plugins.jetbrains.com/idea/plugin/7654-gsonformat" target="_blank" rel="noopener">https://plugins.jetbrains.com/idea/plugin/7654-gsonformat</a></p>
+<p><strong>使用：</strong></p>
+<p>自定义个javaBean(无任何内容，就一个空的类)</p>
+<p>复制你要解析的json</p>
+<p>然后alt+insert弹出如下界面 或者使用快捷键 alt+s</p>
+<p><img src="/images/tools/1543814310924-6e0867e3-3d49-4f13-ab41-101ae825ee20.png" alt="img"></p>
+<p>粘贴到如下界面：</p>
+<p><img src="/images/tools/1543814325007-7a752329-a3ef-4a53-a30f-feca2d3058dc.png" alt="img"></p>
+<p>点击ok,自动生成对应javaBean的代码：</p>
+<p><img src="/images/tools/1543814342629-6bc6c10c-31e5-4e54-a6e1-480ea586dd62.png" alt="img"></p>
+<h3 id="Free-Mybatis-plugin插件"><a href="#Free-Mybatis-plugin插件" class="headerlink" title="Free Mybatis plugin插件"></a>Free Mybatis plugin插件</h3><p>作用：Mybatis代码提示、跳转</p>
+<p>下载数：206.7K</p>
+<p>插件主页：<a href="https://plugins.jetbrains.com/plugin/8321-free-mybatis-plugin" target="_blank" rel="noopener">https://plugins.jetbrains.com/plugin/8321-free-mybatis-plugin</a></p>
+<p>GitHub：<a href="https://github.com/wuzhizhan/free-idea-mybatis" target="_blank" rel="noopener">https://github.com/wuzhizhan/free-idea-mybatis</a></p>
+<p><img src="/images/tools/1543814456905-0f2f2228-4dcb-4fe7-afc3-e77e29145708.png" alt="img"></p>
+<p>点击箭头</p>
+<p><img src="/images/tools/1543814498844-e488c8b6-5647-465d-b723-57b41c41e997.png" alt="img"></p>
+<p>跳转到了mapper</p>
+<p><img src="/images/tools/1543814523565-7e86bbd6-e276-44ae-8e62-95951036bc11.png" alt="img"></p>
+<p>再点击点头返回！</p>
+<h3 id="Maven-Helper插件"><a href="#Maven-Helper插件" class="headerlink" title="Maven Helper插件"></a>Maven Helper插件</h3><p>作用：分析Maven依赖，定位依赖冲突等</p>
+<p>下载数：379K</p>
+<p>插件主页：<a href="https://plugins.jetbrains.com/plugin/7179-maven-helper" target="_blank" rel="noopener">https://plugins.jetbrains.com/plugin/7179-maven-helper</a></p>
+<p>GitHub：<a href="https://github.com/krasa/MavenHelper位依赖冲突等" target="_blank" rel="noopener">https://github.com/krasa/MavenHelper位依赖冲突等</a></p>
+<p><img src="/images/tools/1543814658687-dfa5eb7a-e8ee-4904-90dd-f4994b9aaba7.png" alt="img"></p>
+<p>idea中运行</p>
+<p><img src="/images/tools/1543814708919-411f217b-73c1-4508-8c96-774f5b1208d0.png" alt="img"></p>
+<h3 id="JRebel-for-IntelliJ-热部署插件"><a href="#JRebel-for-IntelliJ-热部署插件" class="headerlink" title="JRebel for IntelliJ 热部署插件"></a>JRebel for IntelliJ 热部署插件</h3><p><img src="/images/tools/1543814824955-74fed6cb-fb77-4dae-9829-5a4931e2c168.png" alt="img"></p>
+<p>安装完成之后</p>
+<p><img src="/images/tools/1543814856316-33bcc473-b45f-47b5-8da4-6bda368c4651.png" alt="img"></p>
+<p>第一个是JRebel for IntelliJ正常启动</p>
+<p>第二个是JRebel for IntelliJ debug启动</p>
+<h3 id="CodeGlance"><a href="#CodeGlance" class="headerlink" title="CodeGlance"></a>CodeGlance</h3><p>类似SublimeText的Mini Map插件，看下图就知道什么用了： </p>
+<p><img src="/images/tools/1544064164017-c349215c-1ee3-477f-9ebe-ba9ba08e2967.png" alt="img"></p>
+<h3 id="Lombok-Plugin"><a href="#Lombok-Plugin" class="headerlink" title="Lombok Plugin"></a>Lombok Plugin</h3><p>作用：简化模板代码，让代码更简洁</p>
+<p>下载数：3824K</p>
+<p>插件主页：<a href="https://plugins.jetbrains.com/plugin/6317-lombok-plugin" target="_blank" rel="noopener">https://plugins.jetbrains.com/plugin/6317-lombok-plugin</a></p>
+<p>GitHub：<a href="https://github.com/mplushnikov/lombok-intellij-plugin" target="_blank" rel="noopener">https://github.com/mplushnikov/lombok-intellij-plugin</a></p>
+<p><img src="/images/tools/1544064201496-a929227b-9e95-4f9b-942f-b777c4eac4d0.png" alt="img"></p>
+<p><a href="http://mp.weixin.qq.com/s?__biz=MzI1NDQ3MjQxNA==&amp;mid=2247484740&amp;idx=1&amp;sn=151715b1f67f0fc20df1df15c3008f26&amp;chksm=e9c5fcf5deb275e35494f4be71e5f71b742e5b321b2fc50a3bc7b7bfbfbd6dd6df4fd76a5185&amp;scene=21#wechat_redirect" target="_blank" rel="noopener">http://mp.weixin.qq.com/s?__biz=MzI1NDQ3MjQxNA==&amp;mid=2247484740&amp;idx=1&amp;sn=151715b1f67f0fc20df1df15c3008f26&amp;chksm=e9c5fcf5deb275e35494f4be71e5f71b742e5b321b2fc50a3bc7b7bfbfbd6dd6df4fd76a5185&amp;scene=21#wechat_redirect</a></p>
+<p>从今天起让我们忘记Java中的get/set方法吧！</p>
+<p><img src="/images/tools/1545364302992-f69be7d5-9951-4c78-b973-723d43826386.gif" alt="img"></p>
+<h3 id="Alibaba-Java-Coding-Guidelines"><a href="#Alibaba-Java-Coding-Guidelines" class="headerlink" title="Alibaba Java Coding Guidelines"></a>Alibaba Java Coding Guidelines</h3><p>作用：代码规约插件，让代码更加规范</p>
+<p>下载数：535K</p>
+<p>插件主页：<a href="https://plugins.jetbrains.com/plugin/10046-alibaba-java-coding-guidelines" target="_blank" rel="noopener">https://plugins.jetbrains.com/plugin/10046-alibaba-java-coding-guidelines</a></p>
+<p>GitHub：<a href="https://github.com/alibaba/p3c" target="_blank" rel="noopener">https://github.com/alibaba/p3c</a></p>
+<p>经过247天的持续研发，阿里巴巴于10月14日在杭州云栖大会上，正式发布众所期待的《阿里巴巴Java开发规约》扫描插件！该插件由阿里巴巴P3C项目组研发。P3C是世界知名的反潜机，专门对付水下潜水艇，寓意是扫描出所有潜在的代码隐患。</p>
+<p>为了让开发者更加方便、快速将规范推动并实行起来，阿里巴巴基于手册内容，研发了一套自动化的IDE检测插件（IDEA、Eclipse）。该插件在扫描代码后，将不符合规约的代码按Blocker/Critical/Major三个等级显示在下方，甚至在IDEA上，我们还基于Inspection机制提供了实时检测功能，编写代码的同时也能快速发现问题所在。对于历史代码，部分规则实现了批量一键修复的功能，如此爽心悦目的功能是不是很值得拥有？提升代码质量，提高团队研发效能，插件将会一路同行。</p>
+<p><img src="/images/tools/1544064282458-4f427971-3838-4654-8ecd-9ef1369f43f6.gif" alt="img"></p>
+<h3 id="Stack-Overflow"><a href="#Stack-Overflow" class="headerlink" title="Stack Overflow"></a>Stack Overflow</h3><p>编码中几乎所有遇到的错误，都可以在Stack Overflow上找到，因此这个插件可称之为贴心助手，只不过默认使用Google搜索，大家注意。 </p>
+<p><img src="/images/tools/1544064321449-8ab0bdb0-da07-43fc-9fea-c67dfb32b116.png" alt="img"></p>
+<h3 id="Background-Image-Plus"><a href="#Background-Image-Plus" class="headerlink" title="Background Image Plus"></a>Background Image Plus</h3><p>给你一个机会让你面向“对象”编程，设置你喜欢的图片，提升你编码逼格！ </p>
+<p><img src="/images/tools/1544064561931-270e65e0-eb3f-4247-8541-68250bc70e8b.png" alt="img"></p>
+<p>安装后，在设置界面设置背景图片文件夹，里边放图片，并且可以设置定时更新： </p>
+<p><img src="/images/tools/1544064660756-efec3dbd-534c-4864-8595-b2d65b993f15.png" alt="img"></p>
+<p>设置完图片之后，重启一下IDEA,然后，你懂的！ </p>
+<p><img src="/images/tools/resize,w_1500" alt="img"></p>
+<h3 id="Markdown-support"><a href="#Markdown-support" class="headerlink" title="Markdown support"></a>Markdown support</h3><p>Idea中优化Markdown Support显示效果</p>
+<h3 id="ignore"><a href="#ignore" class="headerlink" title=".ignore"></a>.ignore</h3><p>git提交时过滤掉不需要提交的文件，很方便，有些本地文件是不需要提交到Git上的。</p>
+<h3 id="CamelCase"><a href="#CamelCase" class="headerlink" title="CamelCase"></a>CamelCase</h3><p>将不是驼峰格式的名称，快速转成驼峰格式，安装好后，选中要修改的名称，按快捷键shift+alt+u。</p>
+<h3 id="codehelper-generator"><a href="#codehelper-generator" class="headerlink" title="codehelper.generator"></a>codehelper.generator</h3><p>可以让你在创建一个对象并赋值的时候，快速的生成代码，不需要一个一个属性的向里面set,根据new关键字，自动生成掉用set方法的代码，还可以一键填入默认值。</p>
+<h4 id="GenAllSetter-特性"><a href="#GenAllSetter-特性" class="headerlink" title="GenAllSetter 特性"></a>GenAllSetter 特性</h4><ul>
+<li><p>在Java方法中, 根据 new 关键词, 为Java Bean 生成所有Setter方法。</p>
+</li>
+<li><p>按GenAllSetter键两次, 会为Setter方法生成默认值。</p>
+</li>
+<li><p>可在Intellij Idea中为GenAllSetter设置快捷键。</p>
+</li>
+</ul>
+<h5 id="如何使用"><a href="#如何使用" class="headerlink" title="如何使用:"></a>如何使用:</h5><ul>
+<li><p>将光标移动到 new 语句的下一行。</p>
+</li>
+<li><p>点击主菜单Tools-&gt; Codehelper-&gt; GenAllSetter, 或者按下GenAllSetter快捷键。</p>
+</li>
+</ul>
+<h4 id="GenDaoCode-特性"><a href="#GenDaoCode-特性" class="headerlink" title="GenDaoCode 特性"></a>GenDaoCode 特性</h4><ul>
+<li><p>根据Pojo 文件一键生成 Dao，Service，Xml，Sql文件。</p>
+</li>
+<li><p>Pojo文件更新后一键更新对应的Sql和mybatis xml文件。</p>
+</li>
+<li><p>提供insert，insertList，update，select，delete五种方法。</p>
+</li>
+<li><p>能够批量生成多个Pojo的对应的文件。</p>
+</li>
+<li><p>自动将pojo的注释添加到对应的Sql文件的注释中。</p>
+</li>
+<li><p>丰富的配置，如果没有配置文件，则会使用默认配置。</p>
+</li>
+<li><p>可以在Intellij Idea中快捷键配置中配置快捷键。</p>
+</li>
+<li><p>目前支持MySQL + Java，后续会支持更多的DB。</p>
+</li>
+<li><p>如果喜欢我们的插件，非常感谢您的分享。</p>
+</li>
+</ul>
+<h4 id="GenDaoCode-使用方法"><a href="#GenDaoCode-使用方法" class="headerlink" title="GenDaoCode 使用方法"></a>GenDaoCode 使用方法</h4><p>主菜单Tools-&gt; Codehelper-&gt; GenDaoCode 按键便可生成代码。</p>
+<h5 id="方法一：点击GenDaoCode，然后根据提示框输入Pojo名字，多个Pojo以-分隔。"><a href="#方法一：点击GenDaoCode，然后根据提示框输入Pojo名字，多个Pojo以-分隔。" class="headerlink" title="方法一：点击GenDaoCode，然后根据提示框输入Pojo名字，多个Pojo以 | 分隔。"></a>方法一：点击GenDaoCode，然后根据提示框输入Pojo名字，多个Pojo以 | 分隔。</h5><p>Codehelper Generator会根据默认配置为您生成代码。</p>
+<h5 id="方法二：在工程目录下添加文件名为codehelper-properties的文件。"><a href="#方法二：在工程目录下添加文件名为codehelper-properties的文件。" class="headerlink" title="方法二：在工程目录下添加文件名为codehelper.properties的文件。"></a>方法二：在工程目录下添加文件名为codehelper.properties的文件。</h5><p>点击GenDaoCode，Codehelper Generator会根据您的配置文件为您生成代码<br><img src="/images/tools/1545364394110-eaa976ee-62cb-4853-ac6d-3b4c494e549e.gif" alt="img"></p>
+<p><img src="/images/tools/1545364399922-ca284f2e-69af-4047-9365-11aa4968b4cd.gif" alt="img"></p>
+<h3 id="GenerateAllSetter"><a href="#GenerateAllSetter" class="headerlink" title="GenerateAllSetter"></a>GenerateAllSetter</h3><p>一键调用一个对象的所有set方法并且赋予默认值 在对象字段多的时候非常方便，在做项目时，每层都有各自的实体对象需要相互转换，但是考虑BeanUtil.copyProperties()等这些工具的弊端，有些地方就需要手动的赋值时，有这个插件就会很方便，创建完对象后在变量名上面按Alt+Enter就会出来 generate all setter选项。 </p>
+<p><img src="/images/tools/1545364436742-ef7c2825-4f8b-4336-8071-cf43f96371a5.gif" alt="img"></p>
+<h3 id="Material-Theme-UI"><a href="#Material-Theme-UI" class="headerlink" title="Material Theme UI"></a>Material Theme UI</h3><p>这是一款主题插件，可以让你的ide的图标变漂亮，配色搭配的很到位，还可以切换不同的颜色，甚至可以自定义颜色。默认的配色就很漂亮了，如果需要修改配色，可以在工具栏中Tools-&gt;Material Theme然后修改配色等。</p>
+<h3 id="active-power-mode"><a href="#active-power-mode" class="headerlink" title="active-power-mode"></a>active-power-mode</h3><p>这是一款让你在编码的时候，整个屏幕都为之颤抖的插件。 </p>
+<p><img src="/images/tools/1545364500147-149ff814-ce37-4377-aa0a-89176aec5209.gif" alt="img"></p>
+<h3 id="Nyan-progress-bar"><a href="#Nyan-progress-bar" class="headerlink" title="Nyan progress bar"></a>Nyan progress bar</h3><p>这是一个将你idea中的所有的进度条都变成萌新动画的小插件。<br><img src="/images/tools/1545364510762-6192fc6b-5c60-40a6-bcf0-130d5c028fb9.png" alt="img"></p>
+<h3 id="Translation"><a href="#Translation" class="headerlink" title="Translation"></a>Translation</h3><p>作用：翻译</p>
+<p>下载数：217K</p>
+<p>插件主页：<a href="https://plugins.jetbrains.com/plugin/8579-translation" target="_blank" rel="noopener">https://plugins.jetbrains.com/plugin/8579-translation</a></p>
+<p>GitHub：<a href="https://github.com/YiiGuxing/TranslationPlugin" target="_blank" rel="noopener">https://github.com/YiiGuxing/TranslationPlugin</a></p>
+<h3 id="RestfulToolkit"><a href="#RestfulToolkit" class="headerlink" title="RestfulToolkit"></a>RestfulToolkit</h3><p>作用：自动识别Spring MVC的REST API，并可调试</p>
+<p>下载数：33K</p>
+<p>插件主页：<a href="https://plugins.jetbrains.com/plugin/10292-restfultoolkit" target="_blank" rel="noopener">https://plugins.jetbrains.com/plugin/10292-restfultoolkit</a></p>
+<p>GitHub：暂无</p>
+<h3 id="AceJump"><a href="#AceJump" class="headerlink" title="AceJump"></a>AceJump</h3><p>作用：在IDEA中高效跳转，丢弃鼠标</p>
+<p>下载数：250K</p>
+<p>插件主页：<a href="https://plugins.jetbrains.com/plugin/7086-acejump" target="_blank" rel="noopener">https://plugins.jetbrains.com/plugin/7086-acejump</a></p>
+<p>GitHub：<a href="https://github.com/johnlindquist/AceJump" target="_blank" rel="noopener">https://github.com/johnlindquist/AceJump</a></p>
+<h3 id="Statistic"><a href="#Statistic" class="headerlink" title="Statistic"></a>Statistic</h3><p>作用：代码统计</p>
+<p>下载数：368K</p>
+<p>插件主页：<a href="https://plugins.jetbrains.com/plugin/4509-statistic" target="_blank" rel="noopener">https://plugins.jetbrains.com/plugin/4509-statistic</a></p>
+<p>GitHub：暂无</p>
+<p>截图：<img src="/images/tools/resize,w_15002019-10-1011" alt="img"></p>
+<h3 id="Kubernetes"><a href="#Kubernetes" class="headerlink" title="Kubernetes"></a>Kubernetes</h3><p>作用：官方出品，帮你快速编写Kubernetes编排文件，例如输入kdep迅速创建Deployment</p>
+<p>下载数：118K</p>
+<p>插件主页：<a href="https://plugins.jetbrains.com/plugin/10485-kubernetes" target="_blank" rel="noopener">https://plugins.jetbrains.com/plugin/10485-kubernetes</a></p>
+<p>GitHub：暂无</p>
+<p>截图：<img src="/images/tools/1562656580757-a04d4e87-0312-4c69-ac92-39aaab8680a3.gif" alt="img"></p>
+<p><img src="https://cdn.nlark.com/yuque/0/2019/gif/182667/1562656854807-5be0e51c-9636-46b1-9388-a9305c244abe.gif" alt="img"></p>
+<h3 id="Docker-interation"><a href="#Docker-interation" class="headerlink" title="Docker interation"></a>Docker interation</h3><p>作用：官方出品，整合Docker</p>
+<p>下载数：1807K</p>
+<p>插件主页：<a href="https://plugins.jetbrains.com/plugin/7724-docker-integration" target="_blank" rel="noopener">https://plugins.jetbrains.com/plugin/7724-docker-integration</a></p>
+<p>GitHub：暂无</p>
+<h3 id="Rainbow-Brackets"><a href="#Rainbow-Brackets" class="headerlink" title="Rainbow Brackets"></a>Rainbow Brackets</h3><p>作用：彩虹色括号，实现配对括号相同颜色，并且实现选中区域代码高亮的功能，让阅读代码更加轻松。</p>
+<p>下载数：555K</p>
+<p>插件主页：<a href="https://plugins.jetbrains.com/plugin/10080-rainbow-brackets" target="_blank" rel="noopener">https://plugins.jetbrains.com/plugin/10080-rainbow-brackets</a></p>
+<p>GitHub：<a href="https://github.com/izhangzhihao/intellij-rainbow-brackets" target="_blank" rel="noopener">https://github.com/izhangzhihao/intellij-rainbow-brackets</a></p>
+<p>截图：</p>
+<p><img src="/images/tools/1562656724468-39073d14-c5d5-4f17-ad1f-9b71c7fabb8b.png" alt="img"></p>
+<h3 id="String-Manipulation"><a href="#String-Manipulation" class="headerlink" title="String Manipulation"></a>String Manipulation</h3><p>作用：各种命名方式交替变化，支持的格式有：camelCase, kebab-lowercase, KEBAB-UPPERCASE, snake_case, SCREAMING_SNAKE_CASE, dot.case, words lowercase, Words Capitalized, PascalCase）</p>
+<p>下载数：594K</p>
+<p>插件主页：<a href="https://plugins.jetbrains.com/plugin/2162-string-manipulation" target="_blank" rel="noopener">https://plugins.jetbrains.com/plugin/2162-string-manipulation</a></p>
+<p>GitHub：<a href="https://github.com/krasa/StringManipulation" target="_blank" rel="noopener">https://github.com/krasa/StringManipulation</a></p>
+<h3 id="Mybatis-Log-Plugin"><a href="#Mybatis-Log-Plugin" class="headerlink" title="Mybatis Log Plugin"></a>Mybatis Log Plugin</h3><p>作用：打印出Mybatis执行的SQL，并且直接可执行，便于调试。</p>
+<p>下载数：31K</p>
+<p>插件主页：<a href="https://plugins.jetbrains.com/plugin/10065-mybatis-log-plugin" target="_blank" rel="noopener">https://plugins.jetbrains.com/plugin/10065-mybatis-log-plugin</a></p>
+<p>GitHub：<a href="https://github.com/kookob/mybatis-log-plugin/" target="_blank" rel="noopener">https://github.com/kookob/mybatis-log-plugin/</a></p>
+<p>截图：</p>
+<p><img src="/images/tools/1562656790671-94c9cd22-db9c-491f-a162-92d3368f3099.gif" alt="img"></p>
+<h3 id="LiveEdit"><a href="#LiveEdit" class="headerlink" title="LiveEdit"></a>LiveEdit</h3><p>作用：前端修改无需刷新浏览器</p>
+<p>下载数：3909K</p>
+<p>插件主页：<a href="https://plugins.jetbrains.com/plugin/7007-liveedit" target="_blank" rel="noopener">https://plugins.jetbrains.com/plugin/7007-liveedit</a></p>
+<p>GitHub：暂无</p>
+<h3 id="Material-Theme-UI-1"><a href="#Material-Theme-UI-1" class="headerlink" title="Material Theme UI"></a>Material Theme UI</h3><p>作用：一款Theme UI的IDEA主题</p>
+<p>下载数：3872K</p>
+<p>插件主页：<a href="https://plugins.jetbrains.com/plugin/8006-material-theme-ui" target="_blank" rel="noopener">https://plugins.jetbrains.com/plugin/8006-material-theme-ui</a></p>
+<p>GitHub：<a href="https://github.com/ChrisRM/material-theme-jetbrains" target="_blank" rel="noopener">https://github.com/ChrisRM/material-theme-jetbrains</a></p>
+<p>截图：</p>
+<p><img src="/images/tools/resize,w_1500549564945349852" alt="img"></p>
+<h3 id="Vue-js"><a href="#Vue-js" class="headerlink" title="Vue.js"></a>Vue.js</h3><p>作用：支持Vue.js的开发</p>
+<p>下载数：845K</p>
+<p>插件主页：<a href="https://plugins.jetbrains.com/plugin/9442-vue-js" target="_blank" rel="noopener">https://plugins.jetbrains.com/plugin/9442-vue-js</a></p>
+<p>GitHub：暂无</p>
+<h3 id="BashSupport"><a href="#BashSupport" class="headerlink" title="BashSupport"></a>BashSupport</h3><p>作用：支持编写Shell，高亮、代码提示、重构</p>
+<p>下载数：9652K</p>
+<p>插件主页：<a href="https://plugins.jetbrains.com/plugin/4230-bashsupport" target="_blank" rel="noopener">https://plugins.jetbrains.com/plugin/4230-bashsupport</a></p>
+<p>GitHub：<a href="https://github.com/BashSupport/BashSupport" target="_blank" rel="noopener">https://github.com/BashSupport/BashSupport</a></p>
+<h3 id="CodeGlance-1"><a href="#CodeGlance-1" class="headerlink" title="CodeGlance"></a>CodeGlance</h3><p>作用：代码缩略图</p>
+<p>下载数：722K</p>
+<p>插件主页：<a href="https://plugins.jetbrains.com/plugin/7275-codeglance" target="_blank" rel="noopener">https://plugins.jetbrains.com/plugin/7275-codeglance</a></p>
+<p>GitHub：<a href="https://github.com/Vektah/CodeGlance" target="_blank" rel="noopener">https://github.com/Vektah/CodeGlance</a></p>
+<p>截图：</p>
+<h3 id="Grep-Console"><a href="#Grep-Console" class="headerlink" title="Grep Console"></a>Grep Console</h3><p>作用：控制台查询、搜索日志，并且可以配置高亮颜色。</p>
+<p>下载数：662K</p>
+<p>插件主页：<a href="https://plugins.jetbrains.com/plugin/7125-grep-console" target="_blank" rel="noopener">https://plugins.jetbrains.com/plugin/7125-grep-console</a></p>
+<p>GitHub：<a href="https://github.com/krasa/GrepConsole" target="_blank" rel="noopener">https://github.com/krasa/GrepConsole</a></p>
+<h3 id="Key-Promoter-X"><a href="#Key-Promoter-X" class="headerlink" title="Key Promoter X"></a>Key Promoter X</h3><p>作用：一个学习IntelliJ IDEA快捷键的插件。</p>
+<p>下载数：185K</p>
+<p>插件主页：<a href="https://plugins.jetbrains.com/plugin/9792-key-promoter-x" target="_blank" rel="noopener">https://plugins.jetbrains.com/plugin/9792-key-promoter-x</a></p>
+<p>GitHub：<a href="https://github.com/halirutan/IntelliJ-Key-Promoter-X" target="_blank" rel="noopener">https://github.com/halirutan/IntelliJ-Key-Promoter-X</a></p>
+<p>截图：</p>
+<p><img src="/images/tools/1562656955364-8c14bfc6-b4ff-4bf8-b2fd-0bbd5c85d1d9.gif" alt="img"></p>
+<h3 id="ignore-1"><a href="#ignore-1" class="headerlink" title="ignore"></a>ignore</h3><p>作用：忽略不想提交的文件</p>
+<p>下载数：8591K</p>
+<p>插件主页：<a href="https://plugins.jetbrains.com/plugin/7495--ignore" target="_blank" rel="noopener">https://plugins.jetbrains.com/plugin/7495--ignore</a></p>
+<p>GitHub：<a href="https://github.com/hsz/idea-gitignore" target="_blank" rel="noopener">https://github.com/hsz/idea-gitignore</a></p>
+<p>截图：</p>
+<h3 id="IDE-Features-Trainer"><a href="#IDE-Features-Trainer" class="headerlink" title="IDE Features Trainer"></a>IDE Features Trainer</h3><p>作用：交互式学习IDEA的基本功能与快捷键</p>
+<p>下载数：1019K</p>
+<p>插件主页：<a href="https://plugins.jetbrains.com/plugin/8554-ide-features-trainer" target="_blank" rel="noopener">https://plugins.jetbrains.com/plugin/8554-ide-features-trainer</a></p>
+<p>GitHub：<a href="https://github.com/JetBrains/ide-features-trainer" target="_blank" rel="noopener">https://github.com/JetBrains/ide-features-trainer</a></p>
+<p>截图：</p>
+<p><img src="/images/tools/1562656955649-4206f3dd-73e1-4539-a669-119d5a8be42d.png" alt="img"></p>
+<h3 id="Idea-类builder模式插件安装方法"><a href="#Idea-类builder模式插件安装方法" class="headerlink" title="Idea 类builder模式插件安装方法"></a>Idea 类builder模式插件安装方法</h3><p>builder 模式的代码 手写的话不是不可能，字段多了 就恶心了，下面就会看到，长话短说，IEDA 安装 builder 插件 首先Idea  快捷键Ctrl +alt+s  打开preference  找Plugins</p>
+<p><img src="/images/tools/1568107990701-d06756dc-5f28-44db-ba90-8b7d8310d9d4.png" alt="image.png"></p>
+<p>弹出来一个窗口 搜索InnerBuilder 点击右边的 install 就完了，等待下载完成，重启idea。进入我们写好的类，点击鼠标右键，选择Generate 下面有一个builder，选择想要的属性。体验优雅的代码</p>
+<p>然后说一下Java中设计模式 ，提到设计模式，懂得人说：“代码变得更优雅，更好看”，不懂得人看了一脸懵逼，那就说一下builder模式吧，对于一些拥有特变多的类来说特别方便，为了使这个类，我们通常情况下会给这个类多个构造器以及一个默认的无参数构造器。</p>
+<p>很多编译器有generate快捷键，可以快速生成一个含有该类属性的constructor， 但是当参数的个数比较多的时候，经常会传错。当然有人会说每个属性调用set方法不就完了么，那么你代码会变成一坨，不如点出来代码优雅，看下面的例子，build的优点儿就体现出来了。</p>
+<h3 id="资源-amp-网站"><a href="#资源-amp-网站" class="headerlink" title="资源&amp;网站"></a>资源&amp;网站</h3><ul>
+<li><a href="http://www.riaway.com/" target="_blank" rel="noopener">IDEA主题下载</a></li>
+<li><a href="http://www.easycolor.cc/" target="_blank" rel="noopener">IDEA主题下载</a></li>
+<li><a href="http://idea.lanyus.com/" target="_blank" rel="noopener">IntelliJ IDEA 注册码</a></li>
+</ul>
+<h3 id="教程"><a href="#教程" class="headerlink" title="教程"></a>教程</h3><ul>
+<li><p>图文教程：</p>
+</li>
+<li><ul>
+<li>CG国斌：<a href="https://blog.csdn.net/qq_35246620/article/details/61191375" target="_blank" rel="noopener">史上最简单的 IntelliJ IDEA 教程</a></li>
+<li>极客学院：<a href="http://wiki.jikexueyuan.com/project/intellij-idea-tutorial" target="_blank" rel="noopener">IntelliJ IDEA 使用教程</a></li>
+<li>GitHub：<a href="https://github.com/judasn/IntelliJ-IDEA-Tutorial" target="_blank" rel="noopener">IntelliJ IDEA 简体中文专题教程</a></li>
+</ul>
+</li>
+<li><p>视频教程：</p>
+</li>
+<li><ul>
+<li>尚学堂：<a href="https://www.bjsxt.com/down/10214.html" target="_blank" rel="noopener">Intellij IDEA视频教程</a></li>
+</ul>
+</li>
+</ul>
+
+        
+    </div>
+    
+        <div class="reward" ontouchstart>
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+            
+                <span class="reward-type">
+                    <img class="wechat" src="/images/weixin.png"><b>微信打赏</b>
+                </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">赞赏是不耍流氓的鼓励</p>
+</div>
+
+
+    
+
+
+    
+        <div class="post-footer">
+            <div class="col-sm-10">
+                <div>
+                    <b>本文链接</b>：<a href="/tools/IntelliJ-IDEA-Plugins/" target="_blank">IntelliJ IDEA 快速高效 Plugins</a>
+                </div>
+                <div>
+                    
+                        转载声明：本博客由小小冒险家创作，采用 <a href="https://creativecommons.org/licenses/by-nc-nd/3.0/" target="_blank"> CC BY 3.0 CN </a> 许可协议。可自由转载、引用，但需署名作者且注明文章出处。如转载至微信公众号，请在文末添加作者公众号二维码。
+                    
+                </div>
+                <div>
+                    
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <img src="/icons/wx.jpg" width=100%/>
+            </div>
+        </div>
+    
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+        <a target="_blank" href="/micro-service/microservice/" class="pre-post btn btn-default"
+           title='SpringCloud微服务学习之旅'>
+            <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+            <span class="hidden-xs">SpringCloud微服务学习之旅</span>
+        </a>
+    
+    
+        <a target="_blank" href="/docker/00-docker-lession-index/" class="next-post btn btn-default"
+           title='Docker系列教程'>
+            <span class="hidden-lg">下一篇</span>
+            <span class="hidden-xs">Docker系列教程</span><i class="fa fa-angle-right fa-fw"></i>
+        </a>
+    
+</div>
+
+
+    <div id="comments">
+        
+   <p>评论系统未开启，无法评论！</p>
+
+    </div>
+
+
+
+
+
+
+                </main>
+                
+    <aside class="col-md-4 sidebar">
+        
+        <div class="widget about-me">
+    <div class="row">
+        <div class="col-md-5">
+            <img src="/icons/wx.jpg" alt="公众号" class="img-responsive center-block">
+        </div>
+        <div class="col-md-7">
+            <a class="series-a" href="javascript:void(0)">公众号</a>
+            <ul>
+                <li>• 技术干货推送</li>
+                <li>• 日常好文分享</li>
+                <li><b>• 扫码领取更多惊喜</b></li>
+            </ul>
+        </div>
+    </div>
+    
+<!--        <div class="row">-->
+<!--            <div class="col-md-5">-->
+<!--                <img src="/icons/xcx.jpg" alt="小程序" class="img-responsive">-->
+<!--            </div>-->
+<!--            <div class="col-md-7">-->
+<!--                <a class="series-a" href="javascript:void(0)">小程序</a>-->
+<!--                <ul>-->
+<!--                    <li>• 原创笔记</li>-->
+<!--                    <li>• 独家心法</li>-->
+<!--                    <li><b>• 扫码领取</b></li>-->
+<!--                </ul>-->
+<!--            </div>-->
+<!--        </div>-->
+    
+</div>
+
+
+
+
+        
+        
+    <div class="widget">
+        <h3 class="title">网站公告</h3>
+        <div class="notification">
+            <p>
+  <b>QQ群</b>：415777345<br/>
+</p>
+
+<p>
+<b>联系博主QQ</b>：210006540<br/>
+</p>
+        </div>
+    </div>
+
+        
+        
+    
+        <div class="ad">
+            <div class="row">
+                <div class="col-md-12">
+                    <a href="https://promotion.aliyun.com/ntms/act/qwbk.html?userCode=qhtujh03" rel="nofollow" target="_blank">
+                        <img class="img-responsive center-block"
+                             title="阿里全民云计算"
+                             src="/icons/380-120.png"
+                        >
+                    </a>
+                </div>
+            </div>
+        </div>
+    
+
+
+
+
+        
+        
+    <div class="widget">
+        <h3 class="title">分类</h3>
+        <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Ajax/"><i class="fa" aria-hidden="true">Ajax</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/"><i class="fa" aria-hidden="true">Docker</i></a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Druid/"><i class="fa" aria-hidden="true">Druid</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Feign/"><i class="fa" aria-hidden="true">Feign</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/HTTP/"><i class="fa" aria-hidden="true">HTTP</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/"><i class="fa" aria-hidden="true">Hexo</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JRebel/"><i class="fa" aria-hidden="true">JRebel</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/"><i class="fa" aria-hidden="true">Java</i></a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Maven/"><i class="fa" aria-hidden="true">Maven</i></a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MongoDB/"><i class="fa" aria-hidden="true">MongoDB</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MySQL/"><i class="fa" aria-hidden="true">MySQL</i></a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Nexus3-x/"><i class="fa" aria-hidden="true">Nexus3.x</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/PowerShell/"><i class="fa" aria-hidden="true">PowerShell</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Quartz/"><i class="fa" aria-hidden="true">Quartz</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/"><i class="fa" aria-hidden="true">Redis</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/RocketMQ/"><i class="fa" aria-hidden="true">RocketMQ</i></a><span class="category-list-count">12</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Sharding-JDBC/"><i class="fa" aria-hidden="true">Sharding-JDBC</i></a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/"><i class="fa" aria-hidden="true">Spring</i></a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring-Cloud/"><i class="fa" aria-hidden="true">Spring Cloud</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringBoot/"><i class="fa" aria-hidden="true">SpringBoot</i></a><span class="category-list-count">15</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringCloud-Alibaba/"><i class="fa" aria-hidden="true">SpringCloud Alibaba</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringSession/"><i class="fa" aria-hidden="true">SpringSession</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/主键/"><i class="fa" aria-hidden="true">主键</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/其他/"><i class="fa" aria-hidden="true">其他</i></a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/安装教程/"><i class="fa" aria-hidden="true">安装教程</i></a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link current" href="/categories/工具/"><i class="fa" aria-hidden="true">工具</i></a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/微服务/"><i class="fa" aria-hidden="true">微服务</i></a><span class="category-list-count">17</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据库/"><i class="fa" aria-hidden="true">数据库</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/面试/"><i class="fa" aria-hidden="true">面试</i></a><span class="category-list-count">1</span></li></ul>
+    </div>
+
+
+        
+        
+  <div class="widget">
+    <h3 class="title">标签云</h3>
+    <div class="content tag-cloud">
+        
+            <canvas width="300" height="300" id="tag-cloud-3d">
+                <a href="/tags/Ajax/" style="font-size: 10px;">Ajax</a> <a href="/tags/Alibaba/" style="font-size: 10px;">Alibaba</a> <a href="/tags/Banner/" style="font-size: 10px;">Banner</a> <a href="/tags/Centos/" style="font-size: 10px;">Centos</a> <a href="/tags/Docker/" style="font-size: 17.5px;">Docker</a> <a href="/tags/Druid/" style="font-size: 10px;">Druid</a> <a href="/tags/Eureka/" style="font-size: 10.83px;">Eureka</a> <a href="/tags/FastDFS/" style="font-size: 10.83px;">FastDFS</a> <a href="/tags/Feign/" style="font-size: 13.33px;">Feign</a> <a href="/tags/File/" style="font-size: 10px;">File</a> <a href="/tags/HTTP/" style="font-size: 10px;">HTTP</a> <a href="/tags/Hexo/" style="font-size: 10.83px;">Hexo</a> <a href="/tags/HikariCP/" style="font-size: 10px;">HikariCP</a> <a href="/tags/Hystrix/" style="font-size: 10.83px;">Hystrix</a> <a href="/tags/Hystrix-Dashboard/" style="font-size: 10px;">Hystrix Dashboard</a> <a href="/tags/IDEA/" style="font-size: 10px;">IDEA</a> <a href="/tags/JDK/" style="font-size: 10px;">JDK</a> <a href="/tags/JRebel/" style="font-size: 10px;">JRebel</a> <a href="/tags/Java/" style="font-size: 12.5px;">Java</a> <a href="/tags/Java-b2-spring注解/" style="font-size: 15.83px;">Java-b2-spring注解</a> <a href="/tags/Map/" style="font-size: 10px;">Map</a> <a href="/tags/Maven/" style="font-size: 12.5px;">Maven</a> <a href="/tags/Memcache/" style="font-size: 10px;">Memcache</a> <a href="/tags/MongoDB/" style="font-size: 10.83px;">MongoDB</a> <a href="/tags/MongoTemplate/" style="font-size: 10.83px;">MongoTemplate</a> <a href="/tags/MySQL/" style="font-size: 15px;">MySQL</a> <a href="/tags/MySQL8/" style="font-size: 10px;">MySQL8</a> <a href="/tags/Mysql/" style="font-size: 10px;">Mysql</a> <a href="/tags/Navicat/" style="font-size: 10px;">Navicat</a> <a href="/tags/Nexus3-x/" style="font-size: 10.83px;">Nexus3.x</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/PowerShell/" style="font-size: 10px;">PowerShell</a> <a href="/tags/Quartz/" style="font-size: 10px;">Quartz</a> <a href="/tags/RabbitMQ/" style="font-size: 10px;">RabbitMQ</a> <a href="/tags/Redis/" style="font-size: 12.5px;">Redis</a> <a href="/tags/Ribbon/" style="font-size: 10.83px;">Ribbon</a> <a href="/tags/RocketMQ/" style="font-size: 18.33px;">RocketMQ</a> <a href="/tags/Sharding-JDBC/" style="font-size: 14.17px;">Sharding-JDBC</a> <a href="/tags/SonarQube/" style="font-size: 10px;">SonarQube</a> <a href="/tags/Spring/" style="font-size: 16.67px;">Spring</a> <a href="/tags/Spring-Boot/" style="font-size: 11.67px;">Spring Boot</a> <a href="/tags/Spring-Cloud/" style="font-size: 16.67px;">Spring Cloud</a> <a href="/tags/Spring-Cloud-Gateway/" style="font-size: 10.83px;">Spring Cloud Gateway</a> <a href="/tags/Spring-Cloud-Sleuth/" style="font-size: 10px;">Spring Cloud Sleuth</a> <a href="/tags/SpringBoot/" style="font-size: 20px;">SpringBoot</a> <a href="/tags/SpringCloud/" style="font-size: 10px;">SpringCloud</a> <a href="/tags/SpringCloud-Alibaba/" style="font-size: 10px;">SpringCloud Alibaba</a> <a href="/tags/SpringCloud-Stream/" style="font-size: 10px;">SpringCloud Stream</a> <a href="/tags/SpringSession/" style="font-size: 10px;">SpringSession</a> <a href="/tags/Tomcat/" style="font-size: 10px;">Tomcat</a> <a href="/tags/Transaction/" style="font-size: 10px;">Transaction</a> <a href="/tags/Turbine/" style="font-size: 10px;">Turbine</a> <a href="/tags/Web应用/" style="font-size: 10px;">Web应用</a> <a href="/tags/Windows/" style="font-size: 10px;">Windows</a> <a href="/tags/Windows-11/" style="font-size: 10px;">Windows 11</a> <a href="/tags/Zipkin/" style="font-size: 10px;">Zipkin</a> <a href="/tags/Zookeeper/" style="font-size: 10px;">Zookeeper</a> <a href="/tags/Zuul/" style="font-size: 10px;">Zuul</a> <a href="/tags/assessToken/" style="font-size: 10px;">assessToken</a> <a href="/tags/httpclient/" style="font-size: 10px;">httpclient</a> <a href="/tags/logback/" style="font-size: 10px;">logback</a> <a href="/tags/session共享/" style="font-size: 10px;">session共享</a> <a href="/tags/theme/" style="font-size: 10px;">theme</a> <a href="/tags/互联网产品/" style="font-size: 10px;">互联网产品</a> <a href="/tags/其他/" style="font-size: 10px;">其他</a> <a href="/tags/分布式/" style="font-size: 10.83px;">分布式</a> <a href="/tags/加密/" style="font-size: 10px;">加密</a> <a href="/tags/原理/" style="font-size: 10px;">原理</a> <a href="/tags/发布/" style="font-size: 10px;">发布</a> <a href="/tags/图片水印/" style="font-size: 10px;">图片水印</a> <a href="/tags/工具/" style="font-size: 10px;">工具</a> <a href="/tags/并发编程/" style="font-size: 10px;">并发编程</a> <a href="/tags/循环依赖/" style="font-size: 10px;">循环依赖</a> <a href="/tags/微服务/" style="font-size: 19.17px;">微服务</a> <a href="/tags/时间工具类/" style="font-size: 10px;">时间工具类</a> <a href="/tags/注解/" style="font-size: 10.83px;">注解</a> <a href="/tags/消息订阅/" style="font-size: 10px;">消息订阅</a> <a href="/tags/索引/" style="font-size: 14.17px;">索引</a> <a href="/tags/红黑树/" style="font-size: 10px;">红黑树</a>
+            </canvas>
+        
+    </div>
+  </div>
+
+
+        
+        
+    <div class="widget">
+        <h3 class="title">归档</h3>
+        <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/"><i class="fa" aria-hidden="true">2022年09月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/05/"><i class="fa" aria-hidden="true">2022年05月</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/"><i class="fa" aria-hidden="true">2021年07月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/"><i class="fa" aria-hidden="true">2021年06月</i></a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/"><i class="fa" aria-hidden="true">2021年03月</i></a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/"><i class="fa" aria-hidden="true">2021年02月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/"><i class="fa" aria-hidden="true">2020年11月</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/"><i class="fa" aria-hidden="true">2020年09月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/"><i class="fa" aria-hidden="true">2020年08月</i></a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/"><i class="fa" aria-hidden="true">2020年07月</i></a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/"><i class="fa" aria-hidden="true">2020年06月</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/"><i class="fa" aria-hidden="true">2020年04月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/"><i class="fa" aria-hidden="true">2020年03月</i></a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/"><i class="fa" aria-hidden="true">2020年02月</i></a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/"><i class="fa" aria-hidden="true">2020年01月</i></a><span class="archive-list-count">23</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/"><i class="fa" aria-hidden="true">2019年12月</i></a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/"><i class="fa" aria-hidden="true">2019年11月</i></a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/"><i class="fa" aria-hidden="true">2019年10月</i></a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/"><i class="fa" aria-hidden="true">2019年09月</i></a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/"><i class="fa" aria-hidden="true">2019年08月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/"><i class="fa" aria-hidden="true">2019年05月</i></a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/"><i class="fa" aria-hidden="true">2019年04月</i></a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/"><i class="fa" aria-hidden="true">2019年03月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/"><i class="fa" aria-hidden="true">2019年02月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/"><i class="fa" aria-hidden="true">2019年01月</i></a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/"><i class="fa" aria-hidden="true">2018年12月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/"><i class="fa" aria-hidden="true">2018年10月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/"><i class="fa" aria-hidden="true">2018年09月</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/"><i class="fa" aria-hidden="true">2018年08月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/"><i class="fa" aria-hidden="true">2018年06月</i></a><span class="archive-list-count">2</span></li></ul>
+    </div>
+
+
+        
+        
+    <div class="widget">
+      <h3 class="title">社交</h3> 
+        <div class="content social">
+            
+	            <a href="//github.com/zhaokejin" rel="external nofollow" title="GitHub" target="_blank">
+			    	<i class="github fa fa-github"></i>
+			    </a>
+            
+	            <a href="//gitee.com/zhaokejin" rel="external nofollow" title="Gitee" target="_blank">
+			    	<i class="git fa fa-git"></i>
+			    </a>
+            
+	            <a href="mailto:210006540qq.com" rel="external nofollow" title="邮箱" target="_blank">
+			    	<i class="envelope-o fa fa-envelope-o"></i>
+			    </a>
+            
+	            <a href="//wpa.qq.com/msgrd?v=3&uin=210006540&site=qq&menu=yes" rel="external nofollow" title="QQ" target="_blank">
+			    	<i class="qq fa fa-qq"></i>
+			    </a>
+            
+	            <a href="//shang.qq.com/wpa/qunwpa?idkey=7b19717710dcc2c78996f316db3ab3365bde39bc3c60de7a6c59fe07231e231a" rel="external nofollow" title="QQ群" target="_blank">
+			    	<i class="group fa fa-group"></i>
+			    </a>
+            
+	            <a href="/atom.xml" rel="external nofollow" title="RSS" target="_blank">
+			    	<i class="feed fa fa-feed"></i>
+			    </a>
+            
+        </div>
+    </div>
+
+
+        
+        
+
+        
+    </aside>
+
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+
+<a id="back-to-top" class="icon-btn hide">
+	<i class="fa fa-chevron-up"></i>
+</a>
+
+
+
+
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+        访问量:
+        <strong id="busuanzi_value_site_pv">
+            <i class="fa fa-spinner fa-spin"></i>
+        </strong>
+        &nbsp; | &nbsp;
+        访客数:
+        <strong id="busuanzi_value_site_uv">
+            <i class="fa fa-spinner fa-spin"></i>
+        </strong>
+<!--        &nbsp; <strong>Since 2018-12-26</strong>-->
+    
+</div>
+
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy; 2018 - 2023
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    <a href="//www.beian.miit.gov.cn/" class="copyright-links" target="_blank" rel="nofollow">鲁ICP备18033870号</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/js/jquery.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/bootstrap-hover-dropdown.min.js"></script>
+
+
+	<script src="/js/search.js?rev=@@hash"></script>
+
+
+
+    <script src="/assets/tagcanvas.min.js?rev=2.9"></script>
+    <script>
+        var tagOption = {
+            textColour: '#29afec', // 字体颜色
+            outlineMethod: 'block', // 选中模式
+            outlineColour: '#FFDAB9', // 选中模式的颜色
+            interval: 30 || 30, // 动画帧之间的时间间隔，值越大，转动幅度越大
+            textHeight: 13,
+            outlineRadius: 3,
+            freezeActive: true || '', // 选中的标签是否继续滚动
+            frontSelect: true || '', // 不选标签云后部的标签
+            initial: [0.1, -0.1],
+            depth: 0.5,
+            decel: 0.95,
+            maxSpeed: 0.03,
+            reverse: true || '', // 是否反向触发
+            fadeIn: 500, // 进入动画时间
+            wheelZoom: false || '' // 是否启用鼠标滚轮
+        }
+        TagCanvas.Start('tag-cloud-3d','',tagOption);
+    </script>
+
+
+
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<script src="/js/app.js?rev=@@hash"></script>
+<script src="/jquery.fancybox.js?v=2.1.5"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('.fancybox').fancybox();
+    });
+    // 给图片添加链接
+    $(document).ready(function() {
+        $("p img").each(function() {
+            var strA = "<a id='yourid' class='fancybox' data-fancybox-group='gallery'  href='" + this.src + "'></a>";
+            $(this).wrapAll(strA);
+        });
+    });
+    // fancybox
+    $("#yourid").fancybox({
+        openEffect    : 'elastic',
+        closeEffect   : 'elastic',
+    });
+</script>
+
+</body>
+</html>

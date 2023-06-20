@@ -1,0 +1,920 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="小小冒险家的博客">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.2.3">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="https://www.cicoding.cn">
+    <!--SEO-->
+
+    <meta name="keywords" content="Java">
+
+
+    <meta name="description" content="JVM 调优概述性能定义
+吞吐量 - 指不考虑 GC 引起的停顿时间或内存消耗，垃圾收集器能支撑应用达到的最高性能指标。
+延迟 - 其度量标准是缩短由于垃圾啊收集引起的停顿时间或者完全消除因垃圾收集所引起的停顿，避免应用运行时发生抖动。
+内存占用 - 垃圾收集器流畅运行所需要的内存数量。
+
+调...">
+
+
+
+<meta name="robots" content="all">
+<meta name="google" content="all">
+<meta name="googlebot" content="all">
+<meta name="verify" content="all">
+    <!--Title-->
+
+
+<title>JVM之调优 | 小小冒险家的博客</title>
+
+
+    <link rel="alternate" href="/atom.xml" title="小小冒险家的博客" type="application/atom+xml">
+
+
+    <link rel="icon" href="/favicon.png">
+
+    
+
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7">
+<link rel="stylesheet" href="/jquery.fancybox.css?v=2.1.5">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.5.0">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash">
+
+
+
+
+    
+
+
+
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?601ebec7733383ef248ca61fc0a0db95";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+
+
+    
+
+</head>
+
+</html>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+
+<body>
+    
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row clearfix">
+            <div class="col-md-12 column">
+                <nav class="navbar navbar-default" style="background-color:#fff;border:0;margin-bottom:0"
+                     role="navigation">
+                    <div class="navbar-header">
+<!--                        <button type="button" class="navbar-toggle" data-toggle="collapse"-->
+<!--                                data-target="#navbar-collapse-1">-->
+<!--                            <span class="sr-only">切</span>-->
+<!--                            <span class="icon-bar"></span>-->
+<!--                            <span class="icon-bar"></span>-->
+<!--                            <span class="icon-bar"></span>-->
+<!--                        </button>-->
+                        <a class="logo" href="/">
+                            <img src="/favicon.png"/>小小冒险家的博客
+                        </a>
+                    </div>
+
+                    <div class="collapse navbar-collapse" style="border:0;" id="navbar-collapse-1">
+                        <ul class="nav navbar-nav">
+                            
+                                
+                                    <li>
+                                        <a href="/" >
+                                            <i class="fa fa-home"></i>
+                                            首页
+                                        </a>
+                                    </li>
+                                
+                            
+                                
+                                    <li>
+                                        <a href="/archives" >
+                                            <i class="fa fa-sort"></i>
+                                            归档
+                                        </a>
+                                    </li>
+                                
+                            
+                                
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                                           data-hover="dropdown">
+                                            <i class="fa fa-fire"></i>
+                                            系列教程
+                                            <strong class="caret"></strong>
+                                        </a>
+                                        <ul class="dropdown-menu">
+                                            
+                                                <li>
+                                                    <a href="/docker/00-docker-lession-index" target="_blank">
+                                                        <i class="fa "></i>
+                                                        Docker系列教程
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="/micro-service/microservice/" target="_blank">
+                                                        <i class="fa "></i>
+                                                        SpringCloud微服务架构
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="/micro-service/microservice-alibaba/" target="_blank">
+                                                        <i class="fa "></i>
+                                                        SpringCloud Alibaba微服务架构
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="/sharding-jdbc/sharding-jdbc000/" target="_blank">
+                                                        <i class="fa "></i>
+                                                        Sharding-JDBC教程
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="/springboot/springboot-source-code/" target="_blank">
+                                                        <i class="fa "></i>
+                                                        SpringBoot源码系列
+                                                    </a>
+                                                </li>
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+                                
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                                           data-hover="dropdown">
+                                            <i class="fa fa-book"></i>
+                                            在线文档
+                                            <strong class="caret"></strong>
+                                        </a>
+                                        <ul class="dropdown-menu">
+                                            
+                                                <li>
+                                                    <a href="https://spring.io/docs/" target="_blank">
+                                                        <i class="fa "></i>
+                                                        Spring Reference
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="https://spring.io/projects/spring-boot/" target="_blank">
+                                                        <i class="fa "></i>
+                                                        SpringBoot Reference
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="https://spring.io/projects/spring-cloud/" target="_blank">
+                                                        <i class="fa "></i>
+                                                        SpringCloud Reference
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="https://docs.spring.io/spring-security/site/docs/current/reference/htmlsingle/" target="_blank">
+                                                        <i class="fa "></i>
+                                                        Spring Security Reference
+                                                    </a>
+                                                </li>
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+                                
+                                    <li>
+                                        <a href="/other/jrebel-activation" >
+                                            <i class="fa fa-fire"></i>
+                                            JRebel激活
+                                        </a>
+                                    </li>
+                                
+                            
+                                
+                                    <li>
+                                        <a href="/about" >
+                                            <i class="fa fa-user"></i>
+                                            关于我
+                                        </a>
+                                    </li>
+                                
+                            
+                        </ul>
+                        
+                            <form id="search-form" class="navbar-form navbar-right">
+                                <div class="form-group input-group">
+                                    <input type="text" id="local-search-input" class="form-control"
+                                           placeholder="搜我..."/>
+                                    <span class="input-group-btn">
+                                        <a class="btn btn-default">
+                                            <i class="fa fa-search"></i>
+                                        </a>
+                                    </span>
+                                </div>
+                                <div id="local-search-result" class="local-search-result-cls"></div>
+                            </form>
+                        
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </div>
+</nav>
+
+    <a href="http://github.com/zhaokejin" target="_blank">
+        <img style="position: absolute; width:100px; top: 0; left: 0; border: 0;"
+             src="/img/fork-me.png"
+             alt="Fork me on GitHub">
+    </a>
+
+
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    
+    
+        <div class="ad">
+            <div class="row">
+                
+                    <div class="col-md-12">
+                        <a href="https://promotion.aliyun.com/ntms/act/qwbk.html?userCode=qhtujh03" rel="nofollow" target="_blank">
+                            <img class="img-responsive center-block"
+                                 src="/icons/810x100.png"
+                                 title="阿里全民云计算"
+                            >
+                        </a>
+                    </div>
+                
+            </div>
+        </div>
+    
+
+
+<p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="JVM之调优">
+            
+                JVM之调优
+            
+        </h1>
+        <div class="post-meta">
+    
+
+    
+        <span class="categories-meta fa-wrap">
+            <i class="fa fa-folder-open-o"></i>
+            <a class="category-link" href="/categories/Java/">Java</a>
+        </span>
+    
+
+    
+        <span class="fa-wrap">
+            <i class="fa fa-tags"></i>
+            <span class="tags-meta">
+                
+                    <a class="tag-link" href="/tags/Java/">Java</a>
+                
+            </span>
+        </span>
+    
+
+    
+        
+        <span class="fa-wrap">
+            <i class="fa fa-clock-o"></i>
+            <span class="date-meta">2020/08/16</span>
+        </span>
+        
+            <span class="fa-wrap">
+                <i class="fa fa-eye"></i>
+                <span id="busuanzi_value_page_pv"></span>
+            </span>
+        
+    
+</div>
+        
+        
+    </div>
+    
+    <div class="post-body post-content" id="container">
+        
+    <div class="toc-article">
+        <strong>
+            目录
+        </strong>
+        <div class="toc-content">
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#JVM-调优概述"><span class="toc-text">JVM 调优概述</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#性能定义"><span class="toc-text">性能定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#调优原则"><span class="toc-text">调优原则</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#将进入老年代的对象数量降到最低"><span class="toc-text">将进入老年代的对象数量降到最低</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#降低-Full-GC-的时间"><span class="toc-text">降低 Full GC 的时间</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#GC-优化的过程"><span class="toc-text">GC 优化的过程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-监控-GC-状态"><span class="toc-text">1.监控 GC 状态</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-分析监控结果后决定是否需要优化-GC"><span class="toc-text">2.分析监控结果后决定是否需要优化 GC</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-设置-GC-类型-内存大小"><span class="toc-text">3.设置 GC 类型/内存大小</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-分析结果"><span class="toc-text">4.分析结果</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-如果结果令人满意，将参数应用到所有服务器上并结束-GC-优化"><span class="toc-text">5.如果结果令人满意，将参数应用到所有服务器上并结束 GC 优化</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#命令"><span class="toc-text">命令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#jmap"><span class="toc-text">jmap</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#jstack"><span class="toc-text">jstack</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#jps"><span class="toc-text">jps</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#jstat"><span class="toc-text">jstat</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#jhat"><span class="toc-text">jhat</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#jinfo"><span class="toc-text">jinfo</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HotSpot-VM-参数"><span class="toc-text">HotSpot VM 参数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#JVM-内存配置"><span class="toc-text">JVM 内存配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#GC-类型配置"><span class="toc-text">GC 类型配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#辅助配置"><span class="toc-text">辅助配置</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#典型配置"><span class="toc-text">典型配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#堆大小设置"><span class="toc-text">堆大小设置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#回收器选择"><span class="toc-text">回收器选择</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JVM-实战"><span class="toc-text">JVM 实战</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#分析-GC-日志"><span class="toc-text">分析 GC 日志</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#获取-GC-日志"><span class="toc-text">获取 GC 日志</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#如何分析-GC-日志"><span class="toc-text">如何分析 GC 日志</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#OutOfMemory-OOM-分析"><span class="toc-text">OutOfMemory(OOM)分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#OutOfMemoryError-PermGen-space"><span class="toc-text">OutOfMemoryError:PermGen space</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#OutOfMemoryError-Java-heap-space"><span class="toc-text">OutOfMemoryError:Java heap space</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#OutOfMemoryError-GC-overhead-limit-exceeded"><span class="toc-text">OutOfMemoryError: GC overhead limit exceeded</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CPU-过高"><span class="toc-text">CPU 过高</span></a></li></ol></li></ol>
+        </div>
+    </div>
+
+
+        <h2 id="JVM-调优概述"><a href="#JVM-调优概述" class="headerlink" title="JVM 调优概述"></a>JVM 调优概述</h2><h3 id="性能定义"><a href="#性能定义" class="headerlink" title="性能定义"></a>性能定义</h3><ul>
+<li>吞吐量 - 指不考虑 GC 引起的停顿时间或内存消耗，垃圾收集器能支撑应用达到的最高性能指标。</li>
+<li>延迟 - 其度量标准是缩短由于垃圾啊收集引起的停顿时间或者完全消除因垃圾收集所引起的停顿，避免应用运行时发生抖动。</li>
+<li>内存占用 - 垃圾收集器流畅运行所需要的内存数量。</li>
+</ul>
+<h3 id="调优原则"><a href="#调优原则" class="headerlink" title="调优原则"></a>调优原则</h3><p>GC 优化的两个目标：</p>
+<ol>
+<li>将进入老年代的对象数量降到最低</li>
+<li>减少 Full GC 的执行时间</li>
+</ol>
+<p>GC 优化的基本原则是：将不同的 GC 参数应用到两个及以上的服务器上然后比较它们的性能，然后将那些被证明可以提高性能或减少 GC 执行时间的参数应用于最终的工作服务器上。</p>
+<h3 id="将进入老年代的对象数量降到最低"><a href="#将进入老年代的对象数量降到最低" class="headerlink" title="将进入老年代的对象数量降到最低"></a>将进入老年代的对象数量降到最低</h3><p>除了可以在 JDK7 及更高版本中使用的 G1 收集器以外，其他分代 GC 都是由 Oracle JVM 提供的。关于分代 GC，就是对象在 Eden 区被创建，随后被转移到 Survivor 区，在此之后剩余的对象会被转入老年代。也有一些对象由于占用内存过大，在 Eden 区被创建后会直接被传入老年代。老年代 GC 相对来说会比新生代 GC 更耗时，因此，减少进入老年代的对象数量可以显著降低 Full GC 的频率。你可能会以为减少进入老年代的对象数量意味着把它们留在新生代，事实正好相反，新生代内存的大小是可以调节的。</p>
+<h3 id="降低-Full-GC-的时间"><a href="#降低-Full-GC-的时间" class="headerlink" title="降低 Full GC 的时间"></a>降低 Full GC 的时间</h3><p>Full GC 的执行时间比 Minor GC 要长很多，因此，如果在 Full GC 上花费过多的时间（超过 1s），将可能出现超时错误。</p>
+<ul>
+<li>如果通过减小老年代内存来减少 Full GC 时间，可能会引起 OutOfMemoryError 或者导致 Full GC 的频率升高。</li>
+<li>另外，如果通过增加老年代内存来降低 Full GC 的频率，Full GC 的时间可能因此增加。</li>
+</ul>
+<p>因此，你需要把老年代的大小设置成一个“合适”的值。</p>
+<p>GC 优化需要考虑的 JVM 参数</p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly9waWMxLnpoaW1nLmNvbS92Mi01NDEwMTA5NWM0OTA5ZmIzN2MyZDIxYTFiZjBmYTgwMF9iLmpwZw?x-oss-process=image/format,png" alt="img"></p>
+<p>GC 优化时最常用的参数是<code>-Xms</code>,<code>-Xmx</code>和<code>-XX:NewRatio</code>。<code>-Xms</code>和<code>-Xmx</code>参数通常是必须的，所以<code>NewRatio</code>的值将对 GC 性能产生重要的影响。</p>
+<p>有些人可能会问如何设置永久代内存大小，你可以用<code>-XX:PermSize</code>和<code>-XX:MaxPermSize</code>参数来进行设置，但是要记住，只有当出现<code>OutOfMemoryError</code>错误时你才需要去设置永久代内存。</p>
+<h3 id="GC-优化的过程"><a href="#GC-优化的过程" class="headerlink" title="GC 优化的过程"></a>GC 优化的过程</h3><p>GC 优化的过程和大多数常见的提升性能的过程相似，下面是笔者使用的流程：</p>
+<h3 id="1-监控-GC-状态"><a href="#1-监控-GC-状态" class="headerlink" title="1.监控 GC 状态"></a>1.监控 GC 状态</h3><p>你需要监控 GC 从而检查系统中运行的 GC 的各种状态。</p>
+<h3 id="2-分析监控结果后决定是否需要优化-GC"><a href="#2-分析监控结果后决定是否需要优化-GC" class="headerlink" title="2.分析监控结果后决定是否需要优化 GC"></a>2.分析监控结果后决定是否需要优化 GC</h3><p>在检查 GC 状态后，你需要分析监控结构并决定是否需要进行 GC 优化。如果分析结果显示运行 GC 的时间只有 0.1-0.3 秒，那么就不需要把时间浪费在 GC 优化上，但如果运行 GC 的时间达到 1-3 秒，甚至大于 10 秒，那么 GC 优化将是很有必要的。</p>
+<p>但是，如果你已经分配了大约 10GB 内存给 Java，并且这些内存无法省下，那么就无法进行 GC 优化了。在进行 GC 优化之前，你需要考虑为什么你需要分配这么大的内存空间，如果你分配了 1GB 或 2GB 大小的内存并且出现了<code>OutOfMemoryError</code>，那你就应该执行<strong>堆快照（heap dump）</strong>来消除导致异常的原因。</p>
+<blockquote>
+<p>注意：<br><strong>堆快照（heap dump）</strong>是一个用来检查 Java 内存中的对象和数据的内存文件。该文件可以通过执行 JDK 中的<code>jmap</code>命令来创建。在创建文件的过程中，所有 Java 程序都将暂停，因此，不要在系统执行过程中创建该文件。<br>你可以在互联网上搜索 heap dump 的详细说明。</p>
+</blockquote>
+<h3 id="3-设置-GC-类型-内存大小"><a href="#3-设置-GC-类型-内存大小" class="headerlink" title="3.设置 GC 类型/内存大小"></a>3.设置 GC 类型/内存大小</h3><p>如果你决定要进行 GC 优化，那么你需要选择一个 GC 类型并且为它设置内存大小。此时如果你有多个服务器，请如上文提到的那样，在每台机器上设置不同的 GC 参数并分析它们的区别。</p>
+<h3 id="4-分析结果"><a href="#4-分析结果" class="headerlink" title="4.分析结果"></a>4.分析结果</h3><p>在设置完 GC 参数后就可以开始收集数据，请在收集至少 24 小时后再进行结果分析。如果你足够幸运，你可能会找到系统的最佳 GC 参数。如若不然，你还需要分析输出日志并检查分配的内存，然后需要通过不断调整 GC 类型/内存大小来找到系统的最佳参数。</p>
+<h3 id="5-如果结果令人满意，将参数应用到所有服务器上并结束-GC-优化"><a href="#5-如果结果令人满意，将参数应用到所有服务器上并结束-GC-优化" class="headerlink" title="5.如果结果令人满意，将参数应用到所有服务器上并结束 GC 优化"></a>5.如果结果令人满意，将参数应用到所有服务器上并结束 GC 优化</h3><p>如果 GC 优化的结果令人满意，就可以将参数应用到所有服务器上，并停止 GC 优化。</p>
+<p>在下面的章节中，你将会看到上述每一步所做的具体工作。</p>
+<h2 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h2><h3 id="jmap"><a href="#jmap" class="headerlink" title="jmap"></a>jmap</h3><p>jmap 即 JVM Memory Map。</p>
+<p>jmap 用于生成 heap dump 文件。</p>
+<p>如果不使用这个命令，还可以使用 <code>-XX:+HeapDumpOnOutOfMemoryError</code> 参数来让虚拟机出现 OOM 的时候，自动生成 dump 文件。</p>
+<p>jmap 不仅能生成 dump 文件，还可以查询 finalize 执行队列、Java 堆和永久代的详细信息，如当前使用率、当前使用的是哪种收集器等。</p>
+<p>命令格式：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jmap [option] LVMID</span><br></pre></td></tr></table></figure>
+
+<p>option 参数：</p>
+<ul>
+<li>dump - 生成堆转储快照</li>
+<li>finalizerinfo - 显示在 F-Queue 队列等待 Finalizer 线程执行 finalizer 方法的对象</li>
+<li>heap - 显示 Java 堆详细信息</li>
+<li>histo - 显示堆中对象的统计信息</li>
+<li>permstat - to print permanent generation statistics</li>
+<li>F - 当-dump 没有响应时，强制生成 dump 快照</li>
+</ul>
+<p><strong>示例：jmap -dump PID 生成堆快照</strong></p>
+<p>dump 堆到文件，format 指定输出格式，live 指明是活着的对象，file 指定文件名</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ jmap -dump:live,format=b,file=dump.hprof 28920 Dumping heap to /home/xxx/dump.hprof ... Heap dump file created</span><br></pre></td></tr></table></figure>
+
+<p>dump.hprof 这个后缀是为了后续可以直接用 MAT(Memory Anlysis Tool)打开。</p>
+<p><strong>示例：jmap -heap 查看指定进程的堆信息</strong></p>
+<p>注意：使用 CMS GC 情况下，jmap -heap 的执行有可能会导致 java 进程挂起。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">jmap -heap PID</span><br><span class="line">[root@chances bin]# ./jmap -heap 12379</span><br><span class="line">Attaching to process ID 12379, please wait...</span><br><span class="line">Debugger attached successfully.</span><br><span class="line">Server compiler detected.</span><br><span class="line">JVM version is 17.0-b16</span><br><span class="line"> </span><br><span class="line">using thread-local object allocation.</span><br><span class="line">Parallel GC with 6 thread(s)</span><br><span class="line"> </span><br><span class="line">Heap Configuration:</span><br><span class="line">   MinHeapFreeRatio = 40</span><br><span class="line">   MaxHeapFreeRatio = 70</span><br><span class="line">   MaxHeapSize      = 83886080 (80.0MB)</span><br><span class="line">   NewSize          = 1310720 (1.25MB)</span><br><span class="line">   MaxNewSize       = 17592186044415 MB</span><br><span class="line">   OldSize          = 5439488 (5.1875MB)</span><br><span class="line">   NewRatio         = 2</span><br><span class="line">   SurvivorRatio    = 8</span><br><span class="line">   PermSize         = 20971520 (20.0MB)</span><br><span class="line">   MaxPermSize      = 88080384 (84.0MB)</span><br><span class="line"> </span><br><span class="line">Heap Usage:</span><br><span class="line">PS Young Generation</span><br><span class="line">Eden Space:</span><br><span class="line">   capacity = 9306112 (8.875MB)</span><br><span class="line">   used     = 5375360 (5.1263427734375MB)</span><br><span class="line">   free     = 3930752 (3.7486572265625MB)</span><br><span class="line">   57.761608714788736% used</span><br><span class="line">From Space:</span><br><span class="line">   capacity = 9306112 (8.875MB)</span><br><span class="line">   used     = 3425240 (3.2665634155273438MB)</span><br><span class="line">   free     = 5880872 (5.608436584472656MB)</span><br><span class="line">   36.80634834397007% used</span><br><span class="line">To Space:</span><br><span class="line">   capacity = 9306112 (8.875MB)</span><br><span class="line">   used     = 0 (0.0MB)</span><br><span class="line">   free     = 9306112 (8.875MB)</span><br><span class="line">   0.0% used</span><br><span class="line">PS Old Generation</span><br><span class="line">   capacity = 55967744 (53.375MB)</span><br><span class="line">   used     = 48354640 (46.11457824707031MB)</span><br><span class="line">   free     = 7613104 (7.2604217529296875MB)</span><br><span class="line">   86.39733629427693% used</span><br><span class="line">PS Perm Generation</span><br><span class="line">   capacity = 62062592 (59.1875MB)</span><br><span class="line">   used     = 60243112 (57.452308654785156MB)</span><br><span class="line">   free     = 1819480 (1.7351913452148438MB)</span><br><span class="line">   97.06831451706046% used</span><br></pre></td></tr></table></figure>
+
+<h3 id="jstack"><a href="#jstack" class="headerlink" title="jstack"></a>jstack</h3><p>jstack 用于生成 java 虚拟机当前时刻的线程快照。</p>
+<p>线程快照是当前 java 虚拟机内每一条线程正在执行的方法堆栈的集合，生成线程快照的主要目的是定位线程出现长时间停顿的原因，如线程间死锁、死循环、请求外部资源导致的长时间等待等。</p>
+<p>线程出现停顿的时候通过 jstack 来查看各个线程的调用堆栈，就可以知道没有响应的线程到底在后台做什么事情，或者等待什么资源。 如果 java 程序崩溃生成 core 文件，jstack 工具可以用来获得 core 文件的 java stack 和 native stack 的信息，从而可以轻松地知道 java 程序是如何崩溃和在程序何处发生问题。另外，jstack 工具还可以附属到正在运行的 java 程序中，看到当时运行的 java 程序的 java stack 和 native stack 的信息, 如果现在运行的 java 程序呈现 hung 的状态，jstack 是非常有用的。</p>
+<p>命令格式：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jstack [option] LVMID</span><br></pre></td></tr></table></figure>
+
+<p>option 参数：</p>
+<ul>
+<li><code>-F</code> - 当正常输出请求不被响应时，强制输出线程堆栈</li>
+<li><code>-l</code> - 除堆栈外，显示关于锁的附加信息</li>
+<li><code>-m</code> - 如果调用到本地方法的话，可以显示 C/C++的堆栈</li>
+</ul>
+<h3 id="jps"><a href="#jps" class="headerlink" title="jps"></a>jps</h3><p>jps(JVM Process Status Tool)，显示指定系统内所有的 HotSpot 虚拟机进程。</p>
+<p>命令格式：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jps [options] [hostid]</span><br></pre></td></tr></table></figure>
+
+<p>option 参数：</p>
+<ul>
+<li><code>-l</code> - 输出主类全名或 jar 路径</li>
+<li><code>-q</code> - 只输出 LVMID</li>
+<li><code>-m</code> - 输出 JVM 启动时传递给 main()的参数</li>
+<li><code>-v</code> - 输出 JVM 启动时显示指定的 JVM 参数</li>
+</ul>
+<p>其中[option]、[hostid]参数也可以不写。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ jps -l -m 28920 org.apache.catalina.startup.Bootstrap start 11589 org.apache.catalina.startup.Bootstrap start 25816 sun.tools.jps.Jps -l -m</span><br></pre></td></tr></table></figure>
+
+<h3 id="jstat"><a href="#jstat" class="headerlink" title="jstat"></a>jstat</h3><p>jstat(JVM statistics Monitoring)，是用于监视虚拟机运行时状态信息的命令，它可以显示出虚拟机进程中的类装载、内存、垃圾收集、JIT 编译等运行数据。</p>
+<p>命令格式：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jstat [option] LVMID [interval] [count]</span><br></pre></td></tr></table></figure>
+
+<p>参数：</p>
+<ul>
+<li>[option] - 操作参数</li>
+<li>LVMID - 本地虚拟机进程 ID</li>
+<li>[interval] - 连续输出的时间间隔</li>
+<li>[count] - 连续输出的次数</li>
+</ul>
+<h3 id="jhat"><a href="#jhat" class="headerlink" title="jhat"></a>jhat</h3><p>jhat(JVM Heap Analysis Tool)，是与 jmap 搭配使用，用来分析 jmap 生成的 dump，jhat 内置了一个微型的 HTTP/HTML 服务器，生成 dump 的分析结果后，可以在浏览器中查看。</p>
+<p>注意：一般不会直接在服务器上进行分析，因为 jhat 是一个耗时并且耗费硬件资源的过程，一般把服务器生成的 dump 文件复制到本地或其他机器上进行分析。</p>
+<p>命令格式：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jhat [dumpfile]</span><br></pre></td></tr></table></figure>
+
+<h3 id="jinfo"><a href="#jinfo" class="headerlink" title="jinfo"></a>jinfo</h3><p>jinfo(JVM Configuration info)，用于实时查看和调整虚拟机运行参数。</p>
+<p>之前的 jps -v 口令只能查看到显示指定的参数，如果想要查看未被显示指定的参数的值就要使用 jinfo 口令</p>
+<p>命令格式：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jinfo [option] [args] LVMID</span><br></pre></td></tr></table></figure>
+
+<p>option 参数：</p>
+<ul>
+<li>-flag : 输出指定 args 参数的值</li>
+<li>-flags : 不需要 args 参数，输出所有 JVM 参数的值</li>
+<li>-sysprops : 输出系统属性，等同于 System.getProperties()</li>
+</ul>
+<h2 id="HotSpot-VM-参数"><a href="#HotSpot-VM-参数" class="headerlink" title="HotSpot VM 参数"></a>HotSpot VM 参数</h2><h3 id="JVM-内存配置"><a href="#JVM-内存配置" class="headerlink" title="JVM 内存配置"></a>JVM 内存配置</h3><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly9waWM0LnpoaW1nLmNvbS92Mi01ODVhMzg5NGYwNWFkZGE1OWNjOTI1MTg0ZDZhMDc2Yl9iLmpwZw?x-oss-process=image/format,png" alt="img"></p>
+<h3 id="GC-类型配置"><a href="#GC-类型配置" class="headerlink" title="GC 类型配置"></a>GC 类型配置</h3><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly9waWM0LnpoaW1nLmNvbS92Mi1lMTM2N2ZiZTY4N2VjMTFlMTY2NGJjYjc1OTQ4MzI5Yl9iLmpwZw?x-oss-process=image/format,png" alt="img"></p>
+<h3 id="辅助配置"><a href="#辅助配置" class="headerlink" title="辅助配置"></a>辅助配置</h3><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly9waWMzLnpoaW1nLmNvbS92Mi04ODk1MzMzMTJkZWY5NzMxNTVhODc5ZmNiNGU1ZWZlNl9iLmpwZw?x-oss-process=image/format,png" alt="img"></p>
+<h2 id="典型配置"><a href="#典型配置" class="headerlink" title="典型配置"></a>典型配置</h2><h3 id="堆大小设置"><a href="#堆大小设置" class="headerlink" title="堆大小设置"></a>堆大小设置</h3><p>年轻代的设置很关键。</p>
+<p>JVM 中最大堆大小有三方面限制：</p>
+<ol>
+<li>相关操作系统的数据模型（32-bt 还是 64-bit）限制；</li>
+<li>系统的可用虚拟内存限制；</li>
+<li>系统的可用物理内存限制。</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">整个堆大小 = 年轻代大小 + 年老代大小 + 持久代大小</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>持久代一般固定大小为 64m。使用 <code>-XX:PermSize</code> 设置。</li>
+<li>官方推荐年轻代占整个堆的 3/8。使用 <code>-Xmn</code> 设置。</li>
+</ul>
+<h3 id="回收器选择"><a href="#回收器选择" class="headerlink" title="回收器选择"></a>回收器选择</h3><p>JVM 给了三种选择：串行收集器、并行收集器、并发收集器。</p>
+<h2 id="JVM-实战"><a href="#JVM-实战" class="headerlink" title="JVM 实战"></a>JVM 实战</h2><h3 id="分析-GC-日志"><a href="#分析-GC-日志" class="headerlink" title="分析 GC 日志"></a>分析 GC 日志</h3><h3 id="获取-GC-日志"><a href="#获取-GC-日志" class="headerlink" title="获取 GC 日志"></a>获取 GC 日志</h3><p>获取 GC 日志有两种方式：</p>
+<ul>
+<li>使用命令动态查看</li>
+<li>在容器中设置相关参数打印 GC 日志</li>
+</ul>
+<p><code>jstat -gc</code> 统计垃圾回收堆的行为：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jstat -gc 1262 S0C S1C S0U S1U EC EU OC OU PC PU YGC YGCT FGC FGCT GCT 26112.0 24064.0 6562.5 0.0 564224.0 76274.5 434176.0 388518.3 524288.0 42724.7 320 6.417 1 0.398 6.815</span><br></pre></td></tr></table></figure>
+
+<p>也可以设置间隔固定时间来打印：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ jstat -gc 1262 2000 20</span><br></pre></td></tr></table></figure>
+
+<p>这个命令意思就是每隔 2000ms 输出 1262 的 gc 情况，一共输出 20 次</p>
+<p>Tomcat 设置示例：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">JAVA_OPTS=<span class="string">"-server -Xms2000m -Xmx2000m -Xmn800m </span></span><br><span class="line"><span class="string">-XX:PermSize=64m -XX:MaxPermSize=256m -XX:SurvivorRatio=4 -verbose:gc -Xloggc:CATALINAHOME/logs/gc.log</span></span><br><span class="line"><span class="string">−Djava.awt.headless=true−XX:+PrintGCTimeStamps−XX:+PrintGCDetails−Dsun.rmi.dgc.server.gcInterval=600000</span></span><br><span class="line"><span class="string">−Dsun.rmi.dgc.client.gcInterval=600000</span></span><br><span class="line"><span class="string">−XX:+UseConcMarkSweepGC−XX:MaxTenuringThreshold=15"</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>−Xms2000m−Xmx2000m−Xmn800m−XX:PermSize=64m−XX:MaxPermSize=256m&lt;/code&gt;Xms，即为jvm启动时得JVM初始堆大小,Xmx为jvm的最大堆大小，xmn为新生代的大小，permsize为永久代的初始大小，MaxPermSize为永久代的最大空间。−XX:SurvivorRatio=4&lt;/code&gt;SurvivorRatio为新生代空间中的Eden区和救助空间Survivor区的大小比值，默认是8，则两个Survivor区与一个Eden区的比值为2:8,一个Survivor区占整个年轻代的1/10。调小这个参数将增大survivor区，让对象尽量在survitor区呆长一点，减少进入年老代的对象。去掉救助空间的想法是让大部分不能马上回收的数据尽快进入年老代，加快年老代的回收频率，减少年老代暴涨的可能性，这个是通过将−XX:SurvivorRatio设置成比较大的值（比如65536)来做到。</code></li>
+<li><code>−verbose:gc−Xloggc:CATALINA_HOME/logs/gc.log</code> 将虚拟机每次垃圾回收的信息写到日志文件中，文件名由 file 指定，文件格式是平文件，内容和-verbose:gc 输出内容相同。</li>
+<li><code>-Djava.awt.headless=true</code> Headless 模式是系统的一种配置模式。在该模式下，系统缺少了显示设备、键盘或鼠标。</li>
+<li><code>-XX:+PrintGCTimeStamps -XX:+PrintGCDetails</code> 设置 gc 日志的格式</li>
+<li><code>-Dsun.rmi.dgc.server.gcInterval=600000 -Dsun.rmi.dgc.client.gcInterval=600000</code> 指定 rmi 调用时 gc 的时间间隔</li>
+<li><code>-XX:+UseConcMarkSweepGC -XX:MaxTenuringThreshold=15</code> 采用并发 gc 方式，经过 15 次 minor gc 后进入年老代</li>
+</ul>
+<h3 id="如何分析-GC-日志"><a href="#如何分析-GC-日志" class="headerlink" title="如何分析 GC 日志"></a>如何分析 GC 日志</h3><p>Young GC 回收日志:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">2016-07-05T10:43:18.093+0800: 25.395: [GC [PSYoungGen: 274931K-&gt;10738K(274944K)] 371093K-&gt;147186K(450048K), 0.0668480 secs] [Times: user=0.17 sys=0.08, real=0.07 secs]</span><br></pre></td></tr></table></figure>
+
+<p>Full GC 回收日志:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">2016-07-05T10:43:18.160+0800: 25.462: [Full GC [PSYoungGen: 10738K-&gt;0K(274944K)] [ParOldGen: 136447K-&gt;140379K(302592K)] 147186K-&gt;140379K(577536K) [PSPermGen: 85411K-&gt;85376K(171008K)], 0.6763541 secs] [Times: user=1.75 sys=0.02, real=0.68 secs]</span><br></pre></td></tr></table></figure>
+
+<p>通过上面日志分析得出，PSYoungGen、ParOldGen、PSPermGen 属于 Parallel 收集器。其中 PSYoungGen 表示 gc 回收前后年轻代的内存变化；ParOldGen 表示 gc 回收前后老年代的内存变化；PSPermGen 表示 gc 回收前后永久区的内存变化。young gc 主要是针对年轻代进行内存回收比较频繁，耗时短；full gc 会对整个堆内存进行回城，耗时长，因此一般尽量减少 full gc 的次数</p>
+<p>通过两张图非常明显看出 gc 日志构成：</p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly9waWM0LnpoaW1nLmNvbS84MC92Mi1jYzE4ZDY1MmIzY2M2ZWIwYjQ4YTVlNDI0ZDZjZTE1Yl83MjB3LmpwZw?x-oss-process=image/format,png" alt="img"></p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly9waWM0LnpoaW1nLmNvbS92Mi01ZTI4YjQxY2U5YzMyMzVjMTZiYTZiOGM4NGI2YjRiN19iLmpwZw?x-oss-process=image/format,png" alt="img"></p>
+<h3 id="OutOfMemory-OOM-分析"><a href="#OutOfMemory-OOM-分析" class="headerlink" title="OutOfMemory(OOM)分析"></a>OutOfMemory(OOM)分析</h3><p>OutOfMemory ，即内存溢出，是一个常见的 JVM 问题。那么分析 OOM 的思路是什么呢？</p>
+<p>首先，要知道有三种 OutOfMemoryError：</p>
+<ul>
+<li>OutOfMemoryError:Java heap space - 堆空间溢出</li>
+<li>OutOfMemoryError:PermGen space - 方法区和运行时常量池溢出</li>
+<li>OutOfMemoryError:unable to create new native thread - 线程过多</li>
+</ul>
+<h3 id="OutOfMemoryError-PermGen-space"><a href="#OutOfMemoryError-PermGen-space" class="headerlink" title="OutOfMemoryError:PermGen space"></a>OutOfMemoryError:PermGen space</h3><p>OutOfMemoryError:PermGen space 表示方法区和运行时常量池溢出。</p>
+<p>原因：</p>
+<p>Perm 区主要用于存放 Class 和 Meta 信息的，Class 在被 Loader 时就会被放到 PermGen space，这个区域称为年老代。GC 在主程序运行期间不会对年老区进行清理，默认是 64M 大小。</p>
+<p>当程序程序中使用了大量的 jar 或 class，使 java 虚拟机装载类的空间不够，超过 64M 就会报这部分内存溢出了，需要加大内存分配，一般 128m 足够。</p>
+<p>解决方案：</p>
+<p>（1）扩大永久代空间</p>
+<ul>
+<li>JDK7 以前使用 <code>-XX:PermSize</code> 和 <code>-XX:MaxPermSize</code> 来控制永久代大小。</li>
+<li>JDK8 以后把原本放在永久代的字符串常量池移出, 放在 Java 堆中(元空间 Metaspace)中，元数据并不在虚拟机中，使用的是本地的内存。使用 <code>-XX:MetaspaceSize</code> 和 <code>-XX:MaxMetaspaceSize</code> 控制元空间大小。</li>
+</ul>
+<blockquote>
+<p>注意：<code>-XX:PermSize</code> 一般设为 64M</p>
+</blockquote>
+<p>（2）清理应用程序中 <code>WEB-INF/lib</code> 下的 jar，用不上的 jar 删除掉，多个应用公共的 jar 移动到 Tomcat 的 lib 目录，减少重复加载。</p>
+<h3 id="OutOfMemoryError-Java-heap-space"><a href="#OutOfMemoryError-Java-heap-space" class="headerlink" title="OutOfMemoryError:Java heap space"></a>OutOfMemoryError:Java heap space</h3><p>OutOfMemoryError:Java heap space 表示堆空间溢出。</p>
+<p>原因：JVM 分配给堆内存的空间已经用满了。</p>
+<p>问题定位</p>
+<p>（1）使用 jmap 或 -XX:+HeapDumpOnOutOfMemoryError 获取堆快照。 （2）使用内存分析工具（visualvm、mat、jProfile 等）对堆快照文件进行分析。 （3）根据分析图，重点是确认内存中的对象是否是必要的，分清究竟是是内存泄漏（Memory Leak）还是内存溢出（Memory Overflow）。</p>
+<p>内存泄露</p>
+<p>内存泄漏是指由于疏忽或错误造成程序未能释放已经不再使用的内存的情况。</p>
+<p>内存泄漏并非指内存在物理上的消失，而是应用程序分配某段内存后，由于设计错误，失去了对该段内存的控制，因而造成了内存的浪费。</p>
+<p>内存泄漏随着被执行的次数越多-最终会导致内存溢出。</p>
+<p>而因程序死循环导致的不断创建对象-只要被执行到就会产生内存溢出。</p>
+<p>内存泄漏常见几个情况：</p>
+<ul>
+<li>静态集合类<ul>
+<li>声明为静态（static）的 HashMap、Vector 等集合</li>
+<li>通俗来讲 A 中有 B，当前只把 B 设置为空，A 没有设置为空，回收时 B 无法回收-因被 A 引用。</li>
+</ul>
+</li>
+<li>监听器<ul>
+<li>监听器被注册后释放对象时没有删除监听器</li>
+</ul>
+</li>
+<li>物理连接<ul>
+<li>DataSource.getConnection()建立链接，必须通过 close()关闭链接</li>
+</ul>
+</li>
+<li>内部类和外部模块等的引用<ul>
+<li>发现它的方式同内存溢出，可再加个实时观察</li>
+<li>jstat -gcutil 7362 2500 70</li>
+</ul>
+</li>
+</ul>
+<p>重点关注：</p>
+<ul>
+<li>FGC — 从应用程序启动到采样时发生 Full GC 的次数。</li>
+<li>FGCT — 从应用程序启动到采样时 Full GC 所用的时间（单位秒）。</li>
+<li>FGC 次数越多，FGCT 所需时间越多-可非常有可能存在内存泄漏。</li>
+</ul>
+<p>解决方案</p>
+<p>（1）检查程序，看是否有死循环或不必要地重复创建大量对象。有则改之。</p>
+<p>下面是一个重复创建内存的示例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">public class OOM &#123;</span><br><span class="line">        public static void main(String[] args) &#123;</span><br><span class="line">            Integer sum1=300000;</span><br><span class="line">            Integer sum2=400000;</span><br><span class="line">            OOM oom = new OOM();</span><br><span class="line">            System.out.println(“往ArrayList中加入30w内容”);</span><br><span class="line">            oom.javaHeapSpace(sum1);</span><br><span class="line">            oom.memoryTotal();</span><br><span class="line">            System.out.println(“往ArrayList中加入40w内容”);</span><br><span class="line">            oom.javaHeapSpace(sum2);</span><br><span class="line">            oom.memoryTotal();</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">public void javaHeapSpace(Integer sum)&#123;</span><br><span class="line">        Random random = new Random();</span><br><span class="line">        ArrayList openList = new ArrayList();</span><br><span class="line">        for(int i=0;i&lt;sum;i++)&#123;</span><br><span class="line">            String charOrNum = String.valueOf(random.nextInt(10));</span><br><span class="line">            openList.add(charOrNum);</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">public void memoryTotal()&#123;</span><br><span class="line">    Runtime run = Runtime.getRuntime();</span><br><span class="line">    long max = run.maxMemory();</span><br><span class="line">    long total = run.totalMemory();</span><br><span class="line">    long free = run.freeMemory();</span><br><span class="line">    long usable = max - total + free;</span><br><span class="line">    System.out.println(&quot;最大内存 = &quot; + max);</span><br><span class="line">    System.out.println(&quot;已分配内存 = &quot; + total);</span><br><span class="line">    System.out.println(&quot;已分配内存中的剩余空间 = &quot; + free);</span><br><span class="line">    System.out.println(&quot;最大可用内存 = &quot; + usable);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>执行结果：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">往ArrayList中加入30w内容 最大内存 = 20447232 已分配内存 = 20447232 已分配内存中的剩余空间 = 4032576 最大可用内存 = 4032576 往ArrayList中加入40w内容 Exception <span class="keyword">in</span> thread “main”</span><br><span class="line">java.lang.OutOfMemoryError: Java heap space at </span><br><span class="line">java.util.Arrays.copyOf(Arrays.java:2245) at </span><br><span class="line">java.util.Arrays.copyOf(Arrays.java:2219) at java.util.ArrayList.grow(ArrayList.java:242) at </span><br><span class="line">java.util.ArrayList.ensureExplicitCapacity(ArrayList.java:216) at </span><br><span class="line">java.util.ArrayList.ensureCapacityInternal(ArrayList.java:208) at </span><br><span class="line">java.util.ArrayList.add(ArrayList.java:440) at </span><br><span class="line">pers.qingqian.study.seven.OOM.javaHeapSpace(OOM.java:36) at </span><br><span class="line">pers.qingqian.study.seven.OOM.main(OOM.java:26)</span><br></pre></td></tr></table></figure>
+
+<p>（2）扩大堆内存空间</p>
+<p>使用 <code>-Xms</code> 和 <code>-Xmx</code> 来控制堆内存空间大小。</p>
+<h3 id="OutOfMemoryError-GC-overhead-limit-exceeded"><a href="#OutOfMemoryError-GC-overhead-limit-exceeded" class="headerlink" title="OutOfMemoryError: GC overhead limit exceeded"></a>OutOfMemoryError: GC overhead limit exceeded</h3><p>原因：JDK6 新增错误类型，当 GC 为释放很小空间占用大量时间时抛出；一般是因为堆太小，导致异常的原因，没有足够的内存。</p>
+<p>解决方案：</p>
+<p>查看系统是否有使用大内存的代码或死循环； 通过添加 JVM 配置，来限制使用内存：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;jvm-arg&gt;-XX:-UseGCOverheadLimit&lt;/jvm-arg&gt;</span><br><span class="line">#### OutOfMemoryError：unable to create new native thread</span><br></pre></td></tr></table></figure>
+
+<p>原因：线程过多</p>
+<p>那么能创建多少线程呢？这里有一个公式：</p>
+<p>(MaxProcessMemory - JVMMemory - ReservedOsMemory) / (ThreadStackSize) = Number of threads MaxProcessMemory 指的是一个进程的最大内存 JVMMemory JVM内存 ReservedOsMemory </p>
+<p>保留的操作系统内存 ThreadStackSize 线程栈的大小</p>
+<p>当发起一个线程的创建时，虚拟机会在 JVM 内存创建一个 Thread 对象同时创建一个操作系统线程，而这个系统线程的内存用的不是 JVMMemory，而是系统中剩下的内存： (MaxProcessMemory - JVMMemory - ReservedOsMemory) 结论：你给 JVM 内存越多，那么你能用来创建的系统线程的内存就会越少，越容易发生 java.lang.OutOfMemoryError: unable to create new native thread。</p>
+<h3 id="CPU-过高"><a href="#CPU-过高" class="headerlink" title="CPU 过高"></a>CPU 过高</h3><p>定位步骤：</p>
+<p>（1）执行 top -c 命令，找到 cpu 最高的进程的 id</p>
+<p>（2）jstack PID 导出 Java 应用程序的线程堆栈信息。</p>
+<p>示例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line">`jstack 6795</span><br><span class="line"> </span><br><span class="line">&quot;Low Memory Detector&quot; daemon prio=10 tid=0x081465f8 nid=0x7 runnable [0x00000000…0x00000000]</span><br><span class="line">“CompilerThread0” daemon prio=10 tid=0x08143c58 nid=0x6 waiting on condition [0x00000000…0xfb5fd798]</span><br><span class="line">“Signal Dispatcher” daemon prio=10 tid=0x08142f08 nid=0x5 waiting on condition [0x00000000…0x00000000]</span><br><span class="line">“Finalizer” daemon prio=10 tid=0x08137ca0 nid=0x4 in Object.wait() [0xfbeed000…0xfbeeddb8] at java.lang.Object.wait(Native Method)</span><br><span class="line">   - waiting on &amp;lt;0xef600848&amp;gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;a java.lang.ref.ReferenceQueue&lt;span class=&quot;nv&quot;&gt;$Lock&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;  </span><br><span class="line"> </span><br><span class="line">at java.lang.ref.ReferenceQueue.remove&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;ReferenceQueue.java:116&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;  </span><br><span class="line"> </span><br><span class="line">- locked &amp;lt;0xef600848&amp;gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;a java.lang.ref.ReferenceQueue&lt;span class=&quot;nv&quot;&gt;$Lock&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;  </span><br><span class="line"> </span><br><span class="line">at java.lang.ref.ReferenceQueue.remove&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;ReferenceQueue.java:132&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;  </span><br><span class="line"> </span><br><span class="line">at java.lang.ref.Finalizer&lt;span class=&quot;nv&quot;&gt;$FinalizerThread&lt;/span&gt;.run&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;Finalizer.java:159&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;  </span><br><span class="line"> </span><br><span class="line">&lt;span class=&quot;s2&quot;&gt;&quot;Reference Handler&quot;&lt;/span&gt; daemon &lt;span class=&quot;nv&quot;&gt;prio&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;10&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;tid&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;0x081370f0 &lt;span class=&quot;nv&quot;&gt;nid&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;0x3 in Object.wait&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;0xfbf4a000..0xfbf4aa38&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;  </span><br><span class="line"> </span><br><span class="line">at java.lang.Object.wait&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;Native Method&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;  </span><br><span class="line"> </span><br><span class="line">- waiting on &amp;lt;0xef600758&amp;gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;a java.lang.ref.Reference&lt;span class=&quot;nv&quot;&gt;$Lock&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;  </span><br><span class="line"> </span><br><span class="line">at java.lang.Object.wait&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;Object.java:474&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;  </span><br><span class="line"> </span><br><span class="line">at java.lang.ref.Reference&lt;span class=&quot;nv&quot;&gt;$ReferenceHandler&lt;/span&gt;.run&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;Reference.java:116&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;  </span><br><span class="line"> </span><br><span class="line">top - 14:20:09 up 611 days, 2:56, 1 user, load average: 13.19, 7.76, 7.82</span><br><span class="line">Threads: 6991 total, 17 running, 6974 sleeping, 0 stopped, 0 zombie</span><br><span class="line">%Cpu(s): 90.4 us, 2.1 sy, 0.0 ni, 7.0 id, 0.0 wa, 0.0 hi, 0.4 si, 0.0 st</span><br><span class="line">KiB Mem: 32783044 total, 32505008 used, 278036 free, 120304 buffers</span><br><span class="line">KiB Swap: 0 total, 0 used, 0 free. 4497428 cached Mem</span><br><span class="line"> </span><br><span class="line">PID USER PR NI VIRT RES SHR S %CPU %MEM TIME+ COMMAND</span><br><span class="line">6800 root 20 0 27.299g 0.021t 7172 S 54.7 70.1 187:55.61 java</span><br><span class="line">6803 root 20 0 27.299g 0.021t 7172 S 54.4 70.1 187:52.59 java</span><br><span class="line">6798 root 20 0 27.299g 0.021t 7172 S 53.7 70.1 187:55.08 java</span><br><span class="line">6801 root 20 0 27.299g 0.021t 7172 S 53.7 70.1 187:55.25 java</span><br><span class="line">6797 root 20 0 27.299g 0.021t 7172 S 53.1 70.1 187:52.78 java</span><br><span class="line">6804 root 20 0 27.299g 0.021t 7172 S 53.1 70.1 187:55.76 java</span><br><span class="line">6802 root 20 0 27.299g 0.021t 7172 S 52.1 70.1 187:54.79 java</span><br><span class="line">6799 root 20 0 27.299g 0.021t 7172 S 51.8 70.1 187:53.36 java</span><br><span class="line">6807 root 20 0 27.299g 0.021t 7172 S 13.6 70.1 48:58.60 java</span><br><span class="line">11014 root 20 0 27.299g 0.021t 7172 R 8.4 70.1 8:00.32 java</span><br><span class="line">10642 root 20 0 27.299g 0.021t 7172 R 6.5 70.1 6:32.06 java</span><br><span class="line">6808 root 20 0 27.299g 0.021t 7172 S 6.1 70.1 159:08.40 java</span><br><span class="line">11315 root 20 0 27.299g 0.021t 7172 S 3.9 70.1 5:54.10 java</span><br><span class="line">12545 root 20 0 27.299g 0.021t 7172 S 3.9 70.1 6:55.48 java</span><br><span class="line">23353 root 20 0 27.299g 0.021t 7172 S 3.9 70.1 2:20.55 java</span><br><span class="line">24868 root 20 0 27.299g 0.021t 7172 S 3.9 70.1 2:12.46 java</span><br><span class="line">9146 root 20 0 27.299g 0.021t 7172 S 3.6 70.1 7:42.72 java</span><br><span class="line"> </span><br><span class="line">- locked &amp;lt;0xef600758&amp;gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;a java.lang.ref.Reference&lt;span class=&quot;nv&quot;&gt;$Lock&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;  </span><br><span class="line"> </span><br><span class="line">&lt;span class=&quot;s2&quot;&gt;&quot;VM Thread&quot;&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;prio&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;10&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;tid&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;0x08134878 &lt;span class=&quot;nv&quot;&gt;nid&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;0x2 runnable  </span><br><span class="line"> </span><br><span class="line">&lt;span class=&quot;s2&quot;&gt;&quot;VM Periodic Task Thread&quot;&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;prio&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;10&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;tid&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;0x08147768 &lt;span class=&quot;nv&quot;&gt;nid&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;0x8 waiting on condition&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;在打印的堆栈日志文件中，tid 和 nid 的含义：&lt;/p&gt;&lt;p&gt;&amp;lt;pre style=&quot;margin: 0px; padding: 0px; white-space: pre-wrap; overflow-wrap: break-word;&quot;&amp;gt;&lt;code&gt;nid : 对应的 Linux 操作系统下的 tid 线程号，也就是前面转化的 16 进制数字 tid: 这个应该是 jvm 的 jmm 内存规范中的唯一地址定位&lt;/code&gt; &amp;lt;/pre&amp;gt;&lt;/p&gt;&lt;p&gt;在 CPU 过高的情况下，查找响应的线程，一般定位都是用 nid 来定位的。而如果发生死锁之类的问题，一般用 tid 来定位。&lt;/p&gt;&lt;p&gt;（3）定位 CPU 高的线程打印其 nid&lt;/p&gt;&lt;p&gt;查看线程下具体进程信息的命令如下：&lt;/p&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-css&quot;&gt;&lt;span class=&quot;nt&quot;&gt;top&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-H&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-p&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;6735&lt;/span&gt;</span><br></pre></td></tr></table></figure>
+
+<p>由此可以看出占用 CPU 较高的线程，但是这些还不高，无法直接定位到具体的类。nid 是 16 进制的，所以我们要获取线程的 16 进制 ID：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">printf</span> “%x\n” 6800</span><br><span class="line">输出结果:45cd</span><br></pre></td></tr></table></figure>
+
+<p>然后根据输出结果到 jstack 打印的堆栈日志中查定位：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">&lt;pre style=“margin: 0px; padding: 0px; white-space: pre-wrap; overflow-wrap: break-word;”&gt;`“catalina-exec-5692” daemon prio=10 tid=0x00007f3b05013800 nid=0x45cd waiting on condition [0x00007f3ae08e3000]</span><br><span class="line"> </span><br><span class="line">java.lang.Thread.State: TIMED_WAITING (parking)</span><br><span class="line"> </span><br><span class="line">at sun.misc.Unsafe.park(Native Method)</span><br><span class="line"> </span><br><span class="line">- parking to wait for  &lt;0x00000006a7800598&gt; (a java.util.concurrent.locks.AbstractQueuedSynchronizerConditionObject&lt;/span&gt;&lt;spanclass=&quot;o&quot;&gt;)&lt;/span&gt;atjava.util.concurrent.locks.LockSupport.parkNanos&lt;spanclass=&quot;o&quot;&gt;(&lt;/span&gt;LockSupport.java:226&lt;spanclass=&quot;o&quot;&gt;)&lt;/span&gt;atjava.util.concurrent.locks.AbstractQueuedSynchronizer&lt;spanclass=&quot;nv&quot;&gt;</span><br><span class="line"> </span><br><span class="line">ConditionObject&lt;/span&gt;&lt;spanclass=&quot;o&quot;&gt;)&lt;/span&gt;atjava.util.concurrent.locks.LockSupport.parkNanos&lt;spanclass=&quot;o&quot;&gt;(&lt;/span&gt;LockSupport.java:226&lt;spanclass=&quot;o&quot;&gt;)&lt;/span&gt;atjava.util.concurrent.locks.AbstractQueuedSynchronizer&lt;spanclass=&quot;nv&quot;&gt;ConditionObject.awaitNanos(AbstractQueuedSynchronizer.java:2082)</span><br><span class="line"> </span><br><span class="line">at java.util.concurrent.LinkedBlockingQueue.poll(LinkedBlockingQueue.java:467)</span><br><span class="line"> </span><br><span class="line">at org.apache.tomcat.util.threads.TaskQueue.poll(TaskQueue.java:86)</span><br><span class="line"> </span><br><span class="line">at org.apache.tomcat.util.threads.TaskQueue.poll(TaskQueue.java:32)</span><br><span class="line"> </span><br><span class="line">at java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1068)</span><br><span class="line"> </span><br><span class="line">at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1130)</span><br><span class="line"> </span><br><span class="line">at java.util.concurrent.ThreadPoolExecutorWorker&lt;/span&gt;.run&lt;spanclass=&quot;o&quot;&gt;(&lt;/span&gt;ThreadPoolExecutor.java:615&lt;spanclass=&quot;o&quot;&gt;)&lt;/span&gt;atorg.apache.tomcat.util.threads.TaskThread&lt;spanclass=&quot;nv&quot;&gt;</span><br><span class="line"> </span><br><span class="line">Worker&lt;/span&gt;.run&lt;spanclass=&quot;o&quot;&gt;(&lt;/span&gt;ThreadPoolExecutor.java:615&lt;spanclass=&quot;o&quot;&gt;)&lt;/span&gt;atorg.apache.tomcat.util.threads.TaskThread&lt;spanclass=&quot;nv&quot;&gt;WrappingRunnable.run(TaskThread.java:61)</span><br><span class="line"> </span><br><span class="line">at java.lang.Thread.run(Thread.java:745)</span><br></pre></td></tr></table></figure>
+
+
+        <h2>相关文章</h2><ul><li><a href="/springcloud/spring-cloud-gateway-zuul-Ribbon-eureka/">Springboot 框架 gateway 前后端分离 实现 zuul Ribbon 负载均衡 脱离Eureka实现</a></li><li><a href="/java/what-is-new-in-java-14/">Java 14的新增功能</a></li><li><a href="/java/what-is-new-in-java-13/">Java 13的新增功能</a></li><li><a href="/java/CountDownLatch-CyclicBarrier-Semaphorepy/">Java并发编程：CountDownLatch、CyclicBarrier和 Semaphore</a></li></ul>
+    </div>
+    
+        <div class="reward" ontouchstart>
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+            
+                <span class="reward-type">
+                    <img class="wechat" src="/images/weixin.png"><b>微信打赏</b>
+                </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">赞赏是不耍流氓的鼓励</p>
+</div>
+
+
+    
+
+
+    
+        <div class="post-footer">
+            <div class="col-sm-10">
+                <div>
+                    <b>本文链接</b>：<a href="/java/JVM-tuning/" target="_blank">JVM之调优</a>
+                </div>
+                <div>
+                    
+                        转载声明：本博客由小小冒险家创作，采用 <a href="https://creativecommons.org/licenses/by-nc-nd/3.0/" target="_blank"> CC BY 3.0 CN </a> 许可协议。可自由转载、引用，但需署名作者且注明文章出处。如转载至微信公众号，请在文末添加作者公众号二维码。
+                    
+                </div>
+                <div>
+                    
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <img src="/icons/wx.jpg" width=100%/>
+            </div>
+        </div>
+    
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+        <a target="_blank" href="/rocketmq/rocketmq-rebalance/" class="pre-post btn btn-default"
+           title='RocketMQ--水平扩展及负载均衡详解'>
+            <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+            <span class="hidden-xs">RocketMQ--水平扩展及负载均衡详解</span>
+        </a>
+    
+    
+        <a target="_blank" href="/maven/maven-metadata-xml/" class="next-post btn btn-default"
+           title='maven-metadata.xml使用'>
+            <span class="hidden-lg">下一篇</span>
+            <span class="hidden-xs">maven-metadata.xml使用</span><i class="fa fa-angle-right fa-fw"></i>
+        </a>
+    
+</div>
+
+
+
+
+
+
+
+                </main>
+                
+    <aside class="col-md-4 sidebar">
+        
+        <div class="widget about-me">
+    <div class="row">
+        <div class="col-md-5">
+            <img src="/icons/wx.jpg" alt="公众号" class="img-responsive center-block">
+        </div>
+        <div class="col-md-7">
+            <a class="series-a" href="javascript:void(0)">公众号</a>
+            <ul>
+                <li>• 技术干货推送</li>
+                <li>• 日常好文分享</li>
+                <li><b>• 扫码领取更多惊喜</b></li>
+            </ul>
+        </div>
+    </div>
+    
+<!--        <div class="row">-->
+<!--            <div class="col-md-5">-->
+<!--                <img src="/icons/xcx.jpg" alt="小程序" class="img-responsive">-->
+<!--            </div>-->
+<!--            <div class="col-md-7">-->
+<!--                <a class="series-a" href="javascript:void(0)">小程序</a>-->
+<!--                <ul>-->
+<!--                    <li>• 原创笔记</li>-->
+<!--                    <li>• 独家心法</li>-->
+<!--                    <li><b>• 扫码领取</b></li>-->
+<!--                </ul>-->
+<!--            </div>-->
+<!--        </div>-->
+    
+</div>
+
+
+
+
+        
+        
+    <div class="widget">
+        <h3 class="title">网站公告</h3>
+        <div class="notification">
+            <p>
+  <b>QQ群</b>：415777345<br/>
+</p>
+
+<p>
+<b>联系博主QQ</b>：210006540<br/>
+</p>
+        </div>
+    </div>
+
+        
+        
+    
+        <div class="ad">
+            <div class="row">
+                <div class="col-md-12">
+                    <a href="https://promotion.aliyun.com/ntms/act/qwbk.html?userCode=qhtujh03" rel="nofollow" target="_blank">
+                        <img class="img-responsive center-block"
+                             title="阿里全民云计算"
+                             src="/icons/380-120.png"
+                        >
+                    </a>
+                </div>
+            </div>
+        </div>
+    
+
+
+
+
+        
+        
+    <div class="widget">
+        <h3 class="title">分类</h3>
+        <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Ajax/"><i class="fa" aria-hidden="true">Ajax</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/"><i class="fa" aria-hidden="true">Docker</i></a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Druid/"><i class="fa" aria-hidden="true">Druid</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Feign/"><i class="fa" aria-hidden="true">Feign</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/HTTP/"><i class="fa" aria-hidden="true">HTTP</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/"><i class="fa" aria-hidden="true">Hexo</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JRebel/"><i class="fa" aria-hidden="true">JRebel</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link current" href="/categories/Java/"><i class="fa" aria-hidden="true">Java</i></a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Maven/"><i class="fa" aria-hidden="true">Maven</i></a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MongoDB/"><i class="fa" aria-hidden="true">MongoDB</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MySQL/"><i class="fa" aria-hidden="true">MySQL</i></a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Nexus3-x/"><i class="fa" aria-hidden="true">Nexus3.x</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/PowerShell/"><i class="fa" aria-hidden="true">PowerShell</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Quartz/"><i class="fa" aria-hidden="true">Quartz</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/"><i class="fa" aria-hidden="true">Redis</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/RocketMQ/"><i class="fa" aria-hidden="true">RocketMQ</i></a><span class="category-list-count">12</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Sharding-JDBC/"><i class="fa" aria-hidden="true">Sharding-JDBC</i></a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/"><i class="fa" aria-hidden="true">Spring</i></a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring-Cloud/"><i class="fa" aria-hidden="true">Spring Cloud</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringBoot/"><i class="fa" aria-hidden="true">SpringBoot</i></a><span class="category-list-count">15</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringCloud-Alibaba/"><i class="fa" aria-hidden="true">SpringCloud Alibaba</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringSession/"><i class="fa" aria-hidden="true">SpringSession</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/主键/"><i class="fa" aria-hidden="true">主键</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/其他/"><i class="fa" aria-hidden="true">其他</i></a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/安装教程/"><i class="fa" aria-hidden="true">安装教程</i></a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/工具/"><i class="fa" aria-hidden="true">工具</i></a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/微服务/"><i class="fa" aria-hidden="true">微服务</i></a><span class="category-list-count">17</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据库/"><i class="fa" aria-hidden="true">数据库</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/面试/"><i class="fa" aria-hidden="true">面试</i></a><span class="category-list-count">1</span></li></ul>
+    </div>
+
+
+        
+        
+  <div class="widget">
+    <h3 class="title">标签云</h3>
+    <div class="content tag-cloud">
+        
+            <canvas width="300" height="300" id="tag-cloud-3d">
+                <a href="/tags/Ajax/" style="font-size: 10px;">Ajax</a> <a href="/tags/Alibaba/" style="font-size: 10px;">Alibaba</a> <a href="/tags/Banner/" style="font-size: 10px;">Banner</a> <a href="/tags/Centos/" style="font-size: 10px;">Centos</a> <a href="/tags/Docker/" style="font-size: 17.5px;">Docker</a> <a href="/tags/Druid/" style="font-size: 10px;">Druid</a> <a href="/tags/Eureka/" style="font-size: 10.83px;">Eureka</a> <a href="/tags/FastDFS/" style="font-size: 10.83px;">FastDFS</a> <a href="/tags/Feign/" style="font-size: 13.33px;">Feign</a> <a href="/tags/File/" style="font-size: 10px;">File</a> <a href="/tags/HTTP/" style="font-size: 10px;">HTTP</a> <a href="/tags/Hexo/" style="font-size: 10.83px;">Hexo</a> <a href="/tags/HikariCP/" style="font-size: 10px;">HikariCP</a> <a href="/tags/Hystrix/" style="font-size: 10.83px;">Hystrix</a> <a href="/tags/Hystrix-Dashboard/" style="font-size: 10px;">Hystrix Dashboard</a> <a href="/tags/IDEA/" style="font-size: 10px;">IDEA</a> <a href="/tags/JDK/" style="font-size: 10px;">JDK</a> <a href="/tags/JRebel/" style="font-size: 10px;">JRebel</a> <a href="/tags/Java/" style="font-size: 12.5px;">Java</a> <a href="/tags/Java-b2-spring注解/" style="font-size: 15.83px;">Java-b2-spring注解</a> <a href="/tags/Map/" style="font-size: 10px;">Map</a> <a href="/tags/Maven/" style="font-size: 12.5px;">Maven</a> <a href="/tags/Memcache/" style="font-size: 10px;">Memcache</a> <a href="/tags/MongoDB/" style="font-size: 10.83px;">MongoDB</a> <a href="/tags/MongoTemplate/" style="font-size: 10.83px;">MongoTemplate</a> <a href="/tags/MySQL/" style="font-size: 15px;">MySQL</a> <a href="/tags/MySQL8/" style="font-size: 10px;">MySQL8</a> <a href="/tags/Mysql/" style="font-size: 10px;">Mysql</a> <a href="/tags/Navicat/" style="font-size: 10px;">Navicat</a> <a href="/tags/Nexus3-x/" style="font-size: 10.83px;">Nexus3.x</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/PowerShell/" style="font-size: 10px;">PowerShell</a> <a href="/tags/Quartz/" style="font-size: 10px;">Quartz</a> <a href="/tags/RabbitMQ/" style="font-size: 10px;">RabbitMQ</a> <a href="/tags/Redis/" style="font-size: 12.5px;">Redis</a> <a href="/tags/Ribbon/" style="font-size: 10.83px;">Ribbon</a> <a href="/tags/RocketMQ/" style="font-size: 18.33px;">RocketMQ</a> <a href="/tags/Sharding-JDBC/" style="font-size: 14.17px;">Sharding-JDBC</a> <a href="/tags/SonarQube/" style="font-size: 10px;">SonarQube</a> <a href="/tags/Spring/" style="font-size: 16.67px;">Spring</a> <a href="/tags/Spring-Boot/" style="font-size: 11.67px;">Spring Boot</a> <a href="/tags/Spring-Cloud/" style="font-size: 16.67px;">Spring Cloud</a> <a href="/tags/Spring-Cloud-Gateway/" style="font-size: 10.83px;">Spring Cloud Gateway</a> <a href="/tags/Spring-Cloud-Sleuth/" style="font-size: 10px;">Spring Cloud Sleuth</a> <a href="/tags/SpringBoot/" style="font-size: 20px;">SpringBoot</a> <a href="/tags/SpringCloud/" style="font-size: 10px;">SpringCloud</a> <a href="/tags/SpringCloud-Alibaba/" style="font-size: 10px;">SpringCloud Alibaba</a> <a href="/tags/SpringCloud-Stream/" style="font-size: 10px;">SpringCloud Stream</a> <a href="/tags/SpringSession/" style="font-size: 10px;">SpringSession</a> <a href="/tags/Tomcat/" style="font-size: 10px;">Tomcat</a> <a href="/tags/Transaction/" style="font-size: 10px;">Transaction</a> <a href="/tags/Turbine/" style="font-size: 10px;">Turbine</a> <a href="/tags/Web应用/" style="font-size: 10px;">Web应用</a> <a href="/tags/Windows/" style="font-size: 10px;">Windows</a> <a href="/tags/Windows-11/" style="font-size: 10px;">Windows 11</a> <a href="/tags/Zipkin/" style="font-size: 10px;">Zipkin</a> <a href="/tags/Zookeeper/" style="font-size: 10px;">Zookeeper</a> <a href="/tags/Zuul/" style="font-size: 10px;">Zuul</a> <a href="/tags/assessToken/" style="font-size: 10px;">assessToken</a> <a href="/tags/httpclient/" style="font-size: 10px;">httpclient</a> <a href="/tags/logback/" style="font-size: 10px;">logback</a> <a href="/tags/session共享/" style="font-size: 10px;">session共享</a> <a href="/tags/theme/" style="font-size: 10px;">theme</a> <a href="/tags/互联网产品/" style="font-size: 10px;">互联网产品</a> <a href="/tags/其他/" style="font-size: 10px;">其他</a> <a href="/tags/分布式/" style="font-size: 10.83px;">分布式</a> <a href="/tags/加密/" style="font-size: 10px;">加密</a> <a href="/tags/原理/" style="font-size: 10px;">原理</a> <a href="/tags/发布/" style="font-size: 10px;">发布</a> <a href="/tags/图片水印/" style="font-size: 10px;">图片水印</a> <a href="/tags/工具/" style="font-size: 10px;">工具</a> <a href="/tags/并发编程/" style="font-size: 10px;">并发编程</a> <a href="/tags/循环依赖/" style="font-size: 10px;">循环依赖</a> <a href="/tags/微服务/" style="font-size: 19.17px;">微服务</a> <a href="/tags/时间工具类/" style="font-size: 10px;">时间工具类</a> <a href="/tags/注解/" style="font-size: 10.83px;">注解</a> <a href="/tags/消息订阅/" style="font-size: 10px;">消息订阅</a> <a href="/tags/索引/" style="font-size: 14.17px;">索引</a> <a href="/tags/红黑树/" style="font-size: 10px;">红黑树</a>
+            </canvas>
+        
+    </div>
+  </div>
+
+
+        
+        
+    <div class="widget">
+        <h3 class="title">归档</h3>
+        <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/"><i class="fa" aria-hidden="true">2022年09月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/05/"><i class="fa" aria-hidden="true">2022年05月</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/"><i class="fa" aria-hidden="true">2021年07月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/"><i class="fa" aria-hidden="true">2021年06月</i></a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/"><i class="fa" aria-hidden="true">2021年03月</i></a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/"><i class="fa" aria-hidden="true">2021年02月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/"><i class="fa" aria-hidden="true">2020年11月</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/"><i class="fa" aria-hidden="true">2020年09月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/"><i class="fa" aria-hidden="true">2020年08月</i></a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/"><i class="fa" aria-hidden="true">2020年07月</i></a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/"><i class="fa" aria-hidden="true">2020年06月</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/"><i class="fa" aria-hidden="true">2020年04月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/"><i class="fa" aria-hidden="true">2020年03月</i></a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/"><i class="fa" aria-hidden="true">2020年02月</i></a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/"><i class="fa" aria-hidden="true">2020年01月</i></a><span class="archive-list-count">23</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/"><i class="fa" aria-hidden="true">2019年12月</i></a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/"><i class="fa" aria-hidden="true">2019年11月</i></a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/"><i class="fa" aria-hidden="true">2019年10月</i></a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/"><i class="fa" aria-hidden="true">2019年09月</i></a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/"><i class="fa" aria-hidden="true">2019年08月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/"><i class="fa" aria-hidden="true">2019年05月</i></a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/"><i class="fa" aria-hidden="true">2019年04月</i></a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/"><i class="fa" aria-hidden="true">2019年03月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/"><i class="fa" aria-hidden="true">2019年02月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/"><i class="fa" aria-hidden="true">2019年01月</i></a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/"><i class="fa" aria-hidden="true">2018年12月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/"><i class="fa" aria-hidden="true">2018年10月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/"><i class="fa" aria-hidden="true">2018年09月</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/"><i class="fa" aria-hidden="true">2018年08月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/"><i class="fa" aria-hidden="true">2018年06月</i></a><span class="archive-list-count">2</span></li></ul>
+    </div>
+
+
+        
+        
+    <div class="widget">
+      <h3 class="title">社交</h3> 
+        <div class="content social">
+            
+	            <a href="//github.com/zhaokejin" rel="external nofollow" title="GitHub" target="_blank">
+			    	<i class="github fa fa-github"></i>
+			    </a>
+            
+	            <a href="//gitee.com/zhaokejin" rel="external nofollow" title="Gitee" target="_blank">
+			    	<i class="git fa fa-git"></i>
+			    </a>
+            
+	            <a href="mailto:210006540qq.com" rel="external nofollow" title="邮箱" target="_blank">
+			    	<i class="envelope-o fa fa-envelope-o"></i>
+			    </a>
+            
+	            <a href="//wpa.qq.com/msgrd?v=3&uin=210006540&site=qq&menu=yes" rel="external nofollow" title="QQ" target="_blank">
+			    	<i class="qq fa fa-qq"></i>
+			    </a>
+            
+	            <a href="//shang.qq.com/wpa/qunwpa?idkey=7b19717710dcc2c78996f316db3ab3365bde39bc3c60de7a6c59fe07231e231a" rel="external nofollow" title="QQ群" target="_blank">
+			    	<i class="group fa fa-group"></i>
+			    </a>
+            
+	            <a href="/atom.xml" rel="external nofollow" title="RSS" target="_blank">
+			    	<i class="feed fa fa-feed"></i>
+			    </a>
+            
+        </div>
+    </div>
+
+
+        
+        
+
+        
+    </aside>
+
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+
+<a id="back-to-top" class="icon-btn hide">
+	<i class="fa fa-chevron-up"></i>
+</a>
+
+
+
+
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+        访问量:
+        <strong id="busuanzi_value_site_pv">
+            <i class="fa fa-spinner fa-spin"></i>
+        </strong>
+        &nbsp; | &nbsp;
+        访客数:
+        <strong id="busuanzi_value_site_uv">
+            <i class="fa fa-spinner fa-spin"></i>
+        </strong>
+<!--        &nbsp; <strong>Since 2018-12-26</strong>-->
+    
+</div>
+
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy; 2018 - 2023
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    <a href="//www.beian.miit.gov.cn/" class="copyright-links" target="_blank" rel="nofollow">鲁ICP备18033870号</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/js/jquery.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/bootstrap-hover-dropdown.min.js"></script>
+
+
+	<script src="/js/search.js?rev=@@hash"></script>
+
+
+
+    <script src="/assets/tagcanvas.min.js?rev=2.9"></script>
+    <script>
+        var tagOption = {
+            textColour: '#29afec', // 字体颜色
+            outlineMethod: 'block', // 选中模式
+            outlineColour: '#FFDAB9', // 选中模式的颜色
+            interval: 30 || 30, // 动画帧之间的时间间隔，值越大，转动幅度越大
+            textHeight: 13,
+            outlineRadius: 3,
+            freezeActive: true || '', // 选中的标签是否继续滚动
+            frontSelect: true || '', // 不选标签云后部的标签
+            initial: [0.1, -0.1],
+            depth: 0.5,
+            decel: 0.95,
+            maxSpeed: 0.03,
+            reverse: true || '', // 是否反向触发
+            fadeIn: 500, // 进入动画时间
+            wheelZoom: false || '' // 是否启用鼠标滚轮
+        }
+        TagCanvas.Start('tag-cloud-3d','',tagOption);
+    </script>
+
+
+
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<script src="/js/app.js?rev=@@hash"></script>
+<script src="/jquery.fancybox.js?v=2.1.5"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('.fancybox').fancybox();
+    });
+    // 给图片添加链接
+    $(document).ready(function() {
+        $("p img").each(function() {
+            var strA = "<a id='yourid' class='fancybox' data-fancybox-group='gallery'  href='" + this.src + "'></a>";
+            $(this).wrapAll(strA);
+        });
+    });
+    // fancybox
+    $("#yourid").fancybox({
+        openEffect    : 'elastic',
+        closeEffect   : 'elastic',
+    });
+</script>
+
+</body>
+</html>

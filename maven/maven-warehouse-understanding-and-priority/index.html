@@ -1,0 +1,744 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="小小冒险家的博客">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.2.3">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="https://www.cicoding.cn">
+    <!--SEO-->
+
+    <meta name="keywords" content="Maven">
+
+
+    <meta name="description" content="前言使用 maven 也有一段时间了，有时候在配置 repository,mirror,profile的时候，总会导致 jar 拉取不到。所以认真的分析了 maven 获取 jar 包时候的优先级。
+Maven 仓库的分类仓库分类：本地仓库和远程仓库。Maven根据坐标寻找构件的时候，它先会查...">
+
+
+
+<meta name="robots" content="all">
+<meta name="google" content="all">
+<meta name="googlebot" content="all">
+<meta name="verify" content="all">
+    <!--Title-->
+
+
+<title>Maven仓库理解和优先级 | 小小冒险家的博客</title>
+
+
+    <link rel="alternate" href="/atom.xml" title="小小冒险家的博客" type="application/atom+xml">
+
+
+    <link rel="icon" href="/favicon.png">
+
+    
+
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7">
+<link rel="stylesheet" href="/jquery.fancybox.css?v=2.1.5">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.5.0">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash">
+
+
+
+
+    
+
+
+
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?601ebec7733383ef248ca61fc0a0db95";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+
+
+    
+
+</head>
+
+</html>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+
+<body>
+    
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row clearfix">
+            <div class="col-md-12 column">
+                <nav class="navbar navbar-default" style="background-color:#fff;border:0;margin-bottom:0"
+                     role="navigation">
+                    <div class="navbar-header">
+<!--                        <button type="button" class="navbar-toggle" data-toggle="collapse"-->
+<!--                                data-target="#navbar-collapse-1">-->
+<!--                            <span class="sr-only">切</span>-->
+<!--                            <span class="icon-bar"></span>-->
+<!--                            <span class="icon-bar"></span>-->
+<!--                            <span class="icon-bar"></span>-->
+<!--                        </button>-->
+                        <a class="logo" href="/">
+                            <img src="/favicon.png"/>小小冒险家的博客
+                        </a>
+                    </div>
+
+                    <div class="collapse navbar-collapse" style="border:0;" id="navbar-collapse-1">
+                        <ul class="nav navbar-nav">
+                            
+                                
+                                    <li>
+                                        <a href="/" >
+                                            <i class="fa fa-home"></i>
+                                            首页
+                                        </a>
+                                    </li>
+                                
+                            
+                                
+                                    <li>
+                                        <a href="/archives" >
+                                            <i class="fa fa-sort"></i>
+                                            归档
+                                        </a>
+                                    </li>
+                                
+                            
+                                
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                                           data-hover="dropdown">
+                                            <i class="fa fa-fire"></i>
+                                            系列教程
+                                            <strong class="caret"></strong>
+                                        </a>
+                                        <ul class="dropdown-menu">
+                                            
+                                                <li>
+                                                    <a href="/docker/00-docker-lession-index" target="_blank">
+                                                        <i class="fa "></i>
+                                                        Docker系列教程
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="/micro-service/microservice/" target="_blank">
+                                                        <i class="fa "></i>
+                                                        SpringCloud微服务架构
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="/micro-service/microservice-alibaba/" target="_blank">
+                                                        <i class="fa "></i>
+                                                        SpringCloud Alibaba微服务架构
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="/sharding-jdbc/sharding-jdbc000/" target="_blank">
+                                                        <i class="fa "></i>
+                                                        Sharding-JDBC教程
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="/springboot/springboot-source-code/" target="_blank">
+                                                        <i class="fa "></i>
+                                                        SpringBoot源码系列
+                                                    </a>
+                                                </li>
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+                                
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                                           data-hover="dropdown">
+                                            <i class="fa fa-book"></i>
+                                            在线文档
+                                            <strong class="caret"></strong>
+                                        </a>
+                                        <ul class="dropdown-menu">
+                                            
+                                                <li>
+                                                    <a href="https://spring.io/docs/" target="_blank">
+                                                        <i class="fa "></i>
+                                                        Spring Reference
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="https://spring.io/projects/spring-boot/" target="_blank">
+                                                        <i class="fa "></i>
+                                                        SpringBoot Reference
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="https://spring.io/projects/spring-cloud/" target="_blank">
+                                                        <i class="fa "></i>
+                                                        SpringCloud Reference
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="https://docs.spring.io/spring-security/site/docs/current/reference/htmlsingle/" target="_blank">
+                                                        <i class="fa "></i>
+                                                        Spring Security Reference
+                                                    </a>
+                                                </li>
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+                                
+                                    <li>
+                                        <a href="/other/jrebel-activation" >
+                                            <i class="fa fa-fire"></i>
+                                            JRebel激活
+                                        </a>
+                                    </li>
+                                
+                            
+                                
+                                    <li>
+                                        <a href="/about" >
+                                            <i class="fa fa-user"></i>
+                                            关于我
+                                        </a>
+                                    </li>
+                                
+                            
+                        </ul>
+                        
+                            <form id="search-form" class="navbar-form navbar-right">
+                                <div class="form-group input-group">
+                                    <input type="text" id="local-search-input" class="form-control"
+                                           placeholder="搜我..."/>
+                                    <span class="input-group-btn">
+                                        <a class="btn btn-default">
+                                            <i class="fa fa-search"></i>
+                                        </a>
+                                    </span>
+                                </div>
+                                <div id="local-search-result" class="local-search-result-cls"></div>
+                            </form>
+                        
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </div>
+</nav>
+
+    <a href="http://github.com/zhaokejin" target="_blank">
+        <img style="position: absolute; width:100px; top: 0; left: 0; border: 0;"
+             src="/img/fork-me.png"
+             alt="Fork me on GitHub">
+    </a>
+
+
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    
+    
+        <div class="ad">
+            <div class="row">
+                
+                    <div class="col-md-12">
+                        <a href="https://promotion.aliyun.com/ntms/act/qwbk.html?userCode=qhtujh03" rel="nofollow" target="_blank">
+                            <img class="img-responsive center-block"
+                                 src="/icons/810x100.png"
+                                 title="阿里全民云计算"
+                            >
+                        </a>
+                    </div>
+                
+            </div>
+        </div>
+    
+
+
+<p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="Maven仓库理解和优先级">
+            
+                Maven仓库理解和优先级
+            
+        </h1>
+        <div class="post-meta">
+    
+
+    
+        <span class="categories-meta fa-wrap">
+            <i class="fa fa-folder-open-o"></i>
+            <a class="category-link" href="/categories/Maven/">Maven</a>
+        </span>
+    
+
+    
+        <span class="fa-wrap">
+            <i class="fa fa-tags"></i>
+            <span class="tags-meta">
+                
+                    <a class="tag-link" href="/tags/Maven/">Maven</a>
+                
+            </span>
+        </span>
+    
+
+    
+        
+        <span class="fa-wrap">
+            <i class="fa fa-clock-o"></i>
+            <span class="date-meta">2020/07/20</span>
+        </span>
+        
+            <span class="fa-wrap">
+                <i class="fa fa-eye"></i>
+                <span id="busuanzi_value_page_pv"></span>
+            </span>
+        
+    
+</div>
+        
+        
+    </div>
+    
+    <div class="post-body post-content" id="container">
+        
+    <div class="toc-article">
+        <strong>
+            目录
+        </strong>
+        <div class="toc-content">
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Maven-仓库的分类"><span class="toc-text">Maven 仓库的分类</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Maven-镜像"><span class="toc-text">Maven 镜像</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#mirrorOf-标签"><span class="toc-text">mirrorOf 标签</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#私服"><span class="toc-text">私服</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Maven-仓库优先级"><span class="toc-text">Maven 仓库优先级</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#本地仓库优先级"><span class="toc-text">本地仓库优先级</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#远程仓库优先级"><span class="toc-text">远程仓库优先级</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#maven-metadata-xml-文件"><span class="toc-text">maven-metadata.xml 文件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#作用"><span class="toc-text">作用</span></a></li></ol></li></ol>
+        </div>
+    </div>
+
+
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>使用 maven 也有一段时间了，有时候在配置 repository,mirror,profile的时候，总会导致 jar 拉取不到。所以认真的分析了 maven 获取 jar 包时候的优先级。</p>
+<h2 id="Maven-仓库的分类"><a href="#Maven-仓库的分类" class="headerlink" title="Maven 仓库的分类"></a>Maven 仓库的分类</h2><p>仓库分类：本地仓库和远程仓库。Maven根据坐标寻找构件的时候，它先会查看本地仓库，如果本地仓库存在构件，则直接使用；如果没有，则从远程仓库查找，找到后，下载到本地。</p>
+<p>1）本地仓库<br>默认情况下，每个用户在自己的用户目录下都有一个路径名为.m2/repository/的仓库目录。我们也可以在 settings.xml 文件配置本地仓库的地址</p>
+<p>2）远程仓库<br>本地仓库好比书房，而远程仓库就像是书店。对于Maven来说，每个用户只有一个本地仓库，但是可以配置多个远程仓库。<br>下·</p>
+<blockquote>
+<p>我们可以在 pom 文件配置多个 repository，但是随着项目越来也多我们每次都要在 pom 文件配置比较麻烦，所以我们可以在<br>settings 文件配置 profile （私服）。这样我们每次创建新项目的时候就可以不用配置 repository。</p>
+</blockquote>
+<p>3）中央仓库<br>Maven必须要知道至少一个可用的远程仓库，中央仓库就是这样一个默认的远程仓库，Maven 默认有一个 super pom 文件。<br>maven super pom 文件位置<br>D:\apache-maven-3.0.4\lib 下的 maven-model-builder-3.0.4.jar 中的 org/apache/maven/model/pom-4.0.0.xml</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">··· 省略其他</span><br><span class="line">  &lt;repositories&gt;</span><br><span class="line">    &lt;repository&gt;</span><br><span class="line">      &lt;id&gt;central&lt;/id&gt;</span><br><span class="line">      &lt;name&gt;Central Repository&lt;/name&gt;</span><br><span class="line">      &lt;url&gt;https://repo.maven.apache.org/maven2&lt;/url&gt;</span><br><span class="line">      &lt;layout&gt;default&lt;/layout&gt;</span><br><span class="line">      &lt;snapshots&gt;</span><br><span class="line">        &lt;enabled&gt;false&lt;/enabled&gt;</span><br><span class="line">      &lt;/snapshots&gt;</span><br><span class="line">    &lt;/repository&gt;</span><br><span class="line">  &lt;/repositories&gt;</span><br><span class="line">···</span><br></pre></td></tr></table></figure>
+
+<p>这个时候我们就明白了，我们在 settings 文件配置一个 mirror 的 mirrorOf 为 central 的镜像就会替代 ‘中央仓库’ 的原因了。</p>
+<h3 id="Maven-镜像"><a href="#Maven-镜像" class="headerlink" title="Maven 镜像"></a>Maven 镜像</h3><p>镜像（Mirroring）是冗余的一种类型，一个磁盘上的数据在另一个磁盘上存在一个完全相同的副本即为镜像。<br>为什么配置镜像?</p>
+<blockquote>
+<p>1.一句话，你有的我也有，你没有的我也有。（拥有远程仓库的所有 jar，包括远程仓库没有的 jar）<br>2.还是一句话，我跑的比你快。（有时候远程仓库获取 jar 的速度可能比镜像慢，这也是为什么我们一般要配置中央仓库的原因，外国的 maven 仓库一般获取速度比较慢）</p>
+</blockquote>
+<p>如果你配置 maven 镜像不是为了以上两点，那基本就不用配置镜像了。<br><strong>注意:当远程仓库被镜像匹配到的，则在获取 jar 包将从镜像仓库获取，而不是我们配置的 repository 仓库, repository 将失去作用</strong></p>
+<h4 id="mirrorOf-标签"><a href="#mirrorOf-标签" class="headerlink" title="mirrorOf 标签"></a>mirrorOf 标签</h4><p>mirrorOf 标签里面放置的是 repository 配置的 id,为了满足一些复杂的需求，Maven还支持更高级的镜像配置：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">external:* = 不在本地仓库的文件才从该镜像获取</span><br><span class="line">repo,repo1 = 远程仓库 repo 和 repo1 从该镜像获取</span><br><span class="line">*,!repo1 =  所有远程仓库都从该镜像获取，除 repo1 远程仓库以外</span><br><span class="line">* = 所用远程仓库都从该镜像获取</span><br></pre></td></tr></table></figure>
+
+<h3 id="私服"><a href="#私服" class="headerlink" title="私服"></a>私服</h3><p>私服是一种特殊的远程Maven仓库，它是架设在局域网内的仓库服务，私服一般被配置为互联网远程仓库的镜像，供局域网内的Maven用户使用。<br>当Maven需要下载构件的时候，先向私服请求，如果私服上不存在该构件，则从外部的远程仓库下载，同时缓存在私服之上，然后为Maven下载请求提供下载服务，另外，对于自定义或第三方的jar可以从本地上传到私服，供局域网内其他maven用户使用。<br>优点主要有：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1. 节省外网宽带</span><br><span class="line">2. 加速Maven构建</span><br><span class="line">3. 部署第三方构件：可以将公司项目的 jar 发布到私服上，方便项目与项目之间的调用</span><br><span class="line">4. 提高稳定性、增强控制：原因是外网不稳定</span><br><span class="line">5. 降低中央仓库的负荷：原因是中央仓库访问量太大</span><br></pre></td></tr></table></figure>
+
+<p><strong>上面大概介绍了 Maven 仓库概念，接下来我们进入正题</strong></p>
+<h2 id="Maven-仓库优先级"><a href="#Maven-仓库优先级" class="headerlink" title="Maven 仓库优先级"></a>Maven 仓库优先级</h2><p>为了方便测试，我准备了以下几个仓库</p>
+<ul>
+<li>172.16.xxx.xxx 远程仓库 （私服）</li>
+<li>dev.xxx.wiki 远程仓库 （远程）</li>
+<li>localhost 仓库 是我自己在本机搭建的一个仓库 （镜像）</li>
+<li>maven.aliyun.com 中央仓库（中央）</li>
+</ul>
+<h3 id="本地仓库优先级"><a href="#本地仓库优先级" class="headerlink" title="本地仓库优先级"></a>本地仓库优先级</h3><p><a href="https://swenfang.github.io/images/example.png" target="_blank" rel="noopener"><img src="https://swenfang.github.io/images/example.png" alt="此处输入图片的描述"></a><br>Maven 本地仓库拥有该包，而远程、镜像、中央、私服都不包含该包。我们来看下 Maven 是怎么获取的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">.......</span><br><span class="line"></span><br><span class="line">// 使用本地仓库，优先级(priority)为 10</span><br><span class="line">[DEBUG] Using local repository at E:\OperSource</span><br><span class="line">[DEBUG] Using manager EnhancedLocalRepositoryManager with priority 10.0 for E:\OperSource</span><br><span class="line">[INFO] Scanning for projects..</span><br><span class="line"></span><br><span class="line">........</span><br><span class="line"></span><br><span class="line">[INFO] Installing C:\Users\swipal\Desktop\abc\demo\target\demo-1.0-SNAPSHOT.jar to E:\OperSource\com\cjf\demo\1.0-SNAPSHOT\demo-1.0-SNAPSHOT.jar</span><br><span class="line">[DEBUG] Writing tracking file E:\OperSource\com\cjf\demo\1.0-SNAPSHOT\_remote.repositories</span><br><span class="line">[INFO] Installing C:\Users\swipal\Desktop\abc\demo\pom.xml to E:\OperSource\com\cjf\demo\1.0-SNAPSHOT\demo-1.0-SNAPSHOT.pom</span><br><span class="line">[DEBUG] Writing tracking file E:\OperSource\com\cjf\demo\1.0-SNAPSHOT\_remote.repositories</span><br><span class="line">[DEBUG] Installing com.cjf:demo:1.0-SNAPSHOT/maven-metadata.xml to E:\OperSource\com\cjf\demo\1.0-SNAPSHOT\maven-metadata-local.xml</span><br><span class="line">[DEBUG] Installing com.cjf:demo/maven-metadata.xml to E:\OperSource\com\cjf\demo\maven-metadata-local.xml</span><br><span class="line">[INFO] ------------------------------------------------------------------------</span><br><span class="line">[INFO] BUILD SUCCESS</span><br><span class="line">[INFO] ------------------------------------------------------------------------</span><br><span class="line">[INFO] Total time: 1.874 s</span><br><span class="line">[INFO] Finished at: 2017-07-07T10:37:32+08:00</span><br><span class="line">[INFO] Final Memory: 23M/219M</span><br><span class="line">[INFO] ------------------------------------------------------------------------</span><br><span class="line"></span><br><span class="line">Process finished with exit code 0</span><br></pre></td></tr></table></figure>
+
+<p>从上面可以看出 Maven 一开始就使用本地仓库，并将本地仓库的优先级定制为 10 , 最后 jar 包也在本地仓库找到，Maven 成功打包。</p>
+<h3 id="远程仓库优先级"><a href="#远程仓库优先级" class="headerlink" title="远程仓库优先级"></a>远程仓库优先级</h3><p>前面我们知道了，本地仓库的优先级是最高的，现在我们继续研究远程仓库的优先级（以下的所有例子，都默认本地仓库不拥有我们需要的包）</p>
+<p>这一次我们默认配置 <strong>profile</strong>（私服）为 172.16.xxx.xxx 远程仓库, <strong>repository</strong> 为 dev.xxx.wiki 远程仓库,<strong>mirror</strong> 为本地 localhost 仓库，还配置了一个 <strong>mirrorOf 为 central</strong> 远程仓库为 maven.aliyun.com 的中央仓库,</p>
+<p>以下是配置信息<br>settings.xml 文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">······</span><br><span class="line"></span><br><span class="line">&lt;mirrors&gt; </span><br><span class="line"></span><br><span class="line">  &lt;mirror&gt; </span><br><span class="line">    &lt;id&gt;localhost&lt;/id&gt;  </span><br><span class="line">    &lt;name&gt;Public Repositories&lt;/name&gt;  </span><br><span class="line">    &lt;mirrorOf&gt;foo&lt;/mirrorOf&gt;   &lt;!--拦截 pom 文件配置的 repository--&gt;</span><br><span class="line">    &lt;url&gt;http://localhost:8081/repository/maven-public/&lt;/url&gt; </span><br><span class="line">  &lt;/mirror&gt;  </span><br><span class="line">  </span><br><span class="line">  &lt;mirror&gt; </span><br><span class="line">    &lt;id&gt;localhost2&lt;/id&gt;  </span><br><span class="line">    &lt;name&gt;Public Repositories&lt;/name&gt;  </span><br><span class="line">    &lt;mirrorOf&gt;foo2&lt;/mirrorOf&gt;   &lt;!--配置一个拦截 foo2 的远程仓库的镜像--&gt;</span><br><span class="line">    &lt;url&gt;http://localhost:8081/repository/maven-snapshots/&lt;/url&gt; </span><br><span class="line">  &lt;/mirror&gt;  </span><br><span class="line">  </span><br><span class="line">  &lt;mirror&gt; </span><br><span class="line">    &lt;id&gt;alimaven&lt;/id&gt;  </span><br><span class="line">    &lt;mirrorOf&gt;central&lt;/mirrorOf&gt;  &lt;!--覆盖 Maven 默认的配置的中央仓库--&gt;</span><br><span class="line">    &lt;name&gt;aliyun maven&lt;/name&gt;  </span><br><span class="line">    &lt;url&gt;http://maven.aliyun.com/nexus/content/groups/public/&lt;/url&gt; </span><br><span class="line">  &lt;/mirror&gt; </span><br><span class="line"> </span><br><span class="line">&lt;/mirrors&gt;</span><br><span class="line"></span><br><span class="line">&lt;!--配置私服--&gt;</span><br><span class="line">&lt;profiles&gt; </span><br><span class="line">  &lt;profile&gt; </span><br><span class="line">    &lt;id&gt;nexus&lt;/id&gt;  </span><br><span class="line">    &lt;repositories&gt; </span><br><span class="line">      &lt;repository&gt; </span><br><span class="line">        &lt;id&gt;public&lt;/id&gt;  </span><br><span class="line">        &lt;name&gt;Public Repositories&lt;/name&gt;  </span><br><span class="line">        &lt;url&gt;http://172.16.xxx.xxx:8081/nexus/content/groups/public/&lt;/url&gt; </span><br><span class="line">      &lt;/repository&gt; </span><br><span class="line">    &lt;/repositories&gt;  </span><br><span class="line">    &lt;pluginRepositories&gt; </span><br><span class="line">      &lt;pluginRepository&gt; </span><br><span class="line">        &lt;id&gt;public&lt;/id&gt;  </span><br><span class="line">        &lt;name&gt;Public Repositories&lt;/name&gt;  </span><br><span class="line">        &lt;url&gt;http://172.16.xxx.xxx:8081/nexus/content/groups/public&lt;/url&gt; </span><br><span class="line">      &lt;/pluginRepository&gt; </span><br><span class="line">    &lt;/pluginRepositories&gt; </span><br><span class="line">  &lt;/profile&gt; </span><br><span class="line">&lt;/profiles&gt;</span><br><span class="line"></span><br><span class="line">&lt;activeProfiles&gt;</span><br><span class="line">    &lt;activeProfile&gt;nexus&lt;/activeProfile&gt;</span><br><span class="line">&lt;/activeProfiles&gt;</span><br><span class="line"></span><br><span class="line">······</span><br></pre></td></tr></table></figure>
+
+<p>pom.xml 文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependencies&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!--xxx-cif-api 存在 172.16.xxx.xxx 仓库--&gt;</span><br><span class="line">    &lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;com.xxx.cif&lt;/groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;xxx-cif-api&lt;/artifactId&gt;</span><br><span class="line">        &lt;version&gt;0.0.1-SNAPSHOT&lt;/version&gt;</span><br><span class="line">    &lt;/dependency&gt;</span><br><span class="line">    &lt;!--Chapter1 存在 localhost 仓库--&gt;</span><br><span class="line">    &lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;com.cjf&lt;/groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;Chapter1&lt;/artifactId&gt;</span><br><span class="line">        &lt;version&gt;0.0.1-SNAPSHOT&lt;/version&gt;</span><br><span class="line">    &lt;/dependency&gt;</span><br><span class="line"></span><br><span class="line">&lt;/dependencies&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&lt;!--配置远程仓库--&gt;</span><br><span class="line">&lt;repositories&gt;</span><br><span class="line">    &lt;repository&gt;</span><br><span class="line">        &lt;id&gt;foo&lt;/id&gt;</span><br><span class="line">        &lt;name&gt;Public Repositories&lt;/name&gt;</span><br><span class="line">        &lt;url&gt;http://dev.xxx.wiki:8081/nexus/content/groups/public/&lt;/url&gt;</span><br><span class="line">    &lt;/repository&gt;</span><br><span class="line">&lt;/repositories&gt;</span><br></pre></td></tr></table></figure>
+
+<p>以下是 Maven 拉取包的日志</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br></pre></td><td class="code"><pre><span class="line">······· 省略部分日志信息</span><br><span class="line"></span><br><span class="line">[DEBUG] Using local repository at E:\OperSource</span><br><span class="line">[DEBUG] Using manager EnhancedLocalRepositoryManager with priority 10.0 for E:\OperSource</span><br><span class="line">[INFO] Scanning for projects...</span><br><span class="line"></span><br><span class="line">// 从这里可以看出我们配置的镜像替代了我们在 pom 配置的远程仓库</span><br><span class="line">[DEBUG] Using mirror localhost (http://localhost:8081/repository/maven-public/) for foo (http://dev.xxx.wiki:8081/nexus/content/groups/public/).</span><br><span class="line">替代了默认的中央仓库</span><br><span class="line">[DEBUG] Using mirror alimaven (http://maven.aliyun.com/nexus/content/groups/public/) for central (https://repo.maven.apache.org/maven2).</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">// 从这里可以看出 Maven 使用哪些 dependencies 和 plugins 的地址，我们可以看出优先级最高的是 172.16.xxx.xxx,然后就是 localhost 最后才是 maven.aliyun.com</span><br><span class="line"></span><br><span class="line">// 注意：alimaven (http://maven.aliyun.com/nexus/content/groups/public/, default, releases) 从这里可以看出中央仓库只能获取 releases 包，所有的 snapshots 包都不从中央仓库获取。（可以看前面 central 的配置信息）</span><br><span class="line">[DEBUG] === PROJECT BUILD PLAN ================================================</span><br><span class="line">[DEBUG] Project:       com.cjf:demo:1.0-SNAPSHOT</span><br><span class="line">[DEBUG] Dependencies (collect): []</span><br><span class="line">[DEBUG] Dependencies (resolve): [compile, runtime, test]</span><br><span class="line"></span><br><span class="line">[DEBUG] Repositories (dependencies): [public (http://172.16.xxx.xxx:8081/nexus/content/groups/public/, default, releases+snapshots), localhost (http://localhost:8081/repository/maven-public/, default, releases+snapshots), alimaven (http://maven.aliyun.com/nexus/content/groups/public/, default, releases)]</span><br><span class="line"></span><br><span class="line">[DEBUG] Repositories (plugins)     : [public (http://172.16.xxx.xxx:8081/nexus/content/groups/public, default, releases+snapshots), alimaven (http://maven.aliyun.com/nexus/content/groups/public/, default, releases)]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">[DEBUG] =======================================================================</span><br><span class="line">// 寻找本地是否有 maven-metadata.xml 配置文件 ，从这里可以看出寻找不到（后面会详细讲该文件作用）</span><br><span class="line">[DEBUG] Could not find metadata com.xxx.cif:xxx-cif-api:0.0.1-SNAPSHOT/maven-metadata.xml in local (E:\OperSource)</span><br><span class="line"></span><br><span class="line">// 由于寻找不到 Maven 只能从我们配置的远程仓库寻找，由于 Maven 也不知道那个仓库才有，所以同时寻找两个仓库</span><br><span class="line">[DEBUG] Using transporter WagonTransporter with priority -1.0 for http://172.16.xxx.xxx:8081/nexus/content/groups/public/</span><br><span class="line">[DEBUG] Using transporter WagonTransporter with priority -1.0 for http://localhost:8081/repository/maven-public/</span><br><span class="line">[DEBUG] Using connector BasicRepositoryConnector with priority 0.0 for http://localhost:8081/repository/maven-public/</span><br><span class="line">[DEBUG] Using connector BasicRepositoryConnector with priority 0.0 for http://172.16.xxx.xxx:8081/nexus/content/groups/public/</span><br><span class="line">Downloading: http://172.16.xxx.xxx:8081/nexus/content/groups/public/com/xxx/cif/xxx-cif-api/0.0.1-SNAPSHOT/maven-metadata.xml</span><br><span class="line">Downloading: http://localhost:8081/repository/maven-public/com/xxx/cif/xxx-cif-api/0.0.1-SNAPSHOT/maven-metadata.xml</span><br><span class="line">[DEBUG] Writing tracking file E:\OperSource\com\xxx\cif\xxx-cif-api\0.0.1-SNAPSHOT\resolver-status.properties</span><br><span class="line"></span><br><span class="line">// 从这里可以看出在 172.16.xxx.xxx 找到  xxx-cif-api 的 maven-metadata.xml 文件并下载下来</span><br><span class="line">Downloaded: http://172.16.xxx.xxx:8081/nexus/content/groups/public/com/xxx/cif/xxx-cif-api/0.0.1-SNAPSHOT/maven-metadata.xml (781 B at 7.0 KB/sec)</span><br><span class="line"></span><br><span class="line">// 追踪文件，resolver-status.properties 配置了 jar 包下载地址和时间</span><br><span class="line">[DEBUG] Writing tracking file E:\OperSource\com\xxx\cif\xxx-cif-api\0.0.1-SNAPSHOT\resolver-status.properties</span><br><span class="line">[DEBUG] Could not find metadata com.xxx.cif:xxx-cif-api:0.0.1-SNAPSHOT/maven-metadata.xml in localhost (http://localhost:8081/repository/maven-public/)</span><br><span class="line"></span><br><span class="line">// 在 localhost 远程仓库寻找不到 xxx-cif-api 的 maven-metadata.xml</span><br><span class="line">[DEBUG] Could not find metadata com.xxx.cif:xxx-cif-api:0.0.1-SNAPSHOT/maven-metadata.xml in local (E:\OperSource)</span><br><span class="line"></span><br><span class="line">// 跳过的远程请求 </span><br><span class="line">[DEBUG] Skipped remote request for com.xxx.cif:xxx-cif-api:0.0.1-SNAPSHOT/maven-metadata.xml, already updated during this session.</span><br><span class="line">[DEBUG] Skipped remote request for com.xxx.cif:xxx-cif-api:0.0.1-SNAPSHOT/maven-metadata.xml, already updated during this session.</span><br><span class="line"></span><br><span class="line">// 默认以后获取 xxx-cif-api 的时候将不在从 localhost 寻找了，除非强制获取才会再次从 localhost 寻找这个包</span><br><span class="line">[DEBUG] Failure to find com.xxx.cif:xxx-cif-api:0.0.1-SNAPSHOT/maven-metadata.xml in http://localhost:8081/repository/maven-public/ was cached in the local repository, resolution will not be reattempted until the update interval of localhost has elapsed or updates are forced</span><br><span class="line"></span><br><span class="line">// 将 172.16.xxx.xxx 优先级升为 0 ，并下载 xxx-cif-api 的 pom 文件</span><br><span class="line">[DEBUG] Using transporter WagonTransporter with priority -1.0 for http://172.16.xxx.xxx:8081/nexus/content/groups/public/</span><br><span class="line">[DEBUG] Using connector BasicRepositoryConnector with priority 0.0 for http://172.16.xxx.xxx:8081/nexus/content/groups/public/</span><br><span class="line">Downloading: http://172.16.xxx.xxx:8081/nexus/content/groups/public/com/xxx/cif/xxx-cif-api/0.0.1-SNAPSHOT/xxx-cif-api-0.0.1-20170515.040917-89.pom</span><br><span class="line">Downloaded: http://172.16.xxx.xxx:8081/nexus/content/groups/public/com/xxx/cif/xxx-cif-api/0.0.1-SNAPSHOT/xxx-cif-api-0.0.1-20170515.040917-89.pom (930 B at 82.6 KB/sec)</span><br><span class="line"></span><br><span class="line">// _remote.repositories 记录的以后使用那个远程仓库获取 （ps:这个文件作用我要不是很清楚作用，以上观点是自己推测出来的。）</span><br><span class="line">[DEBUG] Writing tracking file E:\OperSource\com\xxx\cif\xxx-cif-api\0.0.1-SNAPSHOT\_remote.repositories</span><br><span class="line">[DEBUG] Writing tracking file E:\OperSource\com\xxx\cif\xxx-cif-api\0.0.1-SNAPSHOT\xxx-cif-api-0.0.1-20170515.040917-89.pom.lastUpdated</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">// 后面获取 Chapter1 包的流程跟 com.xxx.cif 是一样的，不过最后是在 localhost 寻找到而已，所以这分日志就不贴出来了。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">// 最后在下载包的时候，都到对应的仓库下载</span><br><span class="line">[DEBUG] Using transporter WagonTransporter with priority -1.0 for http://172.16.xxx.xxx:8081/nexus/content/groups/public/</span><br><span class="line">[DEBUG] Using connector BasicRepositoryConnector with priority 0.0 for http://172.16.xxx.xxx:8081/nexus/content/groups/public/</span><br><span class="line">Downloading: http://172.16.xxx.xxx:8081/nexus/content/groups/public/com/xxx/cif/xxx-cif-api/0.0.1-SNAPSHOT/xxx-cif-api-0.0.1-20170515.040917-89.jar</span><br><span class="line">Downloading: http://172.16.xxx.xxx:8081/nexus/content/groups/public/com/xxx/util/xxx-util/0.0.1-SNAPSHOT/xxx-util-0.0.1-20170514.091041-31.jar</span><br><span class="line">Downloaded: http://172.16.xxx.xxx:8081/nexus/content/groups/public/com/xxx/util/xxx-util/0.0.1-SNAPSHOT/xxx-util-0.0.1-20170514.091041-31.jar (26 KB at 324.2 KB/sec)</span><br><span class="line">Downloaded: http://172.16.xxx.xxx:8081/nexus/content/groups/public/com/xxx/cif/xxx-cif-api/0.0.1-SNAPSHOT/xxx-cif-api-0.0.1-20170515.040917-89.jar (68 KB at 756.6 KB/sec)</span><br><span class="line">[DEBUG] Writing tracking file E:\OperSource\com\xxx\cif\xxx-cif-api\0.0.1-SNAPSHOT\_remote.repositories</span><br><span class="line">[DEBUG] Writing tracking file E:\OperSource\com\xxx\cif\xxx-cif-api\0.0.1-SNAPSHOT\xxx-cif-api-0.0.1-20170515.040917-89.jar.lastUpdated</span><br><span class="line">[DEBUG] Writing tracking file E:\OperSource\com\xxx\util\xxx-util\0.0.1-SNAPSHOT\_remote.repositories</span><br><span class="line">[DEBUG] Writing tracking file E:\OperSource\com\xxx\util\xxx-util\0.0.1-SNAPSHOT\xxx-util-0.0.1-20170514.091041-31.jar.lastUpdated</span><br><span class="line">[DEBUG] Using transporter WagonTransporter with priority -1.0 for http://localhost:8081/repository/maven-public/</span><br><span class="line">[DEBUG] Using connector BasicRepositoryConnector with priority 0.0 for http://localhost:8081/repository/maven-public/</span><br><span class="line">Downloading: http://localhost:8081/repository/maven-public/com/cjf/Chapter1/0.0.1-SNAPSHOT/Chapter1-0.0.1-20170708.092339-1.jar</span><br><span class="line">Downloaded: http://localhost:8081/repository/maven-public/com/cjf/Chapter1/0.0.1-SNAPSHOT/Chapter1-0.0.1-20170708.092339-1.jar (8 KB at 167.0 KB/sec)</span><br><span class="line">[DEBUG] Writing tracking file E:\OperSource\com\cjf\Chapter1\0.0.1-SNAPSHOT\_remote.repositories</span><br><span class="line">[DEBUG] Writing tracking file E:\OperSource\com\cjf\Chapter1\0.0.1-SNAPSHOT\Chapter1-0.0.1-20170708.092339-1.jar.lastUpdated</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">[INFO] Installing C:\Users\swipal\Desktop\abc\demo\target\demo-1.0-SNAPSHOT.jar to E:\OperSource\com\cjf\demo\1.0-SNAPSHOT\demo-1.0-SNAPSHOT.jar</span><br><span class="line">[DEBUG] Writing tracking file E:\OperSource\com\cjf\demo\1.0-SNAPSHOT\_remote.repositories</span><br><span class="line">[INFO] Installing C:\Users\swipal\Desktop\abc\demo\pom.xml to E:\OperSource\com\cjf\demo\1.0-SNAPSHOT\demo-1.0-SNAPSHOT.pom</span><br><span class="line">[DEBUG] Writing tracking file E:\OperSource\com\cjf\demo\1.0-SNAPSHOT\_remote.repositories</span><br><span class="line">[DEBUG] Installing com.cjf:demo:1.0-SNAPSHOT/maven-metadata.xml to E:\OperSource\com\cjf\demo\1.0-SNAPSHOT\maven-metadata-local.xml</span><br><span class="line">[DEBUG] Installing com.cjf:demo/maven-metadata.xml to E:\OperSource\com\cjf\demo\maven-metadata-local.xml</span><br><span class="line">[INFO] ------------------------------------------------------------------------</span><br><span class="line">[INFO] BUILD SUCCESS</span><br><span class="line">[INFO] ------------------------------------------------------------------------</span><br><span class="line">[INFO] Total time: 10.549 s</span><br><span class="line">[INFO] Finished at: 2017-07-09T18:13:20+08:00</span><br><span class="line">[INFO] Final Memory: 26M/219M</span><br><span class="line">[INFO] ------------------------------------------------------------------------</span><br><span class="line"></span><br><span class="line">·······</span><br></pre></td></tr></table></figure>
+
+<p>好了，看了这么多的配置文件信息和日志信息，我们也总结一下 Maven 远程仓库优先级了。</p>
+<p>主要有以下几点：<br>1.从日志信息我们得出这几种maven仓库的优先级别为</p>
+<blockquote>
+<p>本地仓库 &gt; 私服 （profile）&gt; 远程仓库（repository）和 镜像 （mirror） &gt; 中央仓库 （central）</p>
+</blockquote>
+<p>2.镜像是一个特殊的配置，其实镜像等同与远程仓库，没有匹配远程仓库的镜像就毫无作用（如 foo2）。<br>3.总结上面所说的，Maven 仓库的优先级就是 <strong>私服和远程仓库</strong> 的对比，没有其它的仓库类型。为什么这么说是因为，镜像等同远程，而中央其实也是 maven super xml 配置的一个repository 的一个而且。所以 maven 仓库真正的优先级为</p>
+<blockquote>
+<p>本地仓库 &gt; 私服（profile）&gt; 远程仓库（repository）</p>
+</blockquote>
+<h2 id="maven-metadata-xml-文件"><a href="#maven-metadata-xml-文件" class="headerlink" title="maven-metadata.xml 文件"></a>maven-metadata.xml 文件</h2><p>Maven Repository Metadata 可用于表示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1. 一个没有版本的工件：它提供有关该工件的可用版本的信息</span><br><span class="line">2. 快照伪像：它提供有关快照的精确信息</span><br><span class="line">3. 包含Maven插件工件的组：它提供了有关此组中可用插件的信息。</span><br></pre></td></tr></table></figure>
+
+<p>元数据文件名是：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">远程存储库中的 maven-metadata.xml，</span><br><span class="line">maven-metadata- &lt;repo-id&gt;.xml在本地存储库中，用于具有repo-id标识符的存储库中的元标记。</span><br></pre></td></tr></table></figure>
+
+<p>以上是 Maven 官网对该文件的解释。</p>
+<h3 id="作用"><a href="#作用" class="headerlink" title="作用"></a>作用</h3><p>问题：有时候我们更新最新包的时候，会发现最新的包被拉取下来的，但是项目使用的包还是旧的包。所以我们要分析下是什么原因导致的。</p>
+<p>首先我们先大概的了解下 maven-metadata.xml 文件。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;metadata modelVersion=&quot;1.1.0&quot;&gt;</span><br><span class="line">  &lt;groupId&gt;com.cjf&lt;/groupId&gt;</span><br><span class="line">  &lt;artifactId&gt;Chapter1&lt;/artifactId&gt;</span><br><span class="line">  &lt;version&gt;0.0.1-SNAPSHOT&lt;/version&gt;</span><br><span class="line">  &lt;versioning&gt;</span><br><span class="line">    &lt;snapshot&gt;                               &lt;!--当前版本下的最新快照信息--&gt;</span><br><span class="line">      &lt;timestamp&gt;20170710.071727&lt;/timestamp&gt; &lt;!--快照的时间戳--&gt;</span><br><span class="line">      &lt;buildNumber&gt;6&lt;/buildNumber&gt;           &lt;!--构件号--&gt;</span><br><span class="line">    &lt;/snapshot&gt;</span><br><span class="line">    &lt;lastUpdated&gt;20170710071727&lt;/lastUpdated&gt;&lt;!--metadata文件被更新的时间--&gt;</span><br><span class="line">    &lt;snapshotVersions&gt;</span><br><span class="line">      &lt;snapshotVersion&gt;                      &lt;!--当前版本下可用的子快照版本信息--&gt;</span><br><span class="line">        &lt;extension&gt;jar&lt;/extension&gt;</span><br><span class="line">        &lt;value&gt;0.0.1-20170710.071727-6&lt;/value&gt;&lt;!--子快照版本的信息--&gt;</span><br><span class="line">        &lt;updated&gt;20170710071727&lt;/updated&gt;     &lt;!--这个子快照版本的更新时间--&gt;</span><br><span class="line">      &lt;/snapshotVersion&gt;</span><br><span class="line">      &lt;snapshotVersion&gt;</span><br><span class="line">        &lt;extension&gt;pom&lt;/extension&gt;</span><br><span class="line">        &lt;value&gt;0.0.1-20170710.071727-6&lt;/value&gt;</span><br><span class="line">        &lt;updated&gt;20170710071727&lt;/updated&gt;</span><br><span class="line">      &lt;/snapshotVersion&gt;</span><br><span class="line">    &lt;/snapshotVersions&gt;</span><br><span class="line">  &lt;/versioning&gt;</span><br><span class="line">&lt;/metadata&gt;</span><br></pre></td></tr></table></figure>
+
+<p>其中 lastUpdated 是最中要的一个属性，Maven 更新工程的 jar包时，会比较 lastUpdated 时间戳值，哪个值更大，就以哪个文件为准。</p>
+<p>接下来我们看下 Maven 为我们生成了那些文件<br>我们可以看到 maven-metadata.xml 一共有三个</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1. maven-metadata-local.xml 本地的元数据, Maven install 的时候就会生成。</span><br><span class="line">2. maven-metadata-snapshots.xml Maven deploy 时会生成</span><br><span class="line">3. maven-metadata-localhost.xml 远程仓库获取的时候生成 (repository 的 id = localhost)</span><br></pre></td></tr></table></figure>
+
+<p>以上的文件其实都是 Maven 的过渡文件而已</p>
+<ol>
+<li>例如 maven-metadata-snapshots 就是 Maven deploy 先从远程仓库对应包的 maven-metadata.xml 下载下来，然后修改快照信息后在上传到远程仓库上。</li>
+<li>例如 maven-metadata-localhost 的作用是在 Maven 在拉取包的时候，会先跟本地 maven-metadata-local 比较下 lastUpdated 时间戳值，值大用哪个。如果是 Mavne <strong>强制更新</strong> 的时候(没有强制更新是不会) 会下载远程的 maven-metadata.xml 比较<strong>远程，本地，和之前远程保存下来的 maven-metadata 文件</strong>。</li>
+</ol>
+<p>所以有时候 maven 库上的 jar 包已经更新，而我们总是拉取不到 maven 的包原因就是本地的 maven-metadata-local 的 lastUpdated 比较大。</p>
+<p>我们验证下 Maven deploy 例子</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">[INFO] --- maven-deploy-plugin:2.8.2:deploy (default-deploy) @ Chapter1 ---</span><br><span class="line">// 先从远程下载快照 maven-metadata.xml</span><br><span class="line">Downloading: http://localhost:8081/repository/maven-snapshots/com/cjf/Chapter1/0.0.1-SNAPSHOT/maven-metadata.xml</span><br><span class="line">Downloaded: http://localhost:8081/repository/maven-snapshots/com/cjf/Chapter1/0.0.1-SNAPSHOT/maven-metadata.xml (768 B at 3.3 KB/sec)</span><br><span class="line">// 将项目的 jar 和 pom 文件更新到远程仓库</span><br><span class="line">Uploading: http://localhost:8081/repository/maven-snapshots/com/cjf/Chapter1/0.0.1-SNAPSHOT/Chapter1-0.0.1-20170710.121310-15.jar</span><br><span class="line">Uploaded: http://localhost:8081/repository/maven-snapshots/com/cjf/Chapter1/0.0.1-SNAPSHOT/Chapter1-0.0.1-20170710.121310-15.jar (8 KB at 14.1 KB/sec)</span><br><span class="line">Uploading: http://localhost:8081/repository/maven-snapshots/com/cjf/Chapter1/0.0.1-SNAPSHOT/Chapter1-0.0.1-20170710.121310-15.pom</span><br><span class="line">Uploaded: http://localhost:8081/repository/maven-snapshots/com/cjf/Chapter1/0.0.1-SNAPSHOT/Chapter1-0.0.1-20170710.121310-15.pom (2 KB at 2.0 KB/sec)</span><br><span class="line">Downloading: http://localhost:8081/repository/maven-snapshots/com/cjf/Chapter1/maven-metadata.xml</span><br><span class="line">Downloaded: http://localhost:8081/repository/maven-snapshots/com/cjf/Chapter1/maven-metadata.xml (275 B at 1.6 KB/sec)</span><br><span class="line">// 上传  maven-metadata.xml 到远程仓库</span><br><span class="line">Uploading: http://localhost:8081/repository/maven-snapshots/com/cjf/Chapter1/0.0.1-SNAPSHOT/maven-metadata.xml</span><br><span class="line">Uploaded: http://localhost:8081/repository/maven-snapshots/com/cjf/Chapter1/0.0.1-SNAPSHOT/maven-metadata.xml (768 B at 1.0 KB/sec)</span><br><span class="line">Uploading: http://localhost:8081/repository/maven-snapshots/com/cjf/Chapter1/maven-metadata.xml</span><br><span class="line">Uploaded: http://localhost:8081/repository/maven-snapshots/com/cjf/Chapter1/maven-metadata.xml (275 B at 0.4 KB/sec)</span><br><span class="line">[INFO] ------------------------------------------------------------------------</span><br><span class="line">[INFO] BUILD SUCCESS</span><br><span class="line">[INFO] ------------------------------------------------------------------------</span><br><span class="line">[INFO] Total time: 5.231 s</span><br><span class="line">[INFO] Finished at: 2017-07-10T20:13:13+08:00</span><br><span class="line">[INFO] Final Memory: 19M/226M</span><br><span class="line">[INFO] ------------------------------------------------------------------------</span><br></pre></td></tr></table></figure>
+
+
+        <h2>相关文章</h2><ul><li><a href="/maven/maven-metadata-xml/">maven-metadata.xml使用</a></li><li><a href="/springboot/springboot-2-config-404-or-500-exception/">Springboot2.x处理404、500等异常</a></li><li><a href="/maven/nexus3.x-maven/">详解通过 Nexus3.x 搭建 Maven 私服</a></li><li><a href="/maven/maven-pom/">史上最全的maven pom.xml文件教程详解</a></li></ul>
+    </div>
+    
+        <div class="reward" ontouchstart>
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+            
+                <span class="reward-type">
+                    <img class="wechat" src="/images/weixin.png"><b>微信打赏</b>
+                </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">赞赏是不耍流氓的鼓励</p>
+</div>
+
+
+    
+
+
+    
+        <div class="post-footer">
+            <div class="col-sm-10">
+                <div>
+                    <b>本文链接</b>：<a href="/maven/maven-warehouse-understanding-and-priority/" target="_blank">Maven仓库理解和优先级</a>
+                </div>
+                <div>
+                    
+                        转载声明：本博客由小小冒险家创作，采用 <a href="https://creativecommons.org/licenses/by-nc-nd/3.0/" target="_blank"> CC BY 3.0 CN </a> 许可协议。可自由转载、引用，但需署名作者且注明文章出处。如转载至微信公众号，请在文末添加作者公众号二维码。
+                    
+                </div>
+                <div>
+                    
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <img src="/icons/wx.jpg" width=100%/>
+            </div>
+        </div>
+    
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+        <a target="_blank" href="/maven/maven-metadata-xml/" class="pre-post btn btn-default"
+           title='maven-metadata.xml使用'>
+            <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+            <span class="hidden-xs">maven-metadata.xml使用</span>
+        </a>
+    
+    
+        <a target="_blank" href="/other/hexo-top-top-lable/" class="next-post btn btn-default"
+           title='Hexo博客之文章置顶+置顶标签'>
+            <span class="hidden-lg">下一篇</span>
+            <span class="hidden-xs">Hexo博客之文章置顶+置顶标签</span><i class="fa fa-angle-right fa-fw"></i>
+        </a>
+    
+</div>
+
+
+
+
+
+
+
+                </main>
+                
+    <aside class="col-md-4 sidebar">
+        
+        <div class="widget about-me">
+    <div class="row">
+        <div class="col-md-5">
+            <img src="/icons/wx.jpg" alt="公众号" class="img-responsive center-block">
+        </div>
+        <div class="col-md-7">
+            <a class="series-a" href="javascript:void(0)">公众号</a>
+            <ul>
+                <li>• 技术干货推送</li>
+                <li>• 日常好文分享</li>
+                <li><b>• 扫码领取更多惊喜</b></li>
+            </ul>
+        </div>
+    </div>
+    
+<!--        <div class="row">-->
+<!--            <div class="col-md-5">-->
+<!--                <img src="/icons/xcx.jpg" alt="小程序" class="img-responsive">-->
+<!--            </div>-->
+<!--            <div class="col-md-7">-->
+<!--                <a class="series-a" href="javascript:void(0)">小程序</a>-->
+<!--                <ul>-->
+<!--                    <li>• 原创笔记</li>-->
+<!--                    <li>• 独家心法</li>-->
+<!--                    <li><b>• 扫码领取</b></li>-->
+<!--                </ul>-->
+<!--            </div>-->
+<!--        </div>-->
+    
+</div>
+
+
+
+
+        
+        
+    <div class="widget">
+        <h3 class="title">网站公告</h3>
+        <div class="notification">
+            <p>
+  <b>QQ群</b>：415777345<br/>
+</p>
+
+<p>
+<b>联系博主QQ</b>：210006540<br/>
+</p>
+        </div>
+    </div>
+
+        
+        
+    
+        <div class="ad">
+            <div class="row">
+                <div class="col-md-12">
+                    <a href="https://promotion.aliyun.com/ntms/act/qwbk.html?userCode=qhtujh03" rel="nofollow" target="_blank">
+                        <img class="img-responsive center-block"
+                             title="阿里全民云计算"
+                             src="/icons/380-120.png"
+                        >
+                    </a>
+                </div>
+            </div>
+        </div>
+    
+
+
+
+
+        
+        
+    <div class="widget">
+        <h3 class="title">分类</h3>
+        <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Ajax/"><i class="fa" aria-hidden="true">Ajax</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/"><i class="fa" aria-hidden="true">Docker</i></a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Druid/"><i class="fa" aria-hidden="true">Druid</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Feign/"><i class="fa" aria-hidden="true">Feign</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/HTTP/"><i class="fa" aria-hidden="true">HTTP</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/"><i class="fa" aria-hidden="true">Hexo</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JRebel/"><i class="fa" aria-hidden="true">JRebel</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/"><i class="fa" aria-hidden="true">Java</i></a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link current" href="/categories/Maven/"><i class="fa" aria-hidden="true">Maven</i></a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MongoDB/"><i class="fa" aria-hidden="true">MongoDB</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MySQL/"><i class="fa" aria-hidden="true">MySQL</i></a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Nexus3-x/"><i class="fa" aria-hidden="true">Nexus3.x</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/PowerShell/"><i class="fa" aria-hidden="true">PowerShell</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Quartz/"><i class="fa" aria-hidden="true">Quartz</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/"><i class="fa" aria-hidden="true">Redis</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/RocketMQ/"><i class="fa" aria-hidden="true">RocketMQ</i></a><span class="category-list-count">12</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Sharding-JDBC/"><i class="fa" aria-hidden="true">Sharding-JDBC</i></a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/"><i class="fa" aria-hidden="true">Spring</i></a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring-Cloud/"><i class="fa" aria-hidden="true">Spring Cloud</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringBoot/"><i class="fa" aria-hidden="true">SpringBoot</i></a><span class="category-list-count">15</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringCloud-Alibaba/"><i class="fa" aria-hidden="true">SpringCloud Alibaba</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringSession/"><i class="fa" aria-hidden="true">SpringSession</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/主键/"><i class="fa" aria-hidden="true">主键</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/其他/"><i class="fa" aria-hidden="true">其他</i></a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/安装教程/"><i class="fa" aria-hidden="true">安装教程</i></a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/工具/"><i class="fa" aria-hidden="true">工具</i></a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/微服务/"><i class="fa" aria-hidden="true">微服务</i></a><span class="category-list-count">17</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据库/"><i class="fa" aria-hidden="true">数据库</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/面试/"><i class="fa" aria-hidden="true">面试</i></a><span class="category-list-count">1</span></li></ul>
+    </div>
+
+
+        
+        
+  <div class="widget">
+    <h3 class="title">标签云</h3>
+    <div class="content tag-cloud">
+        
+            <canvas width="300" height="300" id="tag-cloud-3d">
+                <a href="/tags/Ajax/" style="font-size: 10px;">Ajax</a> <a href="/tags/Alibaba/" style="font-size: 10px;">Alibaba</a> <a href="/tags/Banner/" style="font-size: 10px;">Banner</a> <a href="/tags/Centos/" style="font-size: 10px;">Centos</a> <a href="/tags/Docker/" style="font-size: 17.5px;">Docker</a> <a href="/tags/Druid/" style="font-size: 10px;">Druid</a> <a href="/tags/Eureka/" style="font-size: 10.83px;">Eureka</a> <a href="/tags/FastDFS/" style="font-size: 10.83px;">FastDFS</a> <a href="/tags/Feign/" style="font-size: 13.33px;">Feign</a> <a href="/tags/File/" style="font-size: 10px;">File</a> <a href="/tags/HTTP/" style="font-size: 10px;">HTTP</a> <a href="/tags/Hexo/" style="font-size: 10.83px;">Hexo</a> <a href="/tags/HikariCP/" style="font-size: 10px;">HikariCP</a> <a href="/tags/Hystrix/" style="font-size: 10.83px;">Hystrix</a> <a href="/tags/Hystrix-Dashboard/" style="font-size: 10px;">Hystrix Dashboard</a> <a href="/tags/IDEA/" style="font-size: 10px;">IDEA</a> <a href="/tags/JDK/" style="font-size: 10px;">JDK</a> <a href="/tags/JRebel/" style="font-size: 10px;">JRebel</a> <a href="/tags/Java/" style="font-size: 12.5px;">Java</a> <a href="/tags/Java-b2-spring注解/" style="font-size: 15.83px;">Java-b2-spring注解</a> <a href="/tags/Map/" style="font-size: 10px;">Map</a> <a href="/tags/Maven/" style="font-size: 12.5px;">Maven</a> <a href="/tags/Memcache/" style="font-size: 10px;">Memcache</a> <a href="/tags/MongoDB/" style="font-size: 10.83px;">MongoDB</a> <a href="/tags/MongoTemplate/" style="font-size: 10.83px;">MongoTemplate</a> <a href="/tags/MySQL/" style="font-size: 15px;">MySQL</a> <a href="/tags/MySQL8/" style="font-size: 10px;">MySQL8</a> <a href="/tags/Mysql/" style="font-size: 10px;">Mysql</a> <a href="/tags/Navicat/" style="font-size: 10px;">Navicat</a> <a href="/tags/Nexus3-x/" style="font-size: 10.83px;">Nexus3.x</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/PowerShell/" style="font-size: 10px;">PowerShell</a> <a href="/tags/Quartz/" style="font-size: 10px;">Quartz</a> <a href="/tags/RabbitMQ/" style="font-size: 10px;">RabbitMQ</a> <a href="/tags/Redis/" style="font-size: 12.5px;">Redis</a> <a href="/tags/Ribbon/" style="font-size: 10.83px;">Ribbon</a> <a href="/tags/RocketMQ/" style="font-size: 18.33px;">RocketMQ</a> <a href="/tags/Sharding-JDBC/" style="font-size: 14.17px;">Sharding-JDBC</a> <a href="/tags/SonarQube/" style="font-size: 10px;">SonarQube</a> <a href="/tags/Spring/" style="font-size: 16.67px;">Spring</a> <a href="/tags/Spring-Boot/" style="font-size: 11.67px;">Spring Boot</a> <a href="/tags/Spring-Cloud/" style="font-size: 16.67px;">Spring Cloud</a> <a href="/tags/Spring-Cloud-Gateway/" style="font-size: 10.83px;">Spring Cloud Gateway</a> <a href="/tags/Spring-Cloud-Sleuth/" style="font-size: 10px;">Spring Cloud Sleuth</a> <a href="/tags/SpringBoot/" style="font-size: 20px;">SpringBoot</a> <a href="/tags/SpringCloud/" style="font-size: 10px;">SpringCloud</a> <a href="/tags/SpringCloud-Alibaba/" style="font-size: 10px;">SpringCloud Alibaba</a> <a href="/tags/SpringCloud-Stream/" style="font-size: 10px;">SpringCloud Stream</a> <a href="/tags/SpringSession/" style="font-size: 10px;">SpringSession</a> <a href="/tags/Tomcat/" style="font-size: 10px;">Tomcat</a> <a href="/tags/Transaction/" style="font-size: 10px;">Transaction</a> <a href="/tags/Turbine/" style="font-size: 10px;">Turbine</a> <a href="/tags/Web应用/" style="font-size: 10px;">Web应用</a> <a href="/tags/Windows/" style="font-size: 10px;">Windows</a> <a href="/tags/Windows-11/" style="font-size: 10px;">Windows 11</a> <a href="/tags/Zipkin/" style="font-size: 10px;">Zipkin</a> <a href="/tags/Zookeeper/" style="font-size: 10px;">Zookeeper</a> <a href="/tags/Zuul/" style="font-size: 10px;">Zuul</a> <a href="/tags/assessToken/" style="font-size: 10px;">assessToken</a> <a href="/tags/httpclient/" style="font-size: 10px;">httpclient</a> <a href="/tags/logback/" style="font-size: 10px;">logback</a> <a href="/tags/session共享/" style="font-size: 10px;">session共享</a> <a href="/tags/theme/" style="font-size: 10px;">theme</a> <a href="/tags/互联网产品/" style="font-size: 10px;">互联网产品</a> <a href="/tags/其他/" style="font-size: 10px;">其他</a> <a href="/tags/分布式/" style="font-size: 10.83px;">分布式</a> <a href="/tags/加密/" style="font-size: 10px;">加密</a> <a href="/tags/原理/" style="font-size: 10px;">原理</a> <a href="/tags/发布/" style="font-size: 10px;">发布</a> <a href="/tags/图片水印/" style="font-size: 10px;">图片水印</a> <a href="/tags/工具/" style="font-size: 10px;">工具</a> <a href="/tags/并发编程/" style="font-size: 10px;">并发编程</a> <a href="/tags/循环依赖/" style="font-size: 10px;">循环依赖</a> <a href="/tags/微服务/" style="font-size: 19.17px;">微服务</a> <a href="/tags/时间工具类/" style="font-size: 10px;">时间工具类</a> <a href="/tags/注解/" style="font-size: 10.83px;">注解</a> <a href="/tags/消息订阅/" style="font-size: 10px;">消息订阅</a> <a href="/tags/索引/" style="font-size: 14.17px;">索引</a> <a href="/tags/红黑树/" style="font-size: 10px;">红黑树</a>
+            </canvas>
+        
+    </div>
+  </div>
+
+
+        
+        
+    <div class="widget">
+        <h3 class="title">归档</h3>
+        <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/"><i class="fa" aria-hidden="true">2022年09月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/05/"><i class="fa" aria-hidden="true">2022年05月</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/"><i class="fa" aria-hidden="true">2021年07月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/"><i class="fa" aria-hidden="true">2021年06月</i></a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/"><i class="fa" aria-hidden="true">2021年03月</i></a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/"><i class="fa" aria-hidden="true">2021年02月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/"><i class="fa" aria-hidden="true">2020年11月</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/"><i class="fa" aria-hidden="true">2020年09月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/"><i class="fa" aria-hidden="true">2020年08月</i></a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/"><i class="fa" aria-hidden="true">2020年07月</i></a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/"><i class="fa" aria-hidden="true">2020年06月</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/"><i class="fa" aria-hidden="true">2020年04月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/"><i class="fa" aria-hidden="true">2020年03月</i></a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/"><i class="fa" aria-hidden="true">2020年02月</i></a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/"><i class="fa" aria-hidden="true">2020年01月</i></a><span class="archive-list-count">23</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/"><i class="fa" aria-hidden="true">2019年12月</i></a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/"><i class="fa" aria-hidden="true">2019年11月</i></a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/"><i class="fa" aria-hidden="true">2019年10月</i></a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/"><i class="fa" aria-hidden="true">2019年09月</i></a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/"><i class="fa" aria-hidden="true">2019年08月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/"><i class="fa" aria-hidden="true">2019年05月</i></a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/"><i class="fa" aria-hidden="true">2019年04月</i></a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/"><i class="fa" aria-hidden="true">2019年03月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/"><i class="fa" aria-hidden="true">2019年02月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/"><i class="fa" aria-hidden="true">2019年01月</i></a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/"><i class="fa" aria-hidden="true">2018年12月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/"><i class="fa" aria-hidden="true">2018年10月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/"><i class="fa" aria-hidden="true">2018年09月</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/"><i class="fa" aria-hidden="true">2018年08月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/"><i class="fa" aria-hidden="true">2018年06月</i></a><span class="archive-list-count">2</span></li></ul>
+    </div>
+
+
+        
+        
+    <div class="widget">
+      <h3 class="title">社交</h3> 
+        <div class="content social">
+            
+	            <a href="//github.com/zhaokejin" rel="external nofollow" title="GitHub" target="_blank">
+			    	<i class="github fa fa-github"></i>
+			    </a>
+            
+	            <a href="//gitee.com/zhaokejin" rel="external nofollow" title="Gitee" target="_blank">
+			    	<i class="git fa fa-git"></i>
+			    </a>
+            
+	            <a href="mailto:210006540qq.com" rel="external nofollow" title="邮箱" target="_blank">
+			    	<i class="envelope-o fa fa-envelope-o"></i>
+			    </a>
+            
+	            <a href="//wpa.qq.com/msgrd?v=3&uin=210006540&site=qq&menu=yes" rel="external nofollow" title="QQ" target="_blank">
+			    	<i class="qq fa fa-qq"></i>
+			    </a>
+            
+	            <a href="//shang.qq.com/wpa/qunwpa?idkey=7b19717710dcc2c78996f316db3ab3365bde39bc3c60de7a6c59fe07231e231a" rel="external nofollow" title="QQ群" target="_blank">
+			    	<i class="group fa fa-group"></i>
+			    </a>
+            
+	            <a href="/atom.xml" rel="external nofollow" title="RSS" target="_blank">
+			    	<i class="feed fa fa-feed"></i>
+			    </a>
+            
+        </div>
+    </div>
+
+
+        
+        
+
+        
+    </aside>
+
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+
+<a id="back-to-top" class="icon-btn hide">
+	<i class="fa fa-chevron-up"></i>
+</a>
+
+
+
+
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+        访问量:
+        <strong id="busuanzi_value_site_pv">
+            <i class="fa fa-spinner fa-spin"></i>
+        </strong>
+        &nbsp; | &nbsp;
+        访客数:
+        <strong id="busuanzi_value_site_uv">
+            <i class="fa fa-spinner fa-spin"></i>
+        </strong>
+<!--        &nbsp; <strong>Since 2018-12-26</strong>-->
+    
+</div>
+
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy; 2018 - 2023
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    <a href="//www.beian.miit.gov.cn/" class="copyright-links" target="_blank" rel="nofollow">鲁ICP备18033870号</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/js/jquery.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/bootstrap-hover-dropdown.min.js"></script>
+
+
+	<script src="/js/search.js?rev=@@hash"></script>
+
+
+
+    <script src="/assets/tagcanvas.min.js?rev=2.9"></script>
+    <script>
+        var tagOption = {
+            textColour: '#29afec', // 字体颜色
+            outlineMethod: 'block', // 选中模式
+            outlineColour: '#FFDAB9', // 选中模式的颜色
+            interval: 30 || 30, // 动画帧之间的时间间隔，值越大，转动幅度越大
+            textHeight: 13,
+            outlineRadius: 3,
+            freezeActive: true || '', // 选中的标签是否继续滚动
+            frontSelect: true || '', // 不选标签云后部的标签
+            initial: [0.1, -0.1],
+            depth: 0.5,
+            decel: 0.95,
+            maxSpeed: 0.03,
+            reverse: true || '', // 是否反向触发
+            fadeIn: 500, // 进入动画时间
+            wheelZoom: false || '' // 是否启用鼠标滚轮
+        }
+        TagCanvas.Start('tag-cloud-3d','',tagOption);
+    </script>
+
+
+
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<script src="/js/app.js?rev=@@hash"></script>
+<script src="/jquery.fancybox.js?v=2.1.5"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('.fancybox').fancybox();
+    });
+    // 给图片添加链接
+    $(document).ready(function() {
+        $("p img").each(function() {
+            var strA = "<a id='yourid' class='fancybox' data-fancybox-group='gallery'  href='" + this.src + "'></a>";
+            $(this).wrapAll(strA);
+        });
+    });
+    // fancybox
+    $("#yourid").fancybox({
+        openEffect    : 'elastic',
+        closeEffect   : 'elastic',
+    });
+</script>
+
+</body>
+</html>
