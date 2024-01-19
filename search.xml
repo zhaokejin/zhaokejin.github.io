@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[微服务开中常用注解]]></title>
+    <url>%2Fmicro-service%2Fmicroservice-annotation%2F</url>
+    <content type="text"><![CDATA[一、组件注册@SpringBootConfigurationSpringBootConfiguration 是 SpringBoot 项目的配置注解，这也是一个组合注解，SpringBootConfiguration 注解可以用 java 代码的形式实现 Spring 中 xml 配置文件配置的效果，并会将当前类内声明的一个或多个以 @Bean 注解标记的方法的实例纳入到 spring 容器中，并且实例名就是方法名。 SpringBootConfiguration 可以作为 Spring 标准中 @Configuration 注解的替代。SpringBoot 项目中推荐使用@SpringBootConfiguration 替代 @Configuration。 @Scope@Scope注解主要作用是调节Ioc容器中的作用域，在Spring IoC容器中主要有以下五种作用域：基本作用域：singleton(单例)、prototype(多例);Web 作用域(reqeust、session、globalsession)，自定义作用域。 @Scope注解是springIoc容器中的一个作用域，在 Spring IoC 容器中具有以下几种作用域：基本作用域singleton（单例）、prototype(多例)，Web 作用域（reqeust、session、globalsession），自定义作用域 singleton单例模式(默认):全局有且仅有一个实例 prototype原型模式:每次获取Bean的时候会有一个新的实例 request: request表示该针对每一次HTTP请求都会产生一个新的bean，同时该bean仅在当前HTTP request内有效 session :session作用域表示该针对每一次HTTP请求都会产生一个新的bean，同时该bean仅在当前HTTP session内有效 global session : global session作用域类似于标准的HTTP Session作用域，不过它仅仅在基于portlet的web应用中才有意义 直接使用字符串容易出问题,spring有默认的参数: ConfigurableBeanFactory.SCOPE_PROTOTYPE，即“prototype” ConfigurableBeanFactory.SCOPE_SINGLETON，即“singleton” WebApplicationContext.SCOPE_REQUEST，即“request” WebApplicationContext.SCOPE_SESSION，即“session” 二、常用注解@SpringBootApplication12345678910111213141516@Target(ElementType.TYPE)@Retention(RetentionPolicy.RUNTIME)@Documented@Inherited@Configuration@EnableAutoConfiguration@ComponentScanpublic @interface SpringBootApplication &#123; /** * Exclude specific auto-configuration classes such that they will never be applied. * @return the classes to exclude */ Class&lt;?&gt;[] exclude() default &#123;&#125;;&#125; 定义在main方法入口类处，用于启动sping boot应用项目 @EnableAutoConfiguration让spring boot根据类路径中的jar包依赖当前项目进行自动配置 在src/main/resources的META-INF/spring.factories 12345org.springframework.boot.autoconfigure.EnableAutoConfiguration=\org.springframework.boot.autoconfigure.admin.SpringApplicationAdminJmxAutoConfiguration,\org.springframework.boot.autoconfigure.aop.AopAutoConfiguration若有多个自动配置，用“，”隔开 @ImportResource加载xml配置，一般是放在启动main类上 123@ImportResource("classpath*:/spring/*.xml") 单个@ImportResource(&#123;"classpath*:/spring/1.xml","classpath*:/spring/2.xml"&#125;) 多个 @Valueapplication.properties定义属性，直接使用@Value注入即可 1234public class A&#123; @Value("$&#123;push.start:0&#125;") 如果缺失，默认值为0 private Long id;&#125; @ConfigurationProperties可以新建一个properties文件，ConfigurationProperties的属性prefix指定properties的配置的前缀，通过location指定properties文件的位置 123456@ConfigurationProperties(prefix="person")public class PersonProperties &#123; private String name ; private int age;&#125; @EnableConfigurationProperties用 @EnableConfigurationProperties注解使 @ConfigurationProperties生效，并从IOC容器中获取bean。 https://blog.csdn.net/u010502101/article/details/78758330 @RestController组合@Controller和@ResponseBody，当你开发一个和页面交互数据的控制时，比如bbs-web的api接口需要此注解 @RequestMapping用来映射web请求(访问路径和参数)、处理类和方法，可以注解在类或方法上。注解在方法上的路径会继承注解在类上的路径。 produces属性: 定制返回的response的媒体类型和字符集，或需返回值是json对象 1@RequestMapping(value="/api2/copper",produces="application/json;charset=UTF-8",method = RequestMethod.POST) @RequestParam获取request请求的参数值 12345public List&lt;CopperVO&gt; getOpList(HttpServletRequest request, @RequestParam(value = "pageIndex", required = false) Integer pageIndex, @RequestParam(value = "pageSize", required = false) Integer pageSize) &#123; &#125; @ResponseBody支持将返回值放在response体内，而不是返回一个页面。比如Ajax接口，可以用此注解返回数据而不是页面。此注解可以放置在返回值前或方法前。 12345678910另一个玩法，可以不用@ResponseBody。继承FastJsonHttpMessageConverter类并对writeInternal方法扩展，在spring响应结果时，再次拦截、加工结果// stringResult: json返回结果//HttpOutputMessage outputMessage byte[] payload = stringResult.getBytes(); outputMessage.getHeaders().setContentType(META_TYPE); outputMessage.getHeaders().setContentLength(payload.length); outputMessage.getBody().write(payload); outputMessage.getBody().flush(); @Bean@Bean(name=”bean的名字”,initMethod=”初始化时调用方法名字”,destroyMethod=”close”) 定义在方法上，在容器内初始化一个bean实例类。 12345@Bean(destroyMethod="close")@ConditionalOnMissingBeanpublic PersonService registryService() &#123; return new PersonService(); &#125; @Service用于标注业务层组件 @Controller用于标注控制层组件(如struts中的action) @Repository用于标注数据访问组件，即DAO组件 @Component泛指组件，当组件不好归类的时候，我们可以使用这个注解进行标注。 @PostConstructspring容器初始化时，要执行该方法 123@PostConstruct public void init() &#123; &#125; @PathVariable用来获得请求url中的动态参数 12345678910111213@Controller public class TestController &#123; @RequestMapping(value="/user/&#123;userId&#125;/roles/&#123;roleId&#125;",method = RequestMethod.GET) public String getLogin(@PathVariable("userId") String userId, @PathVariable("roleId") String roleId)&#123; System.out.println("User Id : " + userId); System.out.println("Role Id : " + roleId); return "hello"; &#125; &#125; @ComponentScan注解会告知Spring扫描指定的包来初始化Spring 1@ComponentScan(basePackages = "com.bbs.xx") @EnableZuulProxy路由网关的主要目的是为了让所有的微服务对外只有一个接口，我们只需访问一个网关地址，即可由网关将所有的请求代理到不同的服务中。Spring Cloud是通过Zuul来实现的，支持自动路由映射到在Eureka Server上注册的服务。Spring Cloud提供了注解@EnableZuulProxy来启用路由代理。 @Autowired在默认情况下使用 @Autowired 注释进行自动注入时，Spring 容器中匹配的候选 Bean 数目必须有且仅有一个。当找不到一个匹配的 Bean 时，Spring 容器将抛出 BeanCreationException 异常，并指出必须至少拥有一个匹配的 Bean。 当不能确定 Spring 容器中一定拥有某个类的 Bean 时，可以在需要自动注入该类 Bean 的地方可以使用 @Autowired(required = false)，这等于告诉 Spring: 在找不到匹配 Bean 时也不报错 @Autowired注解注入map、list与@Qualifier在新窗口打开 @Configuration12345678910111213@Configuration("name")//表示这是一个配置信息类,可以给这个配置类也起一个名称@ComponentScan("spring4")//类似于xml中的&lt;context:component-scan base-package="spring4"/&gt;public class Config &#123; @Autowired//自动注入，如果容器中有多个符合的bean时，需要进一步明确 @Qualifier("compent")//进一步指明注入bean名称为compent的bean private Compent compent; @Bean//类似于xml中的&lt;bean id="newbean" class="spring4.Compent"/&gt; public Compent newbean()&#123; return new Compent(); &#125; &#125; @Import导入Config1配置类里实例化的bean 1234567891011121314151617181920@Configurationpublic class CDConfig &#123; @Bean // 将SgtPeppers注册为 SpringContext中的bean public CompactDisc compactDisc() &#123; return new CompactDisc(); // CompactDisc类型的 &#125;&#125;@Configuration@Import(CDConfig.class) //导入CDConfig的配置public class CDPlayerConfig &#123; @Bean(name = "cDPlayer") public CDPlayer cdPlayer(CompactDisc compactDisc) &#123; // 这里会注入CompactDisc类型的bean // 这里注入的这个bean是CDConfig.class中的CompactDisc类型的那个bean return new CDPlayer(compactDisc); &#125;&#125; @Order@Order(1)，值越小优先级超高，越先运行 三、条件注解 如果注解指定的条件成立，则触发指定行为，条件注解列表: @ConditionalOnRepositoryType (org.springframework.boot.autoconfigure.data) @ConditionalOnDefaultWebSecurity (org.springframework.boot.autoconfigure.security) @ConditionalOnSingleCandidate (org.springframework.boot.autoconfigure.condition) @ConditionalOnWebApplication (org.springframework.boot.autoconfigure.condition) @ConditionalOnWarDeployment (org.springframework.boot.autoconfigure.condition) @ConditionalOnJndi (org.springframework.boot.autoconfigure.condition) @ConditionalOnResource (org.springframework.boot.autoconfigure.condition) @ConditionalOnExpression (org.springframework.boot.autoconfigure.condition) @ConditionalOnClass (org.springframework.boot.autoconfigure.condition) @ConditionalOnEnabledResourceChain (org.springframework.boot.autoconfigure.web) @ConditionalOnMissingClass (org.springframework.boot.autoconfigure.condition) @ConditionalOnNotWebApplication (org.springframework.boot.autoconfigure.condition) @ConditionalOnProperty (org.springframework.boot.autoconfigure.condition) @ConditionalOnCloudPlatform (org.springframework.boot.autoconfigure.condition) @ConditionalOnBean (org.springframework.boot.autoconfigure.condition) @ConditionalOnMissingBean (org.springframework.boot.autoconfigure.condition) @ConditionalOnMissingFilterBean (org.springframework.boot.autoconfigure.web.servlet) @Profile (org.springframework.context.annotation) @ConditionalOnInitializedRestarter (org.springframework.boot.devtools.restart) @ConditionalOnGraphQlSchema (org.springframework.boot.autoconfigure.graphql) @ConditionalOnJava (org.springframework.boot.autoconfigure.condition) @ConditionalOnMissingClass如果类路径中不存在这个类，则触发指定行为 @ConditionalOnBean如果容器中存在这个Bean（组件），则触发指定行为，@ConditionalOnBean（value=组件类型，name=组件名字）：判断容器中是否有这个类型的组件，并且名字是指定的值 @ConditionalOnMissingBean如果容器中不存在这个Bean（组件），则触发指定行为 场景： 如果存在FastsqlException这个类，给容器中放一个Cat组件，名cat01， 否则，就给容器中放一个Dog组件，名dog01 如果系统中有dog01这个组件，就给容器中放一个 User组件，名zhangsan 否则，就放一个User，名叫lisi @ConditionalOnProperty这个注解能够控制某个 @Configuration 是否生效。具体操作是通过其两个属性name以及havingValue来实现的，其中name用来从application.properties中读取某个属性值，如果该值为空，则返回false;如果值不为空，则将该值与havingValue指定的值进行比较，如果一样则返回true;否则返回false。如果返回值为false，则该configuration不生效；为true则生效。 https://blog.csdn.net/dalangzhonghangxing/article/details/78420057 @ConditionalOnClass如果类路径中存在这个类，则触发指定行为； 该注解的参数对应的类必须存在，否则不解析该注解修饰的配置类； 123456789101112@Configuration@ConditionalOnClass(&#123;Gson.class&#125;)public class GsonAutoConfiguration &#123; public GsonAutoConfiguration() &#123; &#125; @Bean @ConditionalOnMissingBean public Gson gson() &#123; return new Gson(); &#125;&#125; @ConditionalOnMisssingClass1@ConditionalOnMisssingClass(&#123;ApplicationManager.class&#125;) 如果存在它修饰的类的bean，则不需要再创建这个bean； @ConditionOnMissingBean1@ConditionOnMissingBean(name = &quot;example&quot;) 表示如果name为“example”的bean存在，该注解修饰的代码块不执行。 @ConditionalOnExpression12345678@Configuration@ConditionalOnExpression("$&#123;enabled:false&#125;")public class BigpipeConfiguration &#123; @Bean public OrderMessageMonitor orderMessageMonitor(ConfigContext configContext) &#123; return new OrderMessageMonitor(configContext); &#125;&#125; 开关为true的时候才实例化bean 四、属性绑定@ConfigurationProperties 声明组件的属性和配置文件哪些前缀开始项进行绑定 @EnableConfigurationProperties快速注册注解： 场景： SpringBoot默认只扫描自己主程序所在的包。如果导入第三方包，即使组件上标注了 @Component、@ConfigurationProperties 注解，也没用。因为组件都扫描不进来，此时使用这个注解就可以快速进行属性绑定并把组件注册进容器 这个一点倒是很重要，SpringBoot默认扫描当前项目主程序包及其子包，再加上自动配置类，那么属性类是不会扫描到的，此时就算加上@Component注解也是没有任何用处，所以一般是在属性类上面使用 @ConfigurationProperties注解，而在相应的自动配置类上面使用@EnableConfigurationProperties注解，从而让属性类绑定生效 将容器中任意组件（Bean）的属性值和配置文件的配置项的值进行绑定 1、给容器中注册组件（@Component、@Bean) 2、使用 @ConfigurationProperties 声明组件和配置文件的哪些配置项进行绑定 五、缓存注解@EnableCaching开启缓存注解的支持 @Cacheable@Cacheable 注解表示方法的结果应该被缓存起来，下次调用该方法时，如果参数和之前相同，则返回缓存结果。 1234567@Servicepublic class MyService &#123; @Cacheable("greetingCache") public String greeting(String name) &#123; return "Hello, " + name + "!"; &#125;&#125; @CachePut@CachePut 注解表示方法的结果应该被缓存起来，下次调用该方法时，不会返回缓存结果，而是重新计算结果并缓存起来。 1234567@Servicepublic class MyService &#123; @CachePut("greetingCache") public String greeting(String name) &#123; return "Hello, " + name + "!"; &#125;&#125; @CacheEvict@CacheEvict 注解表示方法执行后从缓存中删除指定项。 123456@Servicepublic class MyService &#123; @CacheEvict("greetingCache") public void clearGreetingCache() &#123; &#125;&#125; @CacheConfig@CacheConfig是结合@Cacheable使用的来设置过期时间的 @Caching@Caching 注解可以在一个方法或者类上同时指定多个Spring Cache相关的注解。其拥有三个属性：cacheable、put 和 evict，分别用于指定@Cacheable、@CachePut 和 @CacheEvict。对于一个数据变动，更新多个缓存的场景，可以通过 @Caching 来实现： 1234@Caching(cacheable = @Cacheable(cacheNames = &quot;caching&quot;, key = &quot;#age&quot;), evict = @CacheEvict(cacheNames = &quot;t4&quot;, key = &quot;#age&quot;))public String caching(int age) &#123; return &quot;caching: &quot; + age + &quot;--&gt;&quot; + UUID.randomUUID().toString();&#125; 参考： https://www.cnblogs.com/ziyue7575/p/c925cfe466df01c1d352f37da8823946.html https://pdai.tech/md/spring/springboot/springboot-x-hello-anno.html]]></content>
+      <categories>
+        <category>微服务</category>
+      </categories>
+      <tags>
+        <tag>微服务</tag>
+        <tag>SpringCloud</tag>
+        <tag>annotation</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Windows 11解决PowerShell因为在此系统上禁止运行脚本。有关详细信息]]></title>
     <url>%2Fother%2Fwin11-PowerShell%2F</url>
     <content type="text"><![CDATA[Intellij Idea、VScode 等开发工具自带程序终端的时候会报出”系统禁止脚本运行的错误”。 解决 管理员身份运行Windows PowerShell 执行：get-ExecutionPolicy，显示Restricted，表示状态是禁止的; 12Restricted 禁止的RemoteSigned 允许的 执行：set-ExecutionPolicy ​ 3.1 会提示输入参数：RemoteSigned，然后回车 ​ 3.2 或者直接输入 set-executionpolicy remotesigned 回车 这样就能使用了；]]></content>
@@ -251,8 +264,8 @@
       </categories>
       <tags>
         <tag>微服务</tag>
-        <tag>Spring Cloud</tag>
         <tag>Alibaba</tag>
+        <tag>Spring Cloud</tag>
       </tags>
   </entry>
   <entry>
@@ -475,8 +488,8 @@
         <category>微服务</category>
       </categories>
       <tags>
-        <tag>微服务</tag>
         <tag>Feign</tag>
+        <tag>微服务</tag>
         <tag>SpringCloud</tag>
       </tags>
   </entry>
@@ -488,8 +501,8 @@
         <category>微服务</category>
       </categories>
       <tags>
-        <tag>微服务</tag>
         <tag>Feign</tag>
+        <tag>微服务</tag>
       </tags>
   </entry>
   <entry>
@@ -763,9 +776,9 @@
         <category>微服务</category>
       </categories>
       <tags>
+        <tag>Feign</tag>
         <tag>微服务</tag>
         <tag>Spring Cloud</tag>
-        <tag>Feign</tag>
         <tag>Hystrix</tag>
       </tags>
   </entry>
@@ -817,9 +830,9 @@
         <category>微服务</category>
       </categories>
       <tags>
+        <tag>Feign</tag>
         <tag>微服务</tag>
         <tag>Spring Cloud</tag>
-        <tag>Feign</tag>
       </tags>
   </entry>
   <entry>
@@ -1322,8 +1335,8 @@
         <category>Feign</category>
       </categories>
       <tags>
-        <tag>Feign</tag>
         <tag>assessToken</tag>
+        <tag>Feign</tag>
       </tags>
   </entry>
   <entry>
